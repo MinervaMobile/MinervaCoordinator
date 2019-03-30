@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
   s.source_files = 'Source/*.swift'
 
-  s.swift_version              = '5.0'
   s.requires_arc               = true
 
   s.ios.deployment_target      = '11.0'
