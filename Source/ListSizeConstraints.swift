@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-public enum ListRowDistribution {
+public enum ListRowDistribution: Equatable {
   case entireRow
   case equally(cellsInRow: Int)
   case proportionally
 }
 
-public struct ListSizeConstraints {
+public struct ListSizeConstraints: Equatable {
 
   public var containerSizeAdjustedForInsets: CGSize {
     return containerSize.adjust(for: inset)
