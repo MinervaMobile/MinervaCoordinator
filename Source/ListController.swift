@@ -123,46 +123,12 @@ public final class ListController: NSObject {
     self.hideVisibleCells()
   }
 
-  public func update(
-    with listSections: [ListSection],
-    animated: Bool,
-    completion: Completion?
-  ) {
-    return update(with: listSections, ignoreUnchangedModels: true, animated: animated, completion: completion)
-  }
-
-  public func update(
-    with listSections: [ListSection],
-    ignoreUnchangedModels: Bool,
-    animated: Bool,
-    completion: Completion?
-  ) {
+  public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
     guard Thread.isMainThread else {
       DispatchQueue.main.async {
-        self.update(
-          with: listSections,
-          ignoreUnchangedModels: ignoreUnchangedModels,
-          animated: animated,
-          completion: completion)
+        self.update(with: listSections, animated: animated, completion: completion)
       }
       return
-    }
-    // Fixes reactive models not working when cell models are replaced with identifiers that are equal.
-    var currentModelMap = self.cellModels.asMap { $0.identifier }
-    var listSections = listSections
-    for (sectionIndex, section) in listSections.enumerated() {
-      for (modelIndex, model) in section.cellModels.enumerated() {
-        guard let existingModel = currentModelMap[model.identifier], existingModel.isEqual(to: model) else {
-          continue
-        }
-        if ignoreUnchangedModels {
-          // Don't use cell models that haven't changed.
-          listSections[sectionIndex].cellModels[modelIndex] = existingModel
-        } else {
-          // Force the cell to bind with the new cell model because IGListKit won't know it changed.
-          existingModel.cell?.bindViewModel(model)
-        }
-      }
     }
     #if DEBUG
       let cellModels = listSections.flatMap { $0.cellModels }
@@ -235,7 +201,7 @@ public final class ListController: NSObject {
       section.cellModels = cellModels
       listSections[indexPath.section] = section
     }
-    self.update(with: listSections, ignoreUnchangedModels: true, animated: true, completion: completion)
+    self.update(with: listSections, animated: true, completion: completion)
   }
 
   public func scrollTo(

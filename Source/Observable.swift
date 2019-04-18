@@ -86,12 +86,12 @@ public final class Observable<T>: Disposable {
       }
     }
     set {
+      var actualObservers: [Observer]? = nil
       lock {
         internalValue = newValue
+        actualObservers = Array(observers.values)
       }
-      for observe in observers.values {
-        observe(newValue)
-      }
+      actualObservers?.forEach { $0(newValue) }
     }
   }
 
