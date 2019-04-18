@@ -106,9 +106,6 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    if let model = cellModel as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
     let cell: ListCollectionViewCell?
     let cellModelType = type(of: cellModel)
     if cellModel.usesNib {
@@ -142,9 +139,6 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
     guard let collectionContext = self.collectionContext else {
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
-    }
-    if let model = cellModel as? ListBindableCellModelWrapper {
-      model.willBind()
     }
     let cell: ListCollectionViewCell?
     let cellModelType = type(of: cellModel)

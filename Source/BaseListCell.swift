@@ -44,7 +44,12 @@ open class BaseListCell: UICollectionViewCell, ListCell {
       assertionFailure("Invalid view model \(viewModel)")
       return
     }
-    self.cellModel?.cell = nil
+    if let existingCell = self.cellModel?.cell, existingCell === self {
+      self.cellModel?.cell = nil
+    }
+    if let model = cellModel as? ListBindableCellModelWrapper {
+      model.willBind()
+    }
     self.cellModel = cellModel
     self.cellModel?.cell = self
     updatedCellModel()
