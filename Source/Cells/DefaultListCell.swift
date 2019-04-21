@@ -60,7 +60,7 @@ open class DefaultListCellModel: BaseListCellModel {
   }
 }
 
-public class DefaultListCell: BaseListBindableCell {
+open class DefaultListCell: BaseListBindableCell {
 
   private(set) public var containerTopConstraint: NSLayoutConstraint?
   private(set) public var containerBottomConstraint: NSLayoutConstraint?
@@ -156,11 +156,11 @@ public class DefaultListCell: BaseListBindableCell {
     setupConstraints()
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public override func updatedCellModel() {
+  open override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.cellModel as? DefaultListCellModel else { return }
     topSeparatorView.backgroundColor = model.topSeparatorColor ?? model.backgroundColor

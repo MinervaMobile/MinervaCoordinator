@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Minerva"
-  s.version      = "1.2.2"
+  s.version      = "1.2.3"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary      = "This framework is a lightweight wrapper around IGListKit."
@@ -21,9 +21,10 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target     = '11.0'
   s.tvos.frameworks            = 'Foundation', 'UIKit'
 
-  s.subspec 'Core' do |ss|
-    ss.source_files = 'Source/*.swift'
+  s.subspec 'Cells' do |ss|
+    ss.source_files = 'Source/Cells/*.swift'
     ss.dependency 'IGListKit', '~> 3.4.0'
+    ss.dependency 'Minerva/Core'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
@@ -32,10 +33,9 @@ Pod::Spec.new do |s|
     ss.tvos.frameworks            = 'Foundation', 'UIKit'
   end
 
-  s.subspec 'Cells' do |ss|
-    ss.source_files = 'Source/Cells/*.swift'
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'Source/Core/*.swift'
     ss.dependency 'IGListKit', '~> 3.4.0'
-    ss.dependency 'Minerva/Core'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
