@@ -33,6 +33,7 @@
 		F5587D6E22502C5B004223E5 /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D5F22502C5B004223E5 /* BaseListCell.swift */; };
 		F5587D6F22502C5B004223E5 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D6022502C5B004223E5 /* ListCell.swift */; };
 		F5587D7022502D62004223E5 /* Minerva.h in Headers */ = {isa = PBXBuildFile; fileRef = F5587D5822502C5A004223E5 /* Minerva.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
 		F7344623561FF256D6255C5F /* Pods_MinervaExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 315E398B8E773FD39750CB3C /* Pods_MinervaExampleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 		F5587D5E22502C5A004223E5 /* BaseListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseListCellModel.swift; path = ../../Source/BaseListCellModel.swift; sourceTree = "<group>"; };
 		F5587D5F22502C5B004223E5 /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseListCell.swift; path = ../../Source/BaseListCell.swift; sourceTree = "<group>"; };
 		F5587D6022502C5B004223E5 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = ../../Source/ListCell.swift; sourceTree = "<group>"; };
+		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultListCell.swift; path = ../../Source/Cells/DefaultListCell.swift; sourceTree = "<group>"; };
 		FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -239,6 +241,7 @@
 		F5587D4622502BF3004223E5 /* Minerva */ = {
 			isa = PBXGroup;
 			children = (
+				F5DA2B85226D327400BA461A /* Cells */,
 				F5587D5322502C5A004223E5 /* BaseListBindableCell.swift */,
 				F5587D5F22502C5B004223E5 /* BaseListCell.swift */,
 				F5587D5E22502C5A004223E5 /* BaseListCellModel.swift */,
@@ -256,6 +259,14 @@
 				F5587D5922502C5A004223E5 /* Observable.swift */,
 			);
 			path = Minerva;
+			sourceTree = "<group>";
+		};
+		F5DA2B85226D327400BA461A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F5DA2B86226D32B000BA461A /* DefaultListCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,6 +639,7 @@
 				F5587D6E22502C5B004223E5 /* BaseListCell.swift in Sources */,
 				F5587D6F22502C5B004223E5 /* ListCell.swift in Sources */,
 				F5587D6D22502C5B004223E5 /* BaseListCellModel.swift in Sources */,
+				F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */,
 				F5587D6922502C5B004223E5 /* ListSizeConstraints.swift in Sources */,
 				F5587D6A22502C5B004223E5 /* ListViewLayout.swift in Sources */,
 				F5587D6422502C5B004223E5 /* Extensions.swift in Sources */,
