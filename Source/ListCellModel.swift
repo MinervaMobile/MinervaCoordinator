@@ -18,6 +18,7 @@ public protocol ListCellModel: class, ListDiffable, CustomStringConvertible {
   var usesNib: Bool { get }
   var reorderable: Bool { get }
   var identifier: String { get }
+  var cellClassName: String { get }
   func isEqual(to model: ListCellModel) -> Bool
   func size(constrainedTo containerSize: CGSize) -> CGSize?
 }

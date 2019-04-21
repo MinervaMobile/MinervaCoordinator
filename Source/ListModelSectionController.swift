@@ -107,16 +107,16 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       return BaseListCell()
     }
     let cell: ListCollectionViewCell?
-    let cellModelType = type(of: cellModel)
     if cellModel.usesNib {
-      let reuseIdentifier = self.reuseIdentifier(for: cellModelType)
+      let cellModelType = type(of: cellModel)
       let bundle = Bundle(for: cellModelType)
+      let reuseIdentifier = cellModel.cellClassName
       cell = collectionContext.dequeueReusableCell(
         withNibName: reuseIdentifier,
         bundle: bundle,
         for: self,
         at: index) as? ListCollectionViewCell
-    } else if let cellType = self.cellType(for: cellModelType) {
+    } else if let cellType = self.cellType(for: cellModel) {
       cell = collectionContext.dequeueReusableCell(
         of: cellType,
         for: self,
@@ -125,7 +125,7 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       cell = nil
     }
     guard let dequeuedCell = cell else {
-      assertionFailure("Failed to get the cell for \(cellModelType) \(cellModel)")
+      assertionFailure("Failed to get the cell for \(cellModel)")
       return BaseListCell()
     }
     return dequeuedCell
@@ -141,17 +141,17 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       return BaseListCell()
     }
     let cell: ListCollectionViewCell?
-    let cellModelType = type(of: cellModel)
     if cellModel.usesNib {
-      let reuseIdentifier = self.reuseIdentifier(for: cellModelType)
+      let cellModelType = type(of: cellModel)
       let bundle = Bundle(for: cellModelType)
+      let reuseIdentifier = cellModel.cellClassName
       cell = collectionContext.dequeueReusableSupplementaryView(
         ofKind: elementKind,
         for: self,
         nibName: reuseIdentifier,
         bundle: bundle,
         at: index) as? ListCollectionViewCell
-    } else if let cellType = self.cellType(for: cellModelType) {
+    } else if let cellType = self.cellType(for: cellModel) {
       cell = collectionContext.dequeueReusableSupplementaryView(
         ofKind: elementKind,
         for: self,
@@ -189,22 +189,8 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
     return super.sizeForItem(at: index)
   }
 
-  private func reuseIdentifier(for modelType: ListCellModel.Type) -> String {
-    return String(describing: modelType).replacingOccurrences(of: "Model", with: "")
-  }
-
-  private func cellType(for modelType: ListCellModel.Type) -> ListCollectionViewCell.Type? {
-    let className = self.reuseIdentifier(for: modelType)
-    if let cellType = NSClassFromString(className) as? ListCollectionViewCell.Type {
-      return cellType
-    }
-    let bundle = Bundle(for: modelType)
-    guard let bundleName = bundle.infoDictionary?["CFBundleName"] as? String else {
-      return nil
-    }
-    let fullClassName = "\(bundleName).\(className)"
-    let cleanedClassName = fullClassName.replacingOccurrences(of: " ", with: "_")
-    return NSClassFromString(cleanedClassName) as? ListCollectionViewCell.Type
+  private func cellType(for model: ListCellModel) -> ListCollectionViewCell.Type? {
+    return NSClassFromString(model.cellClassName) as? ListCollectionViewCell.Type
   }
 }
 

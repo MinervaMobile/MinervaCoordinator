@@ -34,6 +34,19 @@ open class BaseListCellModel: NSObject, ListCellModel {
     }
     return identifier
   }
+  open var cellClassName: String {
+    let modelType = type(of: self)
+    let className = String(describing: modelType).replacingOccurrences(of: "Model", with: "")
+    if NSClassFromString(className) is ListCollectionViewCell.Type {
+      return className
+    }
+    let bundle = Bundle(for: modelType)
+    let bundleName = bundle.infoDictionary?["CFBundleName"] as? String ?? ""
+    let fullClassName = "\(bundleName).\(className)"
+    let cleanedClassName = fullClassName.replacingOccurrences(of: " ", with: "_")
+    return cleanedClassName
+  }
+
   open func isEqual(to model: ListCellModel) -> Bool {
     return self === model
   }
