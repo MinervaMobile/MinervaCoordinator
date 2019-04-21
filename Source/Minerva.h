@@ -1,7 +1,6 @@
 //
 //  Minerva.h
 //
-//  Created by Joseph Laws
 //  Copyright © 2019 Optimize Fitness. All rights reserved.
 //
 

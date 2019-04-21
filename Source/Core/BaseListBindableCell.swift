@@ -2,7 +2,6 @@
 //  BaseListBindableCell.swift
 //  Minerva
 //
-//  Created by Joe Laws
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
