@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,8 +11,6 @@
 		45D271D1F7A38F4925EA9D09 /* Pods_MinervaExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028490B65F4CF7741CF4C814 /* Pods_MinervaExampleUITests.framework */; };
 		B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
-		F5587D1522502B10004223E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1422502B10004223E5 /* ViewController.swift */; };
-		F5587D1822502B10004223E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1622502B10004223E5 /* Main.storyboard */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
 		F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */; };
 		F5587D2822502B12004223E5 /* MinervaExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D2722502B12004223E5 /* MinervaExampleTests.swift */; };
@@ -20,6 +18,174 @@
 		F5587D4C22502BF3004223E5 /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
 		F5587D4D22502BF3004223E5 /* Minerva.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5587D7022502D62004223E5 /* Minerva.h in Headers */ = {isa = PBXBuildFile; fileRef = F5587D5822502C5A004223E5 /* Minerva.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */; };
+		F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
+		F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
+		F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
+		F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
+		F576F875226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
+		F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
+		F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
+		F576F878226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
+		F576F879226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
+		F576F87A226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
+		F576F87B226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
+		F576F87C226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
+		F576F87D226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
+		F576F897226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
+		F576F898226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
+		F576F899226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
+		F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
+		F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
+		F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
+		F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
+		F576F89E226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
+		F576F89F226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
+		F576F8A0226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
+		F576F8A1226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
+		F576F8A2226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
+		F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
+		F576F8A4226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
+		F576F8A5226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
+		F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
+		F576F8A7226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
+		F576F8A8226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
+		F576F8BB226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
+		F576F8BC226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
+		F576F8BD226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
+		F576F8BE226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
+		F576F8BF226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
+		F576F8C0226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
+		F576F8C1226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
+		F576F8C2226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
+		F576F8C3226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
+		F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
+		F576F8C5226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
+		F576F8C6226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
+		F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
+		F576F8C8226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
+		F576F8C9226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
+		F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
+		F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
+		F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
+		F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
+		F576F8CE226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
+		F576F8CF226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
+		F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
+		F576F8D1226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
+		F576F8D2226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
+		F576F8DB226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
+		F576F8DC226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
+		F576F8DD226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
+		F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
+		F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
+		F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
+		F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
+		F576F8E2226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
+		F576F8E3226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
+		F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
+		F576F8EB226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
+		F576F8EC226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
+		F576F8F4226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
+		F576F8F5226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
+		F576F8F6226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
+		F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
+		F576F8F8226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
+		F576F8F9226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
+		F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
+		F576F8FB226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
+		F576F8FC226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
+		F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
+		F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
+		F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
+		F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
+		F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
+		F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
+		F576F908226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */; };
+		F576F909226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */; };
+		F576F90A226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */; };
+		F576F924226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
+		F576F925226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
+		F576F926226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
+		F576F927226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
+		F576F928226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
+		F576F929226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
+		F576F92A226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */; };
+		F576F92B226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */; };
+		F576F92C226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */; };
+		F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
+		F576F930226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
+		F576F931226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
+		F576F94A226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
+		F576F94B226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
+		F576F94C226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
+		F576F94D226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
+		F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
+		F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
+		F576F950226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
+		F576F951226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
+		F576F952226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
+		F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
+		F576F954226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
+		F576F955226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
+		F576F956226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
+		F576F957226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
+		F576F958226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
+		F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
+		F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
+		F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
+		F576F962226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
+		F576F963226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
+		F576F964226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
+		F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
+		F576F966226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
+		F576F967226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
+		F576F968226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
+		F576F969226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
+		F576F96A226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
+		F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
+		F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
+		F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
+		F576F96E226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
+		F576F96F226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
+		F576F970226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
+		F576F971226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */; };
+		F576F972226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */; };
+		F576F973226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */; };
+		F576F974226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */; };
+		F576F975226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */; };
+		F576F976226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */; };
+		F576F977226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
+		F576F978226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
+		F576F979226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
+		F576F97A226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
+		F576F97B226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
+		F576F97C226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
+		F576F97D226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
+		F576F97E226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
+		F576F97F226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
+		F576F980226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
+		F576F981226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
+		F576F982226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
+		F576F983226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
+		F576F984226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
+		F576F985226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
+		F576F98C226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
+		F576F98D226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
+		F576F98E226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
+		F576F98F226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
+		F576F990226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
+		F576F991226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
+		F576F992226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
+		F576F993226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
+		F576F994226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
+		F576F995226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */; };
+		F576F996226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */; };
+		F576F997226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */; };
+		F576F998226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */; };
+		F576F999226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */; };
+		F576F99A226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */; };
+		F576F99D226E20D20015D14E /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
 		F5DA2B96226D367600BA461A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* Observable.swift */; };
 		F5DA2B97226D367600BA461A /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8A226D367500BA461A /* BaseListCell.swift */; };
@@ -89,8 +255,6 @@
 		F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F5587D1422502B10004223E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F5587D1722502B10004223E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F5587D1922502B11004223E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5587D1C22502B11004223E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F5587D1E22502B11004223E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,22 +265,86 @@
 		F5587D3222502B12004223E5 /* MinervaExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinervaExampleUITests.swift; sourceTree = "<group>"; };
 		F5587D3422502B12004223E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5587D4522502BF2004223E5 /* Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5587D5222502C5A004223E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Source/Info.plist; sourceTree = "<group>"; };
-		F5587D5822502C5A004223E5 /* Minerva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Minerva.h; path = ../../Source/Minerva.h; sourceTree = "<group>"; };
-		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DefaultListCell.swift; path = ../../Source/Cells/DefaultListCell.swift; sourceTree = "<group>"; };
-		F5DA2B89226D367500BA461A /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = ../../Source/Core/Observable.swift; sourceTree = "<group>"; };
-		F5DA2B8A226D367500BA461A /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseListCell.swift; path = ../../Source/Core/BaseListCell.swift; sourceTree = "<group>"; };
-		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListController.swift; path = ../../Source/Core/ListController.swift; sourceTree = "<group>"; };
-		F5DA2B8C226D367500BA461A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../Source/Core/Extensions.swift; sourceTree = "<group>"; };
-		F5DA2B8D226D367500BA461A /* ListViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewLayout.swift; path = ../../Source/Core/ListViewLayout.swift; sourceTree = "<group>"; };
-		F5DA2B8E226D367500BA461A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = ../../Source/Core/ListCell.swift; sourceTree = "<group>"; };
-		F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewLayoutAttributes.swift; path = ../../Source/Core/ListViewLayoutAttributes.swift; sourceTree = "<group>"; };
-		F5DA2B90226D367500BA461A /* ListModelSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListModelSectionController.swift; path = ../../Source/Core/ListModelSectionController.swift; sourceTree = "<group>"; };
-		F5DA2B91226D367500BA461A /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListSection.swift; path = ../../Source/Core/ListSection.swift; sourceTree = "<group>"; };
-		F5DA2B92226D367500BA461A /* BaseListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseListCellModel.swift; path = ../../Source/Core/BaseListCellModel.swift; sourceTree = "<group>"; };
-		F5DA2B93226D367500BA461A /* ListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCellModel.swift; path = ../../Source/Core/ListCellModel.swift; sourceTree = "<group>"; };
-		F5DA2B94226D367500BA461A /* BaseListBindableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseListBindableCell.swift; path = ../../Source/Core/BaseListBindableCell.swift; sourceTree = "<group>"; };
-		F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListSizeConstraints.swift; path = ../../Source/Core/ListSizeConstraints.swift; sourceTree = "<group>"; };
+		F5587D5222502C5A004223E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5587D5822502C5A004223E5 /* Minerva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Minerva.h; sourceTree = "<group>"; };
+		F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleCoordinator.swift; sourceTree = "<group>"; };
+		F576F86B226DEE740015D14E /* UserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoordinator.swift; sourceTree = "<group>"; };
+		F576F86E226DEFA90015D14E /* TestUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserManager.swift; sourceTree = "<group>"; };
+		F576F86F226DEFA90015D14E /* TestDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataManager.swift; sourceTree = "<group>"; };
+		F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataManagerFactory.swift; sourceTree = "<group>"; };
+		F576F871226DEFA90015D14E /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		F576F880226DF0050015D14E /* UserRole.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.pb.swift; sourceTree = "<group>"; };
+		F576F881226DF0050015D14E /* Workout.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.pb.swift; sourceTree = "<group>"; };
+		F576F882226DF0050015D14E /* UserCredentials.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCredentials.pb.swift; sourceTree = "<group>"; };
+		F576F883226DF0050015D14E /* User.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.pb.swift; sourceTree = "<group>"; };
+		F576F884226DF0050015D14E /* UserAuthorization.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthorization.pb.swift; sourceTree = "<group>"; };
+		F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutFilter.pb.swift; sourceTree = "<group>"; };
+		F576F887226DF0050015D14E /* UserCredentials.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = UserCredentials.proto; sourceTree = "<group>"; };
+		F576F888226DF0050015D14E /* UserAuthorization.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = UserAuthorization.proto; sourceTree = "<group>"; };
+		F576F889226DF0050015D14E /* UserRole.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = UserRole.proto; sourceTree = "<group>"; };
+		F576F88A226DF0050015D14E /* WorkoutFilter.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = WorkoutFilter.proto; sourceTree = "<group>"; };
+		F576F88B226DF0050015D14E /* Workout.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = Workout.proto; sourceTree = "<group>"; };
+		F576F88C226DF0050015D14E /* User.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = User.proto; sourceTree = "<group>"; };
+		F576F88E226DF0050015D14E /* UserRole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
+		F576F88F226DF0050015D14E /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		F576F890226DF0050015D14E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F576F891226DF0050015D14E /* UserCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCredentials.swift; sourceTree = "<group>"; };
+		F576F892226DF0050015D14E /* WorkoutFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutFilter.swift; sourceTree = "<group>"; };
+		F576F893226DF0050015D14E /* UserAuthorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthorization.swift; sourceTree = "<group>"; };
+		F576F895226DF0050015D14E /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		F576F896226DF0050015D14E /* ProtoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtoExtensions.swift; sourceTree = "<group>"; };
+		F576F8D4226DF04F0015D14E /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		F576F8D5226DF04F0015D14E /* SystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemError.swift; sourceTree = "<group>"; };
+		F576F8D6226DF04F0015D14E /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManagerFactory.swift; sourceTree = "<group>"; };
+		F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeDataSource.swift; sourceTree = "<group>"; };
+		F576F8F3226DF0B40015D14E /* SignInDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInDataSource.swift; sourceTree = "<group>"; };
+		F576F8FE226DF1020015D14E /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
+		F576F903226E165E0015D14E /* FilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDataSource.swift; sourceTree = "<group>"; };
+		F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterActionSheetDataSource.swift; sourceTree = "<group>"; };
+		F576F912226E16820015D14E /* WorkoutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutVC.swift; sourceTree = "<group>"; };
+		F576F913226E16820015D14E /* WorkoutDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutDataSource.swift; sourceTree = "<group>"; };
+		F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutActionSheetDataSource.swift; sourceTree = "<group>"; };
+		F576F92E226E168B0015D14E /* SettingsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
+		F576F934226E16960015D14E /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
+		F576F935226E16960015D14E /* SwipeableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableLabelCell.swift; sourceTree = "<group>"; };
+		F576F936226E16960015D14E /* PickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
+		F576F937226E16960015D14E /* BottomMarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMarginCell.swift; sourceTree = "<group>"; };
+		F576F938226E16960015D14E /* HorizontalCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCell.swift; sourceTree = "<group>"; };
+		F576F93B226E16960015D14E /* BorderLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLabelCell.swift; sourceTree = "<group>"; };
+		F576F93C226E16960015D14E /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		F576F93D226E16960015D14E /* LabelAccessoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAccessoryCell.swift; sourceTree = "<group>"; };
+		F576F93E226E16960015D14E /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		F576F93F226E16970015D14E /* ImageCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellModel.swift; sourceTree = "<group>"; };
+		F576F940226E16970015D14E /* MarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarginCell.swift; sourceTree = "<group>"; };
+		F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetPresentAnimator.swift; sourceTree = "<group>"; };
+		F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDismissAnimator.swift; sourceTree = "<group>"; };
+		F576F944226E16970015D14E /* ActionSheetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetVC.swift; sourceTree = "<group>"; };
+		F576F946226E16970015D14E /* TabBarManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarManager.swift; sourceTree = "<group>"; };
+		F576F947226E16970015D14E /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		F576F948226E16970015D14E /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
+		F576F949226E16970015D14E /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		F576F987226E16BB0015D14E /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
+		F576F988226E16BB0015D14E /* UserListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListDataSource.swift; sourceTree = "<group>"; };
+		F576F989226E16BB0015D14E /* UserListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
+		F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserActionSheetDataSource.swift; sourceTree = "<group>"; };
+		F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserActionSheetDataSource.swift; sourceTree = "<group>"; };
+		F576F99C226E20D20015D14E /* SwipeableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
+		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultListCell.swift; sourceTree = "<group>"; };
+		F5DA2B89226D367500BA461A /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		F5DA2B8A226D367500BA461A /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
+		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
+		F5DA2B8C226D367500BA461A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F5DA2B8D226D367500BA461A /* ListViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayout.swift; sourceTree = "<group>"; };
+		F5DA2B8E226D367500BA461A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayoutAttributes.swift; sourceTree = "<group>"; };
+		F5DA2B90226D367500BA461A /* ListModelSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListModelSectionController.swift; sourceTree = "<group>"; };
+		F5DA2B91226D367500BA461A /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		F5DA2B92226D367500BA461A /* BaseListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCellModel.swift; sourceTree = "<group>"; };
+		F5DA2B93226D367500BA461A /* ListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCellModel.swift; sourceTree = "<group>"; };
+		F5DA2B94226D367500BA461A /* BaseListBindableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListBindableCell.swift; sourceTree = "<group>"; };
+		F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSizeConstraints.swift; sourceTree = "<group>"; };
 		FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -210,12 +438,20 @@
 		F5587D1122502B10004223E5 /* MinervaExample */ = {
 			isa = PBXGroup;
 			children = (
-				F5587D1E22502B11004223E5 /* Info.plist */,
-				F5587D1222502B10004223E5 /* AppDelegate.swift */,
-				F5587D1422502B10004223E5 /* ViewController.swift */,
 				F5587D1922502B11004223E5 /* Assets.xcassets */,
+				F5587D1E22502B11004223E5 /* Info.plist */,
 				F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */,
-				F5587D1622502B10004223E5 /* Main.storyboard */,
+				F576F8FD226DF1020015D14E /* Extensions */,
+				F576F902226E165E0015D14E /* Filter */,
+				F576F868226DEE250015D14E /* Lifecycle */,
+				F576F8F0226DF0B40015D14E /* Onboarding */,
+				F576F8D3226DF04F0015D14E /* Services */,
+				F576F92D226E168B0015D14E /* Settings */,
+				F576F87E226DF0050015D14E /* Shared */,
+				F576F86D226DEEF10015D14E /* TestData */,
+				F576F932226E16960015D14E /* UI */,
+				F576F986226E16BB0015D14E /* User */,
+				F576F90B226E16820015D14E /* Workout */,
 			);
 			path = MinervaExample;
 			sourceTree = "<group>";
@@ -243,10 +479,217 @@
 			children = (
 				F5DA2B85226D327400BA461A /* Cells */,
 				F5DA2B88226D362900BA461A /* Core */,
+				F576F99B226E20B90015D14E /* Swipeable */,
 				F5587D5222502C5A004223E5 /* Info.plist */,
 				F5587D5822502C5A004223E5 /* Minerva.h */,
 			);
-			path = Minerva;
+			name = Minerva;
+			path = ../Source;
+			sourceTree = SOURCE_ROOT;
+		};
+		F576F868226DEE250015D14E /* Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				F5587D1222502B10004223E5 /* AppDelegate.swift */,
+				F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */,
+				F576F86B226DEE740015D14E /* UserCoordinator.swift */,
+			);
+			path = Lifecycle;
+			sourceTree = "<group>";
+		};
+		F576F86D226DEEF10015D14E /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				F576F871226DEFA90015D14E /* TestData.swift */,
+				F576F86F226DEFA90015D14E /* TestDataManager.swift */,
+				F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */,
+				F576F86E226DEFA90015D14E /* TestUserManager.swift */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
+		F576F87E226DF0050015D14E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F576F894226DF0050015D14E /* Extensions */,
+				F576F87F226DF0050015D14E /* Generated */,
+				F576F88D226DF0050015D14E /* Models */,
+				F576F886226DF0050015D14E /* Protos */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		F576F87F226DF0050015D14E /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				F576F883226DF0050015D14E /* User.pb.swift */,
+				F576F884226DF0050015D14E /* UserAuthorization.pb.swift */,
+				F576F882226DF0050015D14E /* UserCredentials.pb.swift */,
+				F576F880226DF0050015D14E /* UserRole.pb.swift */,
+				F576F881226DF0050015D14E /* Workout.pb.swift */,
+				F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		F576F886226DF0050015D14E /* Protos */ = {
+			isa = PBXGroup;
+			children = (
+				F576F88C226DF0050015D14E /* User.proto */,
+				F576F888226DF0050015D14E /* UserAuthorization.proto */,
+				F576F887226DF0050015D14E /* UserCredentials.proto */,
+				F576F889226DF0050015D14E /* UserRole.proto */,
+				F576F88B226DF0050015D14E /* Workout.proto */,
+				F576F88A226DF0050015D14E /* WorkoutFilter.proto */,
+			);
+			path = Protos;
+			sourceTree = "<group>";
+		};
+		F576F88D226DF0050015D14E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F576F890226DF0050015D14E /* User.swift */,
+				F576F893226DF0050015D14E /* UserAuthorization.swift */,
+				F576F891226DF0050015D14E /* UserCredentials.swift */,
+				F576F88E226DF0050015D14E /* UserRole.swift */,
+				F576F88F226DF0050015D14E /* Workout.swift */,
+				F576F892226DF0050015D14E /* WorkoutFilter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F576F894226DF0050015D14E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F576F895226DF0050015D14E /* FoundationExtensions.swift */,
+				F576F896226DF0050015D14E /* ProtoExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F576F8D3226DF04F0015D14E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F576F8D4226DF04F0015D14E /* DataManager.swift */,
+				F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */,
+				F576F8D5226DF04F0015D14E /* SystemError.swift */,
+				F576F8D6226DF04F0015D14E /* UserManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F576F8F0226DF0B40015D14E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */,
+				F576F8F3226DF0B40015D14E /* SignInDataSource.swift */,
+				F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		F576F8FD226DF1020015D14E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F576F8FE226DF1020015D14E /* UIKitExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F576F902226E165E0015D14E /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */,
+				F576F903226E165E0015D14E /* FilterDataSource.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		F576F90B226E16820015D14E /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */,
+				F576F913226E16820015D14E /* WorkoutDataSource.swift */,
+				F576F912226E16820015D14E /* WorkoutVC.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		F576F92D226E168B0015D14E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F576F92E226E168B0015D14E /* SettingsDataSource.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F576F932226E16960015D14E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F576F941226E16970015D14E /* ActionSheet */,
+				F576F933226E16960015D14E /* Cells */,
+				F576F945226E16970015D14E /* Core */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F576F933226E16960015D14E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F576F93B226E16960015D14E /* BorderLabelCell.swift */,
+				F576F937226E16960015D14E /* BottomMarginCell.swift */,
+				F576F93C226E16960015D14E /* DatePickerCell.swift */,
+				F576F938226E16960015D14E /* HorizontalCollectionCell.swift */,
+				F576F93F226E16970015D14E /* ImageCellModel.swift */,
+				F576F93D226E16960015D14E /* LabelAccessoryCell.swift */,
+				F576F93E226E16960015D14E /* LabelCell.swift */,
+				F576F940226E16970015D14E /* MarginCell.swift */,
+				F576F936226E16960015D14E /* PickerCell.swift */,
+				F576F935226E16960015D14E /* SwipeableLabelCell.swift */,
+				F576F934226E16960015D14E /* TextInputCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F576F941226E16970015D14E /* ActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */,
+				F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */,
+				F576F944226E16970015D14E /* ActionSheetVC.swift */,
+			);
+			path = ActionSheet;
+			sourceTree = "<group>";
+		};
+		F576F945226E16970015D14E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F576F949226E16970015D14E /* CollectionViewController.swift */,
+				F576F947226E16970015D14E /* Images.swift */,
+				F576F948226E16970015D14E /* LoadingHUD.swift */,
+				F576F946226E16970015D14E /* TabBarManager.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F576F986226E16BB0015D14E /* User */ = {
+			isa = PBXGroup;
+			children = (
+				F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */,
+				F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */,
+				F576F988226E16BB0015D14E /* UserListDataSource.swift */,
+				F576F989226E16BB0015D14E /* UserListVC.swift */,
+				F576F987226E16BB0015D14E /* UserVC.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		F576F99B226E20B90015D14E /* Swipeable */ = {
+			isa = PBXGroup;
+			children = (
+				F576F99C226E20D20015D14E /* SwipeableCell.swift */,
+			);
+			path = Swipeable;
 			sourceTree = "<group>";
 		};
 		F5DA2B85226D327400BA461A /* Cells */ = {
@@ -254,7 +697,7 @@
 			children = (
 				F5DA2B86226D32B000BA461A /* DefaultListCell.swift */,
 			);
-			name = Cells;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		F5DA2B88226D362900BA461A /* Core */ = {
@@ -274,7 +717,7 @@
 				F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */,
 				F5DA2B89226D367500BA461A /* Observable.swift */,
 			);
-			name = Core;
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,7 +869,6 @@
 			files = (
 				F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */,
 				F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */,
-				F5587D1822502B10004223E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,16 +946,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExample/Pods-MinervaExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExample/Pods-MinervaExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExample/Pods-MinervaExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -570,16 +1007,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -592,16 +1024,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -615,8 +1042,64 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5587D1522502B10004223E5 /* ViewController.swift in Sources */,
+				F576F8DB226DF04F0015D14E /* DataManager.swift in Sources */,
+				F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */,
+				F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */,
+				F576F897226DF0050015D14E /* UserRole.pb.swift in Sources */,
+				F576F977226E16970015D14E /* ActionSheetVC.swift in Sources */,
+				F576F971226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */,
+				F576F8BE226DF0050015D14E /* Workout.swift in Sources */,
+				F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */,
 				F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */,
+				F576F924226E16820015D14E /* WorkoutVC.swift in Sources */,
+				F576F998226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */,
+				F576F92A226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */,
+				F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */,
+				F576F962226E16970015D14E /* DatePickerCell.swift in Sources */,
+				F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
+				F576F878226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
+				F576F94D226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
+				F576F87B226DEFA90015D14E /* TestData.swift in Sources */,
+				F576F974226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */,
+				F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
+				F576F8A0226DF0050015D14E /* User.pb.swift in Sources */,
+				F576F968226E16970015D14E /* LabelCell.swift in Sources */,
+				F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */,
+				F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
+				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
+				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
+				F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */,
+				F576F98F226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F8F4226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
+				F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */,
+				F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
+				F576F995226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */,
+				F576F927226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F875226DEFA90015D14E /* TestDataManager.swift in Sources */,
+				F576F96E226E16970015D14E /* MarginCell.swift in Sources */,
+				F576F8BB226DF0050015D14E /* UserRole.swift in Sources */,
+				F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */,
+				F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */,
+				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
+				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
+				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
+				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
+				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
+				F576F983226E16970015D14E /* CollectionViewController.swift in Sources */,
+				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
+				F576F908226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */,
+				F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */,
+				F576F956226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
+				F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */,
+				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
+				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
+				F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */,
+				F576F97A226E16970015D14E /* TabBarManager.swift in Sources */,
+				F576F97D226E16970015D14E /* Images.swift in Sources */,
+				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
+				F576F950226E16970015D14E /* PickerCell.swift in Sources */,
+				F576F8C1226DF0050015D14E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,7 +1107,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F576F89E226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
+				F576F879226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
+				F576F8E2226DF04F0015D14E /* UserManager.swift in Sources */,
+				F576F996226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */,
+				F576F984226E16970015D14E /* CollectionViewController.swift in Sources */,
+				F576F975226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */,
+				F576F930226E168B0015D14E /* SettingsDataSource.swift in Sources */,
+				F576F898226DF0050015D14E /* UserRole.pb.swift in Sources */,
+				F576F981226E16970015D14E /* LoadingHUD.swift in Sources */,
+				F576F92B226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */,
+				F576F8FB226DF0B50015D14E /* SignInDataSource.swift in Sources */,
+				F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */,
+				F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */,
+				F576F928226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F97B226E16970015D14E /* TabBarManager.swift in Sources */,
+				F576F951226E16970015D14E /* PickerCell.swift in Sources */,
+				F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */,
+				F576F97E226E16970015D14E /* Images.swift in Sources */,
+				F576F8C5226DF0050015D14E /* UserCredentials.swift in Sources */,
+				F576F963226E16970015D14E /* DatePickerCell.swift in Sources */,
+				F576F909226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */,
+				F576F8F8226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
+				F576F8A1226DF0050015D14E /* User.pb.swift in Sources */,
+				F576F954226E16970015D14E /* BottomMarginCell.swift in Sources */,
+				F576F8BC226DF0050015D14E /* UserRole.swift in Sources */,
+				F576F966226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
+				F576F8C2226DF0050015D14E /* User.swift in Sources */,
+				F576F94B226E16970015D14E /* TextInputCell.swift in Sources */,
+				F576F8DC226DF04F0015D14E /* DataManager.swift in Sources */,
+				F576F98D226E16BB0015D14E /* UserVC.swift in Sources */,
+				F576F990226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
+				F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */,
+				F576F925226E16820015D14E /* WorkoutVC.swift in Sources */,
+				F576F999226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */,
+				F576F972226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */,
+				F576F957226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
+				F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */,
+				F576F8BF226DF0050015D14E /* Workout.swift in Sources */,
+				F576F8C8226DF0050015D14E /* WorkoutFilter.swift in Sources */,
+				F576F8A7226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
+				F576F969226E16970015D14E /* LabelCell.swift in Sources */,
+				F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */,
+				F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */,
+				F576F8F5226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F978226E16970015D14E /* ActionSheetVC.swift in Sources */,
+				F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */,
+				F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */,
+				F576F8CE226DF0050015D14E /* FoundationExtensions.swift in Sources */,
+				F576F87C226DEFA90015D14E /* TestData.swift in Sources */,
+				F576F993226E16BB0015D14E /* UserListVC.swift in Sources */,
+				F576F96F226E16970015D14E /* MarginCell.swift in Sources */,
 				F5587D2822502B12004223E5 /* MinervaExampleTests.swift in Sources */,
+				F576F8A4226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
+				F576F8D1226DF0050015D14E /* ProtoExtensions.swift in Sources */,
+				F576F8EB226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,7 +1170,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F576F89F226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
+				F576F87A226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
+				F576F8E3226DF04F0015D14E /* UserManager.swift in Sources */,
+				F576F997226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */,
+				F576F985226E16970015D14E /* CollectionViewController.swift in Sources */,
+				F576F976226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */,
+				F576F931226E168B0015D14E /* SettingsDataSource.swift in Sources */,
+				F576F899226DF0050015D14E /* UserRole.pb.swift in Sources */,
+				F576F982226E16970015D14E /* LoadingHUD.swift in Sources */,
+				F576F92C226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */,
+				F576F8FC226DF0B50015D14E /* SignInDataSource.swift in Sources */,
+				F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */,
+				F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */,
+				F576F929226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F97C226E16970015D14E /* TabBarManager.swift in Sources */,
+				F576F952226E16970015D14E /* PickerCell.swift in Sources */,
+				F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */,
+				F576F97F226E16970015D14E /* Images.swift in Sources */,
+				F576F8C6226DF0050015D14E /* UserCredentials.swift in Sources */,
+				F576F964226E16970015D14E /* DatePickerCell.swift in Sources */,
+				F576F90A226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */,
+				F576F8F9226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
+				F576F8A2226DF0050015D14E /* User.pb.swift in Sources */,
+				F576F955226E16970015D14E /* BottomMarginCell.swift in Sources */,
+				F576F8BD226DF0050015D14E /* UserRole.swift in Sources */,
+				F576F967226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
+				F576F8C3226DF0050015D14E /* User.swift in Sources */,
+				F576F94C226E16970015D14E /* TextInputCell.swift in Sources */,
+				F576F8DD226DF04F0015D14E /* DataManager.swift in Sources */,
+				F576F98E226E16BB0015D14E /* UserVC.swift in Sources */,
+				F576F991226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
+				F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */,
+				F576F926226E16820015D14E /* WorkoutVC.swift in Sources */,
+				F576F99A226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */,
+				F576F973226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */,
+				F576F958226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
+				F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */,
+				F576F8C0226DF0050015D14E /* Workout.swift in Sources */,
+				F576F8C9226DF0050015D14E /* WorkoutFilter.swift in Sources */,
+				F576F8A8226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
+				F576F96A226E16970015D14E /* LabelCell.swift in Sources */,
+				F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */,
+				F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */,
+				F576F8F6226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F979226E16970015D14E /* ActionSheetVC.swift in Sources */,
+				F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */,
+				F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */,
+				F576F8CF226DF0050015D14E /* FoundationExtensions.swift in Sources */,
+				F576F87D226DEFA90015D14E /* TestData.swift in Sources */,
+				F576F994226E16BB0015D14E /* UserListVC.swift in Sources */,
+				F576F970226E16970015D14E /* MarginCell.swift in Sources */,
 				F5587D3322502B12004223E5 /* MinervaExampleUITests.swift in Sources */,
+				F576F8A5226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
+				F576F8D2226DF0050015D14E /* ProtoExtensions.swift in Sources */,
+				F576F8EC226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +1243,7 @@
 				F5DA2B9F226D367600BA461A /* BaseListCellModel.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
 				F5DA2B97226D367600BA461A /* BaseListCell.swift in Sources */,
+				F576F99D226E20D20015D14E /* SwipeableCell.swift in Sources */,
 				F5DA2B9C226D367600BA461A /* ListViewLayoutAttributes.swift in Sources */,
 				F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
@@ -678,14 +1272,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F5587D1622502B10004223E5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F5587D1722502B10004223E5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -817,7 +1403,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -837,7 +1422,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 642F154AAFFFCF52EA421705 /* Pods-MinervaExample.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -857,7 +1441,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -879,7 +1462,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -901,7 +1483,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CD832F1A0AB69B3BAB146B5 /* Pods-MinervaExampleUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExampleUITests/Info.plist;
@@ -922,7 +1503,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F7CEFBA4112F57545A1B92D /* Pods-MinervaExampleUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExampleUITests/Info.plist;

@@ -1,20 +1,52 @@
 PODS:
+  - Alamofire (4.8.2)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
   - IGListKit/Default (3.4.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.4.0)
+  - IQKeyboardManagerSwift (6.2.1)
+  - KeychainAccess (3.2.0)
+  - MBProgressHUD (1.1.0)
+  - PromiseKit/Alamofire (6.8.4):
+    - Alamofire (~> 4.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/CorePromise (6.8.4)
+  - SwiftProtobuf (1.5.0)
+  - SwipeCellKit (2.6.0)
 
 DEPENDENCIES:
+  - Alamofire
   - IGListKit
+  - IQKeyboardManagerSwift
+  - KeychainAccess
+  - MBProgressHUD
+  - PromiseKit/Alamofire
+  - PromiseKit/CorePromise
+  - SwiftProtobuf
+  - SwipeCellKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - IGListKit
+    - IQKeyboardManagerSwift
+    - KeychainAccess
+    - MBProgressHUD
+    - PromiseKit
+    - SwiftProtobuf
+    - SwipeCellKit
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
+  IQKeyboardManagerSwift: 0f0ae8935360b4003e6ea1ac7c19898f01e2f7c7
+  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
+  SwiftProtobuf: 241400280f912735c1e1b9fe675fdd2c6c4d42e2
+  SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
 
-PODFILE CHECKSUM: 81f6bca730917a9ed74dd5dd745858ccefc48faa
+PODFILE CHECKSUM: fb19fe505cec5882565dbe941abe96f1cb5f9e43
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.0.beta.3

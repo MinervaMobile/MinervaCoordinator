@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Minerva"
-  s.version      = "1.2.4"
+  s.version      = "1.2.5"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary      = "This framework is a lightweight wrapper around IGListKit."
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
 
-  s.default_subspecs = 'Core', 'Cells'
+  s.default_subspecs = 'Core', 'Cells', 'Swipeable'
 
   s.requires_arc               = true
   s.swift_versions             = '5.0'
@@ -23,8 +23,10 @@ Pod::Spec.new do |s|
 
   s.subspec 'Cells' do |ss|
     ss.source_files = 'Source/Cells/*.swift'
-    ss.dependency 'IGListKit', '~> 3.4.0'
+
     ss.dependency 'Minerva/Core'
+
+    ss.dependency 'IGListKit', '~> 3.4.0'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
@@ -35,6 +37,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'Source/Core/*.swift'
+
     ss.dependency 'IGListKit', '~> 3.4.0'
 
     ss.ios.deployment_target      = '11.0'
@@ -42,5 +45,18 @@ Pod::Spec.new do |s|
 
     ss.tvos.deployment_target     = '11.0'
     ss.tvos.frameworks            = 'Foundation', 'UIKit'
+  end
+
+  s.subspec 'Swipeable' do |ss|
+    ss.source_files = 'Source/Swipeable/*.swift'
+
+    ss.dependency 'Minerva/Core'
+    ss.dependency 'Minerva/Cells'
+
+    ss.dependency 'IGListKit', '~> 3.4.0'
+    ss.dependency 'SwipeCellKit', '~> 2.6.0'
+
+    ss.ios.deployment_target      = '11.0'
+    ss.ios.frameworks             = 'Foundation', 'UIKit'
   end
 end

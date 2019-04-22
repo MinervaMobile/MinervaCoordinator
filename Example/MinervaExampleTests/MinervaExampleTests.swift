@@ -2,7 +2,6 @@
 //  MinervaExampleTests.swift
 //  MinervaExampleTests
 //
-//  Created by Joe Laws on 3/30/19.
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 

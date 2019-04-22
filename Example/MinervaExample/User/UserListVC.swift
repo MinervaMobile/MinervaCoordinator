@@ -1,0 +1,131 @@
+//
+//  UserListVC.swift
+//  MinervaExample
+//
+//  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+import Minerva
+import PromiseKit
+
+protocol UserListVCDelegate: class {
+  func userListVC(_ userListVC: UserListVC, selected action: UserListVC.Action)
+}
+
+final class UserListVC: UIViewController {
+
+  enum Action {
+    case createUser
+  }
+
+  weak var delegate: UserListVCDelegate?
+
+  private let listController = ListController()
+
+  private let collectionView: UICollectionView = {
+    let layout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.contentInsetAdjustmentBehavior = .never
+    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+    collectionView.backgroundColor = .white
+    return collectionView
+  }()
+
+  private let addButton: UIButton = {
+    let addButton = UIButton(frame: .zero)
+    addButton.setImage(Asset.Add.image.withRenderingMode(.alwaysTemplate), for: .normal)
+    addButton.tintColor = .selectable
+    addButton.sizeToFit()
+    return addButton
+  }()
+
+  private let dataSource: UserListDataSource
+
+  // MARK: - Lifecycle
+
+  required init(dataSource: UserListDataSource) {
+    self.dataSource = dataSource
+    super.init(nibName: nil, bundle: nil)
+    listController.viewController = self
+    listController.collectionView = collectionView
+    self.title = "Users"
+  }
+
+  @available(*, unavailable)
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("Unsupported")
+  }
+
+  // MARK: - UIViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupViewsAndConstraints()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.isNavigationBarHidden = false
+    navigationController?.navigationBar.prefersLargeTitles = true
+    tabBarHidden = false
+    loadModels(animated: true, completion: nil)
+  }
+
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    let context = collectionView.collectionViewLayout.invalidationContext(forBoundsChange: .zero)
+    coordinator.animate(alongsideTransition: { [weak self] _ in
+      self?.collectionView.collectionViewLayout.invalidateLayout(with: context)
+    })
+  }
+
+  // MARK: - Public
+
+  func updateModels() {
+    loadModels(animated: true, completion: nil)
+  }
+
+  // MARK: - Private
+
+  private func loadModels(animated: Bool, completion: ((Bool) -> Void)?) {
+    LoadingHUD.show(in: view)
+    dataSource.loadSections().done { [weak self] sections in
+      guard let strongSelf = self else { return }
+      strongSelf.listController.update(with: sections, animated: animated, completion: completion)
+    }.catch { [weak self] error in
+      UIAlertController.display(
+        error,
+        defaultTitle: "Failed to load your data",
+        parentVC: self
+      )
+    }.finally { [weak self] in
+      LoadingHUD.hide(from: self?.view)
+    }
+  }
+
+  private func setupViewsAndConstraints() {
+    view.backgroundColor = .white
+    view.addSubview(collectionView)
+    view.addSubview(addButton)
+
+    collectionView.contentInset.bottom = addButton.frame.height + tabBarHeight
+
+    anchorViewToTopSafeAreaLayoutGuide(collectionView)
+    view.shouldTranslateAutoresizingMaskIntoConstraints(false)
+
+    addButton.addTarget(
+      self,
+      action: #selector(addButtonPressed),
+      for: .touchUpInside)
+    addButton.equalHorizontalCenter(with: view)
+    addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+  }
+
+  @objc
+  private func addButtonPressed() {
+    delegate?.userListVC(self, selected: .createUser)
+  }
+}
