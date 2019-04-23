@@ -14,7 +14,6 @@ import IGListKit
 public protocol ListCellModel: class, ListDiffable, CustomStringConvertible {
   var cell: ListCollectionViewCell? { get set }
 
-  var usesNib: Bool { get }
   var reorderable: Bool { get }
   var identifier: String { get }
   var cellClassName: String { get }

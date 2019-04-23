@@ -86,10 +86,13 @@ class ActionSheetVC: UIViewController {
   // MARK: - Public
 
   func reloadCollectionView() {
-    guard let sizeConstraints = listController.sizeConstraints else {
-      assertionFailure("Size Constraints should exist for collection")
-      return
-    }
+    let sizeConstraints = ListSizeConstraints(
+      containerSize: collectionView.bounds.size,
+      inset: UIEdgeInsets.zero,
+      minimumLineSpacing: 0,
+      minimumInteritemSpacing: 0,
+      distribution: .entireRow
+    )
     let cellModels = dataSource.loadCellModels()
     let collectionHeight = cellModels.reduce(0, { $0 + ($1.size(with: sizeConstraints)?.height ?? 0) })
     containerHeightConstraint.constant = collectionHeight + view.safeAreaInsets.bottom
@@ -124,10 +127,13 @@ class ActionSheetVC: UIViewController {
   }
 
   private func keyboard(willShow: Bool, notification: NSNotification) {
-    guard let sizeConstraints = listController.sizeConstraints else {
-      assertionFailure("Size Constraints should exist for collection")
-      return
-    }
+    let sizeConstraints = ListSizeConstraints(
+      containerSize: collectionView.bounds.size,
+      inset: UIEdgeInsets.zero,
+      minimumLineSpacing: 0,
+      minimumInteritemSpacing: 0,
+      distribution: .entireRow
+    )
     let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
     let keyboardHeight = willShow ? keyboardSize?.height ?? 0: 0
     let cellModels = listController.cellModels

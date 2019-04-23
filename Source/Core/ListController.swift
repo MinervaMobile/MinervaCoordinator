@@ -85,41 +85,14 @@ public final class ListController: NSObject {
 
   // MARK: - Public
 
-  public var cellModels: [ListCellModel] {
-    return self.listSections.flatMap { $0.cellModels }
-  }
-
-  public var isReorderable: Bool {
-    return self.reorderActive
-  }
-
-  public var centerCellModel: ListCellModel? {
-    guard let indexPath = self.adapter.collectionView?.centerCellIndexPath,
-      let cellModel = self.cellModel(at: indexPath) else {
-        return nil
+  public func reload(_ cellModels: [ListCellModel]) {
+    guard Thread.isMainThread else {
+      DispatchQueue.main.async {
+        self.adapter.reloadObjects(cellModels)
+      }
+      return
     }
-    return cellModel
-  }
-
-  public var sizeConstraints: ListSizeConstraints? {
-    guard let collectionView = self.adapter.collectionView else {
-      return nil
-    }
-    return ListSizeConstraints(
-      containerSize: collectionView.bounds.size,
-      inset: UIEdgeInsets.zero,
-      minimumLineSpacing: 0,
-      minimumInteritemSpacing: 0,
-      distribution: .entireRow
-    )
-  }
-
-  public func willDisplay() {
-    self.displayVisibleCells()
-  }
-
-  public func didEndDisplaying() {
-    self.hideVisibleCells()
+    self.adapter.reloadObjects(cellModels)
   }
 
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
@@ -147,6 +120,18 @@ public final class ListController: NSObject {
     self.adapter.performUpdates(animated: animated, completion: completion)
   }
 
+  public func willDisplay() {
+    self.displayVisibleCells()
+  }
+
+  public func didEndDisplaying() {
+    self.hideVisibleCells()
+  }
+
+  public var isReorderable: Bool {
+    return self.reorderActive
+  }
+
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
     guard let section = self.listSections.firstIndex(where: {
       $0.cellModels.contains(where: { cellModel.isEqual(to: $0) })
@@ -157,6 +142,18 @@ public final class ListController: NSObject {
       return nil
     }
     return IndexPath(item: item, section: section)
+  }
+
+  public var centerCellModel: ListCellModel? {
+    guard let indexPath = self.adapter.collectionView?.centerCellIndexPath,
+      let cellModel = self.cellModel(at: indexPath) else {
+        return nil
+    }
+    return cellModel
+  }
+
+  public var cellModels: [ListCellModel] {
+    return self.listSections.flatMap { $0.cellModels }
   }
 
   public func cellModel(at indexPath: IndexPath) -> ListCellModel? {
@@ -181,10 +178,7 @@ public final class ListController: NSObject {
     return cell
   }
 
-  public func removeCellModel(
-    at indexPath: IndexPath,
-    completion: Completion?
-  ) {
+  public func removeCellModel(at indexPath: IndexPath, completion: Completion?) {
     guard self.listSections.at(indexPath.section)?.cellModels.at(indexPath.item) != nil else {
       assertionFailure("Could not find model at indexPath")
       return
@@ -259,30 +253,6 @@ public final class ListController: NSObject {
       return
     }
     self.scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
-  }
-
-  public func reload(_ cellModels: [ListCellModel]) {
-    guard Thread.isMainThread else {
-      DispatchQueue.main.async {
-        self.adapter.reloadObjects(cellModels)
-      }
-      return
-    }
-    self.adapter.reloadObjects(cellModels)
-  }
-
-  public func largestCellSize(for cellModels: [ListCellModel]) -> CGSize {
-    guard let sizeConstraints = self.sizeConstraints else {
-      assertionFailure("List Controller should have size Contstrains")
-      return .zero
-    }
-    let height = cellModels.reduce(0, {
-      max($0, ($1.size(constrainedTo: sizeConstraints.containerSize)?.height ?? 0))
-    })
-    let width = cellModels.reduce(0, {
-      max($0, ($1.size(constrainedTo: sizeConstraints.containerSize)?.width ?? 0))
-    })
-    return CGSize(width: width, height: height)
   }
 
   // MARK: - Helpers

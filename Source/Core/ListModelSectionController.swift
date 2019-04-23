@@ -67,7 +67,7 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
     let sizeConstraints = ListSizeConstraints(
       containerSize: containerSize,
       inset: self.inset,
-      minimumLineSpacing: self.minimumInteritemSpacing,
+      minimumLineSpacing: self.minimumLineSpacing,
       minimumInteritemSpacing: self.minimumInteritemSpacing,
       distribution: section.distribution
     )
@@ -105,29 +105,19 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    let cell: ListCollectionViewCell?
-    if cellModel.usesNib {
-      let cellModelType = type(of: cellModel)
-      let bundle = Bundle(for: cellModelType)
-      let reuseIdentifier = cellModel.cellClassName
-      cell = collectionContext.dequeueReusableCell(
-        withNibName: reuseIdentifier,
-        bundle: bundle,
-        for: self,
-        at: index) as? ListCollectionViewCell
-    } else if let cellType = self.cellType(for: cellModel) {
-      cell = collectionContext.dequeueReusableCell(
-        of: cellType,
-        for: self,
-        at: index) as? ListCollectionViewCell
-    } else {
-      cell = nil
-    }
-    guard let dequeuedCell = cell else {
-      assertionFailure("Failed to get the cell for \(cellModel)")
+    guard let cellType = cellType(for: cellModel) else {
+      assertionFailure("Failed to determine the cell class for \(cellModel)")
       return BaseListCell()
     }
-    return dequeuedCell
+    guard let cell = collectionContext.dequeueReusableCell(
+      of: cellType,
+      for: self,
+      at: index
+    ) as? ListCollectionViewCell else {
+      assertionFailure("Failed to load the reuseable cell for \(cellType)")
+      return BaseListCell()
+    }
+    return cell
   }
 
   private func supplementaryView(
@@ -139,27 +129,20 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    let cell: ListCollectionViewCell?
-    if cellModel.usesNib {
-      let cellModelType = type(of: cellModel)
-      let bundle = Bundle(for: cellModelType)
-      let reuseIdentifier = cellModel.cellClassName
-      cell = collectionContext.dequeueReusableSupplementaryView(
-        ofKind: elementKind,
-        for: self,
-        nibName: reuseIdentifier,
-        bundle: bundle,
-        at: index) as? ListCollectionViewCell
-    } else if let cellType = self.cellType(for: cellModel) {
-      cell = collectionContext.dequeueReusableSupplementaryView(
-        ofKind: elementKind,
-        for: self,
-        class: cellType,
-        at: index) as? ListCollectionViewCell
-    } else {
-      cell = nil
+    guard let cellType = cellType(for: cellModel) else {
+      assertionFailure("Failed to determine the cell class for \(cellModel)")
+      return BaseListCell()
     }
-    return cell ?? BaseListCell()
+    guard let cell = collectionContext.dequeueReusableSupplementaryView(
+      ofKind: elementKind,
+      for: self,
+      class: cellType,
+      at: index
+    ) as? ListCollectionViewCell else {
+      assertionFailure("Failed to load the reuseable cell for \(cellType)")
+      return BaseListCell()
+    }
+    return cell
   }
 
   private func determineSize(for viewModel: Any, at index: Int) -> CGSize {
