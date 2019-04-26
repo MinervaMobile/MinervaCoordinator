@@ -19,9 +19,6 @@ open class BaseListCellModel: NSObject, ListCellModel {
   // MARK: - ListCellModel
   public weak var cell: ListCollectionViewCell?
 
-  open var usesNib: Bool {
-    return false
-  }
   open var reorderable: Bool {
     return false
   }
@@ -33,17 +30,21 @@ open class BaseListCellModel: NSObject, ListCellModel {
     }
     return identifier
   }
-  open var cellClassName: String {
+  open var cellType: ListCollectionViewCell.Type {
     let modelType = type(of: self)
     let className = String(describing: modelType).replacingOccurrences(of: "Model", with: "")
-    if NSClassFromString(className) is ListCollectionViewCell.Type {
-      return className
+    if let cellType = NSClassFromString(className) as? ListCollectionViewCell.Type {
+      return cellType
     }
     let bundle = Bundle(for: modelType)
     let bundleName = bundle.infoDictionary?["CFBundleName"] as? String ?? ""
     let fullClassName = "\(bundleName).\(className)"
     let cleanedClassName = fullClassName.replacingOccurrences(of: " ", with: "_")
-    return cleanedClassName
+    if let cellType = NSClassFromString(cleanedClassName) as? ListCollectionViewCell.Type {
+      return cellType
+    }
+    assertionFailure("Unable to determine the cell type")
+    return BaseListCell.self
   }
 
   open func isEqual(to model: ListCellModel) -> Bool {

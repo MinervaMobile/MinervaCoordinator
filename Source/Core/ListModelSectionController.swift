@@ -105,10 +105,7 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    guard let cellType = cellType(for: cellModel) else {
-      assertionFailure("Failed to determine the cell class for \(cellModel)")
-      return BaseListCell()
-    }
+    let cellType = cellModel.cellType
     guard let cell = collectionContext.dequeueReusableCell(
       of: cellType,
       for: self,
@@ -129,10 +126,7 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    guard let cellType = cellType(for: cellModel) else {
-      assertionFailure("Failed to determine the cell class for \(cellModel)")
-      return BaseListCell()
-    }
+    let cellType = cellModel.cellType
     guard let cell = collectionContext.dequeueReusableSupplementaryView(
       ofKind: elementKind,
       for: self,
@@ -169,10 +163,6 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
     }
     assertionFailure("The cell or section controller delegate should provide a size.")
     return super.sizeForItem(at: index)
-  }
-
-  private func cellType(for model: ListCellModel) -> ListCollectionViewCell.Type? {
-    return NSClassFromString(model.cellClassName) as? ListCollectionViewCell.Type
   }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-open class BaseListCell: UICollectionViewCell, ListCell {
+open class BaseListCell: ListCollectionViewCell {
 
   open private(set) var cellModel: ListCellModel?
 
