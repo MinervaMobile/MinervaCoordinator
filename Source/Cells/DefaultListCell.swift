@@ -61,6 +61,7 @@ open class DefaultListCellModel: BaseListCellModel {
 
 open class DefaultListCell: BaseListBindableCell {
 
+  private(set) public var containerCenterXConstraint: NSLayoutConstraint?
   private(set) public var containerTopConstraint: NSLayoutConstraint?
   private(set) public var containerBottomConstraint: NSLayoutConstraint?
   private(set) public var containerLeadingConstraint: NSLayoutConstraint?
@@ -213,7 +214,8 @@ extension DefaultListCell {
     containerTrailingConstraint?.priority = nonRequiredPriority
     containerTrailingConstraint?.isActive = true
 
-    containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+    containerCenterXConstraint = containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+    containerCenterXConstraint?.isActive = true
 
     maxContainerWidthConstraint = containerView.widthAnchor.constraint(
       lessThanOrEqualToConstant: DefaultListCellModel.defaultMaxCellWidth
