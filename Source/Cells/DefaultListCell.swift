@@ -106,8 +106,16 @@ open class DefaultListCell: BaseListBindableCell {
     }
     set {
       bottomSeparatorLeadingConstraint?.isActive = false
-      let newLeadingAnchor = newValue ? containerView.leadingAnchor : contentView.leadingAnchor
-      bottomSeparatorLeadingConstraint = bottomSeparatorView.leadingAnchor.constraint(equalTo: newLeadingAnchor)
+      if newValue {
+        bottomSeparatorLeadingConstraint = bottomSeparatorView.leadingAnchor.constraint(
+          equalTo: contentView.leadingAnchor,
+          constant: DefaultListCellModel.defaultCellInset
+        )
+      } else {
+        bottomSeparatorLeadingConstraint = bottomSeparatorView.leadingAnchor.constraint(
+          equalTo: contentView.leadingAnchor
+        )
+      }
       bottomSeparatorLeadingConstraint?.isActive = true
     }
   }
@@ -118,8 +126,16 @@ open class DefaultListCell: BaseListBindableCell {
     }
     set {
       bottomSeparatorTrailingConstraint?.isActive = false
-      let newLeadingAnchor = newValue ? containerView.trailingAnchor : contentView.trailingAnchor
-      bottomSeparatorTrailingConstraint = bottomSeparatorView.trailingAnchor.constraint(equalTo: newLeadingAnchor)
+      if newValue {
+        bottomSeparatorTrailingConstraint = bottomSeparatorView.trailingAnchor.constraint(
+          equalTo: contentView.trailingAnchor,
+          constant: -DefaultListCellModel.defaultCellInset
+        )
+      } else {
+        bottomSeparatorTrailingConstraint = bottomSeparatorView.trailingAnchor.constraint(
+          equalTo: contentView.trailingAnchor
+        )
+      }
       bottomSeparatorTrailingConstraint?.isActive = true
     }
   }
@@ -233,11 +249,7 @@ extension DefaultListCell {
     topSeparatorTrailingConstraint = topSeparatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
     topSeparatorTrailingConstraint?.isActive = true
 
-    bottomSeparatorLeadingConstraint = bottomSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-    bottomSeparatorLeadingConstraint?.isActive = true
-    bottomSeparatorTrailingConstraint = bottomSeparatorView.trailingAnchor.constraint(
-      equalTo: contentView.trailingAnchor
-    )
-    bottomSeparatorTrailingConstraint?.isActive = true
+    bottomSeparatorLeftInset = false
+    bottomSeparatorRightInset = false
   }
 }
