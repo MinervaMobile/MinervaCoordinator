@@ -72,6 +72,7 @@ open class DefaultListCell: BaseListBindableCell {
   private(set) public var topSeparatorTrailingConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorHeightConstraint: NSLayoutConstraint?
 
+  private var requiredBottomSeparatorLeadingConstraint: NSLayoutConstraint?
   private(set) public var bottomSeparatorLeadingConstraint: NSLayoutConstraint?
   private(set) public var bottomSeparatorTrailingConstraint: NSLayoutConstraint?
   private(set) public var bottomSeparatorHeightConstraint: NSLayoutConstraint?
@@ -116,6 +117,7 @@ open class DefaultListCell: BaseListBindableCell {
           equalTo: contentView.leadingAnchor
         )
       }
+      bottomSeparatorLeadingConstraint?.priority = .notRequired
       bottomSeparatorLeadingConstraint?.isActive = true
     }
   }
@@ -170,6 +172,12 @@ open class DefaultListCell: BaseListBindableCell {
     contentView.addSubview(topSeparatorView)
     contentView.addSubview(bottomSeparatorView)
     setupConstraints()
+  }
+
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+    // Remove this hack when iPad layout is fixed for cell indentation
+    requiredBottomSeparatorLeadingConstraint?.isActive = frame.width > 800 ? true : false
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -243,6 +251,9 @@ extension DefaultListCell {
     bottomSeparatorHeightConstraint?.isActive = true
     containerBottomConstraint = bottomSeparatorView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
     containerBottomConstraint?.isActive = true
+
+    requiredBottomSeparatorLeadingConstraint
+      = bottomSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
 
     topSeparatorLeadingConstraint = topSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
     topSeparatorLeadingConstraint?.isActive = true
