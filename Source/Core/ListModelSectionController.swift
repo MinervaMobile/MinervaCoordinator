@@ -214,6 +214,24 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       model.selected(at: indexPath)
     }
   }
+  public func sectionController(
+    _ sectionController: ListBindingSectionController<ListDiffable>,
+    didDeselectItemAt index: Int,
+    viewModel: Any
+  ) {
+  }
+  public func sectionController(
+    _ sectionController: ListBindingSectionController<ListDiffable>,
+    didHighlightItemAt index: Int,
+    viewModel: Any
+  ) {
+  }
+  public func sectionController(
+    _ sectionController: ListBindingSectionController<ListDiffable>,
+    didUnhighlightItemAt index: Int,
+    viewModel: Any
+  ) {
+  }
 }
 
 // MARK: - ListDisplayDelegate
