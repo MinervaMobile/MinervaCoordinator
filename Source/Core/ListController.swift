@@ -103,9 +103,9 @@ public final class ListController: NSObject {
       return
     }
     #if DEBUG
-      let cellModels = listSections.flatMap { $0.cellModels }
+    for section in listSections {
       var identifiers = [String: ListCellModel]()
-      for cellModel in cellModels {
+      for cellModel in section.cellModels {
         let identifier = cellModel.identifier
         if identifier.isEmpty {
           assertionFailure("Found a cell model an invalid ID \(identifier) - \(cellModel)")
@@ -115,6 +115,7 @@ public final class ListController: NSObject {
         }
         identifiers[identifier] = cellModel
       }
+    }
     #endif
     self.listSections = listSections
     self.adapter.performUpdates(animated: animated, completion: completion)
