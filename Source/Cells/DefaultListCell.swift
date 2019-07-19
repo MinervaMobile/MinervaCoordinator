@@ -261,7 +261,7 @@ extension DefaultListCell {
     containerCenterXConstraint?.isActive = true
 
     maxContainerWidthConstraint = containerView.widthAnchor.constraint(
-      lessThanOrEqualToConstant: 600
+      lessThanOrEqualToConstant: contentView.readableContentGuide.widthAnchor
     )
     maxContainerWidthConstraint?.isActive = true
 
