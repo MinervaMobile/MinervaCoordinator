@@ -142,12 +142,7 @@ open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell {
     topMargin = model.topMargin
     bottomMargin = model.bottomMargin
 
-    if let maxCellWidth = model.maxCellWidth {
-      maxContainerWidthConstraint?.isActive = true
-      maxContainerWidthConstraint?.constant = maxCellWidth
-    } else {
-      maxContainerWidthConstraint?.isActive = false
-    }
+    maxContainerWidthConstraint?.isActive = model.constrainToReadablilityWidth
   }
 
   open func willDisplayCell() {
@@ -193,18 +188,20 @@ extension SwipeableCell {
     containerTopConstraint = containerView.topAnchor.constraint(equalTo: topSeparatorView.bottomAnchor)
     containerTopConstraint?.isActive = true
 
-    containerLeadingConstraint = containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+    containerLeadingConstraint
+      = containerView.leadingAnchor.constraint(equalTo: contentView.readableContentGuide.leadingAnchor)
     containerLeadingConstraint?.priority = nonRequiredPriority
     containerLeadingConstraint?.isActive = true
 
-    containerTrailingConstraint = containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+    containerTrailingConstraint
+      = containerView.trailingAnchor.constraint(equalTo: contentView.readableContentGuide.trailingAnchor)
     containerTrailingConstraint?.priority = nonRequiredPriority
     containerTrailingConstraint?.isActive = true
 
     containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
 
     maxContainerWidthConstraint =
-      containerView.widthAnchor.constraint(lessThanOrEqualToConstant: DefaultListCellModel.defaultMaxCellWidth)
+      containerView.widthAnchor.constraint(lessThanOrEqualTo: contentView.readableContentGuide.widthAnchor)
     maxContainerWidthConstraint?.isActive = true
 
     bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true

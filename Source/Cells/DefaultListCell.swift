@@ -10,8 +10,7 @@ import UIKit
 
 open class DefaultListCellModel: BaseListCellModel {
 
-  public static let defaultMaxCellWidth: CGFloat = 600
-  public static let defaultCellInset: CGFloat = 20
+  public static let defaultCellInset: CGFloat = 10
 
   public var topSeparatorColor: UIColor?
   public var topSeparatorLeftInset = false
@@ -24,9 +23,10 @@ open class DefaultListCellModel: BaseListCellModel {
   public var bottomSeparatorHeight: CGFloat = 1
 
   public var backgroundColor: UIColor?
-  public var maxCellWidth: CGFloat? = DefaultListCellModel.defaultMaxCellWidth
   public var topMargin: CGFloat = 0
   public var bottomMargin: CGFloat = 0
+  public var constrainToReadablilityWidth = true
+
   public var leftMargin: CGFloat = DefaultListCellModel.defaultCellInset
   public var rightMargin: CGFloat = DefaultListCellModel.defaultCellInset
 
@@ -50,7 +50,7 @@ open class DefaultListCellModel: BaseListCellModel {
       && bottomSeparatorRightInset == model.bottomSeparatorRightInset
       && bottomSeparatorHeight == model.bottomSeparatorHeight
       && backgroundColor == model.backgroundColor
-      && maxCellWidth == model.maxCellWidth
+      && constrainToReadablilityWidth == model.constrainToReadablilityWidth
       && topMargin == model.topMargin
       && bottomMargin == model.bottomMargin
       && leftMargin == model.leftMargin
@@ -187,6 +187,9 @@ open class DefaultListCell: BaseListBindableCell {
   open override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.cellModel as? DefaultListCellModel else { return }
+    maxContainerWidthConstraint?.isActive = model.constrainToReadablilityWidth
+    constraintContainerViewHorizontally(toReadabilityWidth: model.constrainToReadablilityWidth)
+
     topSeparatorView.backgroundColor = model.topSeparatorColor ?? model.backgroundColor
     topSeparatorLeftInset = model.topSeparatorLeftInset
     topSeparatorRightInset = model.topSeparatorRightInset
@@ -203,17 +206,39 @@ open class DefaultListCell: BaseListBindableCell {
     topMargin = model.topMargin
     bottomMargin = model.bottomMargin
 
-    if let maxCellWidth = model.maxCellWidth {
-      maxContainerWidthConstraint?.isActive = true
-      maxContainerWidthConstraint?.constant = maxCellWidth
-    } else {
-      maxContainerWidthConstraint?.isActive = false
-    }
   }
 }
 
 // MARK: - Constraints
 extension DefaultListCell {
+  private func constraintContainerViewHorizontally(toReadabilityWidth constrainToReadablilityWidth: Bool) {
+    if constrainToReadablilityWidth {
+      containerLeadingConstraint?.isActive = false
+      containerLeadingConstraint
+        = containerView.leadingAnchor.constraint(equalTo: contentView.readableContentGuide.leadingAnchor)
+      containerLeadingConstraint?.priority = UILayoutPriority.notRequired
+      containerLeadingConstraint?.isActive = true
+
+      containerTrailingConstraint?.isActive = false
+      containerTrailingConstraint
+        = containerView.trailingAnchor.constraint(equalTo: contentView.readableContentGuide.trailingAnchor)
+      containerTrailingConstraint?.priority = UILayoutPriority.notRequired
+      containerTrailingConstraint?.isActive = true
+    } else {
+      containerLeadingConstraint?.isActive = false
+      containerLeadingConstraint
+        = containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+      containerLeadingConstraint?.priority = UILayoutPriority.notRequired
+      containerLeadingConstraint?.isActive = true
+
+      containerTrailingConstraint?.isActive = false
+      containerTrailingConstraint
+        = containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+      containerTrailingConstraint?.priority = UILayoutPriority.notRequired
+      containerTrailingConstraint?.isActive = true
+    }
+  }
+
   private func setupConstraints() {
     let nonRequiredPriority = UILayoutPriority.notRequired
 
@@ -230,19 +255,13 @@ extension DefaultListCell {
     containerTopConstraint = containerView.topAnchor.constraint(equalTo: topSeparatorView.bottomAnchor)
     containerTopConstraint?.isActive = true
 
-    containerLeadingConstraint = containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-    containerLeadingConstraint?.priority = nonRequiredPriority
-    containerLeadingConstraint?.isActive = true
-
-    containerTrailingConstraint = containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-    containerTrailingConstraint?.priority = nonRequiredPriority
-    containerTrailingConstraint?.isActive = true
+    constraintContainerViewHorizontally(toReadabilityWidth: true)
 
     containerCenterXConstraint = containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
     containerCenterXConstraint?.isActive = true
 
     maxContainerWidthConstraint = containerView.widthAnchor.constraint(
-      lessThanOrEqualToConstant: DefaultListCellModel.defaultMaxCellWidth
+      lessThanOrEqualTo: contentView.readableContentGuide.widthAnchor
     )
     maxContainerWidthConstraint?.isActive = true
 
