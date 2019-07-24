@@ -31,13 +31,11 @@ extension ListCellModel {
         - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
       let maxSize = CGSize(width: equalCellWidth, height: sizeConstraints.containerSize.height)
       guard let cellSize = size(constrainedTo: maxSize) else {
-        assertionFailure("ListCellModel: \(self) should implement size")
         return nil
       }
       return CGSize(width: equalCellWidth, height: cellSize.height)
     case .entireRow:
       guard let cellSize = size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets) else {
-        assertionFailure("ListCellModel: \(self) should implement size")
         return nil
       }
       return CGSize(width: rowWidth, height: cellSize.height)
