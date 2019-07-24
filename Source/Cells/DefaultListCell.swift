@@ -240,8 +240,6 @@ extension DefaultListCell {
   }
 
   private func setupConstraints() {
-    let nonRequiredPriority = UILayoutPriority.notRequired
-
     topSeparatorView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     topSeparatorHeightConstraint = topSeparatorView.heightAnchor.constraint(equalToConstant: 1)
     topSeparatorHeightConstraint?.isActive = true
