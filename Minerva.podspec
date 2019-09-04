@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Minerva"
-  s.version      = "1.4.8"
+  s.version      = "1.4.9"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary      = "This framework is a lightweight wrapper around IGListKit."
@@ -10,16 +10,13 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
 
-  s.default_subspecs = 'Core', 'Cells', 'Swipeable'
+  s.default_subspecs = 'Core', 'Cells', 'Navigation', 'Swipeable'
 
   s.requires_arc               = true
   s.swift_versions             = '5.0'
 
   s.ios.deployment_target      = '11.0'
   s.ios.frameworks             = 'Foundation', 'UIKit'
-
-  s.tvos.deployment_target     = '11.0'
-  s.tvos.frameworks            = 'Foundation', 'UIKit'
 
   s.subspec 'Cells' do |ss|
     ss.source_files = 'Source/Cells/*.swift'
@@ -30,9 +27,6 @@ Pod::Spec.new do |s|
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
-
-    ss.tvos.deployment_target     = '11.0'
-    ss.tvos.frameworks            = 'Foundation', 'UIKit'
   end
 
   s.subspec 'Core' do |ss|
@@ -42,9 +36,13 @@ Pod::Spec.new do |s|
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
+  end
 
-    ss.tvos.deployment_target     = '11.0'
-    ss.tvos.frameworks            = 'Foundation', 'UIKit'
+  s.subspec 'Navigation' do |ss|
+    ss.source_files = 'Source/Navigation/*.swift'
+
+    ss.ios.deployment_target      = '11.0'
+    ss.ios.frameworks             = 'Foundation', 'UIKit'
   end
 
   s.subspec 'Swipeable' do |ss|
