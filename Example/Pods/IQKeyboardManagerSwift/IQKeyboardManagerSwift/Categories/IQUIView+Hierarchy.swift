@@ -146,9 +146,9 @@ UIView hierarchy category.
     /**
     Returns the superView of provided class type.
 
-
+     
      @param classType class type of the object which is to be search in above hierarchy and return
-
+     
      @param belowView view object in upper hierarchy where method should stop searching and return nil
 */
     @objc func superviewOfClassType(_ classType: UIView.Type, belowView: UIView? = nil) -> UIView? {
