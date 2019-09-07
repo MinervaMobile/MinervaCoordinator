@@ -49,7 +49,7 @@ extension CoordinatorNavigator {
     _ coordinator: BaseCoordinatorPresentable,
     animated: Bool,
     modalPresentationStyle: UIModalPresentationStyle = .fullScreen
-    ) {
+  ) {
     addChild(coordinator)
 
     let viewController = coordinator._viewController.navigationController ?? coordinator._viewController
@@ -59,9 +59,11 @@ extension CoordinatorNavigator {
     }
   }
 
-  public func dismiss(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {
+  public func dismiss(_ coordinator: BaseCoordinatorPresentable, animated: Bool, completion: (() -> Void)? = nil) {
     let viewController = coordinator._viewController.navigationController ?? coordinator._viewController
-    navigator.dismiss(viewController, animated: animated)
+    navigator.dismiss(viewController, animated: animated) { _ in
+      completion?()
+    }
   }
 
   public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {

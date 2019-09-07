@@ -8,16 +8,16 @@
 import Foundation
 import UIKit
 
-public protocol Navigator {
+public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigationControllerDelegate {
   typealias RemovalCompletion = (UIViewController) -> Void
 
-  func present(
-    _ viewController: UIViewController,
-    animated: Bool,
-    completion: RemovalCompletion?
-  )
+  func present(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
 
-  func dismiss(_ viewController: UIViewController, animated: Bool)
+  func dismiss(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
+
+  func push(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
+
+  func setViewControllers(_ viewControllers: [UIViewController], animated: Bool, completion: RemovalCompletion?)
 
   @discardableResult
   func popToRootViewController(animated: Bool) -> [UIViewController]?
@@ -27,14 +27,6 @@ public protocol Navigator {
 
   @discardableResult
   func popViewController(animated: Bool) -> UIViewController?
-
-  func push(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
-
-  func setViewControllers(
-    _ viewControllers: [UIViewController],
-    animated: Bool,
-    completion: RemovalCompletion?
-  )
 }
 
 extension Navigator {
@@ -43,23 +35,32 @@ extension Navigator {
     push(viewController, animated: animated, completion: nil)
   }
 
+  public func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+    setViewControllers(viewControllers, animated: animated, completion: nil)
+  }
+
   public func present(_ viewController: UIViewController, animated: Bool) {
     present(viewController, animated: animated, completion: nil)
   }
 
-  public func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-    setViewControllers(viewControllers, animated: animated, completion: nil)
+  public func dismiss(_ viewController: UIViewController, animated: Bool) {
+    dismiss(viewController, animated: animated, completion: nil)
   }
 }
 
 public final class BasicNavigator: NSObject {
+
   public let navigationController: UINavigationController
   private var completions = [UIViewController: RemovalCompletion]()
 
-  public init(navigationController: UINavigationController = UINavigationController()) {
+  public init(
+    navigationController: UINavigationController = UINavigationController(),
+    parent: Navigator? = nil
+  ) {
     self.navigationController = navigationController
     super.init()
-    self.navigationController.delegate = self
+    navigationController.delegate = self
+    navigationController.presentationController?.delegate = parent
   }
 
   // MARK: - Private
@@ -74,18 +75,14 @@ public final class BasicNavigator: NSObject {
 // MARK: - NavigatorType
 extension BasicNavigator: Navigator {
 
-  public func present(
-    _ viewController: UIViewController,
-    animated: Bool,
-    completion: RemovalCompletion?
-  ) {
+  public func present(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
     if let completion = completion {
       completions[viewController] = completion
     }
     navigationController.present(viewController, animated: animated, completion: nil)
   }
 
-  public func dismiss(_ viewController: UIViewController, animated: Bool) {
+  public func dismiss(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
     var viewControllers = [UIViewController]()
     func calculateDismissingViewControllers(from vc: UIViewController?) {
       guard let vc = vc else { return }
@@ -131,11 +128,7 @@ extension BasicNavigator: Navigator {
     return poppedController
   }
 
-  public func push(
-    _ viewController: UIViewController,
-    animated: Bool,
-    completion: RemovalCompletion?
-  ) {
+  public func push(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
     if let completion = completion {
       completions[viewController] = completion
     }
@@ -162,8 +155,18 @@ extension BasicNavigator: Navigator {
 
 }
 
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension BasicNavigator {
+
+  // Handles iOS 13 Swipe to dismiss of modals
+  public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    let dismissingViewController = presentationController.presentedViewController
+    runCompletion(for: dismissingViewController)
+  }
+}
+
 // MARK: - UINavigationControllerDelegate
-extension BasicNavigator: UINavigationControllerDelegate {
+extension BasicNavigator {
 
   // Handles when a user swipes to go back or taps the back button in the navigation bar.
   public func navigationController(
@@ -171,11 +174,14 @@ extension BasicNavigator: UINavigationControllerDelegate {
     didShow viewController: UIViewController,
     animated: Bool
   ) {
-    guard let poppingViewController = navigationController.transitionCoordinator?.viewController(forKey: .from),
-      !navigationController.viewControllers.contains(poppingViewController) else {
-        return
+    guard let poppingViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
+      return
+    }
+    // The view controller could be .from if it is being popped, or if another VC is being pushed. Check the
+    // navigation stack to see if it is no longer there (meaning a pop).
+    guard !navigationController.viewControllers.contains(poppingViewController) else {
+      return
     }
     runCompletion(for: poppingViewController)
   }
-
 }
