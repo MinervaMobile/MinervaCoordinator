@@ -158,10 +158,15 @@ extension BasicNavigator: Navigator {
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension BasicNavigator {
 
-  // Handles iOS 13 Swipe to dismiss of modals
+  // Handles iOS 13 Swipe to dismiss of modals.
   public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
     let dismissingViewController = presentationController.presentedViewController
     runCompletion(for: dismissingViewController)
+  }
+
+  // This allows explicitly setting the modalPresentationStyle from a view controller.
+  public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    return controller.presentedViewController.modalPresentationStyle
   }
 }
 
