@@ -68,7 +68,6 @@ final class WelcomeDataSource: CollectionViewControllerDataSource {
     paragraphCellModel.bottomMargin = 60
 
     let newAccountModel = BorderLabelCellModel(text: "SETUP NEW ACCOUNT", font: .subheadline, textColor: .white)
-    newAccountModel.maxCellWidth = 340
     newAccountModel.textAlignment = .center
     newAccountModel.buttonColor = .selectable
     newAccountModel.selectionAction = { [weak self] _, _ in

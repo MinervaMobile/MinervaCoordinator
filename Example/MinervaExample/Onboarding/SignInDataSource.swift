@@ -79,7 +79,6 @@ final class SignInDataSource: CollectionViewControllerDataSource {
       text: mode.buttonText,
       font: .subheadline,
       textColor: .white)
-    signInButtonModel.maxCellWidth = 320
     signInButtonModel.textAlignment = .center
     signInButtonModel.buttonColor = .selectable
     signInButtonModel.bottomMargin = 40
