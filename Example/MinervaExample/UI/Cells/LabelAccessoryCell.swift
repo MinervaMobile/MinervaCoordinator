@@ -65,7 +65,7 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
       && accessoryImageWidthHeight == model.accessoryImageWidthHeight
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let rowWidth = containerSize.width
     let textWidth = rowWidth - LabelAccessoryCellModel.accessoryImageMargin - accessoryImageWidthHeight
 
@@ -75,7 +75,7 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
 
     let height = contentHeight + separatorAndMarginHeight
 
-    return CGSize(width: rowWidth, height: height)
+    return .explicit(size: CGSize(width: rowWidth, height: height))
   }
 }
 

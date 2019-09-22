@@ -19,13 +19,13 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
 
   private let listController: ListController
   private let cellModels: [ListCellModel]
-  private let distribution: ListRowDistribution
+  private let distribution: ListSection.Distribution
   private let cellIdentifier: String
 
   init(
     identifier: String,
     cellModels: [ListCellModel],
-    distribution: ListRowDistribution,
+    distribution: ListSection.Distribution,
     listController: ListController
   ) {
     self.cellIdentifier = identifier
@@ -53,20 +53,26 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
       && listController === model.listController
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    let width = containerSize.width
-    let maxHeight = cellModels.reduce(1, { max($0, ($1.size(constrainedTo: containerSize)?.height ?? 1)) })
-    let height = maxHeight + separatorAndMarginHeight
-    return CGSize(width: width, height: height)
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    let height = cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
+      switch cellModel.size(constrainedTo: containerSize) {
+      case .explicit(let size):
+        return max(maxHeight, size.height)
+      case .autolayout, .relative:
+        fatalError("Unsupported")
+      }
+    }
+    let totalHeight = height + separatorAndMarginHeight
+    return .explicit(size: CGSize(width: containerSize.width, height: totalHeight))
   }
 
   // MARK: - Helpers
 
   private func createListSection() -> ListSection {
-    let section = ListSection(cellModels: cellModels, identifier: "\(cellIdentifier)-section")
-    section.minimumInteritemSpacing = itemSpacing
-    section.minimumLineSpacing = itemSpacing
-    section.distribution = distribution
+    var section = ListSection(cellModels: cellModels, identifier: "\(cellIdentifier)-section")
+    section.constraints.minimumInteritemSpacing = itemSpacing
+    section.constraints.minimumLineSpacing = itemSpacing
+    section.constraints.distribution = distribution
     return section
   }
 

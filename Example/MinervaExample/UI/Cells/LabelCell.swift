@@ -73,7 +73,7 @@ final class LabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListB
       && numberOfLines == model.numberOfLines
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
     let textHeight: CGFloat
     if let attributedString = attributedText {
@@ -83,7 +83,7 @@ final class LabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListB
     }
     let height = textHeight + separatorAndMarginHeight
 
-    return CGSize(width: width, height: height)
+    return .explicit(size: CGSize(width: width, height: height))
   }
 }
 

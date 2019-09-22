@@ -10,9 +10,11 @@ import UIKit
 
 import IGListKit
 
-open class BaseListCellModel: NSObject, ListCellModel {
+open class BaseListCellModel: ListCellModel {
 
-  open override var description: String {
+  public init() { }
+
+  open var description: String {
     return "[\(String(describing: type(of: self))) \(self.identifier)]"
   }
 
@@ -48,21 +50,9 @@ open class BaseListCellModel: NSObject, ListCellModel {
   }
 
   open func isEqual(to model: ListCellModel) -> Bool {
-    return self === model
+    return self.identifier == model.identifier
   }
-  open func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    return nil
-  }
-
-  // MARK: - ListDiffable
-  public final func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-    guard let model = object as? BaseListCellModel else {
-      return false
-    }
-    return isEqual(to: model)
-  }
-
-  public final func diffIdentifier() -> NSObjectProtocol {
-    return identifier as NSString
+  open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    return .autolayout
   }
 }

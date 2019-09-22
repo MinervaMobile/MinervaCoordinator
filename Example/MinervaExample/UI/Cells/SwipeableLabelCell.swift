@@ -87,7 +87,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
       && separatorColor == model.separatorColor
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
     let textWidth = width
       - SwipeableLabelCellModel.buttonWidthHeight
@@ -97,7 +97,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
     let dynamicHeight = text.height(constraintedToWidth: textWidth)
     let height = dynamicHeight + separatorAndMarginHeight
 
-    return CGSize(width: width, height: height)
+    return .explicit(size: CGSize(width: width, height: height))
   }
 }
 

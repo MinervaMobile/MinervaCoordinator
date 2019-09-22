@@ -22,7 +22,6 @@ open class BaseListCell: ListCollectionViewCell {
 
   open override func prepareForReuse() {
     super.prepareForReuse()
-    cellModel?.cell = nil
     cellModel = nil
     updatedCellModel()
   }
@@ -39,18 +38,14 @@ open class BaseListCell: ListCollectionViewCell {
   // MARK: - ListBindable
 
   public func bindViewModel(_ viewModel: Any) {
-    guard let cellModel = viewModel as? ListCellModel else {
+    guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Invalid view model \(viewModel)")
       return
     }
-    if let existingCell = self.cellModel?.cell, existingCell === self {
-      self.cellModel?.cell = nil
-    }
-    if let model = cellModel as? ListBindableCellModelWrapper {
+    if let model = wrapper.model as? ListBindableCellModelWrapper {
       model.willBind()
     }
-    self.cellModel = cellModel
-    self.cellModel?.cell = self
+    self.cellModel = wrapper.model
     updatedCellModel()
   }
 }

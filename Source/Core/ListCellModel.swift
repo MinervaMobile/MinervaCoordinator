@@ -10,40 +10,19 @@ import UIKit
 
 import IGListKit
 
-// MARK: - ListCellModel
-public protocol ListCellModel: class, ListDiffable, CustomStringConvertible {
-  var cell: ListCollectionViewCell? { get set }
+public enum ListCellSize {
+  case autolayout
+  case explicit(size: CGSize)
+  case relative
+}
 
+// MARK: - ListCellModel
+public protocol ListCellModel: CustomStringConvertible {
   var reorderable: Bool { get }
   var identifier: String { get }
   var cellType: ListCollectionViewCell.Type { get }
   func isEqual(to model: ListCellModel) -> Bool
-  func size(constrainedTo containerSize: CGSize) -> CGSize?
-}
-
-extension ListCellModel {
-  public func size(with sizeConstraints: ListSizeConstraints) -> CGSize? {
-    let sizeConstraintWidth = sizeConstraints.containerSizeAdjustedForInsets.width
-    let rowWidth = sizeConstraintWidth
-    switch sizeConstraints.distribution {
-    case .equally(let cellsInRow):
-      let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
-        - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
-      let maxSize = CGSize(width: equalCellWidth, height: sizeConstraints.containerSize.height)
-      guard let cellSize = size(constrainedTo: maxSize) else {
-        return nil
-      }
-      return CGSize(width: equalCellWidth, height: cellSize.height)
-    case .entireRow:
-      guard let cellSize = size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets) else {
-        return nil
-      }
-      return CGSize(width: rowWidth, height: cellSize.height)
-    case .proportionally:
-      let cellSize = size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets)
-      return cellSize
-    }
-  }
+  func size(constrainedTo containerSize: CGSize) -> ListCellSize
 }
 
 // MARK: - ListSelectableCellModel

@@ -144,16 +144,16 @@ final class CreateUserActionSheetDataSource: ActionSheetDataSource {
       startingRow: startingRow
     )
 
-    let pickerModel = PickerCellModel(identifier: "rolePickerCellModel", pickerDataComponents: [componentData])
-    pickerModel.height = 128
-    pickerModel.changedValue = { [weak self] _, _, row, _ -> Void in
+    let pickerModel = PickerCellModel(
+      identifier: "rolePickerCellModel", pickerDataComponents: [componentData]
+    ) { [weak self] _, _, row, _ -> Void in
       guard let role = UserRole(rawValue: row + 1) else {
         assertionFailure("Role should exist at row \(row)")
         return
       }
       self?.role = role
     }
-
+    pickerModel.height = 128
     return pickerModel
   }
 }

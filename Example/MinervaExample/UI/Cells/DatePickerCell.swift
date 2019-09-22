@@ -42,10 +42,10 @@ final class DatePickerCellModel: BaseListCellModel {
       && mode == model.mode
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
     let height: CGFloat = 220.0
-    return CGSize(width: width, height: height)
+    return .explicit(size: CGSize(width: width, height: height))
   }
 }
 

@@ -86,19 +86,12 @@ class ActionSheetVC: UIViewController {
   // MARK: - Public
 
   func reloadCollectionView() {
-    let sizeConstraints = ListSizeConstraints(
-      containerSize: collectionView.bounds.size,
-      inset: UIEdgeInsets.zero,
-      minimumLineSpacing: 0,
-      minimumInteritemSpacing: 0,
-      distribution: .entireRow
-    )
     let cellModels = dataSource.loadCellModels()
-    let collectionHeight = cellModels.reduce(0, { $0 + ($1.size(with: sizeConstraints)?.height ?? 0) })
+    let section = ListSection(cellModels: cellModels, identifier: "singleSection")
+    listController.update(with: [section], animated: false, completion: nil)
+    let collectionHeight = cellModels.reduce(0, { $0 + (listController.size(of: $1)?.height ?? 0) })
     containerHeightConstraint.constant = collectionHeight + view.safeAreaInsets.bottom
     collectionView.collectionViewLayout.invalidateLayout()
-    let section = ListSection(cellModels: cellModels, identifier: "singleSection")
-    listController.update(with: [section], animated: true, completion: nil)
   }
 
 
@@ -127,17 +120,10 @@ class ActionSheetVC: UIViewController {
   }
 
   private func keyboard(willShow: Bool, notification: NSNotification) {
-    let sizeConstraints = ListSizeConstraints(
-      containerSize: collectionView.bounds.size,
-      inset: UIEdgeInsets.zero,
-      minimumLineSpacing: 0,
-      minimumInteritemSpacing: 0,
-      distribution: .entireRow
-    )
     let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
     let keyboardHeight = willShow ? keyboardSize?.height ?? 0: 0
     let cellModels = listController.cellModels
-    let collectionHeight = cellModels.reduce(0, { $0 + ($1.size(with: sizeConstraints)?.height ?? 0) })
+    let collectionHeight = cellModels.reduce(0, { $0 + (listController.size(of: $1)?.height ?? 0) })
     containerHeightConstraint.constant = collectionHeight + view.safeAreaInsets.bottom + keyboardHeight
     view.layoutIfNeeded()
   }
