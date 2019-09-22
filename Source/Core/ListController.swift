@@ -54,12 +54,7 @@ public final class ListController: NSObject {
 
   private let adapter: ListAdapter
   private var noLongerDisplayingCells = false
-  private var reorderActive = false
-  private var longPressGesture: UILongPressGestureRecognizer?
-  private var dragStartLocation: CGPoint?
-
-  private(set) public var listSections: [ListSection]
-  public var emptyView: UIView?
+  private var listSectionWrappers: [ListSectionWrapper]
 
   public weak var viewController: UIViewController? {
     get { return self.adapter.viewController }
@@ -71,12 +66,16 @@ public final class ListController: NSObject {
     set { self.adapter.collectionView = newValue }
   }
 
+  public var listSections: [ListSection] {
+    return listSectionWrappers.map { $0.section }
+  }
+
   // MARK: - Initializers
 
   public override init() {
-    self.listSections = []
+    self.listSectionWrappers = []
     let updater = ListAdapterUpdater()
-    self.adapter = ListAdapter(updater: updater, viewController: nil)
+    self.adapter = ListAdapter(updater: updater, viewController: nil, workingRangeSize: 2)
     super.init()
     self.adapter.scrollViewDelegate = self
     self.adapter.dataSource = self
@@ -88,11 +87,11 @@ public final class ListController: NSObject {
   public func reload(_ cellModels: [ListCellModel]) {
     guard Thread.isMainThread else {
       DispatchQueue.main.async {
-        self.adapter.reloadObjects(cellModels)
+        self.reload(cellModels)
       }
       return
     }
-    self.adapter.reloadObjects(cellModels)
+    self.adapter.reloadObjects(cellModels.map(ListCellModelWrapper.init))
   }
 
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
@@ -103,21 +102,21 @@ public final class ListController: NSObject {
       return
     }
     #if DEBUG
-    for section in listSections {
-      var identifiers = [String: ListCellModel]()
-      for cellModel in section.cellModels {
-        let identifier = cellModel.identifier
-        if identifier.isEmpty {
-          assertionFailure("Found a cell model an invalid ID \(identifier) - \(cellModel)")
+      for section in listSections {
+        var identifiers = [String: ListCellModel]()
+        for cellModel in section.cellModels {
+          let identifier = cellModel.identifier
+          if identifier.isEmpty {
+            assertionFailure("Found a cell model an invalid ID \(cellModel)")
+          }
+          if let existingCellModel = identifiers[identifier] {
+            assertionFailure("Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)")
+          }
+          identifiers[identifier] = cellModel
         }
-        if let existingCellModel = identifiers[identifier] {
-          assertionFailure("Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)")
-        }
-        identifiers[identifier] = cellModel
       }
-    }
     #endif
-    self.listSections = listSections
+    self.listSectionWrappers = listSections.map(ListSectionWrapper.init)
     self.adapter.performUpdates(animated: animated, completion: completion)
   }
 
@@ -127,10 +126,6 @@ public final class ListController: NSObject {
 
   public func didEndDisplaying() {
     self.hideVisibleCells()
-  }
-
-  public var isReorderable: Bool {
-    return self.reorderActive
   }
 
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
@@ -185,7 +180,7 @@ public final class ListController: NSObject {
       return
     }
     var listSections = self.listSections
-    let section = listSections[indexPath.section]
+    var section = listSections[indexPath.section]
     var cellModels = section.cellModels
     cellModels.remove(at: indexPath.row)
 
@@ -212,7 +207,7 @@ public final class ListController: NSObject {
       return
     }
     guard let sectionController = self.adapter.sectionController(for: listSection) else {
-      assertionFailure("Section Controller should exist for \(cellModel)")
+      assertionFailure("Section Controller should exist for \(listSection) and \(cellModel)")
       return
     }
     guard let modelIndex = listSection.cellModels.firstIndex(where: { $0.identifier == cellModel.identifier }) else {
@@ -256,6 +251,40 @@ public final class ListController: NSObject {
     self.scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
+  public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
+    let sectionWrapper = self.listSectionWrappers.first(where: {
+      $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
+    })
+
+    let sectionController: ListModelSectionController
+    let sizeConstraints: ListSizeConstraints
+
+    // If this function is called before the adapter is showing the cellModel we still want to return the correct size.
+    // Reuse the existing ListModelSectionController if it is available in order to support caching of size information.
+    if let listSectionWrapper = sectionWrapper,
+      let controller = adapter.sectionController(for: listSectionWrapper) as? ListModelSectionController,
+      let constraints = controller.sizeConstraints {
+      sectionController = controller
+      sizeConstraints = constraints
+    } else if let constraints = constraints {
+      sectionController = ListModelSectionController()
+      sizeConstraints = constraints
+    } else {
+      assertionFailure("Need a section to properly size the cell")
+      return nil
+    }
+
+    let size = sectionController.size(for: cellModel, with: sizeConstraints)
+    switch size {
+    case .autolayout:
+      return sectionController.autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
+    case .explicit(let size):
+      return size
+    case .relative:
+      return nil
+    }
+  }
+
   // MARK: - Helpers
 
   private func displayVisibleCells() {
@@ -283,65 +312,25 @@ public final class ListController: NSObject {
     visibleCells.compactMap { $0 as? ListCell }.forEach { $0.didEndDisplayingCell() }
     noLongerDisplayingCells = true
   }
-
-  @objc
-  private func handleLongGesture(gesture: UILongPressGestureRecognizer) {
-    guard let collectionView = self.adapter.collectionView else {
-      return
-    }
-    switch gesture.state {
-    case .began:
-      let touchLocation = gesture.location(in: collectionView)
-      self.dragStartLocation = touchLocation
-      guard let selectedIndexPath = collectionView.indexPathForItem(at: touchLocation),
-        let cell = collectionView.cellForItem(at: selectedIndexPath) else {
-          break
-      }
-      self.dragStartLocation = cell.center
-      collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-    case .changed:
-      guard let dragStart = self.dragStartLocation else {
-        return
-      }
-      var position = gesture.location(in: gesture.view)
-      position.x = dragStart.x
-      collectionView.updateInteractiveMovementTargetPosition(position)
-    case .ended:
-      collectionView.endInteractiveMovement()
-    default:
-      collectionView.cancelInteractiveMovement()
-    }
-  }
 }
 
 // MARK: - ListAdapterDataSource
 extension ListController: ListAdapterDataSource {
   public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-    return self.listSections
+    return self.listSectionWrappers
   }
 
   public func listAdapter(
     _ listAdapter: ListAdapter,
     sectionControllerFor object: Any
   ) -> ListSectionController {
-    guard let listSection = object as? ListSection else {
-      assertionFailure("Unknown object type \(object)")
-      return ListSingleSectionController(
-        cellClass: UICollectionViewCell.self,
-        configureBlock: { _, _ in },
-        sizeBlock: { _, _ -> CGSize in
-          return CGSize.zero
-        })
-    }
     let sectionController = ListModelSectionController()
     sectionController.delegate = self
-    sectionController.minimumLineSpacing = listSection.minimumLineSpacing
-    sectionController.minimumInteritemSpacing = listSection.minimumInteritemSpacing
     return sectionController
   }
 
   public func emptyView(for listAdapter: ListAdapter) -> UIView? {
-    return self.emptyView
+    return nil
   }
 }
 
@@ -353,16 +342,17 @@ extension ListController: ListAdapterMoveDelegate {
     from previousObjects: [Any],
     to objects: [Any]
   ) {
-    guard let sections = objects as? [ListSection] else {
+    guard let sections = objects as? [ListSectionWrapper] else {
+      assertionFailure("Invalid object types \(objects)")
       return
     }
-    self.listSections = sections
+    self.listSectionWrappers = sections
   }
 }
 
 // MARK: - ListModelSectionControllerDelegate
 extension ListController: ListModelSectionControllerDelegate {
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListModelSectionController,
     sizeFor model: ListCellModel,
     at indexPath: IndexPath,
@@ -372,10 +362,11 @@ extension ListController: ListModelSectionControllerDelegate {
       self,
       sizeFor: model,
       at: indexPath,
-      constrainedTo: sizeConstraints)
+      constrainedTo: sizeConstraints
+    )
   }
 
-  public func sectionControllerCompletedMove(
+  internal func sectionControllerCompletedMove(
     _ sectionController: ListModelSectionController,
     for cellModel: ListCellModel,
     fromIndex: Int,
@@ -384,7 +375,7 @@ extension ListController: ListModelSectionControllerDelegate {
     reorderDelegate?.listControllerCompletedMove(self, for: cellModel, fromIndex: fromIndex, toIndex: toIndex)
   }
 
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListModelSectionController,
     initialLayoutAttributes attributes: ListViewLayoutAttributes,
     for section: ListSection,
@@ -393,7 +384,7 @@ extension ListController: ListModelSectionControllerDelegate {
     return animationDelegate?.listController(self, initialLayoutAttributes: attributes, for: section, at: indexPath)
   }
 
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListModelSectionController,
     finalLayoutAttributes attributes: ListViewLayoutAttributes,
     for section: ListSection,

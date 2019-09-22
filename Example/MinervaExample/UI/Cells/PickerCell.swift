@@ -58,16 +58,18 @@ final class PickerCellModel: BaseListCellModel {
   ) -> Void
   var height: CGFloat = 220
   fileprivate static let cellMargin: CGFloat = 15.0
-
-  var changedValue: Action?
   private let cellIdentifier: String
 
-  fileprivate let pickerDataComponents: [PickerDataComponent]
+  fileprivate let helper: PickerCellModelHelper
 
-  init(identifier: String, pickerDataComponents: [PickerDataComponent]) {
+  init(identifier: String, pickerDataComponents: [PickerDataComponent], changedValue: @escaping Action) {
     self.cellIdentifier = identifier
-    self.pickerDataComponents = pickerDataComponents
+    self.helper = PickerCellModelHelper(pickerDataComponents: pickerDataComponents)
     super.init()
+    self.helper.changedValue = { [weak self] pickerView, row, component in
+      guard let strongSelf = self else { return }
+      changedValue(strongSelf, pickerView, row, component)
+    }
   }
 
   // MARK: - BaseListCellModel
@@ -80,13 +82,8 @@ final class PickerCellModel: BaseListCellModel {
     guard let model = model as? PickerCellModel else {
       return false
     }
-    return pickerDataComponents == model.pickerDataComponents
+    return helper.pickerDataComponents == model.helper.pickerDataComponents
       && height == model.height
-  }
-
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    let width = containerSize.width
-    return CGSize(width: width, height: height)
   }
 }
 
@@ -113,16 +110,30 @@ final class PickerCell: BaseListCell, ListCellHelper {
     guard let model = model else {
       return
     }
-    pickerView.delegate = model
-    pickerView.dataSource = model
-    for (component, componentData) in model.pickerDataComponents.enumerated() {
+    pickerView.delegate = model.helper
+    pickerView.dataSource = model.helper
+    for (component, componentData) in model.helper.pickerDataComponents.enumerated() {
       pickerView.selectRow(componentData.startingRow, inComponent: component, animated: false)
     }
   }
 }
 
+fileprivate class PickerCellModelHelper: NSObject {
+  typealias Action = (
+    _ pickerView: UIPickerView,
+    _ row: Int,
+    _ component: Int
+  ) -> Void
+  let pickerDataComponents: [PickerDataComponent]
+  var changedValue: Action?
+
+  init(pickerDataComponents: [PickerDataComponent]) {
+    self.pickerDataComponents = pickerDataComponents
+  }
+}
+
 // MARK: - UIPickerViewDataSource
-extension PickerCellModel: UIPickerViewDataSource {
+extension PickerCellModelHelper: UIPickerViewDataSource {
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return pickerDataComponents.count
   }
@@ -137,7 +148,7 @@ extension PickerCellModel: UIPickerViewDataSource {
 }
 
 // MARK: - UIPickerViewDelegate
-extension PickerCellModel: UIPickerViewDelegate {
+extension PickerCellModelHelper: UIPickerViewDelegate {
   func pickerView(
     _ pickerView: UIPickerView,
     viewForRow row: Int,
@@ -192,6 +203,6 @@ extension PickerCellModel: UIPickerViewDelegate {
     return max(maxTextHeight, maxImageHeight) + componentData.verticalMargin * 2
   }
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    changedValue?(self, pickerView, row, component)
+    changedValue?(pickerView, row, component)
   }
 }

@@ -10,7 +10,51 @@ import UIKit
 
 import IGListKit
 
-public protocol ListModelSectionControllerDelegate: class {
+internal class ListCellModelWrapper: NSObject {
+  internal let model: ListCellModel
+
+  internal init(model: ListCellModel) {
+    self.model = model
+  }
+}
+
+// MARK: - ListDiffable
+extension ListCellModelWrapper: ListDiffable {
+  internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    guard let wrapper = object as? ListCellModelWrapper else {
+      return false
+    }
+    return model.isEqual(to: wrapper.model)
+  }
+
+  internal func diffIdentifier() -> NSObjectProtocol {
+    return model.identifier as NSString
+  }
+}
+
+internal class ListSectionWrapper: NSObject {
+  internal var section: ListSection
+
+  internal init(section: ListSection) {
+    self.section = section
+  }
+}
+
+// MARK: - ListDiffable
+extension ListSectionWrapper: ListDiffable {
+  internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    guard let wrapper = object as? ListSectionWrapper else {
+      return false
+    }
+    return section == wrapper.section
+  }
+
+  internal func diffIdentifier() -> NSObjectProtocol {
+    return section.identifier as NSString
+  }
+}
+
+internal protocol ListModelSectionControllerDelegate: class {
 
   func sectionController(
     _ sectionController: ListModelSectionController,
@@ -41,10 +85,10 @@ public protocol ListModelSectionControllerDelegate: class {
   ) -> ListViewLayoutAttributes?
 }
 
-public class ListModelSectionController: ListBindingSectionController<ListSection> {
-  public weak var delegate: ListModelSectionControllerDelegate?
+internal class ListModelSectionController: ListBindingSectionController<ListSectionWrapper> {
+  internal weak var delegate: ListModelSectionControllerDelegate?
 
-  override init() {
+  internal override init() {
     super.init()
     self.dataSource = self
     self.displayDelegate = self
@@ -53,38 +97,128 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
     self.supplementaryViewSource = self
   }
 
-  public var sizeConstraints: ListSizeConstraints? {
+  internal var sizeConstraints: ListSizeConstraints? {
     guard let containerSize = self.collectionContext?.insetContainerSize else {
       assertionFailure("The container size should exist.")
       return nil
     }
 
-    guard let section = self.object else {
+    guard let section = self.object?.section else {
       assertionFailure("List Section model should exist")
       return nil
     }
 
     let sizeConstraints = ListSizeConstraints(
       containerSize: containerSize,
-      inset: self.inset,
-      minimumLineSpacing: self.minimumLineSpacing,
-      minimumInteritemSpacing: self.minimumInteritemSpacing,
-      distribution: section.distribution
+      sectionConstraints: section.constraints
     )
     return sizeConstraints
   }
 
-  public override func canMoveItem(at index: Int) -> Bool {
-    guard let section = self.object else { return false }
+  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+    let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
+    let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
+    let isVertical = sizeConstraints.scrollDirection == .vertical
+
+    let collectionCell = model.cellType.init(frame: .zero)
+    collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+
+    switch sizeConstraints.distribution {
+    case .equally(let cellsInRow):
+      let maxSize: CGSize
+      if isVertical {
+        let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: equalCellWidth, height: rowHeight)
+      } else {
+        let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: rowWidth, height: equalCellHeight)
+      }
+      let size = collectionCell.systemLayoutSizeFitting(
+        maxSize,
+        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+      if isVertical {
+        return CGSize(width: maxSize.width, height: size.height)
+      } else {
+        return CGSize(width: size.width, height: maxSize.height)
+      }
+    case .entireRow:
+      let size = collectionCell.systemLayoutSizeFitting(
+        sizeConstraints.containerSizeAdjustedForInsets,
+        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+      if isVertical {
+        return CGSize(width: sizeConstraints.containerSize.width, height: size.height)
+      } else {
+        return CGSize(width: size.width, height: sizeConstraints.containerSize.height)
+      }
+    case .proportionally:
+      let size = collectionCell.systemLayoutSizeFitting(
+        sizeConstraints.containerSizeAdjustedForInsets,
+        withHorizontalFittingPriority: .fittingSizeLevel,
+        verticalFittingPriority: .fittingSizeLevel)
+      return size
+    }
+  }
+
+  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
+    let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
+    let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
+    switch sizeConstraints.distribution {
+    case .equally(let cellsInRow):
+      let maxSize: CGSize
+      if sizeConstraints.scrollDirection == .vertical {
+        let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: equalCellWidth, height: rowHeight)
+      } else {
+        let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: rowWidth, height: equalCellHeight)
+      }
+      switch model.size(constrainedTo: maxSize) {
+      case .autolayout:
+        return .autolayout
+      case .explicit(let size):
+        if sizeConstraints.scrollDirection == .vertical {
+          return .explicit(size: CGSize(width: maxSize.width, height: size.height))
+        } else {
+          return .explicit(size: CGSize(width: size.width, height: maxSize.height))
+        }
+      case .relative:
+        return .relative
+      }
+    case .entireRow:
+      switch model.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets) {
+      case .autolayout:
+        return .autolayout
+      case .explicit(let size):
+        if sizeConstraints.scrollDirection == .vertical {
+          return .explicit(size: CGSize(width: rowWidth, height: size.height))
+        } else {
+          return .explicit(size: CGSize(width: size.width, height: rowHeight))
+        }
+      case .relative:
+        return .relative
+      }
+    case .proportionally:
+      return model.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets)
+    }
+  }
+
+  internal override func canMoveItem(at index: Int) -> Bool {
+    guard let section = self.object?.section else { return false }
     return section.cellModels[index].reorderable
   }
 
-  public override func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
+  internal override func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
     super.moveObject(from: sourceIndex, to: destinationIndex)
-    guard let section = self.object else { return }
+    guard let wrapper = self.object else { return }
 
-    let cellModel = section.cellModels.remove(at: sourceIndex)
-    section.cellModels.insert(cellModel, at: destinationIndex)
+    let cellModel = wrapper.section.cellModels.remove(at: sourceIndex)
+    wrapper.section.cellModels.insert(cellModel, at: destinationIndex)
 
     self.delegate?.sectionControllerCompletedMove(
       self,
@@ -97,10 +231,14 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
   // MARK: - Helpers
 
   private func cell(for viewModel: Any, index: Int) -> ListCollectionViewCell {
-    guard let cellModel = viewModel as? ListCellModel else {
+    guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Unsupported view model type \(viewModel)")
       return BaseListCell()
     }
+    return cell(for: wrapper.model, index: index)
+  }
+
+  private func cell(for cellModel: ListCellModel, index: Int) -> ListCollectionViewCell {
     guard let collectionContext = self.collectionContext else {
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
@@ -140,7 +278,7 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
   }
 
   private func determineSize(for viewModel: Any, at index: Int) -> CGSize {
-    guard let cellModel = viewModel as? ListCellModel else {
+    guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Invalid view model \(viewModel).")
       return super.sizeForItem(at: index)
     }
@@ -148,21 +286,27 @@ public class ListModelSectionController: ListBindingSectionController<ListSectio
       assertionFailure("The size constraints should exist.")
       return super.sizeForItem(at: index)
     }
+    let cellModel = wrapper.model
 
-    let indexPath = IndexPath(item: index, section: self.section)
-    if let size = self.delegate?.sectionController(
-      self,
-      sizeFor: cellModel,
-      at: indexPath,
-      constrainedTo: sizeConstraints) {
+    let cellSize = size(for: cellModel, with: sizeConstraints)
+    switch cellSize {
+    case .autolayout:
+      return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
+    case .explicit(let size):
+      return size
+    case .relative:
+      let indexPath = IndexPath(item: index, section: self.section)
+      guard let size = self.delegate?.sectionController(
+        self,
+        sizeFor: cellModel,
+        at: indexPath,
+        constrainedTo: sizeConstraints
+      ) else {
+        assertionFailure("The section controller delegate should provide a size for relative cell sizes.")
+        return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
+      }
       return size
     }
-
-    if let size = cellModel.size(with: sizeConstraints) {
-      return size
-    }
-    assertionFailure("The cell or section controller delegate should provide a size.")
-    return super.sizeForItem(at: index)
   }
 }
 
@@ -172,8 +316,8 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
     _ sectionController: ListBindingSectionController<ListDiffable>,
     viewModelsFor object: Any
   ) -> [ListDiffable] {
-    guard let section = self.object else { return [] }
-    return section.cellModels
+    guard let section = self.object?.section else { return [] }
+    return section.cellModels.map(ListCellModelWrapper.init)
   }
 
   public func sectionController(
@@ -205,12 +349,12 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
     didSelectItemAt index: Int,
     viewModel: Any
   ) {
-    guard let cellModel = viewModel as? ListCellModel else {
+    guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Unsupported view model type \(viewModel)")
       return
     }
     let indexPath = IndexPath(item: index, section: self.section)
-    if let model = cellModel as? ListSelectableCellModelWrapper {
+    if let model = wrapper.model as? ListSelectableCellModelWrapper {
       model.selected(at: indexPath)
     }
   }
@@ -274,10 +418,10 @@ extension ListModelSectionController: ListSupplementaryViewSource {
 
   public func supportedElementKinds() -> [String] {
     var elementKinds = [String]()
-    if self.object?.headerModel != nil {
+    if self.object?.section.headerModel != nil {
       elementKinds.append(UICollectionView.elementKindSectionHeader)
     }
-    if self.object?.footerModel != nil {
+    if self.object?.section.footerModel != nil {
       elementKinds.append(UICollectionView.elementKindSectionFooter)
     }
     return elementKinds
@@ -287,9 +431,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
-      model = self.object?.headerModel
+      model = self.object?.section.headerModel
     case UICollectionView.elementKindSectionFooter:
-      model = self.object?.footerModel
+      model = self.object?.section.footerModel
     default:
       assertionFailure("Unsupported Supplementary view type")
       model = nil
@@ -308,9 +452,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
-      model = self.object?.headerModel
+      model = self.object?.section.headerModel
     case UICollectionView.elementKindSectionFooter:
-      model = self.object?.footerModel
+      model = self.object?.section.footerModel
     default:
       assertionFailure("Unsupported Supplementary view type")
       model = nil
@@ -326,20 +470,16 @@ extension ListModelSectionController: ListSupplementaryViewSource {
       return defaultSize
     }
 
-    if let size = cellModel.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets) {
+    let size = cellModel.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets)
+    switch size {
+    case .autolayout:
+      return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
+    case .explicit(let size):
       return size
+    case .relative:
+      assertionFailure("Relative sizing is not supported for supplementary views")
+      return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
     }
-
-    let indexPath = IndexPath(item: index, section: self.section)
-    if let size = self.delegate?.sectionController(
-      self,
-      sizeFor: cellModel,
-      at: indexPath,
-      constrainedTo: sizeConstraints) {
-      return size
-    }
-    assertionFailure("The cell or section controller delegate should provide a size.")
-    return defaultSize
   }
 }
 
@@ -352,7 +492,7 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object else {
+    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object?.section else {
       return attributes
     }
 
@@ -373,7 +513,7 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object else {
+    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object?.section else {
       return attributes
     }
     guard let customAttributes = delegate?.sectionController(

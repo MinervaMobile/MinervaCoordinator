@@ -41,12 +41,6 @@ final class DatePickerCellModel: BaseListCellModel {
     return startDate == model.startDate
       && mode == model.mode
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    let width = containerSize.width
-    let height: CGFloat = 220.0
-    return CGSize(width: width, height: height)
-  }
 }
 
 final class DatePickerCell: BaseListCell, ListCellHelper {

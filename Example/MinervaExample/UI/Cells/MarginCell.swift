@@ -37,10 +37,10 @@ final class MarginCellModel: BaseListCellModel {
       && height == model.height
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    guard let height = self.height else { return nil }
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    guard let height = self.height else { return .relative }
     let width = containerSize.width
-    return CGSize(width: width, height: height)
+    return .explicit(size: CGSize(width: width, height: height))
   }
 }
 

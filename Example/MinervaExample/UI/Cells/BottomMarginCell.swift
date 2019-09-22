@@ -26,7 +26,7 @@ final class BottomMarginCellModel: BaseListCellModel {
     return backgroundColor == model.backgroundColor
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let device = UIDevice.current
     let height: CGFloat
     if device.userInterfaceIdiom == .pad && device.orientation.isLandscape {
@@ -37,7 +37,7 @@ final class BottomMarginCellModel: BaseListCellModel {
       height = 40
     }
     let width = containerSize.width
-    return CGSize(width: width, height: height)
+    return .explicit(size: CGSize(width: width, height: height))
   }
 }
 

@@ -48,12 +48,6 @@ final class ImageCellModel: DefaultListCellModel {
       && contentMode == model.contentMode
       && imageColor == model.imageColor
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    let width = containerSize.width
-    let cellHeight = height + separatorAndMarginHeight
-    return CGSize(width: width, height: cellHeight)
-  }
 }
 
 final class ImageCell: DefaultListCell, ListCellHelper {

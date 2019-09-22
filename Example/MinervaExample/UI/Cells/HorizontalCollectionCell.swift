@@ -15,24 +15,28 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
   var followsInsets = false
   var isScrollEnabled = true
   var horizontalContentInset: CGFloat = 0
-  var itemSpacing: CGFloat = 0
+  var itemSpacing: CGFloat = 0 {
+    didSet {
+      section.constraints.minimumInteritemSpacing = itemSpacing
+      section.constraints.minimumLineSpacing = itemSpacing
+    }
+  }
 
   private let listController: ListController
-  private let cellModels: [ListCellModel]
-  private let distribution: ListRowDistribution
+  private var section: ListSection
   private let cellIdentifier: String
 
   init(
     identifier: String,
     cellModels: [ListCellModel],
-    distribution: ListRowDistribution,
+    distribution: ListSection.Distribution,
     listController: ListController
   ) {
     self.cellIdentifier = identifier
     self.listController = listController
-    self.cellModels = cellModels
-    self.distribution = distribution
+    self.section = ListSection(cellModels: cellModels, identifier: "\(identifier)-section")
     super.init()
+    section.constraints.distribution = distribution
     assert(cellModels.isNotEmpty, "Horizontal Scroll list should have at least 1 model")
   }
 
@@ -44,8 +48,7 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
 
   override func isEqual(to model: ListCellModel) -> Bool {
     guard let model = model as? HorizontalCollectionCellModel, super.isEqual(to: model) else { return false }
-    let equalCells = zip(model.cellModels, cellModels).reduce(true, { $0 && $1.0.isEqual(to: $1.1) })
-    return equalCells
+    return model.section == section
       && followsInsets == model.followsInsets
       && isScrollEnabled == model.isScrollEnabled
       && horizontalContentInset == model.horizontalContentInset
@@ -53,26 +56,23 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
       && listController === model.listController
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> CGSize? {
-    let width = containerSize.width
-    let maxHeight = cellModels.reduce(1, { max($0, ($1.size(constrainedTo: containerSize)?.height ?? 1)) })
-    let height = maxHeight + separatorAndMarginHeight
-    return CGSize(width: width, height: height)
+  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    let size = CGSize(width: containerSize.width, height: CGFloat.greatestFiniteMagnitude)
+    let constraints = ListSizeConstraints(
+      containerSize: size,
+      sectionConstraints: section.constraints)
+    let height = section.cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
+      max(maxHeight, listController.size(of: cellModel, with: constraints)?.height ?? 0)
+    }
+    let totalHeight = height + separatorAndMarginHeight
+    return .explicit(size: CGSize(width: containerSize.width, height: totalHeight))
   }
 
   // MARK: - Helpers
 
-  private func createListSection() -> ListSection {
-    let section = ListSection(cellModels: cellModels, identifier: "\(cellIdentifier)-section")
-    section.minimumInteritemSpacing = itemSpacing
-    section.minimumLineSpacing = itemSpacing
-    section.distribution = distribution
-    return section
-  }
-
   fileprivate func update(collectionView: UICollectionView) {
     listController.collectionView = collectionView
-    listController.update(with: [createListSection()], animated: true, completion: nil)
+    listController.update(with: [section], animated: true, completion: nil)
   }
 }
 
