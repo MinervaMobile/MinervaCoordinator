@@ -64,19 +64,6 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
       && accessoryColor == model.accessoryColor
       && accessoryImageWidthHeight == model.accessoryImageWidthHeight
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let rowWidth = containerSize.width
-    let textWidth = rowWidth - LabelAccessoryCellModel.accessoryImageMargin - accessoryImageWidthHeight
-
-    let textArray = [attributedText, descriptionText].compactMap { $0 }
-
-    let contentHeight = max(textArray.height(constraintedToWidth: textWidth), accessoryImageWidthHeight)
-
-    let height = contentHeight + separatorAndMarginHeight
-
-    return .explicit(size: CGSize(width: rowWidth, height: height))
-  }
 }
 
 final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
@@ -122,6 +109,10 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
     containerView.addSubview(accessoryImageView)
     containerView.addSubview(iconImageView)
     setupConstraints()
+
+    containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+    contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+    contentView.clipsToBounds = true
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -133,6 +124,10 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
     super.prepareForReuse()
     accessoryImageWidthHeightConstraint?.constant = 0
     accessoryImageLeadingConstraint?.constant = 0
+    accessoryImageView.image = nil
+    iconImageWidthHeightConstraint?.constant = 0
+    iconImageTrailingConstraint?.constant = 0
+    iconImageView.image = nil
   }
 
   override func updatedCellModel() {
@@ -145,16 +140,13 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
 
     detailsLabel.attributedText = model.descriptionText
 
-    accessoryImageView.image = model.accessoryImage
     accessoryImageView.tintColor = model.accessoryColor
-    accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
-
-    iconImageView.tintColor = model.iconColor
     if let accessory = model.accessoryImage {
       accessoryImageView.image = accessory
       accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
       accessoryImageLeadingConstraint?.constant = LabelAccessoryCellModel.accessoryImageMargin
     } else {
+      accessoryImageView.isHidden = true
       accessoryImageView.image = nil
       accessoryImageWidthHeightConstraint?.constant = 0
       accessoryImageLeadingConstraint?.constant = 0
@@ -166,6 +158,7 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
       iconImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
       iconImageTrailingConstraint?.constant = LabelAccessoryCellModel.iconTrailingLength
     } else {
+      iconImageView.isHidden = true
       iconImageView.image = nil
       iconImageWidthHeightConstraint?.constant = 0
       iconImageTrailingConstraint?.constant = 0
@@ -182,6 +175,9 @@ extension LabelAccessoryCell {
     iconImageWidthHeightConstraint?.isActive = true
     iconImageView.heightAnchor.constraint(equalTo: iconImageView.widthAnchor).isActive = true
 
+    label.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+    label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+
     iconImageTrailingConstraint = label.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor)
     iconImageTrailingConstraint?.isActive = true
     label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
@@ -197,9 +193,6 @@ extension LabelAccessoryCell {
     accessoryImageWidthHeightConstraint = accessoryImageView.widthAnchor.constraint(equalToConstant: 0)
     accessoryImageWidthHeightConstraint?.isActive = true
     accessoryImageView.heightAnchor.constraint(equalTo: accessoryImageView.widthAnchor).isActive = true
-
-    containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-    contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
 }
 

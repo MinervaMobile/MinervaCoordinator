@@ -96,21 +96,6 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
       && borderColor == model.borderColor
       && selectedBorderColor == model.selectedBorderColor
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let rowWidth = containerSize.width
-    var textWidth = rowWidth - textHorizontalMargin * 2
-    if accessoryImage != nil {
-      textWidth -= textHorizontalMargin
-      textWidth -= accessoryImageWidthHeight
-    }
-    let height = attributedText.height(constraintedToWidth: textWidth)
-      + textVerticalMargin * 2
-      + separatorAndMarginHeight
-    let width = attributedText.width(constraintedToHeight: height) + textHorizontalMargin * 2
-
-    return .explicit(size: CGSize(width: width, height: height))
-  }
 }
 
 final class BorderLabelCell: DefaultListCell, ListCellHelper {

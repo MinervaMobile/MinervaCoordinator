@@ -80,15 +80,6 @@ final class TextInputCellModel: BaseListCellModel {
       && inputTextColor == model.inputTextColor
       && placeholderTextColor == model.placeholderTextColor
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let width = containerSize.width
-    let height = placeholder.height(
-      constraintedToWidth: 340,
-      font: font
-    ) + TextInputCellModel.bottomBorderHeight + TextInputCellModel.textBottomMargin
-    return .explicit(size: CGSize(width: width, height: height))
-  }
 }
 
 final class TextInputCell: BaseListBindableCell, ListCellHelper {

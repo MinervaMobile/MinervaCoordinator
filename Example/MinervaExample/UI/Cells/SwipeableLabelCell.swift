@@ -86,19 +86,6 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
       && deleteColor == model.deleteColor
       && separatorColor == model.separatorColor
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let width = containerSize.width
-    let textWidth = width
-      - SwipeableLabelCellModel.buttonWidthHeight
-      - SwipeableLabelCellModel.accessoryWidthHeight
-      - SwipeableLabelCellModel.labelMargin * 2
-
-    let dynamicHeight = text.height(constraintedToWidth: textWidth)
-    let height = dynamicHeight + separatorAndMarginHeight
-
-    return .explicit(size: CGSize(width: width, height: height))
-  }
 }
 
 final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
@@ -161,6 +148,9 @@ extension SwipeableLabelCell {
       equalTo: accessoryImageView.leadingAnchor,
       constant: -SwipeableLabelCellModel.labelMargin
     ).isActive = true
+
+    titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+    titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
 
     accessoryImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     accessoryImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true

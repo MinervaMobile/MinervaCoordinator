@@ -85,11 +85,6 @@ final class PickerCellModel: BaseListCellModel {
     return helper.pickerDataComponents == model.helper.pickerDataComponents
       && height == model.height
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let width = containerSize.width
-    return .explicit(size: CGSize(width: width, height: height))
-  }
 }
 
 final class PickerCell: BaseListCell, ListCellHelper {

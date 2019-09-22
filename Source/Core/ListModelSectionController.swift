@@ -115,10 +115,13 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     return sizeConstraints
   }
 
-  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {    
     let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
     let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
     let isVertical = sizeConstraints.scrollDirection == .vertical
+
+    let collectionCell = model.cellType.init(frame: .zero)
+    collectionCell.bindViewModel(ListCellModelWrapper(model: model))
 
     switch sizeConstraints.distribution {
     case .equally(let cellsInRow):
@@ -132,9 +135,6 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
           - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
         maxSize = CGSize(width: rowWidth, height: equalCellHeight)
       }
-
-      let collectionCell = model.cellType.init()
-      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
       let size = collectionCell.systemLayoutSizeFitting(
         maxSize,
         withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
@@ -145,8 +145,6 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
         return CGSize(width: size.width, height: maxSize.height)
       }
     case .entireRow:
-      let collectionCell = model.cellType.init()
-      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
       let size = collectionCell.systemLayoutSizeFitting(
         sizeConstraints.containerSizeAdjustedForInsets,
         withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
@@ -157,8 +155,6 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
         return CGSize(width: size.width, height: sizeConstraints.containerSize.height)
       }
     case .proportionally:
-      let collectionCell = model.cellType.init()
-      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
       let size = collectionCell.systemLayoutSizeFitting(
         sizeConstraints.containerSizeAdjustedForInsets,
         withHorizontalFittingPriority: .fittingSizeLevel,
