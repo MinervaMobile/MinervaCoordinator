@@ -115,7 +115,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     return sizeConstraints
   }
 
-  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {    
+  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
     let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
     let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
     let isVertical = sizeConstraints.scrollDirection == .vertical
