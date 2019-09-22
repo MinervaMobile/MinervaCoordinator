@@ -115,8 +115,56 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     return sizeConstraints
   }
 
-  internal func autolayoutSize(for model: ListCellModel, constrainedTo constraints: ListSizeConstraints) -> CGSize {
-    fatalError("Implement Me")
+  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+    let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
+    let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
+    let isVertical = sizeConstraints.scrollDirection == .vertical
+
+    switch sizeConstraints.distribution {
+    case .equally(let cellsInRow):
+      let maxSize: CGSize
+      if isVertical {
+        let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: equalCellWidth, height: rowHeight)
+      } else {
+        let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
+          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+        maxSize = CGSize(width: rowWidth, height: equalCellHeight)
+      }
+
+      let collectionCell = model.cellType.init()
+      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+      let size = collectionCell.systemLayoutSizeFitting(
+        maxSize,
+        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+      if isVertical {
+        return CGSize(width: maxSize.width, height: size.height)
+      } else {
+        return CGSize(width: size.width, height: maxSize.height)
+      }
+    case .entireRow:
+      let collectionCell = model.cellType.init()
+      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+      let size = collectionCell.systemLayoutSizeFitting(
+        sizeConstraints.containerSizeAdjustedForInsets,
+        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+      if isVertical {
+        return CGSize(width: sizeConstraints.containerSize.width, height: size.height)
+      } else {
+        return CGSize(width: size.width, height: sizeConstraints.containerSize.height)
+      }
+    case .proportionally:
+      let collectionCell = model.cellType.init()
+      collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+      let size = collectionCell.systemLayoutSizeFitting(
+        sizeConstraints.containerSizeAdjustedForInsets,
+        withHorizontalFittingPriority: .fittingSizeLevel,
+        verticalFittingPriority: .fittingSizeLevel)
+      return size
+    }
   }
 
   internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
@@ -191,11 +239,15 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
       assertionFailure("Unsupported view model type \(viewModel)")
       return BaseListCell()
     }
+    return cell(for: wrapper.model, index: index)
+  }
+
+  private func cell(for cellModel: ListCellModel, index: Int) -> ListCollectionViewCell {
     guard let collectionContext = self.collectionContext else {
       assertionFailure("The collectionContext should exist")
       return BaseListCell()
     }
-    let cellType = wrapper.model.cellType
+    let cellType = cellModel.cellType
     guard let cell = collectionContext.dequeueReusableCell(
       of: cellType,
       for: self,

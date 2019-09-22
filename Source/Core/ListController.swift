@@ -251,39 +251,27 @@ public final class ListController: NSObject {
     self.scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
-  public func size(of cellModel: ListCellModel) -> CGSize? {
-    let section = self.listSectionWrappers.first(where: {
+  public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
+    let sectionWrapper = self.listSectionWrappers.first(where: {
       $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
     })
-
-    guard let listSection = section else {
-      assertionFailure("Section should exist for \(cellModel)")
-      return nil
-    }
 
     let sectionController: ListModelSectionController
     let sizeConstraints: ListSizeConstraints
 
     // If this function is called before the adapter is showing the cellModel we still want to return the correct size.
     // Reuse the existing ListModelSectionController if it is available in order to support caching of size information.
-    if let controller = adapter.sectionController(for: listSection) as? ListModelSectionController,
+    if let listSectionWrapper = sectionWrapper,
+      let controller = adapter.sectionController(for: listSectionWrapper) as? ListModelSectionController,
       let constraints = controller.sizeConstraints {
       sectionController = controller
       sizeConstraints = constraints
-    } else {
+    } else if let constraints = constraints {
       sectionController = ListModelSectionController()
-
-      guard let bounds = collectionView?.bounds, let adjustedContentInset = collectionView?.adjustedContentInset else {
-        assertionFailure("Collection view should exist")
-        return nil
-      }
-
-      let insetContainerSize = bounds.inset(by: adjustedContentInset).size
-
-      sizeConstraints = ListSizeConstraints(
-        containerSize: insetContainerSize,
-        sectionConstraints: listSection.section.constraints
-      )
+      sizeConstraints = constraints
+    } else {
+      assertionFailure("Need a section to properly size the cell")
+      return nil
     }
 
     let size = sectionController.size(for: cellModel, with: sizeConstraints)

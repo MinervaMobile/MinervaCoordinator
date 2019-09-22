@@ -72,19 +72,6 @@ final class LabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListB
       && textAlignment == model.textAlignment
       && numberOfLines == model.numberOfLines
   }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    let width = containerSize.width
-    let textHeight: CGFloat
-    if let attributedString = attributedText {
-      textHeight = attributedString.height(constraintedToWidth: width)
-    } else {
-      textHeight = text.height(constraintedToWidth: width, font: font)
-    }
-    let height = textHeight + separatorAndMarginHeight
-
-    return .explicit(size: CGSize(width: width, height: height))
-  }
 }
 
 final class LabelCell: DefaultListCell, ListCellHelper {

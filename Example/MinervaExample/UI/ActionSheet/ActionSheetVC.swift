@@ -89,7 +89,10 @@ class ActionSheetVC: UIViewController {
     let cellModels = dataSource.loadCellModels()
     let section = ListSection(cellModels: cellModels, identifier: "singleSection")
     listController.update(with: [section], animated: false, completion: nil)
-    let collectionHeight = cellModels.reduce(0, { $0 + (listController.size(of: $1)?.height ?? 0) })
+    let constraints = ListSizeConstraints(
+      containerSize: collectionView.bounds.size,
+      sectionConstraints: section.constraints)
+    let collectionHeight = cellModels.reduce(0, { $0 + (listController.size(of: $1, with: constraints)?.height ?? 0) })
     containerHeightConstraint.constant = collectionHeight + view.safeAreaInsets.bottom
     collectionView.collectionViewLayout.invalidateLayout()
   }
