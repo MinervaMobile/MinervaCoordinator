@@ -42,13 +42,23 @@ public struct ListSection {
 // MARK: - Equatable
 extension ListSection: Equatable {
   public static func == (lhs: ListSection, rhs: ListSection) -> Bool {
-    return lhs.identifier == rhs.identifier
-  }
-}
-
-// MARK: - Hashable
-extension ListSection: Hashable {
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(identifier)
+    guard lhs.identifier == rhs.identifier && lhs.constraints == rhs.constraints else { return false }
+    guard lhs.cellModels.count == rhs.cellModels.count else { return false }
+    func areEqual(_ leftModel: ListCellModel?, _ rightModel: ListCellModel?) -> Bool {
+      guard let left = leftModel else {
+        return rightModel == nil
+      }
+      guard let right = rightModel else {
+        return false
+      }
+      return left.isEqual(to: right)
+    }
+    guard areEqual(lhs.headerModel, rhs.headerModel) else {
+      return false
+    }
+    guard areEqual(lhs.footerModel, rhs.footerModel) else {
+      return false
+    }
+    return zip(lhs.cellModels, rhs.cellModels).allSatisfy { $0.0.isEqual(to: $0.1) }
   }
 }
