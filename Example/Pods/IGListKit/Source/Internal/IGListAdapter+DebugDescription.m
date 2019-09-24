@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,9 +34,9 @@
         [debug addObject:[NSString stringWithFormat:@"Is prefetching enabled: %@", IGListDebugBOOL(self.collectionView.isPrefetchingEnabled)]];
     }
 
-    if (self.registeredCellClasses.count > 0) {
-        [debug addObject:@"Registered cell classes:"];
-        [debug addObject:[self.registeredCellClasses description]];
+    if (self.registeredCellIdentifiers.count > 0) {
+        [debug addObject:@"Registered cell identifiers:"];
+        [debug addObject:[self.registeredCellIdentifiers description]];
     }
 
     if (self.registeredNibNames.count > 0) {
@@ -59,15 +59,15 @@
         [debug addObjectsFromArray:IGListDebugIndentedLines([(IGListAdapterUpdater *)self.updater debugDescriptionLines])];
     }
 
-    [debug addObject:[NSString stringWithFormat:@"Section map details:"]];
+    [debug addObject:@"Section map details:"];
     [debug addObjectsFromArray:IGListDebugIndentedLines([self.sectionMap debugDescriptionLines])];
 
     if (self.previousSectionMap != nil) {
-        [debug addObject:[NSString stringWithFormat:@"Previous section map details:"]];
+        [debug addObject:@"Previous section map details:"];
         [debug addObjectsFromArray:IGListDebugIndentedLines([self.previousSectionMap debugDescriptionLines])];
     }
 
-    [debug addObject:[NSString stringWithFormat:@"Collection view details:"]];
+    [debug addObject:@"Collection view details:"];
     [debug addObjectsFromArray:IGListDebugIndentedLines([self.collectionView debugDescriptionLines])];
 #endif // #if IGLK_DEBUG_DESCRIPTION_ENABLED
     return debug;

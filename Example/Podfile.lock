@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.8.2)
+  - Alamofire (4.9.0)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
   - IGListKit/Default (3.4.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.4.0)
-  - IQKeyboardManagerSwift (6.4.1)
+  - IQKeyboardManagerSwift (6.4.2)
   - KeychainAccess (3.2.0)
   - MBProgressHUD (1.1.0)
   - PromiseKit/Alamofire (6.11.0):
@@ -13,11 +13,11 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/CorePromise (6.11.0)
   - SwiftProtobuf (1.6.0)
-  - SwipeCellKit (2.6.0)
+  - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
   - Alamofire
-  - IGListKit
+  - IGListKit (from `https://github.com/Instagram/IGListKit`)
   - IQKeyboardManagerSwift
   - KeychainAccess
   - MBProgressHUD
@@ -29,7 +29,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - IGListKit
     - IQKeyboardManagerSwift
     - KeychainAccess
     - MBProgressHUD
@@ -37,16 +36,25 @@ SPEC REPOS:
     - SwiftProtobuf
     - SwipeCellKit
 
+EXTERNAL SOURCES:
+  IGListKit:
+    :git: https://github.com/Instagram/IGListKit
+
+CHECKOUT OPTIONS:
+  IGListKit:
+    :commit: 78246986108e7caf73111fe784057cc107ee67f1
+    :git: https://github.com/Instagram/IGListKit
+
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
-  IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
+  IQKeyboardManagerSwift: 79a3ec200dfb41cb66a89b8575417b5378107c5d
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   PromiseKit: e4863d06976e7dee5e41c04fc7371c16b3600292
   SwiftProtobuf: e905ca1366405696411aaf174411c4b19c0ef73d
-  SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: fb19fe505cec5882565dbe941abe96f1cb5f9e43
+PODFILE CHECKSUM: 4138d2a9800bf65d8e2275260bc3b3308796f39d
 
-COCOAPODS: 1.8.0.beta.1
+COCOAPODS: 1.8.0.beta.2

@@ -67,7 +67,6 @@ open class DefaultListCell: BaseListBindableCell {
   private(set) public var containerLeadingConstraint: NSLayoutConstraint?
   private(set) public var containerTrailingConstraint: NSLayoutConstraint?
 
-  private(set) public var maxContainerWidthConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorLeadingConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorTrailingConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorHeightConstraint: NSLayoutConstraint?
@@ -174,13 +173,6 @@ open class DefaultListCell: BaseListBindableCell {
     setupConstraints()
   }
 
-  open override func layoutSubviews() {
-    super.layoutSubviews()
-    // TODO: Remove this and use readableContentGuide
-    // https://developer.apple.com/documentation/uikit/uiview/1622644-readablecontentguide
-    requiredBottomSeparatorLeadingConstraint?.isActive = frame.width > 800 ? true : false
-  }
-
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -188,7 +180,6 @@ open class DefaultListCell: BaseListBindableCell {
   open override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.cellModel as? DefaultListCellModel else { return }
-    maxContainerWidthConstraint?.isActive = model.constrainToReadablilityWidth
     constraintContainerViewHorizontally(toReadabilityWidth: model.constrainToReadablilityWidth)
 
     topSeparatorView.backgroundColor = model.topSeparatorColor ?? model.backgroundColor
@@ -244,41 +235,20 @@ extension DefaultListCell {
     topSeparatorView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     topSeparatorHeightConstraint = topSeparatorView.heightAnchor.constraint(equalToConstant: 1)
     topSeparatorHeightConstraint?.isActive = true
-    topSeparatorView.anchor(
-      toLeading: contentView.leadingAnchor,
-      top: nil,
-      trailing: contentView.trailingAnchor,
-      bottom: nil
-    )
-
-    containerTopConstraint = containerView.topAnchor.constraint(equalTo: topSeparatorView.bottomAnchor)
-    containerTopConstraint?.isActive = true
-
-    constraintContainerViewHorizontally(toReadabilityWidth: true)
-
-    containerCenterXConstraint = containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-    containerCenterXConstraint?.isActive = true
-
-    maxContainerWidthConstraint = containerView.widthAnchor.constraint(
-      lessThanOrEqualTo: contentView.readableContentGuide.widthAnchor
-    )
-    maxContainerWidthConstraint?.isActive = true
-
-    bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-    bottomSeparatorHeightConstraint = bottomSeparatorView.heightAnchor.constraint(equalToConstant: 1)
-    bottomSeparatorHeightConstraint?.isActive = true
-    containerBottomConstraint = bottomSeparatorView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-    containerBottomConstraint?.isActive = true
-
-    requiredBottomSeparatorLeadingConstraint
-      = bottomSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
 
     topSeparatorLeadingConstraint = topSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
     topSeparatorLeadingConstraint?.isActive = true
     topSeparatorTrailingConstraint = topSeparatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
     topSeparatorTrailingConstraint?.isActive = true
 
-    bottomSeparatorLeftInset = false
-    bottomSeparatorRightInset = false
+    containerTopConstraint = containerView.topAnchor.constraint(equalTo: topSeparatorView.bottomAnchor)
+    containerTopConstraint?.isActive = true
+
+    containerBottomConstraint = bottomSeparatorView.topAnchor.constraint(equalTo: containerView.bottomAnchor)
+    containerBottomConstraint?.isActive = true
+
+    bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+    bottomSeparatorHeightConstraint = bottomSeparatorView.heightAnchor.constraint(equalToConstant: 1)
+    bottomSeparatorHeightConstraint?.isActive = true
   }
 }

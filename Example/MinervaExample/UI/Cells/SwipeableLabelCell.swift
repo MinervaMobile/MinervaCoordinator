@@ -139,7 +139,6 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
 // MARK: - Constraints
 extension SwipeableLabelCell {
   private func setupConstraints() {
-    titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     titleLabel.leadingAnchor.constraint(
       equalTo: containerView.leadingAnchor,
       constant: SwipeableLabelCellModel.labelMargin

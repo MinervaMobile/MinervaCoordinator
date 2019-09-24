@@ -49,15 +49,15 @@ final class WorkoutDataSource {
     ).then { [weak self] workouts, user -> Promise<[ListSection]> in
       guard let strongSelf = self else { return .init(error: SystemError.cancelled) }
       guard let user = user else { return .init(error: SystemError.doesNotExist) }
-      let section = strongSelf.createSection(with: filter, workouts: workouts, user: user)
-      return .value([section])
+      let sections = strongSelf.createSections(with: filter, workouts: workouts, user: user)
+      return .value(sections)
     }
   }
 
   // MARK: - Private
 
-  private func createSection(with filter: WorkoutFilter, workouts: [Workout], user: User) -> ListSection {
-    var cellModels = [ListCellModel]()
+  private func createSections(with filter: WorkoutFilter, workouts: [Workout], user: User) -> [ListSection] {
+    var sections = [ListSection]()
 
     let filterCellModel = LabelCellModel(text: filter.details, font: .subheadline)
     filterCellModel.textColor = .darkGray
@@ -66,7 +66,7 @@ final class WorkoutDataSource {
     filterCellModel.bottomMargin = 10
     filterCellModel.backgroundColor = .section
     filterCellModel.bottomSeparatorColor = .separator
-    cellModels.append(filterCellModel)
+    sections.append(ListSection(cellModels: [filterCellModel], identifier: "FILTER"))
 
     let calendar = Calendar.current
     let filteredWorkouts = workouts.filter { filter.shouldInclude(workout: $0) }
@@ -75,15 +75,8 @@ final class WorkoutDataSource {
     }
     let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
     for (date, workoutsForDate) in sortedGroups {
+      var cellModels = [ListCellModel]()
       let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
-      let dateCellModel = LabelCellModel(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
-      dateCellModel.textColor = .darkGray
-      dateCellModel.textAlignment = .left
-      dateCellModel.topMargin = 10
-      dateCellModel.bottomMargin = 10
-      dateCellModel.backgroundColor = .white
-      dateCellModel.bottomSeparatorColor = .separator
-      cellModels.append(dateCellModel)
       let workoutBackgroundColor = totalCalories < user.dailyCalories
         ? UIColor(red: 179, green: 255, blue: 179) : UIColor(red: 255, green: 179, blue: 179)
       let sortedWorkoutsForDate = workoutsForDate.sorted { $0.date > $1.date }
@@ -96,15 +89,29 @@ final class WorkoutDataSource {
         workoutCellModel.backgroundColor = workoutBackgroundColor
         cellModels.append(workoutCellModel)
       }
+      var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sections.count)")
+
+      let dateCellModel = LabelCellModel(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
+      dateCellModel.textColor = .darkGray
+      dateCellModel.textAlignment = .left
+      dateCellModel.topMargin = 10
+      dateCellModel.bottomMargin = 10
+      dateCellModel.backgroundColor = .white
+      dateCellModel.bottomSeparatorColor = .separator
+      cellModels.append(dateCellModel)
+      section.headerModel = dateCellModel
+
+      sections.append(section)
     }
 
-    let section = ListSection(cellModels: cellModels, identifier: "SECTION")
-
-    return section
+    return sections
   }
 
   private func createWorkoutCellModel(for workout: Workout) -> SwipeableLabelCellModel {
-    let cellModel = SwipeableLabelCellModel(identifier: workout.description, title: workout.details, details: workout.text)
+    let cellModel = SwipeableLabelCellModel(
+      identifier: workout.description,
+      title: workout.details,
+      details: workout.text)
     cellModel.bottomSeparatorColor = .separator
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in

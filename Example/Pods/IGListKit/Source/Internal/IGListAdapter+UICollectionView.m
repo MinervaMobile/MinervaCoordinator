@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,7 +11,6 @@
 #import <IGListKit/IGListAssert.h>
 #import <IGListKit/IGListSectionController.h>
 #import <IGListKit/IGListSectionControllerInternal.h>
-#import <IGListKit/UICollectionViewLayout+InteractiveReordering.h>
 
 @implementation IGListAdapter (UICollectionView)
 
@@ -31,6 +30,9 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    id<IGListAdapterPerformanceDelegate> performanceDelegate = self.performanceDelegate;
+    [performanceDelegate listAdapterWillCallDequeueCell:self];
+
     IGListSectionController *sectionController = [self sectionControllerForSection:indexPath.section];
 
     // flag that a cell is being dequeued in case it tries to access a cell in the process
@@ -43,6 +45,7 @@
     // associate the section controller with the cell so that we know which section controller is using it
     [self mapView:cell toSectionController:sectionController];
 
+    [performanceDelegate listAdapter:self didCallDequeueCell:cell onSectionController:sectionController atIndex:indexPath.item];
     return cell;
 }
 
@@ -57,15 +60,15 @@
 
     return view;
 }
-    
+
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
     const NSInteger sectionIndex = indexPath.section;
     const NSInteger itemIndex = indexPath.item;
-    
+
     IGListSectionController *sectionController = [self sectionControllerForSection:sectionIndex];
     return [sectionController canMoveItemAtIndex:itemIndex];
 }
-    
+
 - (void)collectionView:(UICollectionView *)collectionView
    moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath
            toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -135,6 +138,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    id<IGListAdapterPerformanceDelegate> performanceDelegate = self.performanceDelegate;
+    [performanceDelegate listAdapterWillCallDisplayCell:self];
+
     // forward this method to the delegate b/c this implementation will steal the message from the proxy
     id<UICollectionViewDelegate> collectionViewDelegate = self.collectionViewDelegate;
     if ([collectionViewDelegate respondsToSelector:@selector(collectionView:willDisplayCell:forItemAtIndexPath:)]) {
@@ -155,9 +161,14 @@
     _isSendingWorkingRangeDisplayUpdates = YES;
     [self.workingRangeHandler willDisplayItemAtIndexPath:indexPath forListAdapter:self];
     _isSendingWorkingRangeDisplayUpdates = NO;
+
+    [performanceDelegate listAdapter:self didCallDisplayCell:cell onSectionController:sectionController atIndex:indexPath.item];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    id<IGListAdapterPerformanceDelegate> performanceDelegate = self.performanceDelegate;
+    [performanceDelegate listAdapterWillCallEndDisplayCell:self];
+
     // forward this method to the delegate b/c this implementation will steal the message from the proxy
     id<UICollectionViewDelegate> collectionViewDelegate = self.collectionViewDelegate;
     if ([collectionViewDelegate respondsToSelector:@selector(collectionView:didEndDisplayingCell:forItemAtIndexPath:)]) {
@@ -170,6 +181,8 @@
 
     // break the association between the cell and the section controller
     [self removeMapForView:cell];
+
+    [performanceDelegate listAdapter:self didCallEndDisplayCell:cell onSectionController:sectionController atIndex:indexPath.item];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
@@ -228,11 +241,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     IGAssert(![self.collectionViewDelegate respondsToSelector:_cmd], @"IGListAdapter is consuming method also implemented by the collectionViewDelegate: %@", NSStringFromSelector(_cmd));
-    
+
     CGSize size = [self sizeForItemAtIndexPath:indexPath];
     IGAssert(!isnan(size.height), @"IGListAdapter returned NaN height = %f for item at indexPath <%@>", size.height, indexPath);
     IGAssert(!isnan(size.width), @"IGListAdapter returned NaN width = %f for item at indexPath <%@>", size.width, indexPath);
-    
+
     return size;
 }
 

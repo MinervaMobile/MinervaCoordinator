@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,12 +20,18 @@ typedef NS_OPTIONS (NSInteger, IGListExperiment) {
     IGListExperimentBackgroundDiffing = 1 << 2,
     /// Test fallback to reloadData when "too many" update operations.
     IGListExperimentReloadDataFallback = 1 << 3,
-    /// Test a faster way to return visible section controllers.
-    IGListExperimentFasterVisibleSectionController = 1 << 4,
-    /// Test deduping item-level updates.
-    IGListExperimentDedupeItemUpdates = 1 << 5,
+    /// Test removing the layout pass when calling scrollToObject to avoid creating off-screen cells.
+    IGListExperimentAvoidLayoutOnScrollToObject = 1 << 4,
+    /// Test fixing a crash when inserting and deleting the same NSIndexPath multiple times.
+    IGListExperimentFixIndexPathImbalance = 1 << 5,
     /// Test deferring object creation until just before diffing.
     IGListExperimentDeferredToObjectCreation = 1 << 6,
+    /// Test getting collection view at update time.
+    IGListExperimentGetCollectionViewAtUpdate = 1 << 7,
+    /// Test invalidating layout when cell reloads/updates in IGListBindingSectionController.
+    IGListExperimentInvalidateLayoutForUpdates = 1 << 8,
+    /// Test using the collection view when asking for layout instead of accessing the data source. Only apply to IGListCollectionViewLayout.
+    IGListExperimentUseCollectionViewInsteadOfDataSourceInLayout = 1 << 9
 };
 
 /**

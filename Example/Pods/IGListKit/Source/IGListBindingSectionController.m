@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,10 +8,7 @@
 #import "IGListBindingSectionController.h"
 
 #import <IGListKit/IGListAssert.h>
-#import <IGListKit/IGListDiffable.h>
-#import <IGListKit/IGListDiff.h>
 #import <IGListKit/IGListBindable.h>
-#import <IGListKit/IGListAdapterUpdater.h>
 
 #import "IGListArrayUtilsInternal.h"
 
@@ -73,7 +70,9 @@ typedef NS_ENUM(NSInteger, IGListDiffingSectionState) {
             }
         }];
         
-        
+        if (IGListExperimentEnabled(self.collectionContext.experiments, IGListExperimentInvalidateLayoutForUpdates)) {
+            [batchContext invalidateLayoutInSectionController:self atIndexes:result.updates];
+        }
         [batchContext deleteInSectionController:self atIndexes:result.deletes];
         [batchContext insertInSectionController:self atIndexes:result.inserts];
         
@@ -112,13 +111,27 @@ typedef NS_ENUM(NSInteger, IGListDiffingSectionState) {
     self.object = object;
 
     if (oldObject == nil) {
-        self.viewModels = [[self.dataSource sectionController:self viewModelsForObject:object] copy];
+        NSArray *viewModels = [self.dataSource sectionController:self viewModelsForObject:object];
+        self.viewModels = objectsWithDuplicateIdentifiersRemoved(viewModels);
     } else {
-        IGAssert([oldObject isEqualToDiffableObject:object],
-                 @"Unequal objects %@ and %@ will cause IGListBindingSectionController to reload the entire section",
-                 oldObject, object);
+#if IGLK_LOGGING_ENABLED
+        if (![oldObject isEqualToDiffableObject:object]) {
+            IGLKLog(@"Warning: Unequal objects %@ and %@ will cause IGListBindingSectionController to reload the entire section",
+                    oldObject, object);
+        }
+#endif
         [self updateAnimated:YES completion:nil];
     }
+}
+
+- (void)moveObjectFromIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destinationIndex {
+    NSMutableArray *viewModels = [self.viewModels mutableCopy];
+    
+    id modelAtSource = [viewModels objectAtIndex:sourceIndex];
+    [viewModels removeObjectAtIndex:sourceIndex];
+    [viewModels insertObject:modelAtSource atIndex:destinationIndex];
+    
+    self.viewModels = viewModels;
 }
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
@@ -126,24 +139,15 @@ typedef NS_ENUM(NSInteger, IGListDiffingSectionState) {
 }
 
 - (void)didDeselectItemAtIndex:(NSInteger)index {
-    id<IGListBindingSectionControllerSelectionDelegate> selectionDelegate = self.selectionDelegate;
-    if ([selectionDelegate respondsToSelector:@selector(sectionController:didDeselectItemAtIndex:viewModel:)]) {
-        [selectionDelegate sectionController:self didDeselectItemAtIndex:index viewModel:self.viewModels[index]];
-    }
+    [self.selectionDelegate sectionController:self didDeselectItemAtIndex:index viewModel:self.viewModels[index]];
 }
 
 - (void)didHighlightItemAtIndex:(NSInteger)index {
-    id<IGListBindingSectionControllerSelectionDelegate> selectionDelegate = self.selectionDelegate;
-    if ([selectionDelegate respondsToSelector:@selector(sectionController:didHighlightItemAtIndex:viewModel:)]) {
-        [selectionDelegate sectionController:self didHighlightItemAtIndex:index viewModel:self.viewModels[index]];
-    }
+    [self.selectionDelegate sectionController:self didHighlightItemAtIndex:index viewModel:self.viewModels[index]];
 }
 
 - (void)didUnhighlightItemAtIndex:(NSInteger)index {
-    id<IGListBindingSectionControllerSelectionDelegate> selectionDelegate = self.selectionDelegate;
-    if ([selectionDelegate respondsToSelector:@selector(sectionController:didUnhighlightItemAtIndex:viewModel:)]) {
-        [selectionDelegate sectionController:self didUnhighlightItemAtIndex:index viewModel:self.viewModels[index]];
-    }
+    [self.selectionDelegate sectionController:self didUnhighlightItemAtIndex:index viewModel:self.viewModels[index]];
 }
 
 @end

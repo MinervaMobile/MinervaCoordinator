@@ -180,7 +180,6 @@ extension LabelAccessoryCell {
 
     iconImageTrailingConstraint = label.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor)
     iconImageTrailingConstraint?.isActive = true
-    label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
 
     detailsLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
     detailsLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true

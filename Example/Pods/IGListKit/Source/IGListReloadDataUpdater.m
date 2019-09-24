@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,7 +15,7 @@
     return [NSPointerFunctions pointerFunctionsWithOptions:NSPointerFunctionsObjectPersonality];
 }
 
-- (void)performUpdateWithCollectionView:(UICollectionView *)collectionView
+- (void)performUpdateWithCollectionViewBlock:(IGListCollectionViewBlock)collectionViewBlock
                             fromObjects:(NSArray *)fromObjects
                          toObjectsBlock:(IGListToObjectBlock)toObjectsBlock
                                animated:(BOOL)animated
@@ -25,18 +25,18 @@
         NSArray *toObjects = toObjectsBlock() ?: @[];
         objectTransitionBlock(toObjects);
     }
-    [self _synchronousReloadDataWithCollectionView:collectionView];
+    [self _synchronousReloadDataWithCollectionView:collectionViewBlock()];
     if (completion) {
         completion(YES);
     }
 }
 
-- (void)performUpdateWithCollectionView:(UICollectionView *)collectionView
+- (void)performUpdateWithCollectionViewBlock:(IGListCollectionViewBlock)collectionViewBlock
                                animated:(BOOL)animated
                             itemUpdates:(IGListItemUpdateBlock)itemUpdates
                              completion:(IGListUpdatingCompletion)completion {
     itemUpdates();
-    [self _synchronousReloadDataWithCollectionView:collectionView];
+    [self _synchronousReloadDataWithCollectionView:collectionViewBlock()];
     if (completion) {
         completion(YES);
     }
@@ -58,17 +58,13 @@
     [self _synchronousReloadDataWithCollectionView:collectionView];
 }
 
-- (void)_reloadItemsInCollectionView:(UICollectionView *)collectionView indexPaths:(NSArray<NSIndexPath *> *)indexPaths {
-    [self _synchronousReloadDataWithCollectionView:collectionView];
-}
-    
 - (void)moveSectionInCollectionView:(UICollectionView *)collectionView fromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
     [self _synchronousReloadDataWithCollectionView:collectionView];
 }
 
-- (void)reloadDataWithCollectionView:(UICollectionView *)collectionView reloadUpdateBlock:(IGListReloadUpdateBlock)reloadUpdateBlock completion:(IGListUpdatingCompletion)completion {
+- (void)reloadDataWithCollectionViewBlock:(IGListCollectionViewBlock)collectionViewBlock reloadUpdateBlock:(IGListReloadUpdateBlock)reloadUpdateBlock completion:(IGListUpdatingCompletion)completion {
     reloadUpdateBlock();
-    [self _synchronousReloadDataWithCollectionView:collectionView];
+    [self _synchronousReloadDataWithCollectionView:collectionViewBlock()];
     if (completion) {
         completion(YES);
     }

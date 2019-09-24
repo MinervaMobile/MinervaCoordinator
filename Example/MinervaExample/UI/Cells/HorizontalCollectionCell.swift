@@ -118,7 +118,6 @@ final class HorizontalCollectionCell: DefaultListCell, ListCellHelper {
     collectionView.isScrollEnabled = model.isScrollEnabled
 
     if !model.followsInsets {
-      maxContainerWidthConstraint?.isActive = false
       containerLeadingConstraint?.constant = 0
       containerTrailingConstraint?.constant = 0
     }
