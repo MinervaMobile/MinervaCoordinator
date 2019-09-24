@@ -110,10 +110,9 @@ extension CollectionViewController: ListControllerSizeDelegate {
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    guard model is MarginCellModel else {
-      return nil
-    }
-    let insetAdjustedSize = sizeConstraints.containerSizeAdjustedForInsets
+    guard model is MarginCellModel else { return nil }
+
+    let insetAdjustedSize = sizeConstraints.adjustedContainerSize
     let startingLength = sizeConstraints.scrollDirection == .vertical ? insetAdjustedSize.height : insetAdjustedSize.width
     let dynamicHeight = listController.cellModels.reduce(startingLength) { length, model -> CGFloat in
       let size = listController.size(of: model) ?? CGSize.zero
@@ -121,7 +120,12 @@ extension CollectionViewController: ListControllerSizeDelegate {
       return length - cellLength
     }
 
-    let height = max(20, dynamicHeight / 2)
-    return CGSize(width: sizeConstraints.containerSizeAdjustedForInsets.width, height: height)
+    let height = dynamicHeight / 2
+    guard height > 0 else {
+      collectionView.isScrollEnabled = true
+      return CGSize(width: sizeConstraints.adjustedContainerSize.width, height: 1)
+    }
+    collectionView.isScrollEnabled = false
+    return CGSize(width: sizeConstraints.adjustedContainerSize.width, height: height)
   }
 }

@@ -162,6 +162,8 @@ final class BorderLabelCell: DefaultListCell, ListCellHelper {
 extension BorderLabelCell {
   private func setupConstraints() {
 
+    label.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+    label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
 
     labelLeadingConstraint = label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor)

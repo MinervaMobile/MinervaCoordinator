@@ -10,25 +10,7 @@ import UIKit
 
 import IGListKit
 
-public protocol ListControllerSizeDelegate: class {
-  func listController(
-    _ listController: ListController,
-    sizeFor model: ListCellModel,
-    at indexPath: IndexPath,
-    constrainedTo sizeConstraints: ListSizeConstraints
-  ) -> CGSize?
-}
-
-public protocol ListControllerReorderDelegate: class {
-  func listControllerCompletedMove(
-    _ listController: ListController,
-    for cellModel: ListCellModel,
-    fromIndex: Int,
-    toIndex: Int
-  )
-}
-
-public protocol ListAnimationDelegate: class {
+public protocol ListControllerAnimationDelegate: class {
   func listController(
     _ listController: ListController,
     initialLayoutAttributes attributes: ListViewLayoutAttributes,
@@ -43,18 +25,35 @@ public protocol ListAnimationDelegate: class {
   ) -> ListViewLayoutAttributes?
 }
 
+public protocol ListControllerReorderDelegate: class {
+  func listControllerCompletedMove(
+    _ listController: ListController,
+    for cellModel: ListCellModel,
+    fromIndex: Int,
+    toIndex: Int
+  )
+}
+
+public protocol ListControllerSizeDelegate: class {
+  func listController(
+    _ listController: ListController,
+    sizeFor model: ListCellModel,
+    at indexPath: IndexPath,
+    constrainedTo sizeConstraints: ListSizeConstraints
+  ) -> CGSize?
+}
+
 public final class ListController: NSObject {
 
   public typealias Completion = (Bool) -> Void
 
-  public weak var sizeDelegate: ListControllerSizeDelegate?
+  public weak var animationDelegate: ListControllerAnimationDelegate?
   public weak var reorderDelegate: ListControllerReorderDelegate?
-  public weak var scrollViewDelegate: UIScrollViewDelegate?
-  public weak var animationDelegate: ListAnimationDelegate?
-
-  private let adapter: ListAdapter
-  private var noLongerDisplayingCells = false
-  private var listSectionWrappers: [ListSectionWrapper]
+  public weak var sizeDelegate: ListControllerSizeDelegate?
+  public weak var scrollViewDelegate: UIScrollViewDelegate? {
+    get { self.adapter.scrollViewDelegate }
+    set { self.adapter.scrollViewDelegate = newValue }
+  }
 
   public weak var viewController: UIViewController? {
     get { return self.adapter.viewController }
@@ -70,6 +69,10 @@ public final class ListController: NSObject {
     return listSectionWrappers.map { $0.section }
   }
 
+  private let adapter: ListAdapter
+  private var noLongerDisplayingCells = false
+  private var listSectionWrappers: [ListSectionWrapper]
+
   // MARK: - Initializers
 
   public override init() {
@@ -77,7 +80,6 @@ public final class ListController: NSObject {
     let updater = ListAdapterUpdater()
     self.adapter = ListAdapter(updater: updater, viewController: nil, workingRangeSize: 2)
     super.init()
-    self.adapter.scrollViewDelegate = self
     self.adapter.dataSource = self
     self.adapter.moveDelegate = self
   }
@@ -85,22 +87,12 @@ public final class ListController: NSObject {
   // MARK: - Public
 
   public func reload(_ cellModels: [ListCellModel]) {
-    guard Thread.isMainThread else {
-      DispatchQueue.main.async {
-        self.reload(cellModels)
-      }
-      return
-    }
-    self.adapter.reloadObjects(cellModels.map(ListCellModelWrapper.init))
+    dispatchPrecondition(condition: .onQueue(.main))
+    adapter.reloadObjects(cellModels.map(ListCellModelWrapper.init))
   }
 
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
-    guard Thread.isMainThread else {
-      DispatchQueue.main.async {
-        self.update(with: listSections, animated: animated, completion: completion)
-      }
-      return
-    }
+    dispatchPrecondition(condition: .onQueue(.main))
     #if DEBUG
       for section in listSections {
         var identifiers = [String: ListCellModel]()
@@ -116,66 +108,76 @@ public final class ListController: NSObject {
         }
       }
     #endif
-    self.listSectionWrappers = listSections.map(ListSectionWrapper.init)
-    self.adapter.performUpdates(animated: animated, completion: completion)
+    listSectionWrappers = listSections.map(ListSectionWrapper.init)
+    adapter.performUpdates(animated: animated, completion: completion)
   }
 
   public func willDisplay() {
-    self.displayVisibleCells()
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard noLongerDisplayingCells else { return }
+    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
+    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.willDisplayCell() }
+    noLongerDisplayingCells = false
   }
 
   public func didEndDisplaying() {
-    self.hideVisibleCells()
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard !noLongerDisplayingCells else { return }
+    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
+    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.didEndDisplayingCell() }
+    noLongerDisplayingCells = true
   }
 
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
-    guard let section = self.listSections.firstIndex(where: {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard let section = listSections.firstIndex(where: {
       $0.cellModels.contains(where: { cellModel.isEqual(to: $0) })
     }) else {
       return nil
     }
-    guard let item = self.listSections.at(section)?.cellModels.firstIndex(where: { cellModel.isEqual(to: $0) }) else {
+    guard let item = listSections.at(section)?.cellModels.firstIndex(where: { cellModel.isEqual(to: $0) }) else {
       return nil
     }
     return IndexPath(item: item, section: section)
   }
 
   public var centerCellModel: ListCellModel? {
-    guard let indexPath = self.adapter.collectionView?.centerCellIndexPath,
-      let cellModel = self.cellModel(at: indexPath) else {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard let indexPath = adapter.collectionView?.centerCellIndexPath,
+      let cellModel = cellModel(at: indexPath) else {
         return nil
     }
     return cellModel
   }
 
-  public var cellModels: [ListCellModel] {
-    return self.listSections.flatMap { $0.cellModels }
-  }
-
   public func cellModel(at indexPath: IndexPath) -> ListCellModel? {
-    guard let model = self.listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else {
       return nil
     }
     return model
   }
 
   public func cell(at indexPath: IndexPath) -> UICollectionViewCell? {
-    guard let cell = self.adapter.collectionView?.cellForItem(at: indexPath) else {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard let cell = adapter.collectionView?.cellForItem(at: indexPath) else {
       return nil
     }
     return cell
   }
 
   public func cell(for cellModel: ListCellModel) -> UICollectionViewCell? {
-    guard let indexPath = self.indexPath(for: cellModel),
-      let cell = self.adapter.collectionView?.cellForItem(at: indexPath) else {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard let indexPath = indexPath(for: cellModel),
+      let cell = adapter.collectionView?.cellForItem(at: indexPath) else {
         return nil
     }
     return cell
   }
 
   public func removeCellModel(at indexPath: IndexPath, completion: Completion?) {
-    guard self.listSections.at(indexPath.section)?.cellModels.at(indexPath.item) != nil else {
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard listSections.at(indexPath.section)?.cellModels.at(indexPath.item) != nil else {
       assertionFailure("Could not find model at indexPath")
       return
     }
@@ -190,7 +192,7 @@ public final class ListController: NSObject {
       section.cellModels = cellModels
       listSections[indexPath.section] = section
     }
-    self.update(with: listSections, animated: true, completion: completion)
+    update(with: listSections, animated: true, completion: completion)
   }
 
   public func scrollTo(
@@ -198,7 +200,8 @@ public final class ListController: NSObject {
     scrollPosition: UICollectionView.ScrollPosition,
     animated: Bool
   ) {
-    let section = self.listSections.first(where: {
+    dispatchPrecondition(condition: .onQueue(.main))
+    let section = listSections.first(where: {
       $0.cellModels.contains(where: { $0.identifier == cellModel.identifier })
     })
 
@@ -206,7 +209,7 @@ public final class ListController: NSObject {
       assertionFailure("Section should exist for \(cellModel)")
       return
     }
-    guard let sectionController = self.adapter.sectionController(for: listSection) else {
+    guard let sectionController = adapter.sectionController(for: listSection) else {
       assertionFailure("Section Controller should exist for \(listSection) and \(cellModel)")
       return
     }
@@ -215,7 +218,7 @@ public final class ListController: NSObject {
       return
     }
     let indexPath = IndexPath(item: modelIndex, section: sectionController.section)
-    guard self.collectionView?.isIndexPathAvailable(indexPath) ?? false else {
+    guard collectionView?.isIndexPathAvailable(indexPath) ?? false else {
       assertionFailure("IndexPath should exist for \(cellModel)")
       return
     }
@@ -227,32 +230,31 @@ public final class ListController: NSObject {
   }
 
   public func scroll(to scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
-    guard !self.cellModels.isEmpty else {
-      return
-    }
+    dispatchPrecondition(condition: .onQueue(.main))
+    guard !listSections.isEmpty else { return }
+    let cellModels = listSections.flatMap { $0.cellModels }
+    guard !cellModels.isEmpty else { return }
     let model: ListCellModel?
     switch scrollPosition {
-    case UICollectionView.ScrollPosition.top, UICollectionView.ScrollPosition.left:
-      model = self.cellModels.first
-    case UICollectionView.ScrollPosition.centeredVertically,
-       UICollectionView.ScrollPosition.centeredHorizontally:
-      let middleIndex = self.cellModels.count / 2
-      model = self.cellModels.at(middleIndex)
-    case UICollectionView.ScrollPosition.bottom, UICollectionView.ScrollPosition.right:
-      model = self.cellModels.last
+    case .top, .left:
+      model = cellModels.first
+    case .centeredVertically, .centeredHorizontally:
+      let middleIndex = cellModels.count / 2
+      model = cellModels.at(middleIndex)
+    case .bottom, .right:
+      model = cellModels.last
     default:
-      assertionFailure("Unrecognized scroll position")
-      return
+      model = cellModels.first
     }
 
-    guard let cellModel = model else {
-      return
-    }
-    self.scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
+    guard let cellModel = model else { return }
+
+    scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
   public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
-    let sectionWrapper = self.listSectionWrappers.first(where: {
+    dispatchPrecondition(condition: .onQueue(.main))
+    let sectionWrapper = listSectionWrappers.first(where: {
       $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
     })
 
@@ -284,40 +286,12 @@ public final class ListController: NSObject {
       return nil
     }
   }
-
-  // MARK: - Helpers
-
-  private func displayVisibleCells() {
-    guard Thread.isMainThread else {
-      DispatchQueue.main.async {
-        self.displayVisibleCells()
-      }
-      return
-    }
-    guard noLongerDisplayingCells else { return }
-    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.willDisplayCell() }
-    noLongerDisplayingCells = false
-  }
-
-  private func hideVisibleCells() {
-    guard Thread.isMainThread else {
-      DispatchQueue.main.async {
-        self.hideVisibleCells()
-      }
-      return
-    }
-    guard !noLongerDisplayingCells else { return }
-    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.didEndDisplayingCell() }
-    noLongerDisplayingCells = true
-  }
 }
 
 // MARK: - ListAdapterDataSource
 extension ListController: ListAdapterDataSource {
   public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-    return self.listSectionWrappers
+    return listSectionWrappers
   }
 
   public func listAdapter(
@@ -391,32 +365,5 @@ extension ListController: ListModelSectionControllerDelegate {
     at indexPath: IndexPath
   ) -> ListViewLayoutAttributes? {
     return animationDelegate?.listController(self, finalLayoutAttributes: attributes, for: section, at: indexPath)
-  }
-}
-
-// MARK: - UIScrollViewDelegate
-extension ListController: UIScrollViewDelegate {
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if let delegate = self.scrollViewDelegate,
-      delegate.responds(to: #selector(scrollViewDidScroll(_:))) {
-      delegate.scrollViewDidScroll?(scrollView)
-    }
-  }
-
-  public func scrollViewDidEndDragging(
-    _ scrollView: UIScrollView,
-    willDecelerate decelerate: Bool
-  ) {
-    if let delegate = self.scrollViewDelegate,
-      delegate.responds(to: #selector(scrollViewDidEndDragging(_: willDecelerate:))) {
-      delegate.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
-    }
-  }
-
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if let delegate = self.scrollViewDelegate,
-      delegate.responds(to: #selector(scrollViewDidEndDecelerating(_:))) {
-      delegate.scrollViewDidEndDecelerating?(scrollView)
-    }
   }
 }

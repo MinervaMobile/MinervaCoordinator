@@ -10,10 +10,11 @@ import UIKit
 
 import IGListKit
 
-public typealias ListCollectionViewCell = UICollectionViewCell & ListCell
+// TODO: Remove this dependency on IGListKit's ListBindable
+public typealias ListCollectionViewCell = UICollectionViewCell & ListCell & ListBindable
 
 // MARK: - ListCell
-public protocol ListCell: ListBindable {
+public protocol ListCell {
   var cellModel: ListCellModel? { get }
 
   func willDisplayCell()
@@ -27,7 +28,7 @@ public protocol ListBindableCell: ListCell {
 
 extension ListBindableCell {
   public func bind(_ variable: Observable<UIImage?>, to imageView: UIImageView) {
-    self.bind(variable) { [weak imageView] image in
+    bind(variable) { [weak imageView] image in
       imageView?.image = image
     }
   }

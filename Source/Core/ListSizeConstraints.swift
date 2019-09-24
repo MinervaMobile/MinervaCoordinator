@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public struct ListSizeConstraints: Equatable {
+public struct ListSizeConstraints: Hashable {
 
   public let containerSize: CGSize
   public let sectionConstraints: ListSection.Constraints
@@ -21,9 +21,27 @@ public struct ListSizeConstraints: Equatable {
     self.sectionConstraints = sectionConstraints
   }
 
-  public var containerSizeAdjustedForInsets: CGSize {
-    return containerSize.adjust(for: inset)
+  /// The container size adjusted for the insets, distribution, minimumInteritemSpacing, scroll direction
+  public var adjustedContainerSize: CGSize {
+    let insetSize = containerSize.adjust(for: inset)
+    guard case .equally(let cellsInRow) = distribution else {
+      return insetSize
+    }
+    let rowWidth = insetSize.width
+    let rowHeight = insetSize.height
+    let maxSize: CGSize
+    if scrollDirection == .vertical {
+      let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
+        - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+      maxSize = CGSize(width: equalCellWidth, height: rowHeight)
+    } else {
+      let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
+        - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+      maxSize = CGSize(width: rowWidth, height: equalCellHeight)
+    }
+    return maxSize
   }
+
   public var inset: UIEdgeInsets {
     return sectionConstraints.inset
   }

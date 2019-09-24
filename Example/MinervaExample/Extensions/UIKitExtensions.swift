@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+import Minerva
+
 extension Array where Element: NSAttributedString {
   public func height(constraintedToWidth width: CGFloat) -> CGFloat {
     let mutableString = self.reduce(NSMutableAttributedString()) { mutable, attributed -> NSMutableAttributedString in
@@ -16,6 +18,12 @@ extension Array where Element: NSAttributedString {
       return mutableString
     }
     return mutableString.height(constraintedToWidth: width)
+  }
+}
+
+extension ListController {
+  public var cellModels: [ListCellModel] {
+    return listSections.flatMap { $0.cellModels }
   }
 }
 

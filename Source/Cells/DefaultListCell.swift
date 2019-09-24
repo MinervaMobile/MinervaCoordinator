@@ -176,7 +176,8 @@ open class DefaultListCell: BaseListBindableCell {
 
   open override func layoutSubviews() {
     super.layoutSubviews()
-    // Remove this hack when iPad layout is fixed for cell indentation
+    // TODO: Remove this and use readableContentGuide
+    // https://developer.apple.com/documentation/uikit/uiview/1622644-readablecontentguide
     requiredBottomSeparatorLeadingConstraint?.isActive = frame.width > 800 ? true : false
   }
 
