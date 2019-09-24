@@ -24,7 +24,6 @@ open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindabl
   private(set) public var containerLeadingConstraint: NSLayoutConstraint?
   private(set) public var containerTrailingConstraint: NSLayoutConstraint?
 
-  private(set) public var maxContainerWidthConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorLeadingConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorTrailingConstraint: NSLayoutConstraint?
   private(set) public var topSeparatorHeightConstraint: NSLayoutConstraint?
@@ -141,8 +140,6 @@ open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindabl
     contentView.backgroundColor = model.backgroundColor
     topMargin = model.topMargin
     bottomMargin = model.bottomMargin
-
-    maxContainerWidthConstraint?.isActive = model.constrainToReadablilityWidth
   }
 
   open func willDisplayCell() {
@@ -174,12 +171,6 @@ extension SwipeableCell {
     topSeparatorView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     topSeparatorHeightConstraint = topSeparatorView.heightAnchor.constraint(equalToConstant: 1)
     topSeparatorHeightConstraint?.isActive = true
-    topSeparatorView.anchor(
-      toLeading: contentView.leadingAnchor,
-      top: nil,
-      trailing: contentView.trailingAnchor,
-      bottom: nil
-    )
 
     containerTopConstraint = containerView.topAnchor.constraint(equalTo: topSeparatorView.bottomAnchor)
     containerTopConstraint?.isActive = true
@@ -194,16 +185,10 @@ extension SwipeableCell {
     containerTrailingConstraint?.priority = nonRequiredPriority
     containerTrailingConstraint?.isActive = true
 
-    containerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-
-    maxContainerWidthConstraint =
-      containerView.widthAnchor.constraint(lessThanOrEqualTo: contentView.readableContentGuide.widthAnchor)
-    maxContainerWidthConstraint?.isActive = true
-
     bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     bottomSeparatorHeightConstraint = bottomSeparatorView.heightAnchor.constraint(equalToConstant: 1)
     bottomSeparatorHeightConstraint?.isActive = true
-    containerBottomConstraint = bottomSeparatorView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+    containerBottomConstraint = bottomSeparatorView.topAnchor.constraint(equalTo: containerView.bottomAnchor)
     containerBottomConstraint?.isActive = true
 
     topSeparatorLeadingConstraint = topSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)

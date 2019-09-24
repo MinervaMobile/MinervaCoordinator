@@ -28,7 +28,7 @@ final class WorkoutVC: UIViewController {
   private let listController = ListController()
 
   private let collectionView: UICollectionView = {
-    let layout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
+    let layout = ListViewLayout(stickyHeaders: true, topContentInset: 0, stretchToEdge: true)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.contentInsetAdjustmentBehavior = .never
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)

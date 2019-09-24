@@ -44,6 +44,8 @@ internal protocol ListModelSectionControllerDelegate: class {
 internal class ListModelSectionController: ListBindingSectionController<ListSectionWrapper> {
   internal weak var delegate: ListModelSectionControllerDelegate?
 
+  private var cachedCells = [String: ListCollectionViewCell]()
+
   internal override init() {
     super.init()
     self.dataSource = self
@@ -74,8 +76,14 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
   internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
-    let collectionCell = model.cellType.init(frame: .zero)
+    let cellType = String(describing: model.cellType)
+    let collectionCell = cachedCells[cellType] ?? model.cellType.init(frame: .zero)
     collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+
+    defer {
+      collectionCell.prepareForReuse()
+      cachedCells[cellType] = collectionCell
+    }
 
     switch sizeConstraints.distribution {
     case .equally, .entireRow:
@@ -360,7 +368,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     }
 
     let cell = self.supplementaryView(for: cellModel, index: index, elementKind: elementKind)
-    cell.bindViewModel(cellModel)
+    cell.bindViewModel(ListCellModelWrapper(model: cellModel))
     return cell
   }
 

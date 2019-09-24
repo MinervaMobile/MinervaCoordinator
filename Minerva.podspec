@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Minerva"
-  s.version      = "1.4.11"
+  s.version      = "2.0.0"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary      = "This framework is a lightweight wrapper around IGListKit."
@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Source/Core/*.swift'
+    ss.source_files = 'Source/Core/**/*.swift'
 
     ss.dependency 'IGListKit', '~> 3.4.0'
 

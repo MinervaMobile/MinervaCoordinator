@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,7 +12,6 @@
 #import <vector>
 
 #import <IGListKit/IGListCompatibility.h>
-#import <IGListKit/IGListMacros.h>
 #import <IGListKit/IGListExperiments.h>
 
 #import "IGListIndexPathResultInternal.h"
@@ -87,7 +86,7 @@ static NSArray<NSIndexPath *> *indexPathsAndPopulateMap(__unsafe_unretained NSAr
     [array enumerateObjectsUsingBlock:^(id<IGListDiffable> obj, NSUInteger idx, BOOL *stop) {
         NSIndexPath *path = [NSIndexPath indexPathForItem:idx inSection:section];
         [paths addObject:path];
-        [map setObject:paths forKey:[obj diffIdentifier]];
+        [map setObject:path forKey:[obj diffIdentifier]];
     }];
     return paths;
 }
@@ -237,9 +236,9 @@ static id IGListDiffing(BOOL returnIndexPaths,
         mDeletes = [NSMutableArray<NSIndexPath *> new];
     } else {
         mInserts = [NSMutableIndexSet new];
+        mMoves = [NSMutableArray<IGListMoveIndex *> new];
         mUpdates = [NSMutableIndexSet new];
         mDeletes = [NSMutableIndexSet new];
-        mMoves = [NSMutableArray<IGListMoveIndex *> new];
     }
 
     // track offsets from deleted items to calculate where items have moved
@@ -298,8 +297,8 @@ static id IGListDiffing(BOOL returnIndexPaths,
     }
 
     NSCAssert((oldCount + [mInserts count] - [mDeletes count]) == newCount,
-              @"Sanity check failed applying %li inserts and %lu deletes to old count %lu equaling new count %li",
-              (long)oldCount, (unsigned long)[mInserts count], (unsigned long)[mDeletes count], (long)newCount);
+              @"Sanity check failed applying %lu inserts and %lu deletes to old count %li equaling new count %li",
+              (unsigned long)[mInserts count], (unsigned long)[mDeletes count], (long)oldCount, (long)newCount);
 
     if (returnIndexPaths) {
         return [[IGListIndexPathResult alloc] initWithInserts:mInserts

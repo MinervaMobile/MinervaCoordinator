@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,21 +43,41 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
     }
 }
 
-/**
- Converts all section moves that are also reloaded, or have index path inserts, deletes, or reloads into a section
- delete + insert in order to avoid UICollectionView heap corruptions, exceptions, and animation/snapshot bugs.
- */
 - (instancetype)initWithInsertSections:(NSIndexSet *)insertSections
                         deleteSections:(NSIndexSet *)deleteSections
                           moveSections:(NSSet<IGListMoveIndex *> *)moveSections
                       insertIndexPaths:(NSArray<NSIndexPath *> *)insertIndexPaths
                       deleteIndexPaths:(NSArray<NSIndexPath *> *)deleteIndexPaths
+                      updateIndexPaths:(NSArray<NSIndexPath *> *)updateIndexPaths
                         moveIndexPaths:(NSArray<IGListMoveIndexPath *> *)moveIndexPaths {
+    return [self initWithInsertSections:insertSections
+                         deleteSections:deleteSections
+                           moveSections:moveSections
+                       insertIndexPaths:insertIndexPaths
+                       deleteIndexPaths:deleteIndexPaths
+                       updateIndexPaths:updateIndexPaths
+                         moveIndexPaths:moveIndexPaths
+                  fixIndexPathImbalance:NO];
+}
+
+/**
+ Converts all section moves that are also reloaded, or have index path inserts, deletes, or reloads into a section
+ delete + insert in order to avoid UICollectionView heap corruptions, exceptions, and animation/snapshot bugs.
+ */
+- (instancetype)initWithInsertSections:(nonnull NSIndexSet *)insertSections
+                        deleteSections:(nonnull NSIndexSet *)deleteSections
+                          moveSections:(nonnull NSSet<IGListMoveIndex *> *)moveSections
+                      insertIndexPaths:(nonnull NSArray<NSIndexPath *> *)insertIndexPaths
+                      deleteIndexPaths:(nonnull NSArray<NSIndexPath *> *)deleteIndexPaths
+                      updateIndexPaths:(nonnull NSArray<NSIndexPath *> *)updateIndexPaths
+                        moveIndexPaths:(nonnull NSArray<IGListMoveIndexPath *> *)moveIndexPaths
+                 fixIndexPathImbalance:(BOOL)fixIndexPathImbalance {
     IGParameterAssert(insertSections != nil);
     IGParameterAssert(deleteSections != nil);
     IGParameterAssert(moveSections != nil);
     IGParameterAssert(insertIndexPaths != nil);
     IGParameterAssert(deleteIndexPaths != nil);
+    IGParameterAssert(updateIndexPaths != nil);
     IGParameterAssert(moveIndexPaths != nil);
     if (self = [super init]) {
         NSMutableSet<IGListMoveIndex *> *mMoveSections = [moveSections mutableCopy];
@@ -86,11 +106,19 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
             }
         }
 
-        NSMutableArray<NSIndexPath *> *mInsertIndexPaths = [insertIndexPaths mutableCopy];
-
         // avoid a flaky UICollectionView bug when deleting from the same index path twice
         // exposes a possible data source inconsistency issue
         NSMutableArray<NSIndexPath *> *mDeleteIndexPaths = [[[NSSet setWithArray:deleteIndexPaths] allObjects] mutableCopy];
+
+        NSMutableArray<NSIndexPath *> *mInsertIndexPaths;
+        if (fixIndexPathImbalance) {
+            // Since we remove duplicate deletes (see above) we also need to remove inserts to keep the same insert/delete
+            // balance. For example, if we reload (insert & delete) the same NSIndexPath twice, we would otherwise end up
+            // with 2 inserts and 1 delete.
+            mInsertIndexPaths = [[[NSSet setWithArray:insertIndexPaths] allObjects] mutableCopy];
+        } else {
+            mInsertIndexPaths = [insertIndexPaths mutableCopy];
+        }
 
         // avoids a bug where a cell is animated twice and one of the snapshot cells is never removed from the hierarchy
         [IGListBatchUpdateData _cleanIndexPathsWithMap:fromMap moves:mMoveSections indexPaths:mDeleteIndexPaths deletes:mDeleteSections inserts:mInsertSections];
@@ -120,15 +148,32 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
         _moveSections = [mMoveSections copy];
         _deleteIndexPaths = [mDeleteIndexPaths copy];
         _insertIndexPaths = [mInsertIndexPaths copy];
+        _updateIndexPaths = [updateIndexPaths copy];
         _moveIndexPaths = [mMoveIndexPaths copy];
     }
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (object == self) {
+        return YES;
+    }
+    if ([object isKindOfClass:[IGListBatchUpdateData class]]) {
+        return ([self.insertSections isEqual:[object insertSections]]
+                && [self.deleteSections isEqual:[object deleteSections]]
+                && [self.moveSections isEqual:[object moveSections]]
+                && [self.insertIndexPaths isEqual:[object insertIndexPaths]]
+                && [self.deleteIndexPaths isEqual:[object deleteIndexPaths]]
+                && [self.updateIndexPaths isEqual:[object updateIndexPaths]]
+                && [self.moveIndexPaths isEqual:[object moveIndexPaths]]);
+    }
+    return NO;
+}
+
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p; deleteSections: %lu; insertSections: %lu; moveSections: %lu; deleteIndexPaths: %lu; insertIndexPaths: %lu;>",
+    return [NSString stringWithFormat:@"<%@ %p; deleteSections: %lu; insertSections: %lu; moveSections: %lu; deleteIndexPaths: %lu; insertIndexPaths: %lu; updateIndexPaths: %lu>",
             NSStringFromClass(self.class), self, (unsigned long)self.deleteSections.count, (unsigned long)self.insertSections.count, (unsigned long)self.moveSections.count,
-            (unsigned long)self.deleteIndexPaths.count, (unsigned long)self.insertIndexPaths.count];
+            (unsigned long)self.deleteIndexPaths.count, (unsigned long)self.insertIndexPaths.count, (unsigned long)self.updateIndexPaths.count];
 }
 
 @end
