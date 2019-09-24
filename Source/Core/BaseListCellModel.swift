@@ -8,18 +8,15 @@
 import Foundation
 import UIKit
 
-import IGListKit
-
 open class BaseListCellModel: ListCellModel {
 
   public init() { }
 
   open var description: String {
-    return "[\(String(describing: type(of: self))) \(self.identifier)]"
+    return "[\(String(describing: type(of: self))) \(identifier)]"
   }
 
   // MARK: - ListCellModel
-  public weak var cell: ListCollectionViewCell?
 
   open var reorderable: Bool {
     return false
@@ -50,7 +47,7 @@ open class BaseListCellModel: ListCellModel {
   }
 
   open func isEqual(to model: ListCellModel) -> Bool {
-    return self.identifier == model.identifier
+    return identifier == model.identifier
   }
   open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     return .autolayout

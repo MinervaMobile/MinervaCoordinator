@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-import IGListKit
-
 public enum ListCellSize {
   case autolayout
   case explicit(size: CGSize)

@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 
+import IGListKit
 import SwipeCellKit
 
 open class SwipeableCellModel: DefaultListCellModel {
 
 }
 
-open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell {
+open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindable {
   public private(set) var disposeBag = DisposeBag()
   open private(set) var cellModel: ListCellModel?
 

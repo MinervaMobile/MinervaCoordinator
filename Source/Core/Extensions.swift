@@ -25,6 +25,14 @@ extension CGSize {
   }
 }
 
+extension CGSize: Hashable {
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(width)
+    hasher.combine(height)
+  }
+}
+
 extension Sequence {
   internal func asMap<T>(converter: @escaping (Iterator.Element) -> T) -> [T: Iterator.Element] {
     var map: [T: Iterator.Element] = [:]
@@ -54,6 +62,18 @@ extension UICollectionView {
         return false
     }
     return true
+  }
+}
+
+extension UICollectionView.ScrollDirection: Hashable { }
+
+extension UIEdgeInsets: Hashable {
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(top)
+    hasher.combine(left)
+    hasher.combine(bottom)
+    hasher.combine(right)
   }
 }
 

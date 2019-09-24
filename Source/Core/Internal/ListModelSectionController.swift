@@ -10,50 +10,6 @@ import UIKit
 
 import IGListKit
 
-internal class ListCellModelWrapper: NSObject {
-  internal let model: ListCellModel
-
-  internal init(model: ListCellModel) {
-    self.model = model
-  }
-}
-
-// MARK: - ListDiffable
-extension ListCellModelWrapper: ListDiffable {
-  internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-    guard let wrapper = object as? ListCellModelWrapper else {
-      return false
-    }
-    return model.isEqual(to: wrapper.model)
-  }
-
-  internal func diffIdentifier() -> NSObjectProtocol {
-    return model.identifier as NSString
-  }
-}
-
-internal class ListSectionWrapper: NSObject {
-  internal var section: ListSection
-
-  internal init(section: ListSection) {
-    self.section = section
-  }
-}
-
-// MARK: - ListDiffable
-extension ListSectionWrapper: ListDiffable {
-  internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-    guard let wrapper = object as? ListSectionWrapper else {
-      return false
-    }
-    return section == wrapper.section
-  }
-
-  internal func diffIdentifier() -> NSObjectProtocol {
-    return section.identifier as NSString
-  }
-}
-
 internal protocol ListModelSectionControllerDelegate: class {
 
   func sectionController(
@@ -116,47 +72,26 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
   }
 
   internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
-    let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
-    let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
-    let isVertical = sizeConstraints.scrollDirection == .vertical
+    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
     let collectionCell = model.cellType.init(frame: .zero)
     collectionCell.bindViewModel(ListCellModelWrapper(model: model))
 
     switch sizeConstraints.distribution {
-    case .equally(let cellsInRow):
-      let maxSize: CGSize
-      if isVertical {
-        let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
-          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
-        maxSize = CGSize(width: equalCellWidth, height: rowHeight)
-      } else {
-        let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
-          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
-        maxSize = CGSize(width: rowWidth, height: equalCellHeight)
-      }
+    case .equally, .entireRow:
+      let isVertical = sizeConstraints.scrollDirection == .vertical
       let size = collectionCell.systemLayoutSizeFitting(
-        maxSize,
+        adjustedContainerSize,
         withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
         verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
       if isVertical {
-        return CGSize(width: maxSize.width, height: size.height)
+        return CGSize(width: adjustedContainerSize.width, height: size.height)
       } else {
-        return CGSize(width: size.width, height: maxSize.height)
-      }
-    case .entireRow:
-      let size = collectionCell.systemLayoutSizeFitting(
-        sizeConstraints.containerSizeAdjustedForInsets,
-        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
-        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
-      if isVertical {
-        return CGSize(width: sizeConstraints.containerSize.width, height: size.height)
-      } else {
-        return CGSize(width: size.width, height: sizeConstraints.containerSize.height)
+        return CGSize(width: size.width, height: adjustedContainerSize.height)
       }
     case .proportionally:
       let size = collectionCell.systemLayoutSizeFitting(
-        sizeConstraints.containerSizeAdjustedForInsets,
+        adjustedContainerSize,
         withHorizontalFittingPriority: .fittingSizeLevel,
         verticalFittingPriority: .fittingSizeLevel)
       return size
@@ -164,49 +99,28 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
   }
 
   internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
-    let rowWidth = sizeConstraints.containerSizeAdjustedForInsets.width
-    let rowHeight = sizeConstraints.containerSizeAdjustedForInsets.height
+    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
+    let modelSize = model.size(constrainedTo: adjustedContainerSize)
+
+    guard case .explicit(let size) = modelSize else {
+      return modelSize
+    }
+
     switch sizeConstraints.distribution {
-    case .equally(let cellsInRow):
-      let maxSize: CGSize
+    case .equally, .entireRow:
       if sizeConstraints.scrollDirection == .vertical {
-        let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
-          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
-        maxSize = CGSize(width: equalCellWidth, height: rowHeight)
+        return .explicit(size: CGSize(width: adjustedContainerSize.width, height: size.height))
       } else {
-        let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
-          - (sizeConstraints.minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
-        maxSize = CGSize(width: rowWidth, height: equalCellHeight)
-      }
-      switch model.size(constrainedTo: maxSize) {
-      case .autolayout:
-        return .autolayout
-      case .explicit(let size):
-        if sizeConstraints.scrollDirection == .vertical {
-          return .explicit(size: CGSize(width: maxSize.width, height: size.height))
-        } else {
-          return .explicit(size: CGSize(width: size.width, height: maxSize.height))
-        }
-      case .relative:
-        return .relative
-      }
-    case .entireRow:
-      switch model.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets) {
-      case .autolayout:
-        return .autolayout
-      case .explicit(let size):
-        if sizeConstraints.scrollDirection == .vertical {
-          return .explicit(size: CGSize(width: rowWidth, height: size.height))
-        } else {
-          return .explicit(size: CGSize(width: size.width, height: rowHeight))
-        }
-      case .relative:
-        return .relative
+        return .explicit(size: CGSize(width: size.width, height: adjustedContainerSize.height))
       }
     case .proportionally:
-      return model.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets)
+      return modelSize
     }
   }
+}
+
+// MARK: - ListBindingSectionController
+extension ListModelSectionController {
 
   internal override func canMoveItem(at index: Int) -> Bool {
     guard let section = self.object?.section else { return false }
@@ -227,8 +141,10 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
       toIndex: destinationIndex
     )
   }
+}
 
-  // MARK: - Helpers
+// MARK: - Private
+extension ListModelSectionController {
 
   private func cell(for viewModel: Any, index: Int) -> ListCollectionViewCell {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
@@ -312,7 +228,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
 
 // MARK: - ListBindingSectionControllerDataSource
 extension ListModelSectionController: ListBindingSectionControllerDataSource {
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     viewModelsFor object: Any
   ) -> [ListDiffable] {
@@ -320,7 +236,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
     return section.cellModels.map(ListCellModelWrapper.init)
   }
 
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     cellForViewModel viewModel: Any,
     at index: Int
@@ -328,7 +244,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
     return cell(for: viewModel, index: index)
   }
 
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     sizeForViewModel viewModel: Any,
     at index: Int
@@ -344,7 +260,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
 
 // MARK: - ListBindingSectionControllerSelectionDelegate
 extension ListModelSectionController: ListBindingSectionControllerSelectionDelegate {
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didSelectItemAt index: Int,
     viewModel: Any
@@ -358,19 +274,19 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       model.selected(at: indexPath)
     }
   }
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didDeselectItemAt index: Int,
     viewModel: Any
   ) {
   }
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didHighlightItemAt index: Int,
     viewModel: Any
   ) {
   }
-  public func sectionController(
+  internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didUnhighlightItemAt index: Int,
     viewModel: Any
@@ -380,13 +296,13 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
 
 // MARK: - ListDisplayDelegate
 extension ListModelSectionController: ListDisplayDelegate {
-  public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
+  internal func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
   }
 
-  public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
+  internal func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
   }
 
-  public func listAdapter(
+  internal func listAdapter(
     _ listAdapter: ListAdapter,
     willDisplay sectionController: ListSectionController,
     cell: UICollectionViewCell,
@@ -399,7 +315,7 @@ extension ListModelSectionController: ListDisplayDelegate {
     minervaCell.willDisplayCell()
   }
 
-  public func listAdapter(
+  internal func listAdapter(
     _ listAdapter: ListAdapter,
     didEndDisplaying sectionController: ListSectionController,
     cell: UICollectionViewCell,
@@ -416,7 +332,7 @@ extension ListModelSectionController: ListDisplayDelegate {
 // MARK: - ListSupplementaryViewSource
 extension ListModelSectionController: ListSupplementaryViewSource {
 
-  public func supportedElementKinds() -> [String] {
+  internal func supportedElementKinds() -> [String] {
     var elementKinds = [String]()
     if self.object?.section.headerModel != nil {
       elementKinds.append(UICollectionView.elementKindSectionHeader)
@@ -427,7 +343,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     return elementKinds
   }
 
-  public func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
+  internal func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
@@ -448,7 +364,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     return cell
   }
 
-  public func sizeForSupplementaryView(ofKind elementKind: String, at index: Int) -> CGSize {
+  internal func sizeForSupplementaryView(ofKind elementKind: String, at index: Int) -> CGSize {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
@@ -470,7 +386,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
       return defaultSize
     }
 
-    let size = cellModel.size(constrainedTo: sizeConstraints.containerSizeAdjustedForInsets)
+    let size = cellModel.size(constrainedTo: sizeConstraints.containerSize)
     switch size {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
@@ -485,7 +401,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
 
 // MARK: - IGListTransitionDelegate
 extension ListModelSectionController: IGListTransitionDelegate {
-  public func listAdapter(
+  internal func listAdapter(
     _ listAdapter: ListAdapter,
     customizedInitialLayoutAttributes attributes: UICollectionViewLayoutAttributes,
     sectionController: ListSectionController,
@@ -506,7 +422,7 @@ extension ListModelSectionController: IGListTransitionDelegate {
     }
     return customAttributes
   }
-  public func listAdapter(
+  internal func listAdapter(
     _ listAdapter: ListAdapter,
     customizedFinalLayoutAttributes attributes: UICollectionViewLayoutAttributes,
     sectionController: ListSectionController,
