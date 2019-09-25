@@ -32,12 +32,12 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
     distribution: ListSection.Distribution,
     listController: ListController
   ) {
+    assert(cellModels.isNotEmpty, "Horizontal Scroll list should have at least 1 model")
     self.cellIdentifier = identifier
     self.listController = listController
     self.section = ListSection(cellModels: cellModels, identifier: "\(identifier)-section")
     super.init()
     section.constraints.distribution = distribution
-    assert(cellModels.isNotEmpty, "Horizontal Scroll list should have at least 1 model")
   }
 
   // MARK: - BaseListCellModel
