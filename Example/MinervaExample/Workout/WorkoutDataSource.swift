@@ -15,7 +15,7 @@ protocol WorkoutDataSourceDelegate: AnyObject {
   func workoutDataSource(_ workoutDataSource: WorkoutDataSource, selected action: WorkoutDataSource.Action)
 }
 
-final class WorkoutDataSource {
+final class WorkoutDataSource: BaseDataSource {
 
   enum Action {
     case delete(workout: Workout)
@@ -25,33 +25,36 @@ final class WorkoutDataSource {
 
   private let dataManager: DataManager
   private let userID: String
+  public var filter: WorkoutFilter
 
   // MARK: - Lifecycle
 
   init(userID: String, dataManager: DataManager) {
     self.userID = userID
     self.dataManager = dataManager
+    self.filter = WorkoutFilterProto()
   }
 
   // MARK: - Public
 
   func loadTitle() -> Promise<String> {
-    return dataManager.loadUser(withID: userID).then { user -> Promise<String> in
-      guard let user = user else { return .init(error: SystemError.doesNotExist) }
-      return .value(user.email)
+    return dataManager.loadUser(withID: userID).map { user -> String in
+      guard let user = user else { throw SystemError.doesNotExist }
+      return user.email
     }
   }
 
-  func loadSections(with filter: WorkoutFilter) -> Promise<[ListSection]> {
-    return when(
+  func reload(animated: Bool) {
+    let sectionsPromise = when(
       fulfilled: dataManager.loadWorkouts(forUserID: userID),
       dataManager.loadUser(withID: userID)
-    ).then { [weak self] workouts, user -> Promise<[ListSection]> in
-      guard let strongSelf = self else { return .init(error: SystemError.cancelled) }
-      guard let user = user else { return .init(error: SystemError.doesNotExist) }
-      let sections = strongSelf.createSections(with: filter, workouts: workouts, user: user)
-      return .value(sections)
+    ).map { [weak self] workouts, user -> [ListSection] in
+      guard let strongSelf = self else { throw SystemError.cancelled }
+      guard let user = user else { throw SystemError.doesNotExist }
+      let sections = strongSelf.createSections(with: strongSelf.filter, workouts: workouts, user: user)
+      return sections
     }
+    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
   }
 
   // MARK: - Private

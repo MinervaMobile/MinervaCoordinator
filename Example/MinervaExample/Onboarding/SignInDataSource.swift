@@ -15,7 +15,7 @@ protocol SignInDataSourceDelegate: AnyObject {
   func signInDataSource(_ signInDataSource: SignInDataSource, selected action: SignInDataSource.Action)
 }
 
-final class SignInDataSource: CollectionViewControllerDataSource {
+final class SignInDataSource: BaseDataSource {
   private static let emailCellModelIdentifier = "emailInputCellModel"
   private static let passwordCellModelIdentifier = "passwordInputCellModel"
 
@@ -40,6 +40,7 @@ final class SignInDataSource: CollectionViewControllerDataSource {
 
   private var email: String?
   private var password: String?
+
   let mode: Mode
 
   // MARK: - Lifecycle
@@ -50,8 +51,11 @@ final class SignInDataSource: CollectionViewControllerDataSource {
 
   // MARK: - Public
 
-  func loadSections() -> Promise<[ListSection]> {
-    return .value([createSection()])
+  func reload(animated: Bool) {
+    updateDelegate?.dataSourceStartedUpdate(self)
+    let section = createSection()
+    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
+    updateDelegate?.dataSourceCompletedUpdate(self)
   }
 
   // MARK: - Private

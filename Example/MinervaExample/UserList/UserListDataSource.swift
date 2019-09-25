@@ -15,7 +15,7 @@ protocol UserListDataSourceDelegate: AnyObject {
   func userListDataSource(_ userListDataSource: UserListDataSource, selected action: UserListDataSource.Action)
 }
 
-final class UserListDataSource: CollectionViewControllerDataSource {
+final class UserListDataSource: BaseDataSource {
   enum Action {
     case delete(user: User)
     case edit(user: User)
@@ -34,11 +34,12 @@ final class UserListDataSource: CollectionViewControllerDataSource {
 
   // MARK: - Public
 
-  func loadSections() -> Promise<[ListSection]> {
-    return dataManager.loadUsers().then { [weak self] users -> Promise<[ListSection]> in
-      guard let strongSelf = self else { return .init(error: SystemError.cancelled) }
-      return .value([strongSelf.createSection(with: users.sorted { $0.email < $1.email })])
+  func reload(animated: Bool) {
+    let sectionsPromise = dataManager.loadUsers().map { [weak self] users -> [ListSection] in
+      guard let strongSelf = self else { throw SystemError.cancelled }
+      return [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
     }
+    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
   }
 
   // MARK: - Private

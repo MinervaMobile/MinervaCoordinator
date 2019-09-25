@@ -12,10 +12,6 @@ open class BaseListCellModel: ListCellModel {
 
   public init() { }
 
-  open var description: String {
-    return "[\(String(describing: type(of: self))) \(identifier)]"
-  }
-
   // MARK: - ListCellModel
 
   open var reorderable: Bool {

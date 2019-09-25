@@ -15,7 +15,7 @@ protocol FilterDataSourceDelegate: AnyObject {
   func filterDataSource(_ filterDataSource: FilterDataSource, selected action: FilterDataSource.Action)
 }
 
-final class FilterDataSource: CollectionViewControllerDataSource {
+final class FilterDataSource: BaseDataSource {
   enum Action {
     case edit(filter: WorkoutFilter, type: FilterType)
   }
@@ -32,8 +32,11 @@ final class FilterDataSource: CollectionViewControllerDataSource {
 
   // MARK: - Public
 
-  func loadSections() -> Promise<[ListSection]> {
-    return .value([createSection()])
+  func reload(animated: Bool) {
+    updateDelegate?.dataSourceStartedUpdate(self)
+    let section = createSection()
+    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
+    updateDelegate?.dataSourceCompletedUpdate(self)
   }
 
   // MARK: - Private

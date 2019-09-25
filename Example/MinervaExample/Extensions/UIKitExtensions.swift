@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
+import PromiseKit
 
 extension Array where Element: NSAttributedString {
   public func height(constraintedToWidth width: CGFloat) -> CGFloat {
@@ -18,6 +19,28 @@ extension Array where Element: NSAttributedString {
       return mutableString
     }
     return mutableString.height(constraintedToWidth: width)
+  }
+}
+
+extension DataSourceUpdateDelegate {
+  public func dataSource(
+    _ dataSource: DataSource,
+    process promise: Promise<[ListSection]>,
+    animated: Bool,
+    completion: Completion?
+  ) {
+    dataSourceStartedUpdate(dataSource)
+    promise.done { [weak self, weak dataSource] sections in
+      guard let strongSelf = self, let strongDataSource = dataSource else { return }
+      strongSelf.dataSource(strongDataSource, update: sections, animated: animated, completion: completion)
+    }.catch { [weak self, weak dataSource] error in
+      guard let strongSelf = self, let strongDataSource = dataSource else { return }
+      strongSelf.dataSource(strongDataSource, encountered: error)
+      completion?(false)
+    }.finally { [weak self, weak dataSource] in
+      guard let strongSelf = self, let strongDataSource = dataSource else { return }
+      strongSelf.dataSourceCompletedUpdate(strongDataSource)
+    }
   }
 }
 
@@ -76,33 +99,6 @@ extension String {
   }
 }
 
-extension UIAlertController {
-
-  static func display(_ error: Error, defaultTitle: String, parentVC: UIViewController?) {
-    self.display(error, defaultTitle: defaultTitle, defaultMessage: nil, parentVC: parentVC)
-  }
-
-  static func display(_ error: Error, defaultTitle: String, defaultMessage: String?, parentVC: UIViewController?) {
-    switch error {
-    case SystemError.cancelled: return
-    default: break
-    }
-    var message = defaultMessage
-    if let localError = error as? LocalizedError {
-      message = message ?? localError.errorDescription
-    }
-    self.display(title: defaultTitle, message: message, parentVC: parentVC)
-  }
-
-  static func display(title: String, message: String?, parentVC: UIViewController?) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alertController.addAction(okAction)
-
-    parentVC?.present(alertController, animated: true, completion: nil)
-  }
-}
 extension UIColor {
 
   public static var controllers: UIColor {
@@ -337,5 +333,26 @@ extension UIViewController {
 
   private var tabBarManager: TabBarManager? {
     return navigationController?.parent as? TabBarManager
+  }
+
+  func alert(_ error: Error, title: String, message: String? = nil) {
+    switch error {
+    case SystemError.cancelled: return
+    default: break
+    }
+    var message = message
+    if let localError = error as? LocalizedError {
+      message = message ?? localError.errorDescription
+    }
+    alert(title: title, message: message)
+  }
+
+  func alert(title: String, message: String?) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alertController.addAction(okAction)
+
+    present(alertController, animated: true, completion: nil)
   }
 }

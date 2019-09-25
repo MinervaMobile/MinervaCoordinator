@@ -23,6 +23,12 @@ public protocol ListCellModel: CustomStringConvertible {
   func size(constrainedTo containerSize: CGSize) -> ListCellSize
 }
 
+extension ListCellModel {
+  public var description: String {
+    return "[\(String(describing: type(of: self))) \(identifier)]"
+  }
+}
+
 // MARK: - ListSelectableCellModel
 public protocol ListSelectableCellModelWrapper {
   func selected(at indexPath: IndexPath)

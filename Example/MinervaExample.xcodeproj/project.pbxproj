@@ -10,6 +10,20 @@
 		26CD12BC8E33D2B3DB8C382D /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */; };
 		45D271D1F7A38F4925EA9D09 /* Pods_MinervaExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028490B65F4CF7741CF4C814 /* Pods_MinervaExampleUITests.framework */; };
 		B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */; };
+		F501F88A233BE71A00012C5E /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F882233BE1BC00012C5E /* DataSource.swift */; };
+		F501F88B233BE71A00012C5E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F886233BE23700012C5E /* BaseViewController.swift */; };
+		F501F88C233BE71A00012C5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F888233BE25C00012C5E /* ViewController.swift */; };
+		F501F88D233BE71A00012C5E /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F880233BE18800012C5E /* BaseCoordinator.swift */; };
+		F501F88E233BE71A00012C5E /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F884233BE1E700012C5E /* BaseDataSource.swift */; };
+		F501F88F233BE71A00012C5E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
+		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
+		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
+		F501F895233BFF7000012C5E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
+		F501F896233BFF7000012C5E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
+		F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F897233C016F00012C5E /* SettingsCoordinator.swift */; };
+		F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F899233C05E500012C5E /* UserListCoordinator.swift */; };
+		F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
+		F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89D233C0E5900012C5E /* FilterCoordinator.swift */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
 		F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */; };
@@ -86,9 +100,9 @@
 		F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
 		F576F8EB226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
 		F576F8EC226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
-		F576F8F4226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
-		F576F8F5226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
-		F576F8F6226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */; };
+		F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
+		F576F8F5226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
+		F576F8F6226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
 		F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
 		F576F8F8226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
 		F576F8F9226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
@@ -167,9 +181,6 @@
 		F576F980226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
 		F576F981226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
 		F576F982226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
-		F576F983226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
-		F576F984226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
-		F576F985226E16970015D14E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
 		F576F98C226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
 		F576F98D226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
 		F576F98E226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
@@ -257,6 +268,17 @@
 		A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExample.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExample/Pods-MinervaExample.debug.xcconfig"; sourceTree = "<group>"; };
 		F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		F501F882233BE1BC00012C5E /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		F501F884233BE1E700012C5E /* BaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
+		F501F886233BE23700012C5E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		F501F888233BE25C00012C5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F501F890233BE77200012C5E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		F501F892233BF47700012C5E /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
+		F501F897233C016F00012C5E /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		F501F899233C05E500012C5E /* UserListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoordinator.swift; sourceTree = "<group>"; };
+		F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCoordinator.swift; sourceTree = "<group>"; };
+		F501F89D233C0E5900012C5E /* FilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCoordinator.swift; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5587D1922502B11004223E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -301,7 +323,7 @@
 		F576F8D5226DF04F0015D14E /* SystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemError.swift; sourceTree = "<group>"; };
 		F576F8D6226DF04F0015D14E /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManagerFactory.swift; sourceTree = "<group>"; };
-		F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeDataSource.swift; sourceTree = "<group>"; };
 		F576F8F3226DF0B40015D14E /* SignInDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInDataSource.swift; sourceTree = "<group>"; };
 		F576F8FE226DF1020015D14E /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
@@ -419,6 +441,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F501F894233BFF6400012C5E /* UserList */ = {
+			isa = PBXGroup;
+			children = (
+				F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */,
+				F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */,
+				F576F988226E16BB0015D14E /* UserListDataSource.swift */,
+				F576F989226E16BB0015D14E /* UserListVC.swift */,
+				F501F899233C05E500012C5E /* UserListCoordinator.swift */,
+			);
+			path = UserList;
+			sourceTree = "<group>";
+		};
 		F5587D0622502B10004223E5 = {
 			isa = PBXGroup;
 			children = (
@@ -457,6 +491,7 @@
 				F576F86D226DEEF10015D14E /* TestData */,
 				F576F932226E16960015D14E /* UI */,
 				F576F986226E16BB0015D14E /* User */,
+				F501F894233BFF6400012C5E /* UserList */,
 				F576F90B226E16820015D14E /* Workout */,
 			);
 			path = MinervaExample;
@@ -499,7 +534,6 @@
 			children = (
 				F5587D1222502B10004223E5 /* AppDelegate.swift */,
 				F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */,
-				F576F86B226DEE740015D14E /* UserCoordinator.swift */,
 			);
 			path = Lifecycle;
 			sourceTree = "<group>";
@@ -588,8 +622,9 @@
 		F576F8F0226DF0B40015D14E /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				F576F8F1226DF0B40015D14E /* OnboardingCoordinator.swift */,
+				F501F892233BF47700012C5E /* SignInCoordinator.swift */,
 				F576F8F3226DF0B40015D14E /* SignInDataSource.swift */,
+				F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */,
 				F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */,
 			);
 			path = Onboarding;
@@ -608,6 +643,7 @@
 			children = (
 				F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */,
 				F576F903226E165E0015D14E /* FilterDataSource.swift */,
+				F501F89D233C0E5900012C5E /* FilterCoordinator.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -618,6 +654,7 @@
 				F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */,
 				F576F913226E16820015D14E /* WorkoutDataSource.swift */,
 				F576F912226E16820015D14E /* WorkoutVC.swift */,
+				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -625,6 +662,7 @@
 		F576F92D226E168B0015D14E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F501F897233C016F00012C5E /* SettingsCoordinator.swift */,
 				F576F92E226E168B0015D14E /* SettingsDataSource.swift */,
 			);
 			path = Settings;
@@ -671,9 +709,9 @@
 		F576F945226E16970015D14E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F576F947226E16970015D14E /* Images.swift */,
 				F576F948226E16970015D14E /* LoadingHUD.swift */,
+				F501F890233BE77200012C5E /* MainCoordinator.swift */,
 				F576F946226E16970015D14E /* TabBarManager.swift */,
 			);
 			path = Core;
@@ -682,10 +720,7 @@
 		F576F986226E16BB0015D14E /* User */ = {
 			isa = PBXGroup;
 			children = (
-				F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */,
-				F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */,
-				F576F988226E16BB0015D14E /* UserListDataSource.swift */,
-				F576F989226E16BB0015D14E /* UserListVC.swift */,
+				F576F86B226DEE740015D14E /* UserCoordinator.swift */,
 				F576F987226E16BB0015D14E /* UserVC.swift */,
 			);
 			path = User;
@@ -742,8 +777,14 @@
 		F5F08AF223192C2900C249E9 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F501F880233BE18800012C5E /* BaseCoordinator.swift */,
+				F501F884233BE1E700012C5E /* BaseDataSource.swift */,
+				F501F886233BE23700012C5E /* BaseViewController.swift */,
+				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F5F08AF323192C4900C249E9 /* Coordinator.swift */,
+				F501F882233BE1BC00012C5E /* DataSource.swift */,
 				F5F08AF523192C9B00C249E9 /* Navigator.swift */,
+				F501F888233BE25C00012C5E /* ViewController.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -1073,8 +1114,10 @@
 				F576F8DB226DF04F0015D14E /* DataManager.swift in Sources */,
 				F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */,
 				F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */,
+				F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */,
 				F576F897226DF0050015D14E /* UserRole.pb.swift in Sources */,
 				F576F977226E16970015D14E /* ActionSheetVC.swift in Sources */,
+				F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */,
 				F576F971226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */,
 				F576F8BE226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */,
@@ -1095,10 +1138,11 @@
 				F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */,
 				F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
 				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
+				F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */,
 				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */,
 				F576F98F226E16BB0015D14E /* UserListDataSource.swift in Sources */,
-				F576F8F4226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
 				F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
 				F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */,
 				F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
@@ -1110,11 +1154,13 @@
 				F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */,
 				F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */,
 				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
+				F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */,
 				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
+				F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */,
+				F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */,
 				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
-				F576F983226E16970015D14E /* CollectionViewController.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* FilterActionSheetDataSource.swift in Sources */,
 				F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */,
@@ -1139,7 +1185,6 @@
 				F576F879226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
 				F576F8E2226DF04F0015D14E /* UserManager.swift in Sources */,
 				F576F996226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */,
-				F576F984226E16970015D14E /* CollectionViewController.swift in Sources */,
 				F576F975226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */,
 				F576F930226E168B0015D14E /* SettingsDataSource.swift in Sources */,
 				F576F898226DF0050015D14E /* UserRole.pb.swift in Sources */,
@@ -1179,7 +1224,7 @@
 				F576F969226E16970015D14E /* LabelCell.swift in Sources */,
 				F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */,
-				F576F8F5226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F8F5226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
 				F576F978226E16970015D14E /* ActionSheetVC.swift in Sources */,
 				F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */,
@@ -1187,6 +1232,7 @@
 				F576F87C226DEFA90015D14E /* TestData.swift in Sources */,
 				F576F993226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F96F226E16970015D14E /* MarginCell.swift in Sources */,
+				F501F896233BFF7000012C5E /* UserCoordinator.swift in Sources */,
 				F5587D2822502B12004223E5 /* MinervaExampleTests.swift in Sources */,
 				F576F8A4226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
 				F576F8D1226DF0050015D14E /* ProtoExtensions.swift in Sources */,
@@ -1202,7 +1248,6 @@
 				F576F87A226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
 				F576F8E3226DF04F0015D14E /* UserManager.swift in Sources */,
 				F576F997226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift in Sources */,
-				F576F985226E16970015D14E /* CollectionViewController.swift in Sources */,
 				F576F976226E16970015D14E /* ActionSheetDismissAnimator.swift in Sources */,
 				F576F931226E168B0015D14E /* SettingsDataSource.swift in Sources */,
 				F576F899226DF0050015D14E /* UserRole.pb.swift in Sources */,
@@ -1242,7 +1287,7 @@
 				F576F96A226E16970015D14E /* LabelCell.swift in Sources */,
 				F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */,
-				F576F8F6226DF0B50015D14E /* OnboardingCoordinator.swift in Sources */,
+				F576F8F6226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
 				F576F979226E16970015D14E /* ActionSheetVC.swift in Sources */,
 				F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */,
@@ -1250,6 +1295,7 @@
 				F576F87D226DEFA90015D14E /* TestData.swift in Sources */,
 				F576F994226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F970226E16970015D14E /* MarginCell.swift in Sources */,
+				F501F895233BFF7000012C5E /* UserCoordinator.swift in Sources */,
 				F5587D3322502B12004223E5 /* MinervaExampleUITests.swift in Sources */,
 				F576F8A5226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
 				F576F8D2226DF0050015D14E /* ProtoExtensions.swift in Sources */,
@@ -1265,7 +1311,9 @@
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
 				F5DA2B9A226D367600BA461A /* ListViewLayout.swift in Sources */,
 				F5848579233A669F001DBF1E /* ListModelWrapper.swift in Sources */,
+				F501F88C233BE71A00012C5E /* ViewController.swift in Sources */,
 				F5DA2B99226D367600BA461A /* Extensions.swift in Sources */,
+				F501F88B233BE71A00012C5E /* BaseViewController.swift in Sources */,
 				F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */,
 				F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */,
 				F5DA2B96226D367600BA461A /* Observable.swift in Sources */,
@@ -1275,10 +1323,14 @@
 				F5DA2B97226D367600BA461A /* BaseListCell.swift in Sources */,
 				F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */,
 				F576F99D226E20D20015D14E /* SwipeableCell.swift in Sources */,
+				F501F88D233BE71A00012C5E /* BaseCoordinator.swift in Sources */,
 				F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */,
 				F5DA2B9C226D367600BA461A /* ListViewLayoutAttributes.swift in Sources */,
+				F501F88F233BE71A00012C5E /* CollectionViewController.swift in Sources */,
 				F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
+				F501F88E233BE71A00012C5E /* BaseDataSource.swift in Sources */,
+				F501F88A233BE71A00012C5E /* DataSource.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
