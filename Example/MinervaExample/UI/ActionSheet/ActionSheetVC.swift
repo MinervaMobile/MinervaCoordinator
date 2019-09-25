@@ -97,7 +97,6 @@ class ActionSheetVC: UIViewController {
     collectionView.collectionViewLayout.invalidateLayout()
   }
 
-
   func present(from viewController: UIViewController) {
     preferredContentSize = viewController.view.frame.size
     modalPresentationStyle = .custom

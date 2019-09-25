@@ -19,4 +19,3 @@ final class TestDataManagerFactory: DataManagerFactory {
     return TestDataManager(testData: testData, userAuthorization: userAuthorization)
   }
 }
-

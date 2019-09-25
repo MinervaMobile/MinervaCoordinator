@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-protocol TextInputCellModelDelegate: class {
+protocol TextInputCellModelDelegate: AnyObject {
   func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?)
 }
 

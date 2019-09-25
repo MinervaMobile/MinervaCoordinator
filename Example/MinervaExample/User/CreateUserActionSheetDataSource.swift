@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-protocol CreateUserActionSheetDataSourceDelegate: class {
+protocol CreateUserActionSheetDataSourceDelegate: AnyObject {
   func createUserActionSheetDataSource(
     _ createUserActionSheetDataSource: CreateUserActionSheetDataSource,
     selected action: CreateUserActionSheetDataSource.Action)
@@ -30,7 +30,7 @@ final class CreateUserActionSheetDataSource: ActionSheetDataSource {
 
   private var email: String = ""
   private var password: String = ""
-  private var dailyCalories: Int32 = 2000
+  private var dailyCalories: Int32 = 2_000
   private var role: UserRole = .user
 
   // MARK: - Lifecycle

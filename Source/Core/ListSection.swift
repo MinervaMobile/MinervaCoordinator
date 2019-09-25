@@ -26,12 +26,11 @@ public struct ListSection {
     public init() { }
   }
 
-  public var constraints: Constraints = Constraints()
-  public var cellModels: [ListCellModel]
+  public let identifier: String
+  public var constraints = Constraints()
   public var headerModel: ListCellModel?
   public var footerModel: ListCellModel?
-
-  public let identifier: String
+  public var cellModels: [ListCellModel]
 
   public init(cellModels: [ListCellModel], identifier: String) {
     self.cellModels = cellModels
@@ -39,19 +38,32 @@ public struct ListSection {
   }
 }
 
+// MARK: - CustomStringConvertible
+extension ListSection: CustomStringConvertible {
+  public var description: String {
+    return "[ListSection identifier=\(identifier) constraints=\(constraints) headerModel=\(headerModel.debugDescription) footerModel=\(footerModel.debugDescription) cellModels=\(cellModels)]"
+  }
+}
+
 // MARK: - Equatable
 extension ListSection: Equatable {
+
+  private static func areEqual(_ leftModel: ListCellModel?, _ rightModel: ListCellModel?) -> Bool {
+    guard let left = leftModel else {
+      return rightModel == nil
+    }
+    guard let right = rightModel else {
+      return false
+    }
+    return left.identifier == right.identifier
+  }
+
   public static func == (lhs: ListSection, rhs: ListSection) -> Bool {
-    guard lhs.identifier == rhs.identifier && lhs.constraints == rhs.constraints else { return false }
-    guard lhs.cellModels.count == rhs.cellModels.count else { return false }
-    func areEqual(_ leftModel: ListCellModel?, _ rightModel: ListCellModel?) -> Bool {
-      guard let left = leftModel else {
-        return rightModel == nil
-      }
-      guard let right = rightModel else {
-        return false
-      }
-      return left.isEqual(to: right)
+    guard lhs.identifier == rhs.identifier else {
+      return false
+    }
+    guard lhs.constraints == rhs.constraints else {
+      return false
     }
     guard areEqual(lhs.headerModel, rhs.headerModel) else {
       return false
@@ -59,6 +71,6 @@ extension ListSection: Equatable {
     guard areEqual(lhs.footerModel, rhs.footerModel) else {
       return false
     }
-    return zip(lhs.cellModels, rhs.cellModels).allSatisfy { $0.0.isEqual(to: $0.1) }
+    return true
   }
 }

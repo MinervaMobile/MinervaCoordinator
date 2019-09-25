@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol WelcomeDataSourceDelegate: class {
+protocol WelcomeDataSourceDelegate: AnyObject {
   func welcomeDataSource(_ welcomeDataSource: WelcomeDataSource, selected action: WelcomeDataSource.Action)
 }
 

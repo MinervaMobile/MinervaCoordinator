@@ -10,7 +10,7 @@ import UIKit
 
 import PromiseKit
 
-protocol OnboardingCoordinatorDelegate: class {
+protocol OnboardingCoordinatorDelegate: AnyObject {
   func onboardingCoordinator(
     _ onboardingCoordinator: OnboardingCoordinator,
     activated dataManager: DataManager)

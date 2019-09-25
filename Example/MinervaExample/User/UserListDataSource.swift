@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol UserListDataSourceDelegate: class {
+protocol UserListDataSourceDelegate: AnyObject {
   func userListDataSource(_ userListDataSource: UserListDataSource, selected action: UserListDataSource.Action)
 }
 

@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol SettingsDataSourceDelegate: class {
+protocol SettingsDataSourceDelegate: AnyObject {
   func settingsDataSource(_ settingsDataSource: SettingsDataSource, selected action: SettingsDataSource.Action)
 }
 
@@ -23,7 +23,7 @@ final class SettingsDataSource: CollectionViewControllerDataSource {
   }
 
   weak var delegate: SettingsDataSourceDelegate?
-  private var user: User = UserProto(userID: UUID().uuidString, email: "unknown", dailyCalories: 2000)
+  private var user: User = UserProto(userID: UUID().uuidString, email: "unknown", dailyCalories: 2_000)
 
   private let dataManager: DataManager
   // MARK: - Lifecycle

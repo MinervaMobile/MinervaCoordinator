@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol TabBarManager: class {
+protocol TabBarManager: AnyObject {
   var tabBarIsHidden: Bool { get set }
   var tabHeight: CGFloat { get }
 }

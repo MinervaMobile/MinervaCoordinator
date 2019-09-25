@@ -12,14 +12,14 @@ open class BaseListBindableCell: BaseListCell, ListBindableCell {
 
   public private(set) var disposeBag = DisposeBag()
 
-  open override func prepareForReuse() {
+  override open func prepareForReuse() {
     disposeBag.clear()
     super.prepareForReuse()
   }
 
   // MARK: - ListBindable
 
-  public override func bindViewModel(_ viewModel: Any) {
+  override public func bindViewModel(_ viewModel: Any) {
     disposeBag.clear()
     super.bindViewModel(viewModel)
   }

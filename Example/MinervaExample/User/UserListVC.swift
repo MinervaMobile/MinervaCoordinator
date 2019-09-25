@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol UserListVCDelegate: class {
+protocol UserListVCDelegate: AnyObject {
   func userListVC(_ userListVC: UserListVC, selected action: UserListVC.Action)
 }
 

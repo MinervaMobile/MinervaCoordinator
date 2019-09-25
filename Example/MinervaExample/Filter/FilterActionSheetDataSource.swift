@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-protocol FilterActionSheetDataSourceDelegate: class {
+protocol FilterActionSheetDataSourceDelegate: AnyObject {
   func filterActionSheetDataSource(
     _ filterActionSheetDataSource: FilterActionSheetDataSource,
     selected action: FilterActionSheetDataSource.Action)

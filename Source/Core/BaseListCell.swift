@@ -12,7 +12,7 @@ open class BaseListCell: ListCollectionViewCell {
 
   open private(set) var cellModel: ListCellModel?
 
-  open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+  override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
     if let attributes = layoutAttributes as? ListViewLayoutAttributes,
       let animation = attributes.animationGroup {
@@ -20,7 +20,7 @@ open class BaseListCell: ListCollectionViewCell {
     }
   }
 
-  open override func prepareForReuse() {
+  override open func prepareForReuse() {
     super.prepareForReuse()
     cellModel = nil
     updatedCellModel()

@@ -43,4 +43,3 @@ extension UserAuthorizationProto: UserAuthorization {
     self.role = role
   }
 }
-

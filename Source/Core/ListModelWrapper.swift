@@ -16,12 +16,16 @@ internal class ListCellModelWrapper: NSObject {
   internal init(model: ListCellModel) {
     self.model = model
   }
+  override internal var description: String {
+    return model.description
+  }
 }
 
 // MARK: - ListDiffable
 extension ListCellModelWrapper: ListDiffable {
   internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
     guard let wrapper = object as? ListCellModelWrapper else {
+      assertionFailure("Unknown object type \(object.debugDescription)")
       return false
     }
     return model.isEqual(to: wrapper.model)

@@ -37,7 +37,7 @@ open class DefaultListCellModel: BaseListCellModel {
       + bottomMargin
   }
 
-  open override func isEqual(to model: ListCellModel) -> Bool {
+  override open func isEqual(to model: ListCellModel) -> Bool {
     guard let model = model as? DefaultListCellModel else {
       return false
     }
@@ -61,20 +61,20 @@ open class DefaultListCellModel: BaseListCellModel {
 
 open class DefaultListCell: BaseListBindableCell {
 
-  private(set) public var containerCenterXConstraint: NSLayoutConstraint?
-  private(set) public var containerTopConstraint: NSLayoutConstraint?
-  private(set) public var containerBottomConstraint: NSLayoutConstraint?
-  private(set) public var containerLeadingConstraint: NSLayoutConstraint?
-  private(set) public var containerTrailingConstraint: NSLayoutConstraint?
+  public private(set) var containerCenterXConstraint: NSLayoutConstraint?
+  public private(set) var containerTopConstraint: NSLayoutConstraint?
+  public private(set) var containerBottomConstraint: NSLayoutConstraint?
+  public private(set) var containerLeadingConstraint: NSLayoutConstraint?
+  public private(set) var containerTrailingConstraint: NSLayoutConstraint?
 
-  private(set) public var topSeparatorLeadingConstraint: NSLayoutConstraint?
-  private(set) public var topSeparatorTrailingConstraint: NSLayoutConstraint?
-  private(set) public var topSeparatorHeightConstraint: NSLayoutConstraint?
+  public private(set) var topSeparatorLeadingConstraint: NSLayoutConstraint?
+  public private(set) var topSeparatorTrailingConstraint: NSLayoutConstraint?
+  public private(set) var topSeparatorHeightConstraint: NSLayoutConstraint?
 
   private var requiredBottomSeparatorLeadingConstraint: NSLayoutConstraint?
-  private(set) public var bottomSeparatorLeadingConstraint: NSLayoutConstraint?
-  private(set) public var bottomSeparatorTrailingConstraint: NSLayoutConstraint?
-  private(set) public var bottomSeparatorHeightConstraint: NSLayoutConstraint?
+  public private(set) var bottomSeparatorLeadingConstraint: NSLayoutConstraint?
+  public private(set) var bottomSeparatorTrailingConstraint: NSLayoutConstraint?
+  public private(set) var bottomSeparatorHeightConstraint: NSLayoutConstraint?
 
   public var topSeparatorLeftInset: Bool {
     get {
@@ -165,7 +165,7 @@ open class DefaultListCell: BaseListBindableCell {
   public let topSeparatorView = UIView()
   public let bottomSeparatorView = UIView()
 
-  public override init(frame: CGRect) {
+  override public init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(containerView)
     contentView.addSubview(topSeparatorView)
@@ -177,7 +177,7 @@ open class DefaultListCell: BaseListBindableCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  open override func updatedCellModel() {
+  override open func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.cellModel as? DefaultListCellModel else { return }
     constraintContainerViewHorizontally(toReadabilityWidth: model.constrainToReadablilityWidth)

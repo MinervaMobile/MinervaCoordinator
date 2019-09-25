@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-protocol WorkoutActionSheetDataSourceDelegate: class {
+protocol WorkoutActionSheetDataSourceDelegate: AnyObject {
   func workoutActionSheetDataSource(
     _ workoutActionSheetDataSource: WorkoutActionSheetDataSource,
     selected action: WorkoutActionSheetDataSource.Action)

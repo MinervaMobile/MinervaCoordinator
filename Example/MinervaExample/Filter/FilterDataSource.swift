@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol FilterDataSourceDelegate: class {
+protocol FilterDataSourceDelegate: AnyObject {
   func filterDataSource(_ filterDataSource: FilterDataSource, selected action: FilterDataSource.Action)
 }
 

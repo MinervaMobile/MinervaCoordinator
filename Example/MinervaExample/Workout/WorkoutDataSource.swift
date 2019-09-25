@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol WorkoutDataSourceDelegate: class {
+protocol WorkoutDataSourceDelegate: AnyObject {
   func workoutDataSource(_ workoutDataSource: WorkoutDataSource, selected action: WorkoutDataSource.Action)
 }
 
@@ -71,7 +71,7 @@ final class WorkoutDataSource {
     let calendar = Calendar.current
     let filteredWorkouts = workouts.filter { filter.shouldInclude(workout: $0) }
     let workoutGroups = filteredWorkouts.group { workout -> Date in
-      return calendar.startOfDay(for: workout.date)
+      calendar.startOfDay(for: workout.date)
     }
     let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
     for (date, workoutsForDate) in sortedGroups {

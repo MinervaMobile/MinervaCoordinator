@@ -30,7 +30,7 @@ final class TestData {
       let testUser = UserProto(
         userID: testUserAuthorization.userID,
         email: "u\(n)@u.com",
-        dailyCalories: Int32.random(in: 1250...2500))
+        dailyCalories: Int32.random(in: 1_250...2_500))
       emailToPasswordMap[testUser.email] = "\(n)"
       emailToAuthorizationMap[testUser.email] = testUserAuthorization
       idToAuthorizationMap[testUser.userID] = testUserAuthorization
@@ -44,7 +44,7 @@ final class TestData {
       userID: UUID().uuidString,
       accessToken: UUID().uuidString,
       role: .userManager)
-    let testUser = UserProto(userID: testUserAuthorization.userID, email: "m@m.com", dailyCalories: 2000)
+    let testUser = UserProto(userID: testUserAuthorization.userID, email: "m@m.com", dailyCalories: 2_000)
     emailToPasswordMap[testUser.email] = "m"
     emailToAuthorizationMap[testUser.email] = testUserAuthorization
     idToAuthorizationMap[testUser.userID] = testUserAuthorization
@@ -57,7 +57,7 @@ final class TestData {
       userID: UUID().uuidString,
       accessToken: UUID().uuidString,
       role: .admin)
-    let testUser = UserProto(userID: testUserAuthorization.userID, email: "a@a.com", dailyCalories: 2000)
+    let testUser = UserProto(userID: testUserAuthorization.userID, email: "a@a.com", dailyCalories: 2_000)
     emailToPasswordMap[testUser.email] = "a"
     emailToAuthorizationMap[testUser.email] = testUserAuthorization
     idToAuthorizationMap[testUser.userID] = testUserAuthorization
@@ -71,7 +71,7 @@ final class TestData {
         workoutID: UUID().uuidString,
         userID: userID,
         text: "\(workoutNumber)",
-        calories: Int32.random(in: 1...1250),
+        calories: Int32.random(in: 1...1_250),
         date: Date().addingTimeInterval(-60 * 60 * 8 * Double(workoutNumber)))
       workouts.append(workout)
     }

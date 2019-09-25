@@ -10,7 +10,7 @@ import UIKit
 
 import IGListKit
 
-public protocol ListControllerAnimationDelegate: class {
+public protocol ListControllerAnimationDelegate: AnyObject {
   func listController(
     _ listController: ListController,
     initialLayoutAttributes attributes: ListViewLayoutAttributes,
@@ -25,7 +25,7 @@ public protocol ListControllerAnimationDelegate: class {
   ) -> ListViewLayoutAttributes?
 }
 
-public protocol ListControllerReorderDelegate: class {
+public protocol ListControllerReorderDelegate: AnyObject {
   func listControllerCompletedMove(
     _ listController: ListController,
     for cellModel: ListCellModel,
@@ -34,7 +34,7 @@ public protocol ListControllerReorderDelegate: class {
   )
 }
 
-public protocol ListControllerSizeDelegate: class {
+public protocol ListControllerSizeDelegate: AnyObject {
   func listController(
     _ listController: ListController,
     sizeFor model: ListCellModel,
@@ -75,7 +75,7 @@ public final class ListController: NSObject {
 
   // MARK: - Initializers
 
-  public override init() {
+  override public init() {
     self.listSectionWrappers = []
     let updater = ListAdapterUpdater()
     self.adapter = ListAdapter(updater: updater, viewController: nil, workingRangeSize: 2)
@@ -201,19 +201,20 @@ public final class ListController: NSObject {
     animated: Bool
   ) {
     dispatchPrecondition(condition: .onQueue(.main))
-    let section = listSections.first(where: {
-      $0.cellModels.contains(where: { $0.identifier == cellModel.identifier })
-    })
 
-    guard let listSection = section else {
+    guard let sectionWrapper = listSectionWrappers.first(where: {
+      $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
+    }) else {
       assertionFailure("Section should exist for \(cellModel)")
       return
     }
-    guard let sectionController = adapter.sectionController(for: listSection) else {
-      assertionFailure("Section Controller should exist for \(listSection) and \(cellModel)")
+    guard let sectionController = adapter.sectionController(for: sectionWrapper) else {
+      assertionFailure("Section Controller should exist for \(sectionWrapper) and \(cellModel)")
       return
     }
-    guard let modelIndex = listSection.cellModels.firstIndex(where: { $0.identifier == cellModel.identifier }) else {
+    guard let modelIndex = sectionWrapper.section.cellModels.firstIndex(where: {
+      $0.identifier == cellModel.identifier
+    }) else {
       assertionFailure("index should exist for \(cellModel)")
       return
     }
@@ -252,11 +253,32 @@ public final class ListController: NSObject {
     scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
+  public func size(of listSection: ListSection, with constraints: ListSizeConstraints? = nil) -> CGSize? {
+    dispatchPrecondition(condition: .onQueue(.main))
+    return size(
+      using: constraints,
+      sectionPicker: { $0.section.identifier == listSection.identifier }
+    ) { sectionController, sizeConstraints -> CGSize? in
+      sectionController.size(of: listSection, with: sizeConstraints)
+    }
+  }
+
   public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
     dispatchPrecondition(condition: .onQueue(.main))
-    let sectionWrapper = listSectionWrappers.first(where: {
-      $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
-    })
+    return size(
+      using: constraints,
+      sectionPicker: { $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier }) }
+    ) { sectionController, sizeConstraints -> CGSize? in
+      sectionController.size(for: cellModel, with: sizeConstraints)
+    }
+  }
+
+  private func size(
+    using constraints: ListSizeConstraints?,
+    sectionPicker: (ListSectionWrapper) -> Bool,
+    executionBlock: (ListModelSectionController, ListSizeConstraints) -> CGSize?
+  ) -> CGSize? {
+    let sectionWrapper = listSectionWrappers.first(where: sectionPicker)
 
     let sectionController: ListModelSectionController
     let sizeConstraints: ListSizeConstraints
@@ -275,16 +297,7 @@ public final class ListController: NSObject {
       assertionFailure("Need a section to properly size the cell")
       return nil
     }
-
-    let size = sectionController.size(for: cellModel, with: sizeConstraints)
-    switch size {
-    case .autolayout:
-      return sectionController.autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
-    case .explicit(let size):
-      return size
-    case .relative:
-      return nil
-    }
+    return executionBlock(sectionController, sizeConstraints)
   }
 }
 

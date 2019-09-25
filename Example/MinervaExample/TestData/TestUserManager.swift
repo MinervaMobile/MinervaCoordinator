@@ -42,7 +42,7 @@ extension TestUserManager: UserManager {
     testData.emailToPasswordMap[email] = password
     testData.idToAuthorizationMap[userID] = authorization
 
-    let user = UserProto(userID: userID, email: email, dailyCalories: 2000)
+    let user = UserProto(userID: userID, email: email, dailyCalories: 2_000)
     testData.idToUserMap[userID] = user
     activeUser = authorization
     return .value(dataManagerFactory.createDataManager(for: authorization))
