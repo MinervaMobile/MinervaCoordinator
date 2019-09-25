@@ -55,7 +55,7 @@ extension ListSection: Equatable {
     guard let right = rightModel else {
       return false
     }
-    return left.isEqual(to: right)
+    return left.identifier == right.identifier
   }
 
   public static func == (lhs: ListSection, rhs: ListSection) -> Bool {
@@ -65,21 +65,12 @@ extension ListSection: Equatable {
     guard lhs.constraints == rhs.constraints else {
       return false
     }
-    guard lhs.cellModels.count == rhs.cellModels.count else {
-      return false
-    }
-
     guard areEqual(lhs.headerModel, rhs.headerModel) else {
       return false
     }
     guard areEqual(lhs.footerModel, rhs.footerModel) else {
       return false
     }
-    return zip(lhs.cellModels, rhs.cellModels).allSatisfy { left, right -> Bool in
-      guard left.isEqual(to: right) else {
-        return false
-      }
-      return true
-    }
+    return true
   }
 }
