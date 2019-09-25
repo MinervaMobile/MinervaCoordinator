@@ -51,4 +51,3 @@ final class BottomMarginCell: BaseListCell, ListCellHelper {
     self.contentView.backgroundColor = model.backgroundColor
   }
 }
-

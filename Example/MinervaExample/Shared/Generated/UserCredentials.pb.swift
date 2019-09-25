@@ -19,32 +19,32 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct UserCredentialsProto {
+public struct UserCredentialsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var email: String {
+  public var email: String {
     get {return _email ?? String()}
     set {_email = newValue}
   }
   /// Returns true if `email` has been explicitly set.
-  var hasEmail: Bool {return self._email != nil}
+  public var hasEmail: Bool {return self._email != nil}
   /// Clears the value of `email`. Subsequent reads from it will return its default value.
-  mutating func clearEmail() {self._email = nil}
+  public mutating func clearEmail() {self._email = nil}
 
-  var password: String {
+  public var password: String {
     get {return _password ?? String()}
     set {_password = newValue}
   }
   /// Returns true if `password` has been explicitly set.
-  var hasPassword: Bool {return self._password != nil}
+  public var hasPassword: Bool {return self._password != nil}
   /// Clears the value of `password`. Subsequent reads from it will return its default value.
-  mutating func clearPassword() {self._password = nil}
+  public mutating func clearPassword() {self._password = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _email: String? = nil
   fileprivate var _password: String? = nil
@@ -53,13 +53,13 @@ struct UserCredentialsProto {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension UserCredentialsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UserCredentialsProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = "UserCredentialsProto"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "email"),
     2: .same(proto: "password"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self._email)
@@ -69,7 +69,7 @@ extension UserCredentialsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._email {
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     }
@@ -79,7 +79,7 @@ extension UserCredentialsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UserCredentialsProto, rhs: UserCredentialsProto) -> Bool {
+  public static func ==(lhs: UserCredentialsProto, rhs: UserCredentialsProto) -> Bool {
     if lhs._email != rhs._email {return false}
     if lhs._password != rhs._password {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

@@ -28,4 +28,3 @@ enum Asset: String {
 }
 
 fileprivate final class ImageBundleToken { }
-

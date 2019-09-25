@@ -14,7 +14,7 @@ protocol User: CustomStringConvertible {
 }
 
 extension User {
-  var description: String {
+  public var description: String {
     return proto.debugDescription
   }
 

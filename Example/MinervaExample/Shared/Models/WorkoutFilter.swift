@@ -13,7 +13,7 @@ typealias FilterType = WorkoutFilterProto.FilterType
 
 extension FilterType: CustomStringConvertible {
 
-  var description: String {
+  public var description: String {
     switch self {
     case .endDate: return "End Date"
     case .endTime: return "End Time"
@@ -33,7 +33,7 @@ protocol WorkoutFilter: CustomStringConvertible {
 }
 
 extension WorkoutFilter {
-  var description: String {
+  public var description: String {
     return proto.debugDescription
   }
 

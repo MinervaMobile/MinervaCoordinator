@@ -36,4 +36,3 @@ final class ActionSheetDismissAnimator: NSObject, UIViewControllerAnimatedTransi
     )
   }
 }
-

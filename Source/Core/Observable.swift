@@ -12,7 +12,7 @@ public protocol Disposable {
   func unsubscribe(_ token: ObserverToken)
 }
 
-fileprivate class DisposableItem {
+private class DisposableItem {
   private let disposable: Disposable
   private let token: ObserverToken
 
@@ -81,11 +81,11 @@ public final class Observable<T>: Disposable {
   public var value: T {
     get {
       return lock {
-        return internalValue
+        internalValue
       }
     }
     set {
-      var actualObservers: [Observer]? = nil
+      var actualObservers: [Observer]?
       lock {
         internalValue = newValue
         actualObservers = Array(observers.values)

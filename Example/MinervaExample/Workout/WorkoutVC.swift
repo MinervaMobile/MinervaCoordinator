@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-protocol WorkoutVCDelegate: class {
+protocol WorkoutVCDelegate: AnyObject {
   func workoutVC(_ workoutVC: WorkoutVC, selected action: WorkoutVC.Action)
 }
 

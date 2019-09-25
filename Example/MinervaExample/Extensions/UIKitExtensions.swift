@@ -133,7 +133,6 @@ extension UIColor {
   }
 }
 
-
 extension UIFont {
 
   static var headline: UIFont {
@@ -278,7 +277,6 @@ extension UIView {
       constant: 0).isActive = true
   }
 }
-
 
 extension UIViewController {
 

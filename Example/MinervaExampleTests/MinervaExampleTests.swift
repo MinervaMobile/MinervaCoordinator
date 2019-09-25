@@ -5,8 +5,8 @@
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
-import XCTest
 @testable import MinervaExample
+import XCTest
 
 class MinervaExampleTests: XCTestCase {
 

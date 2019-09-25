@@ -18,7 +18,7 @@ protocol Workout: CustomStringConvertible {
 }
 
 extension Workout {
-  var description: String {
+  public var description: String {
     return proto.debugDescription
   }
 

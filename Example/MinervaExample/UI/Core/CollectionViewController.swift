@@ -100,7 +100,6 @@ class CollectionViewController: UIViewController {
   }
 }
 
-
 // MARK: - ListControllerSizeDelegate
 extension CollectionViewController: ListControllerSizeDelegate {
 

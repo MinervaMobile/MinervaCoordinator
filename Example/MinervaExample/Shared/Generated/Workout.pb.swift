@@ -19,59 +19,59 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct WorkoutProto {
+public struct WorkoutProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var workoutID: String {
+  public var workoutID: String {
     get {return _storage._workoutID ?? String()}
     set {_uniqueStorage()._workoutID = newValue}
   }
   /// Returns true if `workoutID` has been explicitly set.
-  var hasWorkoutID: Bool {return _storage._workoutID != nil}
+  public var hasWorkoutID: Bool {return _storage._workoutID != nil}
   /// Clears the value of `workoutID`. Subsequent reads from it will return its default value.
-  mutating func clearWorkoutID() {_uniqueStorage()._workoutID = nil}
+  public mutating func clearWorkoutID() {_uniqueStorage()._workoutID = nil}
 
-  var userID: String {
+  public var userID: String {
     get {return _storage._userID ?? String()}
     set {_uniqueStorage()._userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  var hasUserID: Bool {return _storage._userID != nil}
+  public var hasUserID: Bool {return _storage._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
-  mutating func clearUserID() {_uniqueStorage()._userID = nil}
+  public mutating func clearUserID() {_uniqueStorage()._userID = nil}
 
-  var text: String {
+  public var text: String {
     get {return _storage._text ?? String()}
     set {_uniqueStorage()._text = newValue}
   }
   /// Returns true if `text` has been explicitly set.
-  var hasText: Bool {return _storage._text != nil}
+  public var hasText: Bool {return _storage._text != nil}
   /// Clears the value of `text`. Subsequent reads from it will return its default value.
-  mutating func clearText() {_uniqueStorage()._text = nil}
+  public mutating func clearText() {_uniqueStorage()._text = nil}
 
-  var calories: Int32 {
+  public var calories: Int32 {
     get {return _storage._calories ?? 0}
     set {_uniqueStorage()._calories = newValue}
   }
   /// Returns true if `calories` has been explicitly set.
-  var hasCalories: Bool {return _storage._calories != nil}
+  public var hasCalories: Bool {return _storage._calories != nil}
   /// Clears the value of `calories`. Subsequent reads from it will return its default value.
-  mutating func clearCalories() {_uniqueStorage()._calories = nil}
+  public mutating func clearCalories() {_uniqueStorage()._calories = nil}
 
-  var dateTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+  public var dateTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _storage._dateTimestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._dateTimestamp = newValue}
   }
   /// Returns true if `dateTimestamp` has been explicitly set.
-  var hasDateTimestamp: Bool {return _storage._dateTimestamp != nil}
+  public var hasDateTimestamp: Bool {return _storage._dateTimestamp != nil}
   /// Clears the value of `dateTimestamp`. Subsequent reads from it will return its default value.
-  mutating func clearDateTimestamp() {_uniqueStorage()._dateTimestamp = nil}
+  public mutating func clearDateTimestamp() {_uniqueStorage()._dateTimestamp = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
@@ -79,8 +79,8 @@ struct WorkoutProto {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "WorkoutProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = "WorkoutProto"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "workoutID"),
     2: .same(proto: "userID"),
     3: .same(proto: "text"),
@@ -115,7 +115,7 @@ extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     return _storage
   }
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     _ = _uniqueStorage()
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       while let fieldNumber = try decoder.nextFieldNumber() {
@@ -131,7 +131,7 @@ extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
       if let v = _storage._workoutID {
         try visitor.visitSingularStringField(value: v, fieldNumber: 1)
@@ -152,7 +152,7 @@ extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: WorkoutProto, rhs: WorkoutProto) -> Bool {
+  public static func ==(lhs: WorkoutProto, rhs: WorkoutProto) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0

@@ -11,7 +11,7 @@ import UIKit
 public class ListViewLayoutAttributes: UICollectionViewLayoutAttributes {
   public var animationGroup: CAAnimationGroup?
 
-  public override func copy(with zone: NSZone? = nil) -> Any {
+  override public func copy(with zone: NSZone? = nil) -> Any {
     let superCopy = super.copy(with: zone)
     guard let attributes = superCopy as? ListViewLayoutAttributes else { return superCopy }
     if let animationGroup = self.animationGroup {
@@ -20,7 +20,7 @@ public class ListViewLayoutAttributes: UICollectionViewLayoutAttributes {
     return attributes
   }
 
-  public override func isEqual(_ object: Any?) -> Bool {
+  override public func isEqual(_ object: Any?) -> Bool {
     guard let other = object else { return false }
     guard let object = other as? ListViewLayoutAttributes else { return false }
     guard object.animationGroup == animationGroup else { return false }

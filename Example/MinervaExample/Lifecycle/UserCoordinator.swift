@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol UserCoordinatorDelegate: class {
+protocol UserCoordinatorDelegate: AnyObject {
   func userCoordinatorLogoutCurrentUser(_ userCoordinator: UserCoordinator)
 }
 
@@ -370,7 +370,6 @@ extension UserCoordinator: UpdateUserActionSheetDataSourceDelegate {
     }
   }
 }
-
 
 // MARK: - UIViewControllerTransitioningDelegate
 extension UserCoordinator: UIViewControllerTransitioningDelegate {

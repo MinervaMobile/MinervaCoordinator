@@ -118,7 +118,7 @@ final class PickerCell: BaseListCell, ListCellHelper {
   }
 }
 
-fileprivate class PickerCellModelHelper: NSObject {
+private class PickerCellModelHelper: NSObject {
   typealias Action = (
     _ pickerView: UIPickerView,
     _ row: Int,

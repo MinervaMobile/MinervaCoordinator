@@ -10,7 +10,7 @@ import UIKit
 
 import IGListKit
 
-internal protocol ListModelSectionControllerDelegate: class {
+internal protocol ListModelSectionControllerDelegate: AnyObject {
 
   func sectionController(
     _ sectionController: ListModelSectionController,
@@ -46,7 +46,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
 
   private var cachedCells = [String: ListCollectionViewCell]()
 
-  internal override init() {
+  override internal init() {
     super.init()
     self.dataSource = self
     self.displayDelegate = self
@@ -106,23 +106,74 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     }
   }
 
-  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
-    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
-    let modelSize = model.size(constrainedTo: adjustedContainerSize)
-
-    guard case .explicit(let size) = modelSize else {
-      return modelSize
+  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize? {
+    let size = listCellSize(for: model, with: sizeConstraints)
+    switch size {
+    case .autolayout:
+      return autolayoutSize(for: model, constrainedTo: sizeConstraints)
+    case .explicit(let size):
+      return size
+    case .relative:
+      assertionFailure("Sizing of relative models is not yet supported")
+      return nil
     }
+  }
 
-    switch sizeConstraints.distribution {
-    case .equally, .entireRow:
-      if sizeConstraints.scrollDirection == .vertical {
-        return .explicit(size: CGSize(width: adjustedContainerSize.width, height: size.height))
+  internal func size(of listSection: ListSection, with constraints: ListSizeConstraints) -> CGSize? {
+    let isVertical = constraints.scrollDirection == .vertical
+    let containerSize = constraints.containerSize
+
+    switch listSection.constraints.distribution {
+    case .entireRow:
+      if isVertical {
+        let height = listSection.cellModels.reduce(0, { sum, model -> CGFloat in
+          let length = size(for: model, with: constraints)?.height ?? 0
+          return sum + length + minimumLineSpacing
+        })
+        return CGSize(width: constraints.containerSize.width, height: height)
       } else {
-        return .explicit(size: CGSize(width: size.width, height: adjustedContainerSize.height))
+        let width = listSection.cellModels.reduce(0, { sum, model -> CGFloat in
+          let length = size(for: model, with: constraints)?.width ?? 0
+          return sum + length + minimumLineSpacing
+        })
+        return CGSize(width: width, height: constraints.containerSize.height)
       }
+    case .equally(let cellsInRow):
+      guard isVertical else { fatalError("Horizontal is not yet supported") }
+      var totalHeight: CGFloat = 0
+      var rowHeight: CGFloat = 0
+      for (index, model) in listSection.cellModels.enumerated() {
+        if index % cellsInRow == 0 {
+          totalHeight += (rowHeight + minimumLineSpacing)
+          rowHeight = 0
+        }
+        let modelHeight = size(for: model, with: constraints)?.height ?? 0
+        rowHeight = max(rowHeight, modelHeight)
+      }
+      totalHeight += (rowHeight + minimumLineSpacing)
+      return CGSize(width: constraints.containerSize.width, height: totalHeight)
     case .proportionally:
-      return modelSize
+      guard isVertical else { fatalError("Horizontal is not yet supported") }
+      var height: CGFloat = 0
+      var maxCellHeightInRow: CGFloat = 0
+      var currentRowWidth: CGFloat = 0
+      for model in listSection.cellModels {
+        guard let modelSize = size(for: model, with: constraints) else {
+          continue
+        }
+        let modelHeight = modelSize.height + minimumLineSpacing
+        let modelWidth = modelSize.width + minimumInteritemSpacing
+        maxCellHeightInRow = max(maxCellHeightInRow, modelHeight)
+        currentRowWidth += modelWidth
+        guard currentRowWidth < containerSize.width else {
+          height += maxCellHeightInRow
+          maxCellHeightInRow = modelHeight
+          currentRowWidth = modelWidth
+          continue
+        }
+      }
+      height += maxCellHeightInRow
+      return CGSize(width: constraints.containerSize.width, height: height)
     }
   }
 }
@@ -130,12 +181,23 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
 // MARK: - ListBindingSectionController
 extension ListModelSectionController {
 
-  internal override func canMoveItem(at index: Int) -> Bool {
+  override internal func didUpdate(to object: Any) {
+    super.didUpdate(to: object)
+    guard let sectionWrapper = object as? ListSectionWrapper else {
+      assertionFailure("Unknown object type \(object)")
+      return
+    }
+    self.inset = sectionWrapper.section.constraints.inset
+    self.minimumLineSpacing = sectionWrapper.section.constraints.minimumLineSpacing
+    self.minimumInteritemSpacing = sectionWrapper.section.constraints.minimumInteritemSpacing
+  }
+
+  override internal func canMoveItem(at index: Int) -> Bool {
     guard let section = self.object?.section else { return false }
     return section.cellModels[index].reorderable
   }
 
-  internal override func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
+  override internal func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
     super.moveObject(from: sourceIndex, to: destinationIndex)
     guard let wrapper = self.object else { return }
 
@@ -212,7 +274,7 @@ extension ListModelSectionController {
     }
     let cellModel = wrapper.model
 
-    let cellSize = size(for: cellModel, with: sizeConstraints)
+    let cellSize = listCellSize(for: cellModel, with: sizeConstraints)
     switch cellSize {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
@@ -230,6 +292,26 @@ extension ListModelSectionController {
         return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
       }
       return size
+    }
+  }
+
+  private func listCellSize(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
+    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
+    let modelSize = model.size(constrainedTo: adjustedContainerSize)
+
+    guard case .explicit(let size) = modelSize else {
+      return modelSize
+    }
+
+    switch sizeConstraints.distribution {
+    case .entireRow:
+      if sizeConstraints.scrollDirection == .vertical {
+        return .explicit(size: CGSize(width: adjustedContainerSize.width, height: size.height))
+      } else {
+        return .explicit(size: CGSize(width: size.width, height: adjustedContainerSize.height))
+      }
+    case .proportionally, .equally:
+      return modelSize
     }
   }
 }

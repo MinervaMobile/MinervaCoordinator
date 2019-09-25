@@ -10,7 +10,7 @@ import UIKit
 
 import PromiseKit
 
-protocol UserVCDelegate: class {
+protocol UserVCDelegate: AnyObject {
   func userVC(_ userVC: UserVC, selected tab: UserVC.Tab)
 }
 
@@ -50,7 +50,7 @@ final class UserVC: UIViewController, TabBarManager {
     }
 
     private static var tabBarItems: [Tab: UITabBarItem] = {
-      return [
+      [
           .workouts: item(for: .workouts),
           .users: item(for: .users),
           .settings: item(for: .settings)

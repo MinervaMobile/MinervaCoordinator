@@ -11,7 +11,7 @@ import Minerva
 
 import PromiseKit
 
-protocol SignInDataSourceDelegate: class {
+protocol SignInDataSourceDelegate: AnyObject {
   func signInDataSource(_ signInDataSource: SignInDataSource, selected action: SignInDataSource.Action)
 }
 

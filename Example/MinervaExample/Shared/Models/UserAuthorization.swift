@@ -14,7 +14,7 @@ protocol UserAuthorization: CustomStringConvertible {
 }
 
 extension UserAuthorization {
-  var description: String {
+  public var description: String {
     return proto.debugDescription
   }
 
@@ -43,4 +43,3 @@ extension UserAuthorizationProto: UserAuthorization {
     self.role = role
   }
 }
-

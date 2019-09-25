@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-protocol UpdateUserActionSheetDataSourceDelegate: class {
+protocol UpdateUserActionSheetDataSourceDelegate: AnyObject {
   func updateUserActionSheetDataSource(
     _ updateUserActionSheetDataSource: UpdateUserActionSheetDataSource,
     selected action: UpdateUserActionSheetDataSource.Action)

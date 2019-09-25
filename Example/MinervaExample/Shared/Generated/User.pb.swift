@@ -19,41 +19,41 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct UserProto {
+public struct UserProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var userID: String {
+  public var userID: String {
     get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  var hasUserID: Bool {return self._userID != nil}
+  public var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
-  mutating func clearUserID() {self._userID = nil}
+  public mutating func clearUserID() {self._userID = nil}
 
-  var email: String {
+  public var email: String {
     get {return _email ?? String()}
     set {_email = newValue}
   }
   /// Returns true if `email` has been explicitly set.
-  var hasEmail: Bool {return self._email != nil}
+  public var hasEmail: Bool {return self._email != nil}
   /// Clears the value of `email`. Subsequent reads from it will return its default value.
-  mutating func clearEmail() {self._email = nil}
+  public mutating func clearEmail() {self._email = nil}
 
-  var dailyCalories: Int32 {
+  public var dailyCalories: Int32 {
     get {return _dailyCalories ?? 0}
     set {_dailyCalories = newValue}
   }
   /// Returns true if `dailyCalories` has been explicitly set.
-  var hasDailyCalories: Bool {return self._dailyCalories != nil}
+  public var hasDailyCalories: Bool {return self._dailyCalories != nil}
   /// Clears the value of `dailyCalories`. Subsequent reads from it will return its default value.
-  mutating func clearDailyCalories() {self._dailyCalories = nil}
+  public mutating func clearDailyCalories() {self._dailyCalories = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _userID: String? = nil
   fileprivate var _email: String? = nil
@@ -63,14 +63,14 @@ struct UserProto {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension UserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UserProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = "UserProto"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "userID"),
     2: .same(proto: "email"),
     3: .same(proto: "dailyCalories"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self._userID)
@@ -81,7 +81,7 @@ extension UserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._userID {
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     }
@@ -94,7 +94,7 @@ extension UserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UserProto, rhs: UserProto) -> Bool {
+  public static func ==(lhs: UserProto, rhs: UserProto) -> Bool {
     if lhs._userID != rhs._userID {return false}
     if lhs._email != rhs._email {return false}
     if lhs._dailyCalories != rhs._dailyCalories {return false}

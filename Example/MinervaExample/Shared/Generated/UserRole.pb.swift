@@ -19,17 +19,17 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum UserRole: SwiftProtobuf.Enum {
-  typealias RawValue = Int
+public enum UserRole: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
   case user // = 1
   case userManager // = 2
   case admin // = 3
 
-  init() {
+  public init() {
     self = .user
   }
 
-  init?(rawValue: Int) {
+  public init?(rawValue: Int) {
     switch rawValue {
     case 1: self = .user
     case 2: self = .userManager
@@ -38,7 +38,7 @@ enum UserRole: SwiftProtobuf.Enum {
     }
   }
 
-  var rawValue: Int {
+  public var rawValue: Int {
     switch self {
     case .user: return 1
     case .userManager: return 2
@@ -59,7 +59,7 @@ extension UserRole: CaseIterable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension UserRole: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "user"),
     2: .same(proto: "userManager"),
     3: .same(proto: "admin"),
