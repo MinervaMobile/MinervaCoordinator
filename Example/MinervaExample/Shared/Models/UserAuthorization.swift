@@ -14,7 +14,7 @@ protocol UserAuthorization: CustomStringConvertible {
 }
 
 extension UserAuthorization {
-  public var description: String {
+  var description: String {
     return proto.debugDescription
   }
 

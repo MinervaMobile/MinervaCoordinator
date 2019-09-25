@@ -8,7 +8,7 @@
 import Foundation
 
 extension UserRole: CustomStringConvertible {
-  public var description: String {
+  var description: String {
     switch self {
     case .admin: return "Admin"
     case .user: return "User"

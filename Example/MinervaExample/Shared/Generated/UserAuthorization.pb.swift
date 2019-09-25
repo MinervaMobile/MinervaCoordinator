@@ -19,41 +19,41 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public struct UserAuthorizationProto {
+struct UserAuthorizationProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var userID: String {
+  var userID: String {
     get {return _userID ?? String()}
     set {_userID = newValue}
   }
   /// Returns true if `userID` has been explicitly set.
-  public var hasUserID: Bool {return self._userID != nil}
+  var hasUserID: Bool {return self._userID != nil}
   /// Clears the value of `userID`. Subsequent reads from it will return its default value.
-  public mutating func clearUserID() {self._userID = nil}
+  mutating func clearUserID() {self._userID = nil}
 
-  public var accessToken: String {
+  var accessToken: String {
     get {return _accessToken ?? String()}
     set {_accessToken = newValue}
   }
   /// Returns true if `accessToken` has been explicitly set.
-  public var hasAccessToken: Bool {return self._accessToken != nil}
+  var hasAccessToken: Bool {return self._accessToken != nil}
   /// Clears the value of `accessToken`. Subsequent reads from it will return its default value.
-  public mutating func clearAccessToken() {self._accessToken = nil}
+  mutating func clearAccessToken() {self._accessToken = nil}
 
-  public var role: UserRole {
+  var role: UserRole {
     get {return _role ?? .user}
     set {_role = newValue}
   }
   /// Returns true if `role` has been explicitly set.
-  public var hasRole: Bool {return self._role != nil}
+  var hasRole: Bool {return self._role != nil}
   /// Clears the value of `role`. Subsequent reads from it will return its default value.
-  public mutating func clearRole() {self._role = nil}
+  mutating func clearRole() {self._role = nil}
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public init() {}
+  init() {}
 
   fileprivate var _userID: String? = nil
   fileprivate var _accessToken: String? = nil
@@ -63,14 +63,14 @@ public struct UserAuthorizationProto {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension UserAuthorizationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = "UserAuthorizationProto"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let protoMessageName: String = "UserAuthorizationProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "userID"),
     2: .same(proto: "accessToken"),
     4: .same(proto: "role"),
   ]
 
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self._userID)
@@ -81,7 +81,7 @@ extension UserAuthorizationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     }
   }
 
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._userID {
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     }
@@ -94,7 +94,7 @@ extension UserAuthorizationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: UserAuthorizationProto, rhs: UserAuthorizationProto) -> Bool {
+  static func ==(lhs: UserAuthorizationProto, rhs: UserAuthorizationProto) -> Bool {
     if lhs._userID != rhs._userID {return false}
     if lhs._accessToken != rhs._accessToken {return false}
     if lhs._role != rhs._role {return false}

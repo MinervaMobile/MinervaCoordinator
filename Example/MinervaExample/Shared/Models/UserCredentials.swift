@@ -13,7 +13,7 @@ protocol UserCredentials: CustomStringConvertible {
 }
 
 extension UserCredentials {
-  public var description: String {
+  var description: String {
     return proto.debugDescription
   }
 
