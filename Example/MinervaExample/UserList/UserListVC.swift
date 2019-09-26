@@ -1,5 +1,5 @@
 //
-//  WorkoutVC.swift
+//  UserListVC.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -9,20 +9,20 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
 
-protocol WorkoutVCDelegate: AnyObject {
-  func workoutVC(_ workoutVC: WorkoutVC, selected action: WorkoutVC.Action)
+protocol UserListVCDelegate: AnyObject {
+  func userListVC(_ userListVC: UserListVC, selected action: UserListVC.Action)
 }
 
-final class WorkoutVC: BaseViewController {
+final class UserListVC: BaseViewController {
 
   enum Action {
-    case createWorkout
-    case updateFilter
+    case createUser
   }
 
-  weak var delegate: WorkoutVCDelegate?
+  weak var delegate: UserListVCDelegate?
+
+  private let listController = ListController()
 
   private let addButton: UIButton = {
     let addButton = UIButton(frame: .zero)
@@ -36,23 +36,21 @@ final class WorkoutVC: BaseViewController {
 
   required override init() {
     super.init()
+
     collectionView.contentInsetAdjustmentBehavior = .never
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     collectionView.backgroundColor = .white
+
+    self.title = "Users"
   }
 
   // MARK: - UIViewController
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.rightBarButtonItem = UIBarButtonItem(
-      image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
-      style: .plain,
-      target: self,
-      action: #selector(selectFilter))
-    navigationItem.rightBarButtonItem?.tintColor = .selectable
     setupViewsAndConstraints()
   }
+
   // MARK: - Private
 
   private func setupViewsAndConstraints() {
@@ -75,11 +73,6 @@ final class WorkoutVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    delegate?.workoutVC(self, selected: .createWorkout)
-  }
-
-  @objc
-  private func selectFilter() {
-    delegate?.workoutVC(self, selected: .updateFilter)
+    delegate?.userListVC(self, selected: .createUser)
   }
 }

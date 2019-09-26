@@ -15,7 +15,7 @@ protocol SettingsDataSourceDelegate: AnyObject {
   func settingsDataSource(_ settingsDataSource: SettingsDataSource, selected action: SettingsDataSource.Action)
 }
 
-final class SettingsDataSource: CollectionViewControllerDataSource {
+final class SettingsDataSource: BaseDataSource {
   enum Action {
     case deleteAccount
     case logout
@@ -34,8 +34,8 @@ final class SettingsDataSource: CollectionViewControllerDataSource {
 
   // MARK: - Public
 
-  func loadSections() -> Promise<[ListSection]> {
-    return dataManager.loadUser(
+  func reload(animated: Bool) {
+    let sectionsPromise = dataManager.loadUser(
       withID: dataManager.userAuthorization.userID
     ).then { [weak self] user -> Promise<[ListSection]> in
       guard let strongSelf = self else { return .init(error: SystemError.cancelled) }
@@ -46,6 +46,7 @@ final class SettingsDataSource: CollectionViewControllerDataSource {
       guard let strongSelf = self else { return .init(error: SystemError.cancelled) }
       return .value([strongSelf.createSection()])
     }
+    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
   }
 
   // MARK: - Private

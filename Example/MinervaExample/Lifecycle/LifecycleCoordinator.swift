@@ -8,12 +8,15 @@
 import Foundation
 import UIKit
 
+import Minerva
+
 /// Responsible for launching, and transitioning between, the onboarding and active user flows.
 final class LifecycleCoordinator {
   private let window: UIWindow
   private let userManager: UserManager
-  private var onboardingCoordinator: OnboardingCoordinator?
-  private var userCoordinator: UserCoordinator?
+
+  // MARK: - Coordinator
+  public var activeCoordinator: Coordinator?
 
   // MARK: - Lifecycle
 
@@ -26,44 +29,44 @@ final class LifecycleCoordinator {
 
   func launch() {
     guard let dataManager = userManager.activateCachedUser() else {
-      launchOnboardingCoordinator()
+      launchWelcomeCoordinator(animated: false)
       return
     }
-    launchUserCoordinator(with: dataManager)
+    launchUserCoordinator(with: dataManager, animated: true)
   }
 
   // MARK: - Private
 
-  private func launchOnboardingCoordinator() {
-    let onboardingCoordinator = OnboardingCoordinator(userManager: userManager)
+  private func launchWelcomeCoordinator(animated: Bool) {
+    let navigator = BasicNavigator()
+    let onboardingCoordinator = WelcomeCoordinator(navigator: navigator, userManager: userManager)
+    navigator.setViewControllers([onboardingCoordinator.viewController], animated: animated, completion: nil)
     onboardingCoordinator.delegate = self
-    onboardingCoordinator.launch(in: window)
-    self.onboardingCoordinator = onboardingCoordinator
-    userCoordinator = nil
+    window.rootViewController = navigator.navigationController
+    activeCoordinator = onboardingCoordinator
   }
 
-  private func launchUserCoordinator(with dataManager: DataManager) {
+  private func launchUserCoordinator(with dataManager: DataManager, animated: Bool) {
     let userCoordinator = UserCoordinator(userManager: userManager, dataManager: dataManager)
     userCoordinator.delegate = self
-    userCoordinator.launch(in: window)
-    self.userCoordinator = userCoordinator
-    onboardingCoordinator = nil
+    window.rootViewController = userCoordinator.userVC
+    activeCoordinator = userCoordinator
   }
 }
 
-// MARK: - OnboardingCoordinatorDelegate
-extension LifecycleCoordinator: OnboardingCoordinatorDelegate {
+// MARK: - WelcomeCoordinatorDelegate
+extension LifecycleCoordinator: WelcomeCoordinatorDelegate {
   func onboardingCoordinator(
-    _ onboardingCoordinator: OnboardingCoordinator,
+    _ onboardingCoordinator: WelcomeCoordinator,
     activated dataManager: DataManager
   ) {
-    launchUserCoordinator(with: dataManager)
+    launchUserCoordinator(with: dataManager, animated: true)
   }
 }
 
 // MARK: - UserCoordinatorDelegate
 extension LifecycleCoordinator: UserCoordinatorDelegate {
   func userCoordinatorLogoutCurrentUser(_ userCoordinator: UserCoordinator) {
-    launchOnboardingCoordinator()
+    launchWelcomeCoordinator(animated: true)
   }
 }

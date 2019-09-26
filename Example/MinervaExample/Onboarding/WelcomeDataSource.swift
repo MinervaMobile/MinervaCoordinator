@@ -9,13 +9,12 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
 
 protocol WelcomeDataSourceDelegate: AnyObject {
   func welcomeDataSource(_ welcomeDataSource: WelcomeDataSource, selected action: WelcomeDataSource.Action)
 }
 
-final class WelcomeDataSource: CollectionViewControllerDataSource {
+final class WelcomeDataSource: BaseDataSource {
   enum Action {
     case createAccount
     case login
@@ -23,15 +22,13 @@ final class WelcomeDataSource: CollectionViewControllerDataSource {
 
   weak var delegate: WelcomeDataSourceDelegate?
 
-  // MARK: - Lifecycle
-
-  init() {
-  }
-
   // MARK: - Public
 
-  func loadSections() -> Promise<[ListSection]> {
-    return .value([createSection()])
+  func reload(animated: Bool) {
+    updateDelegate?.dataSourceStartedUpdate(self)
+    let section = createSection()
+    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
+    updateDelegate?.dataSourceCompletedUpdate(self)
   }
 
   // MARK: - Private

@@ -14,7 +14,7 @@ protocol UserVCDelegate: AnyObject {
   func userVC(_ userVC: UserVC, selected tab: UserVC.Tab)
 }
 
-final class UserVC: UIViewController, TabBarManager {
+final class UserVC: UIViewController {
 
   enum Tab: Int {
     case workouts = 1
@@ -60,7 +60,7 @@ final class UserVC: UIViewController, TabBarManager {
 
   weak var delegate: UserVCDelegate?
 
-  let navigationVC: UINavigationController
+  private let navigationVC: UINavigationController
 
   private let tabBar: UITabBar = {
     let tabBar = UITabBar(frame: .zero)
@@ -77,29 +77,18 @@ final class UserVC: UIViewController, TabBarManager {
 
   private let userAuthorization: UserAuthorization
 
-  // MARK: - TabBarManager
-
-  var tabBarIsHidden: Bool {
-    get { return (tabBarBottomConstraint?.constant ?? 0) > 0 }
-    set { setTabBarHidden(newValue) }
-  }
-
-  var tabHeight: CGFloat {
-    return self.tabBar.bounds.height
-  }
-
   // MARK: - Lifecycle
 
-  required init(userAuthorization: UserAuthorization) {
+  required init(userAuthorization: UserAuthorization, navigationController: UINavigationController) {
     self.userAuthorization = userAuthorization
     self.tab = .workouts
-    self.navigationVC = UINavigationController()
+    self.navigationVC = navigationController
     super.init(nibName: nil, bundle: nil)
   }
 
   @available(*, unavailable)
   required convenience init?(coder aDecoder: NSCoder) {
-    fatalError("Unsupported")
+    fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - UIViewController
@@ -123,23 +112,10 @@ final class UserVC: UIViewController, TabBarManager {
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    guard !tabBarIsHidden else { return }
     restoreTabBarHeight()
   }
 
   // MARK: - Private
-
-  private func setTabBarHidden(_ hidden: Bool) {
-    guard hidden != tabBarIsHidden else { return }
-    if hidden {
-      tabBarBottomConstraint?.constant = tabBar.frame.height
-    } else {
-      restoreTabBarHeight()
-    }
-    UIView.animate(withDuration: 0.2) {
-      self.view.layoutIfNeeded()
-    }
-  }
 
   private func setupConstraints() {
     view.addSubview(tabBar)
