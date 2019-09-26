@@ -2,7 +2,6 @@
 //  FilterCoordinator.swift
 //  MinervaExample
 //
-//  Created by Joe Laws on 9/25/19.
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
