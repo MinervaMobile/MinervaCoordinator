@@ -28,6 +28,7 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutDataSource, WorkoutVC> {
       dataSource.reload(animated: animated)
     }
     dataSource.delegate = self
+    viewController.delegate = self
 
     dataSource.loadTitle().map { [weak self] title -> Void in
       self?.viewController.title = title
@@ -61,13 +62,9 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutDataSource, WorkoutVC> {
   }
 
   private func displayFilterSelection() {
-//    let dataSource = FilterDataSource(filter: filter)
-//    dataSource.delegate = self
-//    filterDataSource = dataSource
-//    let viewController = CollectionViewController()
-//    filterViewController = viewController
-//    userVC.navigationVC.pushViewController(viewController, animated: true)
-    fatalError("Implement Me")
+    let coordinator = FilterCoordinator(navigator: navigator, filter: dataSource.filter)
+    coordinator.delegate = self
+    push(coordinator, animated: true)
   }
 
   private func save(workout: Workout) {
@@ -87,6 +84,13 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutDataSource, WorkoutVC> {
     dataSource.filter = filter
     dataSource.reload(animated: true)
     viewController.dismiss(animated: true, completion: nil)
+  }
+}
+
+// MARK: - FilterCoordinatorDelegate
+extension WorkoutCoordinator: FilterCoordinatorDelegate {
+  func filterCoordinator(_ filterCoordinator: FilterCoordinator, updatedFilter filter: WorkoutFilter) {
+    apply(filter: filter)
   }
 }
 

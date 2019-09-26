@@ -45,13 +45,9 @@ class ActionSheetVC: UIViewController {
     backgroundButton.addTarget(self, action: #selector(backgroundPressed), for: .touchUpInside)
   }
 
-  deinit {
-    NotificationCenter.default.removeObserver(self)
-  }
-
   @available(*, unavailable)
   required convenience init?(coder aDecoder: NSCoder) {
-    fatalError("Unsupported")
+    fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - UIViewController

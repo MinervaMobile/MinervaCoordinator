@@ -37,26 +37,52 @@ final class UserCoordinator: NSObject, CoordinatorNavigator {
   init(userManager: UserManager, dataManager: DataManager) {
     self.userManager = userManager
     self.dataManager = dataManager
-    self.userVC = UserVC(userAuthorization: dataManager.userAuthorization)
-    self.navigator = BasicNavigator()
+    let navigator = BasicNavigator()
+    self.navigator = navigator
+    self.userVC = UserVC(
+      userAuthorization: dataManager.userAuthorization,
+      navigationController: navigator.navigationController)
     super.init()
     self.userVC.delegate = self
+    displayWorkoutList()
   }
 
   // MARK: - Private
 
   private func displayWorkoutList() {
-    fatalError("Implement Me")
+    let coordinator = WorkoutCoordinator(
+      navigator: navigator,
+      dataManager: dataManager,
+      userID: dataManager.userAuthorization.userID)
+    setRootCoordinator(coordinator, animated: false)
   }
 
   private func displayUserList() {
-    fatalError("Implement Me")
+    let coordinator = UserListCoordinator(navigator: navigator, userManager: userManager, dataManager: dataManager)
+    coordinator.delegate = self
+    setRootCoordinator(coordinator, animated: false)
   }
 
   private func displaySettings() {
-    fatalError("Implement Me")
+    let coordinator = SettingsCoordinator(navigator: navigator, userManager: userManager, dataManager: dataManager)
+    coordinator.delegate = self
+    setRootCoordinator(coordinator, animated: false)
   }
 
+}
+
+// MARK: - SettingsCoordinatorDelegate
+extension UserCoordinator: SettingsCoordinatorDelegate {
+  func settingsCoordinatorLogoutCurrentUser(_ settingsCoordinator: SettingsCoordinator) {
+    delegate?.userCoordinatorLogoutCurrentUser(self)
+  }
+}
+
+// MARK: - UserListCoordinatorDelegate
+extension UserCoordinator: UserListCoordinatorDelegate {
+  func userListCoordinatorLogoutCurrentUser(_ userListCoordinator: UserListCoordinator) {
+    delegate?.userCoordinatorLogoutCurrentUser(self)
+  }
 }
 
 // MARK: - UserVCDelegate

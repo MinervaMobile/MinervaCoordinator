@@ -112,12 +112,12 @@ final class UserListCoordinator: MainCoordinator<UserListDataSource, UserListVC>
   }
 
   private func displayWorkoutList(forUserID userID: String, title: String) {
-//    let dataSource = WorkoutDataSource(userID: userID, dataManager: dataManager)
-//    dataSource.delegate = self
-//    let viewController = WorkoutVC(userID: userID, dataSource: dataSource, filter: workoutFilter)
-//    viewController.title = title
-//    push(coordinator, animated: true)
-    fatalError("Implement Me")
+    let coordinator = WorkoutCoordinator(
+      navigator: navigator,
+      dataManager: dataManager,
+      userID: userID)
+    coordinator.viewController.title = title
+    push(coordinator, animated: true)
   }
 }
 

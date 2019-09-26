@@ -172,9 +172,6 @@
 		F576F977226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
 		F576F978226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
 		F576F979226E16970015D14E /* ActionSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F944226E16970015D14E /* ActionSheetVC.swift */; };
-		F576F97A226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
-		F576F97B226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
-		F576F97C226E16970015D14E /* TabBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F946226E16970015D14E /* TabBarManager.swift */; };
 		F576F97D226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
 		F576F97E226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
 		F576F97F226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
@@ -347,7 +344,6 @@
 		F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetPresentAnimator.swift; sourceTree = "<group>"; };
 		F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDismissAnimator.swift; sourceTree = "<group>"; };
 		F576F944226E16970015D14E /* ActionSheetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetVC.swift; sourceTree = "<group>"; };
-		F576F946226E16970015D14E /* TabBarManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarManager.swift; sourceTree = "<group>"; };
 		F576F947226E16970015D14E /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		F576F948226E16970015D14E /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		F576F949226E16970015D14E /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -444,8 +440,6 @@
 		F501F894233BFF6400012C5E /* UserList */ = {
 			isa = PBXGroup;
 			children = (
-				F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */,
-				F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */,
 				F576F988226E16BB0015D14E /* UserListDataSource.swift */,
 				F576F989226E16BB0015D14E /* UserListVC.swift */,
 				F501F899233C05E500012C5E /* UserListCoordinator.swift */,
@@ -641,7 +635,6 @@
 		F576F902226E165E0015D14E /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */,
 				F576F903226E165E0015D14E /* FilterDataSource.swift */,
 				F501F89D233C0E5900012C5E /* FilterCoordinator.swift */,
 			);
@@ -651,7 +644,6 @@
 		F576F90B226E16820015D14E /* Workout */ = {
 			isa = PBXGroup;
 			children = (
-				F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */,
 				F576F913226E16820015D14E /* WorkoutDataSource.swift */,
 				F576F912226E16820015D14E /* WorkoutVC.swift */,
 				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
@@ -702,6 +694,10 @@
 				F576F943226E16970015D14E /* ActionSheetDismissAnimator.swift */,
 				F576F942226E16970015D14E /* ActionSheetPresentAnimator.swift */,
 				F576F944226E16970015D14E /* ActionSheetVC.swift */,
+				F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */,
+				F576F904226E165E0015D14E /* FilterActionSheetDataSource.swift */,
+				F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */,
+				F576F914226E16820015D14E /* WorkoutActionSheetDataSource.swift */,
 			);
 			path = ActionSheet;
 			sourceTree = "<group>";
@@ -712,7 +708,6 @@
 				F576F947226E16970015D14E /* Images.swift */,
 				F576F948226E16970015D14E /* LoadingHUD.swift */,
 				F501F890233BE77200012C5E /* MainCoordinator.swift */,
-				F576F946226E16970015D14E /* TabBarManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1169,7 +1164,6 @@
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */,
-				F576F97A226E16970015D14E /* TabBarManager.swift in Sources */,
 				F576F97D226E16970015D14E /* Images.swift in Sources */,
 				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
 				F576F950226E16970015D14E /* PickerCell.swift in Sources */,
@@ -1194,7 +1188,6 @@
 				F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */,
 				F576F928226E16820015D14E /* WorkoutDataSource.swift in Sources */,
-				F576F97B226E16970015D14E /* TabBarManager.swift in Sources */,
 				F576F951226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */,
 				F576F97E226E16970015D14E /* Images.swift in Sources */,
@@ -1257,7 +1250,6 @@
 				F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */,
 				F576F929226E16820015D14E /* WorkoutDataSource.swift in Sources */,
-				F576F97C226E16970015D14E /* TabBarManager.swift in Sources */,
 				F576F952226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */,
 				F576F97F226E16970015D14E /* Images.swift in Sources */,

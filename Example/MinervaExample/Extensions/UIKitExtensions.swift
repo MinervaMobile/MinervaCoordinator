@@ -322,19 +322,6 @@ extension UIViewController {
       bottom: self.view.bottomAnchor)
   }
 
-  var tabBarHidden: Bool {
-    get { return tabBarManager?.tabBarIsHidden ?? true }
-    set { tabBarManager?.tabBarIsHidden = newValue }
-  }
-
-  var tabBarHeight: CGFloat {
-    return tabBarManager?.tabHeight ?? 0
-  }
-
-  private var tabBarManager: TabBarManager? {
-    return navigationController?.parent as? TabBarManager
-  }
-
   func alert(_ error: Error, title: String, message: String? = nil) {
     switch error {
     case SystemError.cancelled: return

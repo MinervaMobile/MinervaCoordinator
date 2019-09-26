@@ -112,11 +112,6 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
     setupConstraints()
   }
 
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("Unsupported")
-    return nil
-  }
-
   override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.model else {

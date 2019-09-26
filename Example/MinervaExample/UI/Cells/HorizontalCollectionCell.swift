@@ -103,8 +103,9 @@ final class HorizontalCollectionCell: DefaultListCell, ListCellHelper {
     collectionView.collectionViewLayout.invalidateLayout()
   }
 
+  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
-    fatalError("Unsupported")
+    fatalError("init(coder:) has not been implemented")
   }
 
   override func updatedCellModel() {

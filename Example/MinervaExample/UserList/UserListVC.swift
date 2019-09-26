@@ -58,7 +58,7 @@ final class UserListVC: BaseViewController {
     view.addSubview(collectionView)
     view.addSubview(addButton)
 
-    collectionView.contentInset.bottom = addButton.frame.height + tabBarHeight
+    collectionView.contentInset.bottom = addButton.frame.height + 20
 
     anchorViewToTopSafeAreaLayoutGuide(collectionView)
     view.shouldTranslateAutoresizingMaskIntoConstraints(false)

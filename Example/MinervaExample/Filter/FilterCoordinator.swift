@@ -14,7 +14,7 @@ import Minerva
 
 protocol FilterCoordinatorDelegate: AnyObject {
   func filterCoordinator(
-    _ FilterCoordinator: FilterCoordinator,
+    _ filterCoordinator: FilterCoordinator,
     updatedFilter filter: WorkoutFilter
   )
 }
@@ -38,7 +38,7 @@ final class FilterCoordinator: MainCoordinator<FilterDataSource, CollectionViewC
   // MARK: - Private
 
   private func apply(filter: WorkoutFilter) {
-    fatalError("Implement Me")
+    delegate?.filterCoordinator(self, updatedFilter: filter)
   }
 
   private func displayFilterPopup(with filter: WorkoutFilter, type: FilterType) {

@@ -114,7 +114,6 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     case .explicit(let size):
       return size
     case .relative:
-      assertionFailure("Sizing of relative models is not yet supported")
       return nil
     }
   }
