@@ -11,6 +11,7 @@ def minerva_pods
   pod 'MBProgressHUD'
   pod 'PromiseKit/Alamofire'
   pod 'PromiseKit/CorePromise'
+  pod 'RxSwift'
   pod 'SwiftProtobuf'
   pod 'SwipeCellKit'
 end

@@ -17,7 +17,6 @@ open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
   ViewControllerDelegate
 {
   public typealias CoordinatorVC = U
-  public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
 
   public weak var parent: Coordinator?
   public var childCoordinators = [Coordinator]()
@@ -26,8 +25,6 @@ open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
   public let viewController: U
   public let dataSource: T
   public let navigator: Navigator
-
-  private var dismissBlock: DismissBlock?
 
   public init(navigator: Navigator, viewController: U, dataSource: T) {
     self.navigator = navigator
@@ -41,23 +38,6 @@ open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
     listController.sizeDelegate = self
     dataSource.updateDelegate = self
     viewController.lifecycleDelegate = self
-  }
-
-  public final func addCloseButton(dismissBlock: @escaping DismissBlock) {
-    self.dismissBlock = dismissBlock
-    viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
-      title: "Close",
-      style: .plain,
-      target: self,
-      action: #selector(closeButtonPressed(_:))
-    )
-  }
-
-  // MARK: - Private
-
-  @objc
-  private func closeButtonPressed(_ sender: UIBarButtonItem) {
-    dismissBlock?(self)
   }
 
   // MARK: - DataSourceUpdateDelegate
