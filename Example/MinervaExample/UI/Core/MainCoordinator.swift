@@ -12,14 +12,34 @@ import Minerva
 
 public class MainCoordinator<T: DataSource, U: UIViewController & ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
 
+  public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
   public typealias RefreshBlock = (_ dataSource: T, _ animated: Bool) -> Void
 
   private let refreshBlock: RefreshBlock
+
+  private var dismissBlock: DismissBlock?
 
   // MARK: - Lifecycle
   public init(navigator: Navigator, viewController: U, dataSource: T, refreshBlock: @escaping RefreshBlock) {
     self.refreshBlock = refreshBlock
     super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
+  }
+
+  public final func addCloseButton(dismissBlock: @escaping DismissBlock) {
+    self.dismissBlock = dismissBlock
+    viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: "Close",
+      style: .plain,
+      target: self,
+      action: #selector(closeButtonPressed(_:))
+    )
+  }
+
+  // MARK: - Private
+
+  @objc
+  private func closeButtonPressed(_ sender: UIBarButtonItem) {
+    dismissBlock?(self)
   }
 
   // MARK: - DataSourceUpdateDelegate

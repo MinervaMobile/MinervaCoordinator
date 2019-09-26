@@ -237,7 +237,8 @@ UIView category methods to add IQToolbar on UIKeyboard.
             
         } else {
             
-            let newToolbar = IQToolbar()
+            let frame = CGRect(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 44))
+            let newToolbar = IQToolbar(frame: frame)
             
             objc_setAssociatedObject(self, &kIQKeyboardToolbar, newToolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
@@ -454,25 +455,20 @@ UIView category methods to add IQToolbar on UIKeyboard.
             //  Adding button to toolBar.
             toolbar.items = items
             
+            if let textInput = self as? UITextInput {
+                switch textInput.keyboardAppearance {
+                case .dark:
+                    toolbar.barStyle = .black
+                default:
+                    toolbar.barStyle = .default
+                }
+            }
+
             //  Setting toolbar to keyboard.
             if let textField = self as? UITextField {
                 textField.inputAccessoryView = toolbar
-
-                switch textField.keyboardAppearance {
-                case .dark:
-                    toolbar.barStyle = .black
-                default:
-                    toolbar.barStyle = .default
-                }
             } else if let textView = self as? UITextView {
                 textView.inputAccessoryView = toolbar
-
-                switch textView.keyboardAppearance {
-                case .dark:
-                    toolbar.barStyle = .black
-                default:
-                    toolbar.barStyle = .default
-                }
             }
         }
     }
