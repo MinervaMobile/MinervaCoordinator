@@ -42,8 +42,8 @@ final class TextInputCellModel: BaseListCellModel {
   var placeholderTextColor: UIColor = .white
   private let cellIdentifier: String
 
-  fileprivate var reactiveFirstResponder = Observable<Bool>(false)
-  fileprivate var reactiveBottomBorderColor = Observable<UIColor?>(nil)
+  fileprivate var reactiveFirstResponder = MinervaObservable<Bool>(false)
+  fileprivate var reactiveBottomBorderColor = MinervaObservable<UIColor?>(nil)
 
   fileprivate let placeholder: String
   fileprivate let font: UIFont

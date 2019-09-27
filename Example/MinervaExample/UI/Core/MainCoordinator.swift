@@ -10,20 +10,13 @@ import UIKit
 
 import Minerva
 
-public class MainCoordinator<T: DataSource, U: UIViewController & ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
+public class MainCoordinator<T: DataSource, U: ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
 
   public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
-  public typealias RefreshBlock = (_ dataSource: T, _ animated: Bool) -> Void
-
-  private let refreshBlock: RefreshBlock
 
   private var dismissBlock: DismissBlock?
 
-  // MARK: - Lifecycle
-  public init(navigator: Navigator, viewController: U, dataSource: T, refreshBlock: @escaping RefreshBlock) {
-    self.refreshBlock = refreshBlock
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
-  }
+  // MARK: - Public
 
   public final func addCloseButton(dismissBlock: @escaping DismissBlock) {
     self.dismissBlock = dismissBlock
@@ -40,26 +33,6 @@ public class MainCoordinator<T: DataSource, U: UIViewController & ViewController
   @objc
   private func closeButtonPressed(_ sender: UIBarButtonItem) {
     dismissBlock?(self)
-  }
-
-  // MARK: - DataSourceUpdateDelegate
-  public override func dataSource(_ dataSource: DataSource, encountered error: Error) {
-    viewController.alert(error, title: "Failed to load your data")
-  }
-
-  public override func dataSource(
-    _ dataSource: DataSource,
-    update sections: [ListSection],
-    animated: Bool,
-    completion: DataSourceUpdateDelegate.Completion?
-  ) {
-    listController.update(with: sections, animated: animated, completion: completion)
-  }
-  public override func dataSourceStartedUpdate(_ dataSource: DataSource) {
-    LoadingHUD.show(in: viewController.view)
-  }
-  public override func dataSourceCompletedUpdate(_ dataSource: DataSource) {
-    LoadingHUD.hide(from: viewController.view)
   }
 
   // MARK: - ListControllerSizeDelegate
@@ -80,12 +53,6 @@ public class MainCoordinator<T: DataSource, U: UIViewController & ViewController
     let height = max(minHeight, dynamicHeight / CGFloat(marginCellCount))
     let width = sizeConstraints.adjustedContainerSize.width
     return CGSize(width: width, height: height)
-  }
-
-  // MARK: - ViewControllerDelegate
-  override public func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
-    super.viewController(viewController, viewWillAppear: animated)
-    refreshBlock(dataSource, animated)
   }
 
   // MARK: - UIViewControllerTransitioningDelegate

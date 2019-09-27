@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-import PromiseKit
 import Minerva
+import RxSwift
 
 protocol UserListCoordinatorDelegate: AnyObject {
   func userListCoordinatorLogoutCurrentUser(
@@ -17,35 +17,89 @@ protocol UserListCoordinatorDelegate: AnyObject {
   )
 }
 
-final class UserListCoordinator: MainCoordinator<UserListDataSource, UserListVC> {
+final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> {
 
   weak var delegate: UserListCoordinatorDelegate?
   private let userManager: UserManager
   private let dataManager: DataManager
+  private let disposeBag: DisposeBag
 
   // MARK: - Lifecycle
 
   init(navigator: Navigator, userManager: UserManager, dataManager: DataManager) {
     self.userManager = userManager
     self.dataManager = dataManager
+    self.disposeBag = DisposeBag()
 
-    let dataSource = UserListDataSource(dataManager: dataManager)
-    let welcomeVC = UserListVC()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource) { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let repository = UserListRepository(dataManager: dataManager)
+    let presenter = UserListPresenter(repository: repository)
+    let viewController = UserListVC()
+    super.init(navigator: navigator, viewController: viewController, dataSource: presenter)
+  }
+
+  // MARK: - ViewControllerDelegate
+  override public func viewControllerViewDidLoad(_ viewController: ViewController) {
+    super.viewControllerViewDidLoad(viewController)
+
+    dataSource.sections.subscribe(
+      onNext: { [weak self] state in self?.handle(state) },
+      onError: nil,
+      onCompleted: nil,
+      onDisposed: nil
+    ).disposed(by: disposeBag)
+
+    dataSource.actions.subscribe(
+      onNext: { [weak self] action in self?.handle(action) },
+      onError: nil,
+      onCompleted: nil,
+      onDisposed: nil
+    ).disposed(by: disposeBag)
+
+    self.viewController.actions.subscribe(
+      onNext: { [weak self] action in self?.handle(action) },
+      onError: nil,
+      onCompleted: nil,
+      onDisposed: nil
+    ).disposed(by: disposeBag)
   }
 
   // MARK: - Private
 
+  private func handle(_ state: PresenterState) {
+    switch state {
+    case .failure(let error):
+      LoadingHUD.hide(from: viewController.view)
+      viewController.alert(error, title: "Failed to load")
+    case .loaded(let sections):
+      LoadingHUD.hide(from: viewController.view)
+      listController.update(with: sections, animated: true, completion: nil)
+    case .loading:
+      LoadingHUD.show(in: viewController.view)
+    }
+  }
+
+  private func handle(_ action: UserListPresenter.Action) {
+    switch action {
+    case .delete(let user):
+      deleteUser(withID: user.userID)
+    case .edit(let user):
+      displayUserUpdatePopup(for: user)
+    case .view(let user):
+      displayWorkoutList(forUserID: user.userID, title: user.email)
+    }
+  }
+
+  private func handle(_ action: UserListVC.Action) {
+    switch action {
+    case .createUser:
+      displayCreateUserPopup()
+    }
+  }
+
   private func deleteUser(withID userID: String) {
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
-    userManager.delete(userID: userID).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.dataSource.reload(animated: true)
-    }.catch { [weak self] error -> Void in
+    dataManager.delete(userID: userID).catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to delete the user")
     }.finally { [weak self] in
       guard let strongSelf = self else { return }
@@ -88,10 +142,7 @@ final class UserListCoordinator: MainCoordinator<UserListDataSource, UserListVC>
 
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
-    dataManager.update(user: user).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.dataSource.reload(animated: true)
-    }.catch { [weak self] error -> Void in
+    dataManager.update(user: user).catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to save the user")
     }.finally { [weak self] in
       LoadingHUD.hide(from: self?.viewController.view)
@@ -102,7 +153,6 @@ final class UserListCoordinator: MainCoordinator<UserListDataSource, UserListVC>
     LoadingHUD.show(in: viewController.view)
     dataManager.create(withEmail: email, password: password, dailyCalories: dailyCalories, role: role).done { [weak self] () -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.dataSource.reload(animated: true)
       strongSelf.viewController.dismiss(animated: true, completion: nil)
     }.catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to save the user")
@@ -132,30 +182,6 @@ extension UserListCoordinator: CreateUserActionSheetDataSourceDelegate {
       viewController.dismiss(animated: true, completion: nil)
     case let .create(email, password, dailyCalories, role):
       create(email: email, password: password, dailyCalories: dailyCalories, role: role)
-    }
-  }
-}
-
-// MARK: - UserListDataSourceDelegate
-extension UserListCoordinator: UserListDataSourceDelegate {
-  func userListDataSource(_ userListDataSource: UserListDataSource, selected action: UserListDataSource.Action) {
-    switch action {
-    case .delete(let user):
-      deleteUser(withID: user.userID)
-    case .edit(let user):
-      displayUserUpdatePopup(for: user)
-    case .view(let user):
-      displayWorkoutList(forUserID: user.userID, title: user.email)
-    }
-  }
-}
-
-// MARK: - UserListVCDelegate
-extension UserListCoordinator: UserListVCDelegate {
-  func userListVC(_ userListVC: UserListVC, selected action: UserListVC.Action) {
-    switch action {
-    case .createUser:
-      displayCreateUserPopup()
     }
   }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 open class BaseListBindableCell: BaseListCell, ListBindableCell {
 
-  public private(set) var disposeBag = DisposeBag()
+  public private(set) var disposeBag = MinervaDisposeBag()
 
   override open func prepareForReuse() {
     disposeBag.clear()

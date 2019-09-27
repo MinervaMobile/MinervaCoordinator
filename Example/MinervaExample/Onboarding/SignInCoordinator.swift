@@ -18,7 +18,7 @@ protocol SignInCoordinatorDelegate: AnyObject {
   )
 }
 
-final class SignInCoordinator: MainCoordinator<SignInDataSource, CollectionViewController> {
+final class SignInCoordinator: PromiseCoordinator<SignInDataSource, CollectionViewController> {
 
   weak var delegate: SignInCoordinatorDelegate?
   private let userManager: UserManager
@@ -30,7 +30,8 @@ final class SignInCoordinator: MainCoordinator<SignInDataSource, CollectionViewC
 
     let dataSource = SignInDataSource(mode: mode)
     let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource) { dataSource, animated in
+    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
+    self.refreshBlock = { dataSource, animated in
       dataSource.reload(animated: animated)
     }
     dataSource.delegate = self

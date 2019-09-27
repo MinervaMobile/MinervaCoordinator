@@ -92,11 +92,6 @@ final class LabelCell: DefaultListCell, ListCellHelper {
     contentView.clipsToBounds = true
   }
 
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = model else {

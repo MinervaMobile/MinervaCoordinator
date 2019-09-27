@@ -4,12 +4,9 @@ use_frameworks!
 inhibit_all_warnings!
 
 def minerva_pods
-  pod 'Alamofire'
   pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit'
   pod 'IQKeyboardManagerSwift'
-  pod 'KeychainAccess'
   pod 'MBProgressHUD'
-  pod 'PromiseKit/Alamofire'
   pod 'PromiseKit/CorePromise'
   pod 'RxSwift'
   pod 'SwiftProtobuf'

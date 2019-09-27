@@ -18,7 +18,7 @@ protocol WelcomeCoordinatorDelegate: AnyObject {
 }
 
 /// Manages the user flows for logging in and creating new accounts
-final class WelcomeCoordinator: MainCoordinator<WelcomeDataSource, CollectionViewController> {
+final class WelcomeCoordinator: PromiseCoordinator<WelcomeDataSource, CollectionViewController> {
 
   weak var delegate: WelcomeCoordinatorDelegate?
   private let userManager: UserManager
@@ -30,7 +30,8 @@ final class WelcomeCoordinator: MainCoordinator<WelcomeDataSource, CollectionVie
 
     let dataSource = WelcomeDataSource()
     let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource) { dataSource, animated in
+    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
+    self.refreshBlock = { dataSource, animated in
       dataSource.reload(animated: animated)
     }
     dataSource.delegate = self

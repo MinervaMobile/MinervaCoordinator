@@ -23,17 +23,17 @@ public protocol ListCell {
 
 // MARK: - ListBindableCell
 public protocol ListBindableCell: ListCell {
-  var disposeBag: DisposeBag { get }
+  var disposeBag: MinervaDisposeBag { get }
 }
 
 extension ListBindableCell {
-  public func bind(_ variable: Observable<UIImage?>, to imageView: UIImageView) {
+  public func bind(_ variable: MinervaObservable<UIImage?>, to imageView: UIImageView) {
     bind(variable) { [weak imageView] image in
       imageView?.image = image
     }
   }
 
-  public func bind<T>(_ variable: Observable<T>, with completion: @escaping (T) -> Void) {
+  public func bind<T>(_ variable: MinervaObservable<T>, with completion: @escaping (T) -> Void) {
     variable.subscribe(in: self.disposeBag, completion)
   }
 }

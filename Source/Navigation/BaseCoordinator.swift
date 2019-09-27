@@ -8,11 +8,10 @@
 import Foundation
 import UIKit
 
-open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
+open class BaseCoordinator<T: DataSource, U: ViewController>:
   NSObject,
   CoordinatorNavigator,
   CoordinatorPresentable,
-  DataSourceUpdateDelegate,
   ListControllerSizeDelegate,
   ViewControllerDelegate
 {
@@ -36,25 +35,7 @@ open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
     listController.collectionView = viewController.collectionView
     listController.viewController = viewController
     listController.sizeDelegate = self
-    dataSource.updateDelegate = self
     viewController.lifecycleDelegate = self
-  }
-
-  // MARK: - DataSourceUpdateDelegate
-  open func dataSource(_ dataSource: DataSource, encountered error: Error) {
-  }
-
-  open func dataSource(
-    _ dataSource: DataSource,
-    update sections: [ListSection],
-    animated: Bool,
-    completion: DataSourceUpdateDelegate.Completion?
-  ) {
-    listController.update(with: sections, animated: animated, completion: completion)
-  }
-  open func dataSourceStartedUpdate(_ dataSource: DataSource) {
-  }
-  open func dataSourceCompletedUpdate(_ dataSource: DataSource) {
   }
 
   // MARK: - ListControllerSizeDelegate
@@ -69,6 +50,9 @@ open class BaseCoordinator<T: DataSource, U: UIViewController & ViewController>:
   }
 
   // MARK: - ViewControllerDelegate
+  open func viewControllerViewDidLoad(_ viewController: ViewController) {
+
+  }
   open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
     listController.willDisplay()
   }

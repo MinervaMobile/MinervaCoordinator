@@ -33,6 +33,10 @@ open class BaseViewController: UIViewController, ViewController {
   }
 
   // MARK: - UIViewController
+  override open func viewDidLoad() {
+    super.viewDidLoad()
+    lifecycleDelegate?.viewControllerViewDidLoad(self)
+  }
 
   override open func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)

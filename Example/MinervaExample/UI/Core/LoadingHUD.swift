@@ -19,7 +19,7 @@ final class LoadingHUD {
     }
   }
   static func show(in view: UIView?) {
-    LoadingHUD.show(in: view, withGraceTime: 0.25)
+    LoadingHUD.show(in: view, withGraceTime: 0)
   }
   static func hide(from view: UIView?) {
     guard let view = view else {

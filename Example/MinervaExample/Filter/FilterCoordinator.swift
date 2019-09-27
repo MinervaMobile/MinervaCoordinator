@@ -18,7 +18,7 @@ protocol FilterCoordinatorDelegate: AnyObject {
   )
 }
 
-final class FilterCoordinator: MainCoordinator<FilterDataSource, CollectionViewController> {
+final class FilterCoordinator: PromiseCoordinator<FilterDataSource, CollectionViewController> {
 
   weak var delegate: FilterCoordinatorDelegate?
 
@@ -28,7 +28,8 @@ final class FilterCoordinator: MainCoordinator<FilterDataSource, CollectionViewC
 
     let dataSource = FilterDataSource(filter: filter)
     let viewController = CollectionViewController()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource) { dataSource, animated in
+    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
+    self.refreshBlock = { dataSource, animated in
       dataSource.reload(animated: animated)
     }
     dataSource.delegate = self
