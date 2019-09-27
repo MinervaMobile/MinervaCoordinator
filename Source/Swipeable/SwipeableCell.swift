@@ -16,7 +16,7 @@ open class SwipeableCellModel: DefaultListCellModel {
 }
 
 open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindable {
-  public private(set) var disposeBag = DisposeBag()
+  public private(set) var disposeBag = MinervaDisposeBag()
   open private(set) var cellModel: ListCellModel?
 
   public private(set) var containerTopConstraint: NSLayoutConstraint?

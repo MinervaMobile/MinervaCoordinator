@@ -46,7 +46,7 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
   var borderColor: UIColor?
   var selectedBorderColor: UIColor?
 
-  fileprivate var reactiveIsSelected = Observable<Bool>(false)
+  fileprivate var reactiveIsSelected = MinervaObservable<Bool>(false)
 
   fileprivate let attributedText: NSAttributedString
 
@@ -126,11 +126,6 @@ final class BorderLabelCell: DefaultListCell, ListCellHelper {
     containerView.addSubview(label)
     containerView.addSubview(accessoryImageView)
     setupConstraints()
-  }
-
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   override func updatedCellModel() {

@@ -115,11 +115,6 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
     contentView.clipsToBounds = true
   }
 
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   override func prepareForReuse() {
     super.prepareForReuse()
     accessoryImageWidthHeightConstraint?.constant = 0

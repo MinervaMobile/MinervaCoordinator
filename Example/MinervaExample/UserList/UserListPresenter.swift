@@ -9,37 +9,42 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
-protocol UserListDataSourceDelegate: AnyObject {
-  func userListDataSource(_ userListDataSource: UserListDataSource, selected action: UserListDataSource.Action)
-}
+final class UserListPresenter: Presenter {
 
-final class UserListDataSource: BaseDataSource {
   enum Action {
     case delete(user: User)
     case edit(user: User)
     case view(user: User)
   }
 
-  weak var delegate: UserListDataSourceDelegate?
+  private(set) var sections: Observable<PresenterState>
+  var actions: Observable<Action> {
+    actionsSubject.asObservable()
+  }
 
-  private let dataManager: DataManager
+  private let actionsSubject: PublishSubject<Action>
+  private let repository: UserListRepository
 
   // MARK: - Lifecycle
 
-  init(dataManager: DataManager) {
-    self.dataManager = dataManager
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    let sectionsPromise = dataManager.loadUsers().map { [weak self] users -> [ListSection] in
-      guard let strongSelf = self else { throw SystemError.cancelled }
-      return [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
-    }
-    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
+  init(repository: UserListRepository) {
+    self.repository = repository
+    self.actionsSubject = PublishSubject()
+    self.sections = Observable.just(.loading)
+    self.sections = self.sections.concat(repository.users.map { [weak self] usersResult -> PresenterState in
+      guard let strongSelf = self else {
+        return .failure(error: SystemError.cancelled)
+      }
+      switch usersResult {
+      case .success(let users):
+        let sections = [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
+        return .loaded(sections: sections)
+      case .failure(let error):
+        return .failure(error: error)
+      }
+    })
   }
 
   // MARK: - Private
@@ -47,13 +52,13 @@ final class UserListDataSource: BaseDataSource {
   private func createSection(with users: [User]) -> ListSection {
     var cellModels = [ListCellModel]()
 
-    let allowSelection = dataManager.userAuthorization.role == .admin
+    let allowSelection = repository.allowSelection
     for user in users {
       let userCellModel = createUserCellModel(for: user)
       if allowSelection {
         userCellModel.selectionAction = { [weak self] _, _ -> Void in
           guard let strongSelf = self else { return }
-          strongSelf.delegate?.userListDataSource(strongSelf, selected: .view(user: user))
+          strongSelf.actionsSubject.on(.next(.view(user: user)))
         }
       }
       cellModels.append(userCellModel)
@@ -72,11 +77,11 @@ final class UserListDataSource: BaseDataSource {
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.userListDataSource(strongSelf, selected: .delete(user: user))
+      strongSelf.actionsSubject.on(.next(.delete(user: user)))
     }
     cellModel.editAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.userListDataSource(strongSelf, selected: .edit(user: user))
+      strongSelf.actionsSubject.on(.next(.edit(user: user)))
     }
     return cellModel
   }

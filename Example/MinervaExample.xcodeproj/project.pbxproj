@@ -14,7 +14,6 @@
 		F501F88B233BE71A00012C5E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F886233BE23700012C5E /* BaseViewController.swift */; };
 		F501F88C233BE71A00012C5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F888233BE25C00012C5E /* ViewController.swift */; };
 		F501F88D233BE71A00012C5E /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F880233BE18800012C5E /* BaseCoordinator.swift */; };
-		F501F88E233BE71A00012C5E /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F884233BE1E700012C5E /* BaseDataSource.swift */; };
 		F501F88F233BE71A00012C5E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
 		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
@@ -181,9 +180,9 @@
 		F576F98C226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
 		F576F98D226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
 		F576F98E226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
-		F576F98F226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
-		F576F990226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
-		F576F991226E16BB0015D14E /* UserListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListDataSource.swift */; };
+		F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
+		F576F990226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
+		F576F991226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
 		F576F992226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
 		F576F993226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
 		F576F994226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
@@ -196,8 +195,14 @@
 		F576F99D226E20D20015D14E /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848576233A6673001DBF1E /* ListSectionWrapper.swift */; };
 		F5848579233A669F001DBF1E /* ListModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListModelWrapper.swift */; };
+		F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */; };
+		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
+		F5CE47BF233E4ABE00983F72 /* PromiseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */; };
+		F5CE47C3233E4B3400983F72 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C2233E4B3400983F72 /* Presenter.swift */; };
+		F5CE47C4233E4E1700983F72 /* PromiseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F884233BE1E700012C5E /* PromiseDataSource.swift */; };
+		F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C5233E561C00983F72 /* UserListRepository.swift */; };
 		F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
-		F5DA2B96226D367600BA461A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* Observable.swift */; };
+		F5DA2B96226D367600BA461A /* MinervaObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* MinervaObservable.swift */; };
 		F5DA2B97226D367600BA461A /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8A226D367500BA461A /* BaseListCell.swift */; };
 		F5DA2B98226D367600BA461A /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8B226D367500BA461A /* ListController.swift */; };
 		F5DA2B99226D367600BA461A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8C226D367500BA461A /* Extensions.swift */; };
@@ -267,7 +272,7 @@
 		F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		F501F882233BE1BC00012C5E /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		F501F884233BE1E700012C5E /* BaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
+		F501F884233BE1E700012C5E /* PromiseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDataSource.swift; sourceTree = "<group>"; };
 		F501F886233BE23700012C5E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F501F888233BE25C00012C5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F501F890233BE77200012C5E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -348,15 +353,20 @@
 		F576F948226E16970015D14E /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		F576F949226E16970015D14E /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		F576F987226E16BB0015D14E /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
-		F576F988226E16BB0015D14E /* UserListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListDataSource.swift; sourceTree = "<group>"; };
+		F576F988226E16BB0015D14E /* UserListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListPresenter.swift; sourceTree = "<group>"; };
 		F576F989226E16BB0015D14E /* UserListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
 		F576F98A226E16BB0015D14E /* UpdateUserActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserActionSheetDataSource.swift; sourceTree = "<group>"; };
 		F576F98B226E16BB0015D14E /* CreateUserActionSheetDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserActionSheetDataSource.swift; sourceTree = "<group>"; };
 		F576F99C226E20D20015D14E /* SwipeableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
 		F5848576233A6673001DBF1E /* ListSectionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionWrapper.swift; sourceTree = "<group>"; };
 		F5848578233A669F001DBF1E /* ListModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModelWrapper.swift; sourceTree = "<group>"; };
+		F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Promise.swift"; sourceTree = "<group>"; };
+		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
+		F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseCoordinator.swift; sourceTree = "<group>"; };
+		F5CE47C2233E4B3400983F72 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
 		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultListCell.swift; sourceTree = "<group>"; };
-		F5DA2B89226D367500BA461A /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		F5DA2B89226D367500BA461A /* MinervaObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinervaObservable.swift; sourceTree = "<group>"; };
 		F5DA2B8A226D367500BA461A /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
 		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		F5DA2B8C226D367500BA461A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -440,9 +450,10 @@
 		F501F894233BFF6400012C5E /* UserList */ = {
 			isa = PBXGroup;
 			children = (
-				F576F988226E16BB0015D14E /* UserListDataSource.swift */,
-				F576F989226E16BB0015D14E /* UserListVC.swift */,
 				F501F899233C05E500012C5E /* UserListCoordinator.swift */,
+				F576F988226E16BB0015D14E /* UserListPresenter.swift */,
+				F5CE47C5233E561C00983F72 /* UserListRepository.swift */,
+				F576F989226E16BB0015D14E /* UserListVC.swift */,
 			);
 			path = UserList;
 			sourceTree = "<group>";
@@ -606,6 +617,8 @@
 			isa = PBXGroup;
 			children = (
 				F576F8D4226DF04F0015D14E /* DataManager.swift */,
+				F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */,
+				F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */,
 				F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */,
 				F576F8D5226DF04F0015D14E /* SystemError.swift */,
 				F576F8D6226DF04F0015D14E /* UserManager.swift */,
@@ -708,6 +721,9 @@
 				F576F947226E16970015D14E /* Images.swift */,
 				F576F948226E16970015D14E /* LoadingHUD.swift */,
 				F501F890233BE77200012C5E /* MainCoordinator.swift */,
+				F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */,
+				F501F884233BE1E700012C5E /* PromiseDataSource.swift */,
+				F5CE47C2233E4B3400983F72 /* Presenter.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -764,7 +780,7 @@
 				F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */,
 				F5DA2B8D226D367500BA461A /* ListViewLayout.swift */,
 				F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */,
-				F5DA2B89226D367500BA461A /* Observable.swift */,
+				F5DA2B89226D367500BA461A /* MinervaObservable.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -773,7 +789,6 @@
 			isa = PBXGroup;
 			children = (
 				F501F880233BE18800012C5E /* BaseCoordinator.swift */,
-				F501F884233BE1E700012C5E /* BaseDataSource.swift */,
 				F501F886233BE23700012C5E /* BaseViewController.swift */,
 				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F5F08AF323192C4900C249E9 /* Coordinator.swift */,
@@ -1116,10 +1131,12 @@
 				F576F971226E16970015D14E /* ActionSheetPresentAnimator.swift in Sources */,
 				F576F8BE226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */,
+				F5CE47BF233E4ABE00983F72 /* PromiseCoordinator.swift in Sources */,
 				F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */,
 				F576F924226E16820015D14E /* WorkoutVC.swift in Sources */,
 				F576F998226E16BB0015D14E /* CreateUserActionSheetDataSource.swift in Sources */,
 				F576F92A226E16820015D14E /* WorkoutActionSheetDataSource.swift in Sources */,
+				F5CE47C4233E4E1700983F72 /* PromiseDataSource.swift in Sources */,
 				F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */,
 				F576F962226E16970015D14E /* DatePickerCell.swift in Sources */,
 				F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
@@ -1136,8 +1153,9 @@
 				F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */,
 				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */,
-				F576F98F226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
+				F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */,
 				F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
 				F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */,
 				F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
@@ -1148,11 +1166,14 @@
 				F576F8BB226DF0050015D14E /* UserRole.swift in Sources */,
 				F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */,
 				F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */,
+				F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */,
 				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
 				F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */,
 				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
 				F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */,
+				F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */,
 				F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */,
+				F5CE47C3233E4B3400983F72 /* Presenter.swift in Sources */,
 				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
@@ -1203,7 +1224,7 @@
 				F576F94B226E16970015D14E /* TextInputCell.swift in Sources */,
 				F576F8DC226DF04F0015D14E /* DataManager.swift in Sources */,
 				F576F98D226E16BB0015D14E /* UserVC.swift in Sources */,
-				F576F990226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F990226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
 				F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F925226E16820015D14E /* WorkoutVC.swift in Sources */,
@@ -1265,7 +1286,7 @@
 				F576F94C226E16970015D14E /* TextInputCell.swift in Sources */,
 				F576F8DD226DF04F0015D14E /* DataManager.swift in Sources */,
 				F576F98E226E16BB0015D14E /* UserVC.swift in Sources */,
-				F576F991226E16BB0015D14E /* UserListDataSource.swift in Sources */,
+				F576F991226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
 				F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F926226E16820015D14E /* WorkoutVC.swift in Sources */,
@@ -1308,7 +1329,7 @@
 				F501F88B233BE71A00012C5E /* BaseViewController.swift in Sources */,
 				F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */,
 				F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */,
-				F5DA2B96226D367600BA461A /* Observable.swift in Sources */,
+				F5DA2B96226D367600BA461A /* MinervaObservable.swift in Sources */,
 				F5DA2BA1226D367600BA461A /* BaseListBindableCell.swift in Sources */,
 				F5DA2B9F226D367600BA461A /* BaseListCellModel.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
@@ -1321,7 +1342,6 @@
 				F501F88F233BE71A00012C5E /* CollectionViewController.swift in Sources */,
 				F5DA2B87226D32B000BA461A /* DefaultListCell.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
-				F501F88E233BE71A00012C5E /* BaseDataSource.swift in Sources */,
 				F501F88A233BE71A00012C5E /* DataSource.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
 			);

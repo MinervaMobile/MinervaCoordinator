@@ -11,7 +11,7 @@ import UIKit
 import PromiseKit
 import Minerva
 
-final class WorkoutCoordinator: MainCoordinator<WorkoutDataSource, WorkoutVC> {
+final class WorkoutCoordinator: PromiseCoordinator<WorkoutDataSource, WorkoutVC> {
 
   private let dataManager: DataManager
   private let userID: String
@@ -24,7 +24,8 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutDataSource, WorkoutVC> {
 
     let dataSource = WorkoutDataSource(userID: userID, dataManager: dataManager)
     let viewController = WorkoutVC()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource) { dataSource, animated in
+    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
+    self.refreshBlock = { dataSource, animated in
       dataSource.reload(animated: animated)
     }
     dataSource.delegate = self

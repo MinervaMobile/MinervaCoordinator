@@ -22,28 +22,6 @@ extension Array where Element: NSAttributedString {
   }
 }
 
-extension DataSourceUpdateDelegate {
-  public func dataSource(
-    _ dataSource: DataSource,
-    process promise: Promise<[ListSection]>,
-    animated: Bool,
-    completion: Completion?
-  ) {
-    dataSourceStartedUpdate(dataSource)
-    promise.done { [weak self, weak dataSource] sections in
-      guard let strongSelf = self, let strongDataSource = dataSource else { return }
-      strongSelf.dataSource(strongDataSource, update: sections, animated: animated, completion: completion)
-    }.catch { [weak self, weak dataSource] error in
-      guard let strongSelf = self, let strongDataSource = dataSource else { return }
-      strongSelf.dataSource(strongDataSource, encountered: error)
-      completion?(false)
-    }.finally { [weak self, weak dataSource] in
-      guard let strongSelf = self, let strongDataSource = dataSource else { return }
-      strongSelf.dataSourceCompletedUpdate(strongDataSource)
-    }
-  }
-}
-
 extension ListController {
   public var cellModels: [ListCellModel] {
     return listSections.flatMap { $0.cellModels }

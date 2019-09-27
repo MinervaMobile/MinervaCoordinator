@@ -17,7 +17,7 @@ protocol SettingsCoordinatorDelegate: AnyObject {
   )
 }
 
-final class SettingsCoordinator: MainCoordinator<SettingsDataSource, CollectionViewController> {
+final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, CollectionViewController> {
 
   weak var delegate: SettingsCoordinatorDelegate?
   private let userManager: UserManager
@@ -31,7 +31,8 @@ final class SettingsCoordinator: MainCoordinator<SettingsDataSource, CollectionV
 
     let dataSource = SettingsDataSource(dataManager: dataManager)
     let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource) { dataSource, animated in
+    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
+    self.refreshBlock = { dataSource, animated in
       dataSource.reload(animated: animated)
     }
     viewController.title = "Settings"

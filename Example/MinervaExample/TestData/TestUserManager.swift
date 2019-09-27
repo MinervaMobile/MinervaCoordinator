@@ -25,7 +25,7 @@ final class TestUserManager {
 extension TestUserManager: UserManager {
   func activateCachedUser() -> DataManager? {
     guard let activeUser = self.activeUser else { return nil }
-    return dataManagerFactory.createDataManager(for: activeUser)
+    return dataManagerFactory.createDataManager(for: activeUser, userManager: self)
   }
 
   func createAccount(withEmail email: String, password: String) -> Promise<DataManager> {
@@ -45,7 +45,7 @@ extension TestUserManager: UserManager {
     let user = UserProto(userID: userID, email: email, dailyCalories: 2_000)
     testData.idToUserMap[userID] = user
     activeUser = authorization
-    return .value(dataManagerFactory.createDataManager(for: authorization))
+    return .value(dataManagerFactory.createDataManager(for: authorization, userManager: self))
   }
 
   func login(withEmail email: String, password: String) -> Promise<DataManager> {
@@ -60,7 +60,7 @@ extension TestUserManager: UserManager {
       return .init(error: SystemError.invalidEmailAndPassword)
     }
     activeUser = authorization
-    return .value(dataManagerFactory.createDataManager(for: authorization))
+    return .value(dataManagerFactory.createDataManager(for: authorization, userManager: self))
   }
 
   func logout(userID: String) -> Promise<Void> {

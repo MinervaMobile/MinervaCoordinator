@@ -9,10 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
-
-protocol UserListVCDelegate: AnyObject {
-  func userListVC(_ userListVC: UserListVC, selected action: UserListVC.Action)
-}
+import RxSwift
 
 final class UserListVC: BaseViewController {
 
@@ -20,8 +17,11 @@ final class UserListVC: BaseViewController {
     case createUser
   }
 
-  weak var delegate: UserListVCDelegate?
+  var actions: Observable<Action> {
+    actionsSubject.asObservable()
+  }
 
+  private let actionsSubject: PublishSubject<Action>
   private let listController = ListController()
 
   private let addButton: UIButton = {
@@ -35,6 +35,7 @@ final class UserListVC: BaseViewController {
   // MARK: - Lifecycle
 
   required override init() {
+    self.actionsSubject = PublishSubject()
     super.init()
 
     collectionView.contentInsetAdjustmentBehavior = .never
@@ -73,6 +74,6 @@ final class UserListVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    delegate?.userListVC(self, selected: .createUser)
+    actionsSubject.on(.next(.createUser))
   }
 }

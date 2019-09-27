@@ -1,5 +1,5 @@
 //
-//  Observable.swift
+//  MinervaObservable.swift
 //  Minerva
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -8,15 +8,15 @@
 import Darwin
 import Foundation
 
-public protocol Disposable {
-  func unsubscribe(_ token: ObserverToken)
+public protocol MinervaDisposable {
+  func unsubscribe(_ token: MinervaObserverToken)
 }
 
-private class DisposableItem {
-  private let disposable: Disposable
-  private let token: ObserverToken
+private class MinervaMinervaDisposableItem {
+  private let disposable: MinervaDisposable
+  private let token: MinervaObserverToken
 
-  fileprivate init(disposable: Disposable, token: ObserverToken) {
+  fileprivate init(disposable: MinervaDisposable, token: MinervaObserverToken) {
     self.disposable = disposable
     self.token = token
   }
@@ -30,8 +30,8 @@ private class DisposableItem {
   }
 }
 
-public final class DisposeBag {
-  private var disposables = [DisposableItem]()
+public final class MinervaDisposeBag {
+  private var disposables = [MinervaMinervaDisposableItem]()
 
   public init() {
   }
@@ -40,8 +40,8 @@ public final class DisposeBag {
     clear()
   }
 
-  fileprivate func add<T>(_ observable: Observable<T>, with token: ObserverToken) {
-    disposables.append(DisposableItem(disposable: observable, token: token))
+  fileprivate func add<T>(_ observable: MinervaObservable<T>, with token: MinervaObserverToken) {
+    disposables.append(MinervaMinervaDisposableItem(disposable: observable, token: token))
   }
 
   public func clear() {
@@ -50,7 +50,7 @@ public final class DisposeBag {
   }
 }
 
-public struct ObserverToken: Hashable {
+public struct MinervaObserverToken: Hashable {
   public let id: Int
 
   public init() {
@@ -65,18 +65,18 @@ public struct ObserverToken: Hashable {
     hasher.combine(id)
   }
 
-  public var next: ObserverToken {
-    return ObserverToken(id: id &+ 1)
+  public var next: MinervaObserverToken {
+    return MinervaObserverToken(id: id &+ 1)
   }
 
-  public static func == (lhs: ObserverToken, rhs: ObserverToken) -> Bool {
+  public static func == (lhs: MinervaObserverToken, rhs: MinervaObserverToken) -> Bool {
     return lhs.hashValue == rhs.hashValue
   }
 }
 
-public final class Observable<T>: Disposable {
+public final class MinervaObservable<T>: MinervaDisposable {
   private typealias Observer = (T) -> Void
-  private var observers = [ObserverToken: Observer]()
+  private var observers = [MinervaObserverToken: Observer]()
   private var internalValue: T
   public var value: T {
     get {
@@ -95,7 +95,7 @@ public final class Observable<T>: Disposable {
   }
 
   private var spinlock = os_unfair_lock()
-  private var nextToken = ObserverToken()
+  private var nextToken = MinervaObserverToken()
 
   public init(_ value: T) {
     self.internalValue = value
@@ -110,9 +110,9 @@ public final class Observable<T>: Disposable {
   }
 
   @discardableResult
-  public func subscribe(in disposeBag: DisposeBag, _ observer: @escaping (T) -> Void) -> ObserverToken {
+  public func subscribe(in disposeBag: MinervaDisposeBag, _ observer: @escaping (T) -> Void) -> MinervaObserverToken {
     var value = internalValue
-    let token: ObserverToken = lock {
+    let token: MinervaObserverToken = lock {
       let token = nextToken
       nextToken = token.next
       observers[token] = observer
@@ -124,7 +124,7 @@ public final class Observable<T>: Disposable {
     return token
   }
 
-  public func unsubscribe(_ token: ObserverToken) {
+  public func unsubscribe(_ token: MinervaObserverToken) {
     lock {
       observers[token] = nil
     }
