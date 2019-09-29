@@ -29,6 +29,13 @@ extension ListCellModel {
   }
 }
 
+extension ListCellModel where Self: Equatable {
+  public func isEqual(to model: ListCellModel) -> Bool {
+    guard let other = model as? Self else { return false }
+    return self == other
+  }
+}
+
 // MARK: - ListSelectableCellModel
 public protocol ListSelectableCellModelWrapper {
   func selected(at indexPath: IndexPath)
