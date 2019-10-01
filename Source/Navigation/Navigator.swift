@@ -84,14 +84,14 @@ extension BasicNavigator: Navigator {
 
   public func dismiss(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
     var viewControllers = [UIViewController]()
-    func calculateDismissingViewControllers(from vc: UIViewController?) {
-      guard let vc = vc else { return }
+    func calculateDismissingViewControllers(from viewController: UIViewController?) {
+      guard let viewController = viewController else { return }
 
-      viewControllers.append(vc)
-      if let navigationController = vc as? UINavigationController {
+      viewControllers.append(viewController)
+      if let navigationController = viewController as? UINavigationController {
         viewControllers.append(contentsOf: navigationController.viewControllers)
       }
-      return calculateDismissingViewControllers(from: vc.presentedViewController)
+      return calculateDismissingViewControllers(from: viewController.presentedViewController)
     }
     if viewController.presentingViewController == nil {
       calculateDismissingViewControllers(from: viewController.presentedViewController)
@@ -147,9 +147,9 @@ extension BasicNavigator: Navigator {
       }
     }
     navigationController.setViewControllers(viewControllers, animated: animated)
-    Array(completions.keys).forEach { vc in
-      guard !viewControllers.contains(vc) else { return }
-      runCompletion(for: vc)
+    Array(completions.keys).forEach { viewController in
+      guard !viewControllers.contains(viewController) else { return }
+      runCompletion(for: viewController)
     }
   }
 

@@ -51,22 +51,22 @@ public final class MinervaDisposeBag {
 }
 
 public struct MinervaObserverToken: Hashable {
-  public let id: Int
+  public let tokenID: Int
 
   public init() {
-    self.init(id: 0)
+    self.init(tokenID: 0)
   }
 
-  public init(id: Int) {
-    self.id = id
+  public init(tokenID: Int) {
+    self.tokenID = tokenID
   }
 
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
+    hasher.combine(tokenID)
   }
 
   public var next: MinervaObserverToken {
-    return MinervaObserverToken(id: id &+ 1)
+    return MinervaObserverToken(tokenID: tokenID &+ 1)
   }
 
   public static func == (lhs: MinervaObserverToken, rhs: MinervaObserverToken) -> Bool {

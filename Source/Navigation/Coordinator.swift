@@ -25,7 +25,7 @@ extension Coordinator {
 }
 
 public protocol BaseCoordinatorPresentable: Coordinator {
-  var _viewController: UIViewController { get }
+  var baseViewController: UIViewController { get }
 }
 
 public protocol CoordinatorPresentable: BaseCoordinatorPresentable {
@@ -35,7 +35,7 @@ public protocol CoordinatorPresentable: BaseCoordinatorPresentable {
 }
 
 extension CoordinatorPresentable {
-  public var _viewController: UIViewController { return viewController }
+  public var baseViewController: UIViewController { return viewController }
 }
 
 public protocol CoordinatorNavigator: Coordinator {
@@ -50,7 +50,7 @@ extension CoordinatorNavigator {
     animated: Bool,
     modalPresentationStyle: UIModalPresentationStyle = .fullScreen
   ) {
-    navigator.setViewControllers([coordinator._viewController], animated: false)
+    navigator.setViewControllers([coordinator.baseViewController], animated: false)
     present(coordinator, animated: true, modalPresentationStyle: modalPresentationStyle)
   }
 
@@ -61,7 +61,7 @@ extension CoordinatorNavigator {
   ) {
     addChild(coordinator)
 
-    let viewController = coordinator._viewController.navigationController ?? coordinator._viewController
+    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
     viewController.modalPresentationStyle = modalPresentationStyle
     navigator.present(viewController, animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)
@@ -69,7 +69,7 @@ extension CoordinatorNavigator {
   }
 
   public func dismiss(_ coordinator: BaseCoordinatorPresentable, animated: Bool, completion: (() -> Void)? = nil) {
-    let viewController = coordinator._viewController.navigationController ?? coordinator._viewController
+    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated) { _ in
       completion?()
     }
@@ -77,17 +77,17 @@ extension CoordinatorNavigator {
 
   public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {
     addChild(coordinator)
-    navigator.push(coordinator._viewController, animated: animated) { [weak self] _ in
+    navigator.push(coordinator.baseViewController, animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)
     }
   }
   public func setCoordinators(_ coordinators: [BaseCoordinatorPresentable], animated: Bool) {
     coordinators.forEach { addChild($0) }
     navigator.setViewControllers(
-      coordinators.map { $0._viewController },
+      coordinators.map { $0.baseViewController },
       animated: animated
     ) { [weak self] viewController in
-      guard let coordinator = coordinators.first(where: { $0._viewController === viewController }) else {
+      guard let coordinator = coordinators.first(where: { $0.baseViewController === viewController }) else {
         assertionFailure("Coordinator does not exist for \(viewController)")
         return
       }
@@ -97,7 +97,7 @@ extension CoordinatorNavigator {
 
   public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {
     addChild(coordinator)
-    navigator.setViewControllers([coordinator._viewController], animated: animated) { [weak self] _ in
+    navigator.setViewControllers([coordinator.baseViewController], animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)
     }
   }

@@ -107,7 +107,9 @@ public final class ListController: NSObject {
             assertionFailure("Found a cell model an invalid ID \(cellModel)")
           }
           if let existingCellModel = identifiers[identifier] {
-            assertionFailure("Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)")
+            assertionFailure(
+              "Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)"
+            )
           }
           identifiers[identifier] = cellModel
         }
@@ -262,20 +264,24 @@ public final class ListController: NSObject {
     dispatchPrecondition(condition: .onQueue(.main))
     return size(
       using: constraints,
-      sectionPicker: { $0.section.identifier == listSection.identifier }
-    ) { sectionController, sizeConstraints -> CGSize? in
-      sectionController.size(of: listSection, with: sizeConstraints)
-    }
+      sectionPicker: { $0.section.identifier == listSection.identifier },
+      executionBlock: { sectionController, sizeConstraints -> CGSize? in
+        sectionController.size(of: listSection, with: sizeConstraints)
+      }
+    )
   }
 
   public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
     dispatchPrecondition(condition: .onQueue(.main))
     return size(
       using: constraints,
-      sectionPicker: { $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier }) }
-    ) { sectionController, sizeConstraints -> CGSize? in
-      sectionController.size(for: cellModel, with: sizeConstraints)
-    }
+      sectionPicker: { wrapper -> Bool in
+        wrapper.section.cellModels.contains { $0.identifier == cellModel.identifier }
+      },
+      executionBlock: { sectionController, sizeConstraints -> CGSize? in
+        sectionController.size(for: cellModel, with: sizeConstraints)
+      }
+    )
   }
 
   private func size(

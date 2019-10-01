@@ -19,6 +19,7 @@ public protocol ListCellModel: CustomStringConvertible {
   var reorderable: Bool { get }
   var identifier: String { get }
   var cellType: ListCollectionViewCell.Type { get }
+
   func identical(to model: ListCellModel) -> Bool
   func size(constrainedTo containerSize: CGSize, with templateProvider: () -> ListCollectionViewCell) -> ListCellSize
 }
@@ -110,6 +111,7 @@ extension TypedListCellModel {
   public var cellType: ListCollectionViewCell.Type {
     return CellType.self
   }
+
   public func identical(to other: ListCellModel) -> Bool {
     guard let model = other as? Self else {
       return false

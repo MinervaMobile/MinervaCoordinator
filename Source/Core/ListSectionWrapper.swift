@@ -16,6 +16,7 @@ internal class ListSectionWrapper: NSObject {
   internal init(section: ListSection) {
     self.section = section
   }
+
   override internal var description: String {
     return section.description
   }

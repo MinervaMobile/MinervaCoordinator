@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+internal enum Extensions { }
+
 extension Array {
   internal func at(_ index: Int) -> Element? {
     guard index >= 0, index < count else {

@@ -8,13 +8,11 @@
 import Foundation
 import UIKit
 
-open class BaseCoordinator<T: DataSource, U: ViewController>:
-  NSObject,
+open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject,
   CoordinatorNavigator,
   CoordinatorPresentable,
   ListControllerSizeDelegate,
-  ViewControllerDelegate
-{
+  ViewControllerDelegate {
   public typealias CoordinatorVC = U
 
   public weak var parent: Coordinator?

@@ -183,7 +183,7 @@
 		F576F998226E16BB0015D14E /* CreateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserDataSource.swift */; };
 		F576F99D226E20D20015D14E /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848576233A6673001DBF1E /* ListSectionWrapper.swift */; };
-		F5848579233A669F001DBF1E /* ListModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListModelWrapper.swift */; };
+		F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */; };
 		F5C908232343C2740038BD89 /* UserListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908222343C2740038BD89 /* UserListInteractor.swift */; };
 		F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */; };
 		F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */; };
@@ -350,7 +350,7 @@
 		F576F98B226E16BB0015D14E /* CreateUserDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserDataSource.swift; sourceTree = "<group>"; };
 		F576F99C226E20D20015D14E /* SwipeableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
 		F5848576233A6673001DBF1E /* ListSectionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionWrapper.swift; sourceTree = "<group>"; };
-		F5848578233A669F001DBF1E /* ListModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModelWrapper.swift; sourceTree = "<group>"; };
+		F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellModelWrapper.swift; sourceTree = "<group>"; };
 		F5C908222343C2740038BD89 /* UserListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListInteractor.swift; sourceTree = "<group>"; };
 		F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserCoordinator.swift; sourceTree = "<group>"; };
 		F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFilterCoordinator.swift; sourceTree = "<group>"; };
@@ -770,9 +770,9 @@
 				F5DA2B8C226D367500BA461A /* Extensions.swift */,
 				F5DA2B8E226D367500BA461A /* ListCell.swift */,
 				F5DA2B93226D367500BA461A /* ListCellModel.swift */,
+				F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */,
 				F5DA2B8B226D367500BA461A /* ListController.swift */,
 				F5DA2B90226D367500BA461A /* ListModelSectionController.swift */,
-				F5848578233A669F001DBF1E /* ListModelWrapper.swift */,
 				F5DA2B91226D367500BA461A /* ListSection.swift */,
 				F5848576233A6673001DBF1E /* ListSectionWrapper.swift */,
 				F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */,
@@ -817,7 +817,6 @@
 			buildPhases = (
 				822BF3B8EDB96AD43E2A1037 /* [CP] Check Pods Manifest.lock */,
 				F5587D0B22502B10004223E5 /* Sources */,
-				F5C9082E2343D0E20038BD89 /* Run SwiftLint */,
 				F5587D0C22502B10004223E5 /* Frameworks */,
 				F5587D0D22502B10004223E5 /* Resources */,
 				F5587D5122502BF3004223E5 /* Embed Frameworks */,
@@ -1113,24 +1112,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F5C9082E2343D0E20038BD89 /* Run SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run SwiftLint";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1334,7 +1315,7 @@
 				F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
 				F5DA2B9A226D367600BA461A /* ListViewLayout.swift in Sources */,
-				F5848579233A669F001DBF1E /* ListModelWrapper.swift in Sources */,
+				F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */,
 				F501F88C233BE71A00012C5E /* ViewController.swift in Sources */,
 				F5DA2B99226D367600BA461A /* Extensions.swift in Sources */,
 				F501F88B233BE71A00012C5E /* BaseViewController.swift in Sources */,

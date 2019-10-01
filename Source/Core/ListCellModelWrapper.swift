@@ -16,6 +16,7 @@ internal class ListCellModelWrapper: NSObject {
   internal init(model: ListCellModel) {
     self.model = model
   }
+
   override internal var description: String {
     return model.description
   }
