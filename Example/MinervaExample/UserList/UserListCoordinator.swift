@@ -41,26 +41,17 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   override public func viewControllerViewDidLoad(_ viewController: ViewController) {
     super.viewControllerViewDidLoad(viewController)
 
-    dataSource.sections.subscribe(
-      onNext: { [weak self] state in self?.handle(state) },
-      onError: nil,
-      onCompleted: nil,
-      onDisposed: nil
-    ).disposed(by: disposeBag)
+    dataSource.sections
+      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
 
-    dataSource.actions.subscribe(
-      onNext: { [weak self] action in self?.handle(action) },
-      onError: nil,
-      onCompleted: nil,
-      onDisposed: nil
-    ).disposed(by: disposeBag)
+    dataSource.actions
+      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
 
-    self.viewController.actions.subscribe(
-      onNext: { [weak self] action in self?.handle(action) },
-      onError: nil,
-      onCompleted: nil,
-      onDisposed: nil
-    ).disposed(by: disposeBag)
+    self.viewController.actions
+      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Private

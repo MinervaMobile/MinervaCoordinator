@@ -9,36 +9,78 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
-final class WorkoutCoordinator: PromiseCoordinator<WorkoutDataSource, WorkoutVC> {
+final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
   private let dataManager: DataManager
+  private let interactor: WorkoutInteractor
   private let userID: String
+  private let disposeBag: DisposeBag
 
   // MARK: - Lifecycle
 
   init(navigator: Navigator, dataManager: DataManager, userID: String) {
     self.userID = userID
     self.dataManager = dataManager
+    self.disposeBag = DisposeBag()
 
-    let dataSource = WorkoutDataSource(userID: userID, dataManager: dataManager)
-    let viewController = WorkoutVC()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
-    viewController.delegate = self
+    let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
+    self.interactor = WorkoutInteractor(repository: repository)
+    let presenter = WorkoutPresenter(interactor: interactor)
+    let viewController = WorkoutVC(interactor: interactor)
+    super.init(navigator: navigator, viewController: viewController, dataSource: presenter)
 
-    dataSource.loadTitle().map { [weak self] title -> Void in
-      self?.viewController.title = title
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to load users data")
-    }
+  }
+
+  // MARK: - ViewControllerDelegate
+  override public func viewControllerViewDidLoad(_ viewController: ViewController) {
+    super.viewControllerViewDidLoad(viewController)
+
+    dataSource.actions
+      .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+
+    dataSource.sections
+      .subscribe(onNext: handle(state:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+    self.viewController.actions
+      .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Private
+
+  private func handle(state: PresenterState) {
+    switch state {
+    case .failure(let error):
+      LoadingHUD.hide(from: viewController.view)
+      viewController.alert(error, title: "Failed to load")
+    case .loaded(let sections):
+      LoadingHUD.hide(from: viewController.view)
+      listController.update(with: sections, animated: true, completion: nil)
+    case .loading:
+      LoadingHUD.show(in: viewController.view)
+    }
+  }
+
+  private func handle(action: WorkoutPresenter.Action) {
+    switch action {
+    case .delete(let workout):
+      delete(workout: workout)
+    case .edit(let workout):
+      displayWorkoutPopup(with: workout, forUserID: workout.userID)
+    }
+  }
+
+  private func handle(action: WorkoutVC.Action) {
+    switch action {
+    case .createWorkout:
+      displayWorkoutPopup(with: nil, forUserID: userID)
+    case .update(let filter):
+      displayFilterSelection(with: filter)
+    }
+  }
 
   private func displayWorkoutPopup(with workout: Workout?, forUserID userID: String) {
     let editing = workout != nil
@@ -59,56 +101,24 @@ final class WorkoutCoordinator: PromiseCoordinator<WorkoutDataSource, WorkoutVC>
 
   private func delete(workout: Workout) {
     LoadingHUD.show(in: viewController.view)
-    dataManager.delete(workout: workout).done { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf.dataSource.reload(animated: true)
-    }.catch { [weak self] error -> Void in
+    dataManager.delete(workout: workout).catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to delete the workout")
     }.finally { [weak self] in
       LoadingHUD.hide(from: self?.viewController.view)
     }
   }
 
-  private func displayFilterSelection() {
-    let coordinator = FilterCoordinator(navigator: navigator, filter: dataSource.filter)
+  private func displayFilterSelection(with filter: WorkoutFilter) {
+    let coordinator = FilterCoordinator(navigator: navigator, filter: filter)
     coordinator.delegate = self
     push(coordinator, animated: true)
-  }
-
-  private func apply(filter: WorkoutFilter) {
-    dataSource.filter = filter
-    dataSource.reload(animated: true)
-    viewController.dismiss(animated: true, completion: nil)
   }
 }
 
 // MARK: - FilterCoordinatorDelegate
 extension WorkoutCoordinator: FilterCoordinatorDelegate {
   func filterCoordinator(_ filterCoordinator: FilterCoordinator, updatedFilter filter: WorkoutFilter) {
-    apply(filter: filter)
-  }
-}
-
-// MARK: - WorkoutDataSourceDelegate
-extension WorkoutCoordinator: WorkoutDataSourceDelegate {
-  func workoutDataSource(_ workoutDataSource: WorkoutDataSource, selected action: WorkoutDataSource.Action) {
-    switch action {
-    case .delete(let workout):
-      delete(workout: workout)
-    case .edit(let workout):
-      displayWorkoutPopup(with: workout, forUserID: workout.userID)
-    }
-  }
-}
-
-// MARK: - WorkoutVCDelegate
-extension WorkoutCoordinator: WorkoutVCDelegate {
-  func workoutVC(_ workoutVC: WorkoutVC, selected action: WorkoutVC.Action) {
-    switch action {
-    case .createWorkout:
-      displayWorkoutPopup(with: nil, forUserID: userID)
-    case .updateFilter:
-      displayFilterSelection()
-    }
+    interactor.apply(filter: filter)
+    dismiss(filterCoordinator, animated: true)
   }
 }

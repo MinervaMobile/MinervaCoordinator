@@ -1,5 +1,5 @@
 //
-//  EditWorkoutDataSource.swift
+//  EditWorkoutPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,13 +10,13 @@ import UIKit
 
 import Minerva
 
-protocol EditWorkoutDataSourceDelegate: AnyObject {
+protocol EditWorkoutPresenterDelegate: AnyObject {
   func workoutActionSheetDataSource(
-    _ workoutActionSheetDataSource: EditWorkoutDataSource,
-    selected action: EditWorkoutDataSource.Action)
+    _ workoutActionSheetDataSource: EditWorkoutPresenter,
+    selected action: EditWorkoutPresenter.Action)
 }
 
-final class EditWorkoutDataSource: BaseDataSource {
+final class EditWorkoutPresenter: BaseDataSource {
   enum Action {
     case save(workout: Workout)
   }
@@ -25,7 +25,7 @@ final class EditWorkoutDataSource: BaseDataSource {
   private static let caloriesCellModelIdentifier = "CaloriesCellModel"
   private static let textCellModelIdentifier = "TextCellModel"
 
-  weak var delegate: EditWorkoutDataSourceDelegate?
+  weak var delegate: EditWorkoutPresenterDelegate?
 
   private var workout: WorkoutProto
   private let editing: Bool
@@ -94,7 +94,7 @@ final class EditWorkoutDataSource: BaseDataSource {
 
   private func createTextCellModel() -> ListCellModel {
     let cellModel = TextInputCellModel(
-      identifier: EditWorkoutDataSource.textCellModelIdentifier,
+      identifier: EditWorkoutPresenter.textCellModelIdentifier,
       placeholder: "Description of the workout...",
       font: .subheadline)
     cellModel.text = workout.text.isEmpty ? nil : workout.text
@@ -110,7 +110,7 @@ final class EditWorkoutDataSource: BaseDataSource {
 
   private func createCaloriesCellModel() -> ListCellModel {
     let cellModel = TextInputCellModel(
-      identifier: EditWorkoutDataSource.caloriesCellModelIdentifier,
+      identifier: EditWorkoutPresenter.caloriesCellModelIdentifier,
       placeholder: "Calories",
       font: .subheadline)
     cellModel.text = workout.calories > 0 ? String(workout.calories) : nil
@@ -126,13 +126,13 @@ final class EditWorkoutDataSource: BaseDataSource {
 }
 
 // MARK: - TextInputCellModelDelegate
-extension EditWorkoutDataSource: TextInputCellModelDelegate {
+extension EditWorkoutPresenter: TextInputCellModelDelegate {
   func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
     guard let text = text else { return }
     switch textInputCellModel.identifier {
-    case EditWorkoutDataSource.textCellModelIdentifier:
+    case EditWorkoutPresenter.textCellModelIdentifier:
       workout.text = text
-    case EditWorkoutDataSource.caloriesCellModelIdentifier:
+    case EditWorkoutPresenter.caloriesCellModelIdentifier:
       workout.calories = Int32(text) ?? workout.calories
     default:
       assertionFailure("Unknown text input cell model")

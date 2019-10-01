@@ -120,9 +120,9 @@
 		F576F924226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
 		F576F925226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
 		F576F926226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
-		F576F927226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
-		F576F928226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
-		F576F929226E16820015D14E /* WorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutDataSource.swift */; };
+		F576F927226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
+		F576F928226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
+		F576F929226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
 		F576F92A226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
 		F576F92B226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
 		F576F92C226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
@@ -197,6 +197,8 @@
 		F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
 		F5C908372343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
 		F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
+		F5C9083B2343E97B0038BD89 /* WorkoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */; };
+		F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */; };
 		F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47BF233E4ABE00983F72 /* PromiseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */; };
@@ -333,7 +335,7 @@
 		F576F903226E165E0015D14E /* FilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDataSource.swift; sourceTree = "<group>"; };
 		F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFilterDataSource.swift; sourceTree = "<group>"; };
 		F576F912226E16820015D14E /* WorkoutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutVC.swift; sourceTree = "<group>"; };
-		F576F913226E16820015D14E /* WorkoutDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutDataSource.swift; sourceTree = "<group>"; };
+		F576F913226E16820015D14E /* WorkoutPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutPresenter.swift; sourceTree = "<group>"; };
 		F576F914226E16820015D14E /* EditWorkoutDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditWorkoutDataSource.swift; sourceTree = "<group>"; };
 		F576F92E226E168B0015D14E /* SettingsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
 		F576F934226E16960015D14E /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
@@ -362,6 +364,8 @@
 		F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFilterCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutCoordinator.swift; sourceTree = "<group>"; };
+		F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInteractor.swift; sourceTree = "<group>"; };
+		F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRepository.swift; sourceTree = "<group>"; };
 		F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Promise.swift"; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
 		F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseCoordinator.swift; sourceTree = "<group>"; };
@@ -664,7 +668,9 @@
 			isa = PBXGroup;
 			children = (
 				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
-				F576F913226E16820015D14E /* WorkoutDataSource.swift */,
+				F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */,
+				F576F913226E16820015D14E /* WorkoutPresenter.swift */,
+				F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */,
 				F576F912226E16820015D14E /* WorkoutVC.swift */,
 			);
 			path = Workout;
@@ -1117,6 +1123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F576F8DB226DF04F0015D14E /* DataManager.swift in Sources */,
+				F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */,
 				F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */,
 				F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */,
 				F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */,
@@ -1155,7 +1162,7 @@
 				F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */,
 				F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
 				F576F995226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */,
-				F576F927226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F927226E16820015D14E /* WorkoutPresenter.swift in Sources */,
 				F576F875226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F96E226E16970015D14E /* MarginCell.swift in Sources */,
 				F576F8BB226DF0050015D14E /* UserRole.swift in Sources */,
@@ -1164,6 +1171,7 @@
 				F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */,
 				F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */,
 				F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */,
+				F5C9083B2343E97B0038BD89 /* WorkoutInteractor.swift in Sources */,
 				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
 				F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */,
 				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
@@ -1205,7 +1213,7 @@
 				F576F8FB226DF0B50015D14E /* SignInDataSource.swift in Sources */,
 				F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */,
-				F576F928226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F928226E16820015D14E /* WorkoutPresenter.swift in Sources */,
 				F576F951226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */,
 				F576F97E226E16970015D14E /* Images.swift in Sources */,
@@ -1267,7 +1275,7 @@
 				F576F8FC226DF0B50015D14E /* SignInDataSource.swift in Sources */,
 				F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */,
-				F576F929226E16820015D14E /* WorkoutDataSource.swift in Sources */,
+				F576F929226E16820015D14E /* WorkoutPresenter.swift in Sources */,
 				F576F952226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */,
 				F576F97F226E16970015D14E /* Images.swift in Sources */,

@@ -2,7 +2,6 @@
 //  UserListRepository.swift
 //  MinervaExample
 //
-//  Created by Joe Laws on 9/27/19.
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 

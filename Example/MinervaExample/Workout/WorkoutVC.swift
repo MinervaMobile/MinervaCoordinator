@@ -9,20 +9,19 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
-
-protocol WorkoutVCDelegate: AnyObject {
-  func workoutVC(_ workoutVC: WorkoutVC, selected action: WorkoutVC.Action)
-}
+import RxSwift
 
 final class WorkoutVC: BaseViewController {
 
   enum Action {
     case createWorkout
-    case updateFilter
+    case update(filter: WorkoutFilter)
   }
 
-  weak var delegate: WorkoutVCDelegate?
+  private let actionsSubject: PublishSubject<Action>
+  var actions: Observable<Action> {
+    actionsSubject.asObservable()
+  }
 
   private let addButton: UIButton = {
     let addButton = UIButton(frame: .zero)
@@ -32,9 +31,16 @@ final class WorkoutVC: BaseViewController {
     return addButton
   }()
 
+  private let disposeBag = DisposeBag()
+  private var showFailuresOnly: Bool = false
+  private var filter: WorkoutFilter = WorkoutFilterProto()
+  private let interactor: WorkoutInteractor
+
   // MARK: - Lifecycle
 
-  required init() {
+  required init(interactor: WorkoutInteractor) {
+    self.interactor = interactor
+    self.actionsSubject = PublishSubject()
     let layout = ListViewLayout(stickyHeaders: true, topContentInset: 0, stretchToEdge: true)
     super.init(layout: layout)
     collectionView.contentInsetAdjustmentBehavior = .never
@@ -46,6 +52,7 @@ final class WorkoutVC: BaseViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
       style: .plain,
@@ -53,8 +60,44 @@ final class WorkoutVC: BaseViewController {
       action: #selector(selectFilter))
     navigationItem.rightBarButtonItem?.tintColor = .selectable
     setupViewsAndConstraints()
+
+    interactor.failuresOnly
+      .subscribe(onNext: showFailuresOnly(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+
+    interactor.filter
+      .subscribe(onNext: updated(filter:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+
+    interactor.user
+      .subscribe(onNext: updated(user:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
   }
+
   // MARK: - Private
+
+  private func updated(user: Result<User, Error>) {
+    switch user {
+    case .success(let user):
+      title = user.email
+    case .failure(let error):
+      alert(error, title: "Failed to load users data")
+    }
+  }
+
+  private func updated(filter: WorkoutFilter) {
+    self.filter = filter
+  }
+
+  private func showFailuresOnly(_ showFailuresOnly: Bool) {
+    self.showFailuresOnly = showFailuresOnly
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: showFailuresOnly ? "Failures Only" : "All",
+      style: .plain,
+      target: self,
+      action: #selector(toggleShowFailuresOnly))
+    navigationItem.leftBarButtonItem?.tintColor = .selectable
+  }
 
   private func setupViewsAndConstraints() {
     view.backgroundColor = .white
@@ -76,11 +119,16 @@ final class WorkoutVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    delegate?.workoutVC(self, selected: .createWorkout)
+    actionsSubject.on(.next(.createWorkout))
   }
 
   @objc
   private func selectFilter() {
-    delegate?.workoutVC(self, selected: .updateFilter)
+    actionsSubject.on(.next(.update(filter: filter)))
+  }
+
+  @objc
+  private func toggleShowFailuresOnly() {
+    interactor.showFailuresOnly(!showFailuresOnly)
   }
 }

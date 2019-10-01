@@ -11,7 +11,7 @@ import UIKit
 import Minerva
 import PromiseKit
 
-final class EditWorkoutCoordinator: PromiseCoordinator<EditWorkoutDataSource, CollectionViewController> {
+final class EditWorkoutCoordinator: PromiseCoordinator<EditWorkoutPresenter, CollectionViewController> {
 
   private let dataManager: DataManager
 
@@ -19,7 +19,7 @@ final class EditWorkoutCoordinator: PromiseCoordinator<EditWorkoutDataSource, Co
 
   init(navigator: Navigator, dataManager: DataManager, workout: Workout, editing: Bool) {
     self.dataManager = dataManager
-    let dataSource = EditWorkoutDataSource(workout: workout, editing: editing)
+    let dataSource = EditWorkoutPresenter(workout: workout, editing: editing)
     let viewController = CollectionViewController()
     super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
     self.refreshBlock = { dataSource, animated in
@@ -42,11 +42,11 @@ final class EditWorkoutCoordinator: PromiseCoordinator<EditWorkoutDataSource, Co
   }
 }
 
-// MARK: - EditWorkoutDataSourceDelegate
-extension EditWorkoutCoordinator: EditWorkoutDataSourceDelegate {
+// MARK: - EditWorkoutPresenterDelegate
+extension EditWorkoutCoordinator: EditWorkoutPresenterDelegate {
   func workoutActionSheetDataSource(
-    _ workoutActionSheetDataSource: EditWorkoutDataSource,
-    selected action: EditWorkoutDataSource.Action
+    _ workoutActionSheetDataSource: EditWorkoutPresenter,
+    selected action: EditWorkoutPresenter.Action
   ) {
     switch action {
     case .save(let workout):
