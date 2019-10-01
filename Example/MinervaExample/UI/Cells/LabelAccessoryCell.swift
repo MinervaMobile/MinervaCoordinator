@@ -50,8 +50,8 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? LabelAccessoryCellModel, super.isEqual(to: model) else {
+  override func identical(to model: ListCellModel) -> Bool {
+    guard let model = model as? LabelAccessoryCellModel, super.identical(to: model) else {
       return false
     }
     return attributedText == model.attributedText

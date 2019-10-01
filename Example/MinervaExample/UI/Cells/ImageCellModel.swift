@@ -38,8 +38,8 @@ final class ImageCellModel: DefaultListCellModel {
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageCellModel, super.isEqual(to: model) else {
+  override func identical(to model: ListCellModel) -> Bool {
+    guard let model = model as? ImageCellModel, super.identical(to: model) else {
       return false
     }
     return image == model.image

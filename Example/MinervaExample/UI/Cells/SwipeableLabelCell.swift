@@ -74,8 +74,8 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? SwipeableLabelCellModel, super.isEqual(to: model) else {
+  override func identical(to model: ListCellModel) -> Bool {
+    guard let model = model as? SwipeableLabelCellModel, super.identical(to: model) else {
       return false
     }
     return title == model.title

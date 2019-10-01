@@ -65,7 +65,7 @@ final class TextInputCellModel: BaseListCellModel {
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
+  override func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? TextInputCellModel else { return false }
     return text == model.text
       && bottomBorderColor == model.bottomBorderColor

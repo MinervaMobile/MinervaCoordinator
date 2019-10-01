@@ -9,6 +9,7 @@ def minerva_pods
   pod 'MBProgressHUD'
   pod 'PromiseKit/CorePromise'
   pod 'RxSwift'
+  pod 'SwiftLint'
   pod 'SwiftProtobuf'
   pod 'SwipeCellKit'
 end

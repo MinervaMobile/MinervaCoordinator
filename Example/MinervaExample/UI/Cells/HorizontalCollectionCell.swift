@@ -46,8 +46,8 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? HorizontalCollectionCellModel, super.isEqual(to: model) else { return false }
+  override func identical(to model: ListCellModel) -> Bool {
+    guard let model = model as? HorizontalCollectionCellModel, super.identical(to: model) else { return false }
     return model.section == section
       && followsInsets == model.followsInsets
       && isScrollEnabled == model.isScrollEnabled
@@ -56,7 +56,10 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
       && listController === model.listController
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+  override func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> ListCollectionViewCell
+  ) -> ListCellSize {
     let size = CGSize(width: containerSize.width, height: CGFloat.greatestFiniteMagnitude)
     let constraints = ListSizeConstraints(
       containerSize: size,

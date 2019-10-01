@@ -76,13 +76,11 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
   internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
-    let cellType = String(describing: model.cellType)
-    let collectionCell = cachedCells[cellType] ?? model.cellType.init(frame: .zero)
+    let collectionCell = cell(for: model)
     collectionCell.bindViewModel(ListCellModelWrapper(model: model))
 
     defer {
       collectionCell.prepareForReuse()
-      cachedCells[cellType] = collectionCell
     }
 
     switch sizeConstraints.distribution {
@@ -294,9 +292,22 @@ extension ListModelSectionController {
     }
   }
 
+  private func cell(for model: ListCellModel) -> ListCollectionViewCell {
+    let cellType = String(describing: model.cellType)
+    if let cell = cachedCells[cellType] {
+      return cell
+    } else {
+      let cell = model.cellType.init(frame: .zero)
+      cachedCells[cellType] = cell
+      return cell
+    }
+  }
+
   private func listCellSize(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
-    let modelSize = model.size(constrainedTo: adjustedContainerSize)
+    let modelSize = model.size(constrainedTo: adjustedContainerSize) {
+      return self.cell(for: model)
+    }
 
     guard case .explicit(let size) = modelSize else {
       return modelSize
@@ -475,7 +486,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
       return defaultSize
     }
 
-    let size = cellModel.size(constrainedTo: sizeConstraints.containerSize)
+    let size = cellModel.size(constrainedTo: sizeConstraints.containerSize) {
+      return self.cell(for: cellModel)
+    }
     switch size {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)

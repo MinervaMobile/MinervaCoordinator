@@ -84,7 +84,7 @@ final class WelcomeDataSource: BaseDataSource {
     let bottomDynamicMarginModel = MarginCellModel(cellIdentifier: "bottomDynamicMarginModel", height: nil)
     let bottomMarginModel = BottomMarginCellModel()
 
-    let cellModels = [
+    let cellModels: [ListCellModel] = [
       topDynamicMarginModel,
       logoModel,
       personalizedGuidanceModel,

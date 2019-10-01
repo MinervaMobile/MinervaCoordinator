@@ -13,15 +13,13 @@ import RxSwift
 class UserListRepository {
 
   private let dataManager: DataManager
+  let users: Observable<Result<[User], Error>>
 
   // MARK: - Lifecycle
 
   init(dataManager: DataManager) {
     self.dataManager = dataManager
-  }
-
-  var users: Observable<Result<[User], Error>> {
-    return dataManager.observeUsers()
+    self.users = dataManager.observeUsers()
   }
 
   var allowSelection: Bool {

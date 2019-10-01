@@ -28,7 +28,7 @@ extension ListCellModelWrapper: ListDiffable {
       assertionFailure("Unknown object type \(object.debugDescription)")
       return false
     }
-    return model.isEqual(to: wrapper.model)
+    return model.identical(to: wrapper.model)
   }
 
   internal func diffIdentifier() -> NSObjectProtocol {

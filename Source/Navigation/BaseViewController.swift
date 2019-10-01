@@ -53,6 +53,11 @@ open class BaseViewController: UIViewController, ViewController {
     lifecycleDelegate?.viewController(self, viewDidDisappear: animated)
   }
 
+  override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    lifecycleDelegate?.viewController(self, traitCollectionDidChangeFrom: previousTraitCollection)
+  }
+
   override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
     let context = collectionView.collectionViewLayout.invalidationContext(forBoundsChange: .zero)

@@ -187,8 +187,7 @@ extension TestDataManager: DataManager {
       let userID = subscription.userID
       workoutSubscriptions[listenerID] = nil
       userSubscriptions[listenerID] = nil
-      var subscriptions = workoutUserIDToSubscriptions[userID, default: []]
-      subscriptions.removeAll { $0 == listenerID }
+      let subscriptions = workoutUserIDToSubscriptions[userID, default: []].filter { $0 != listenerID }
       workoutUserIDToSubscriptions[userID] = subscriptions.isEmpty ? nil : subscriptions
     }
   }

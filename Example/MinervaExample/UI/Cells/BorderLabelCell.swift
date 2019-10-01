@@ -75,7 +75,7 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
+  override func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? BorderLabelCellModel else {
       return false
     }

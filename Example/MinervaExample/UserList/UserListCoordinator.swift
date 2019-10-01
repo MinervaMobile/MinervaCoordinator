@@ -99,28 +99,28 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   private func deleteUser(withID userID: String) {
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
-    dataManager.delete(userID: userID).catch { [weak self] error -> Void in
+    dataManager.delete(userID: userID).done { [weak self] in
+      guard let strongSelf = self else { return }
+      guard logoutCurrentUser else { return }
+      strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
+    }.catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to delete the user")
     }.finally { [weak self] in
-      guard let strongSelf = self else { return }
-      LoadingHUD.hide(from: strongSelf.viewController.view)
-      if logoutCurrentUser {
-        strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
-      }
+      LoadingHUD.hide(from: self?.viewController.view)
     }
   }
 
   private func logoutUser(withID userID: String) {
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
-    userManager.logout(userID: userID).catch { [weak self] error -> Void in
+    userManager.logout(userID: userID).done { [weak self] in
+      guard let strongSelf = self else { return }
+      guard logoutCurrentUser else { return }
+      strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
+    }.catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to logout")
     }.finally { [weak self] in
-      guard let strongSelf = self else { return }
-      LoadingHUD.hide(from: strongSelf.viewController.view)
-      if logoutCurrentUser {
-        strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
-      }
+      LoadingHUD.hide(from: self?.viewController.view)
     }
   }
 

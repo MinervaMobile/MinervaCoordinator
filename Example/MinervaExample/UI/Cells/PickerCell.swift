@@ -78,7 +78,7 @@ final class PickerCellModel: BaseListCellModel {
     return cellIdentifier
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
+  override func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? PickerCellModel else {
       return false
     }

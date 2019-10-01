@@ -13,6 +13,10 @@ public protocol ViewControllerDelegate: AnyObject {
   func viewController(_ viewController: ViewController, viewWillAppear animated: Bool)
   func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool)
   func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool)
+  func viewController(
+    _ viewController: ViewController,
+    traitCollectionDidChangeFrom previousTraitCollection: UITraitCollection?
+  )
 }
 
 public protocol ViewController: UIViewController {

@@ -12,55 +12,22 @@ import RxSwift
 extension DataManager {
 
   func users() -> Single<[User]> {
-    return Single.create() { single in
-      self.loadUsers { users, error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(users))
-        }
-      }
-      return Disposables.create { }
-    }
+    return asSingle(loadUsers(completion:))
   }
 
   func user(withID userID: String) -> Single<User?> {
-    return Single.create() { single in
-      self.loadUser(withID: userID) { user, error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(user))
-        }
-      }
-      return Disposables.create { }
-    }
+    let curried = curry(loadUser(withID: completion:))
+    return asSingle(curried(userID))
   }
 
   func update(_ user: User) -> Single<Void> {
-    return Single.create() { single in
-      self.update(user: user) { error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(()))
-        }
-      }
-      return Disposables.create { }
-    }
+    let curried = curry(update(user: completion:))
+    return asSingle(curried(user))
   }
 
   func deleteUser(withUserID userID: String) -> Single<Void> {
-    return Single.create() { single in
-      self.delete(userID: userID) { error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(()))
-        }
-      }
-      return Disposables.create { }
-    }
+    let curried = curry(delete(userID: completion:))
+    return asSingle(curried(userID))
   }
 
   func createUser(
@@ -82,34 +49,51 @@ extension DataManager {
   }
 
   func workouts(forUserID userID: String) -> Single<[Workout]> {
-    return Single.create() { single in
-      self.loadWorkouts(forUserID: userID) { workouts, error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(workouts))
-        }
-      }
-      return Disposables.create { }
-    }
+    let curried = curry(loadWorkouts(forUserID: completion:))
+    return asSingle(curried(userID))
   }
 
   func store(_ workout: Workout) -> Single<Void> {
-    return Single.create() { single in
-      self.store(workout: workout) { error in
-        if let error = error {
-          single(.error(error))
-        } else {
-          single(.success(()))
-        }
-      }
-      return Disposables.create { }
-    }
+    let curried = curry(store(workout: completion:))
+    return asSingle(curried(workout))
   }
 
   func delete(_ workout: Workout) -> Single<Void> {
+    let curried = curry(delete(workout: completion:))
+    return asSingle(curried(workout))
+  }
+
+  func observeWorkouts(for userID: String) -> Observable<Result<[Workout], Error>> {
+    let curried = curry(subscribeToWorkoutChanges(for: callback:))
+    return observe(curried(userID))
+  }
+
+  func observeUsers() -> Observable<Result<[User], Error>> {
+    return observe(subscribeToUserChanges(callback:))
+  }
+
+  // MARK: - Private
+
+  private func observe<T>(
+    _ block: @escaping (@escaping (T, Error?) -> Void) -> SubscriptionID
+  ) -> Observable<Result<T, Error>> {
+    return Observable<Result<T, Error>>.create { observer in
+      let subscriptionID = block() { result, error in
+        if let error = error {
+          observer.onNext(.failure(error))
+        } else {
+          observer.onNext(.success(result))
+        }
+      }
+      return Disposables.create {
+        self.unsubscribe(listenerID: subscriptionID)
+      }
+    }
+  }
+
+  private func asSingle(_ block: @escaping (@escaping (Error?) -> Void) -> Void) -> Single<Void> {
     return Single.create() { single in
-      self.delete(workout: workout) { error in
+      block() { error in
         if let error = error {
           single(.error(error))
         } else {
@@ -120,32 +104,25 @@ extension DataManager {
     }
   }
 
-  func observeWorkouts(for userID: String) -> Observable<Result<[Workout], Error>> {
-    return Observable<Result<[Workout], Error>>.create { observer in
-      let subscriptionID = self.subscribeToWorkoutChanges(for: userID) { workouts, error in
+  private func asSingle<T>(_ block: @escaping (@escaping (T, Error?) -> Void) -> Void) -> Single<T> {
+    return Single.create() { single in
+      block() { result, error in
         if let error = error {
-          observer.on(.next(.failure(error)))
+          single(.error(error))
         } else {
-          observer.on(.next(.success(workouts)))
+          single(.success(result))
         }
       }
-      return Disposables.create {
-        self.unsubscribe(listenerID: subscriptionID)
-      }
+      return Disposables.create { }
     }
   }
 
-  func observeUsers() -> Observable<Result<[User], Error>> {
-    return Observable<Result<[User], Error>>.create { observer in
-      let subscriptionID = self.subscribeToUserChanges() { users, error in
-        if let error = error {
-          observer.on(.next(.failure(error)))
-        } else {
-          observer.on(.next(.success(users)))
-        }
-      }
-      return Disposables.create {
-        self.unsubscribe(listenerID: subscriptionID)
+  private func curry<A, B, C>(
+    _ f: @escaping (A, B) -> C) -> ((A) -> ((B) -> C)
+  ) {
+    return { (a: A) -> ((B) -> C) in
+      return { (b: B) -> C in
+        return f(a, b)
       }
     }
   }

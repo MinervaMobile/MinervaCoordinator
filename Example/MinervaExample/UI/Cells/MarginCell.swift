@@ -10,34 +10,33 @@ import UIKit
 
 import Minerva
 
-final class MarginCellModel: BaseListCellModel {
+struct MarginCellModel: TypedListCellModel {
 
-  private let cellIdentifier: String
+  typealias CellType = MarginCell
+
+  let identifier: String
 
   var backgroundColor: UIColor?
   let height: CGFloat?
 
   init(cellIdentifier: String = "MarginCellModel", height: CGFloat? = nil) {
-    self.cellIdentifier = cellIdentifier
+    self.identifier = cellIdentifier
     self.height = height
-    super.init()
   }
 
   // MARK: - BaseListCellModel
 
-  override var identifier: String {
-    return self.cellIdentifier
-  }
+  var reorderable: Bool { false }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? MarginCellModel else {
-      return false
-    }
+  func identical(to model: MarginCellModel) -> Bool {
     return backgroundColor == model.backgroundColor
       && height == model.height
   }
 
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+  func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> CellType
+  ) -> ListCellSize {
     guard let height = self.height else { return .relative }
     let width = containerSize.width
     return .explicit(size: CGSize(width: width, height: height))
@@ -50,9 +49,7 @@ final class MarginCell: BaseListCell, ListCellHelper {
 
   override func updatedCellModel() {
     super.updatedCellModel()
-    guard let model = self.model else {
-      return
-    }
+    guard let model = self.model else { return }
     self.contentView.backgroundColor = model.backgroundColor
   }
 }

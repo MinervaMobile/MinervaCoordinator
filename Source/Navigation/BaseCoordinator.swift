@@ -62,4 +62,10 @@ open class BaseCoordinator<T: DataSource, U: ViewController>:
   open func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool) {
     listController.didEndDisplaying()
   }
+  open func viewController(
+    _ viewController: ViewController,
+    traitCollectionDidChangeFrom previousTraitCollection: UITraitCollection?
+  ) {
+    listController.reloadData()
+  }
 }

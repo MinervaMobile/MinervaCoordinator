@@ -86,6 +86,11 @@ public final class ListController: NSObject {
 
   // MARK: - Public
 
+  public func reloadData(completion: Completion? = nil) {
+    dispatchPrecondition(condition: .onQueue(.main))
+    adapter.reloadData(completion: completion)
+  }
+
   public func reload(_ cellModels: [ListCellModel]) {
     dispatchPrecondition(condition: .onQueue(.main))
     adapter.reloadObjects(cellModels.map(ListCellModelWrapper.init))
@@ -131,11 +136,11 @@ public final class ListController: NSObject {
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
     dispatchPrecondition(condition: .onQueue(.main))
     guard let section = listSections.firstIndex(where: {
-      $0.cellModels.contains(where: { cellModel.isEqual(to: $0) })
+      $0.cellModels.contains(where: { cellModel.identical(to: $0) })
     }) else {
       return nil
     }
-    guard let item = listSections.at(section)?.cellModels.firstIndex(where: { cellModel.isEqual(to: $0) }) else {
+    guard let item = listSections.at(section)?.cellModels.firstIndex(where: { cellModel.identical(to: $0) }) else {
       return nil
     }
     return IndexPath(item: item, section: section)

@@ -58,7 +58,7 @@ final class UserListPresenter: Presenter {
       if allowSelection {
         userCellModel.selectionAction = { [weak self] _, _ -> Void in
           guard let strongSelf = self else { return }
-          strongSelf.actionsSubject.on(.next(.view(user: user)))
+          strongSelf.actionsSubject.onNext(.view(user: user))
         }
       }
       cellModels.append(userCellModel)
@@ -77,11 +77,11 @@ final class UserListPresenter: Presenter {
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.on(.next(.delete(user: user)))
+      strongSelf.actionsSubject.onNext(.delete(user: user))
     }
     cellModel.editAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.on(.next(.edit(user: user)))
+      strongSelf.actionsSubject.onNext(.edit(user: user))
     }
     return cellModel
   }

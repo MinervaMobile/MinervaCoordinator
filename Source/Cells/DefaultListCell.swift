@@ -37,7 +37,7 @@ open class DefaultListCellModel: BaseListCellModel {
       + bottomMargin
   }
 
-  override open func isEqual(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? DefaultListCellModel else {
       return false
     }

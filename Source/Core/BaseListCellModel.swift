@@ -18,34 +18,18 @@ open class BaseListCellModel: ListCellModel {
     return false
   }
   open var identifier: String {
-    let identifier = String(describing: Unmanaged.passUnretained(self).toOpaque())
-    guard !identifier.isEmpty else {
-      assertionFailure("The identifier should exist for \(self)")
-      return UUID().uuidString
-    }
-    return identifier
+    return typeIdentifier
   }
   open var cellType: ListCollectionViewCell.Type {
-    let modelType = type(of: self)
-    let className = String(describing: modelType).replacingOccurrences(of: "Model", with: "")
-    if let cellType = NSClassFromString(className) as? ListCollectionViewCell.Type {
-      return cellType
-    }
-    let bundle = Bundle(for: modelType)
-    let bundleName = bundle.infoDictionary?["CFBundleName"] as? String ?? ""
-    let fullClassName = "\(bundleName).\(className)"
-    let cleanedClassName = fullClassName.replacingOccurrences(of: " ", with: "_")
-    if let cellType = NSClassFromString(cleanedClassName) as? ListCollectionViewCell.Type {
-      return cellType
-    }
-    assertionFailure("Unable to determine the cell type")
-    return BaseListCell.self
+    return cellTypeFromModelName
   }
-
-  open func isEqual(to model: ListCellModel) -> Bool {
+  open func identical(to model: ListCellModel) -> Bool {
     return identifier == model.identifier
   }
-  open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+  open func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> ListCollectionViewCell
+  ) -> ListCellSize {
     return .autolayout
   }
 }

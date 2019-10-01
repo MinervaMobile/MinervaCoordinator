@@ -10,23 +10,25 @@ import UIKit
 
 import Minerva
 
-final class BottomMarginCellModel: BaseListCellModel {
+struct BottomMarginCellModel: TypedListCellModel, Equatable {
+
+  typealias CellType = BottomMarginCell
+
   var backgroundColor: UIColor?
 
-  // MARK: - BaseListCellModel
+  // MARK: - TypedListCellModel
+  var reorderable: Bool {
+    return false
+  }
 
-  override var identifier: String {
+  var identifier: String {
     return "BottomMarginCellModel"
   }
 
-  override func isEqual(to model: ListCellModel) -> Bool {
-    guard let model = model as? BottomMarginCellModel else {
-      return false
-    }
-    return backgroundColor == model.backgroundColor
-  }
-
-  override func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+  func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> CellType
+  ) -> ListCellSize {
     let device = UIDevice.current
     let height: CGFloat
     if device.userInterfaceIdiom == .pad && device.orientation.isLandscape {
