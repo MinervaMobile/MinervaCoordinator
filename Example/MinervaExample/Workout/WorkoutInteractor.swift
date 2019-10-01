@@ -15,12 +15,12 @@ final class WorkoutInteractor {
 
   private let repository: WorkoutRepository
 
-  private let filterSubject: PublishSubject<WorkoutFilter>
+  private let filterSubject: BehaviorSubject<WorkoutFilter>
   var filter: Observable<WorkoutFilter> {
     filterSubject.asObservable()
   }
 
-  private let failuresOnlySubject: PublishSubject<Bool>
+  private let failuresOnlySubject: BehaviorSubject<Bool>
   var failuresOnly: Observable<Bool> {
     failuresOnlySubject.asObservable()
   }
@@ -35,8 +35,8 @@ final class WorkoutInteractor {
 
   init(repository: WorkoutRepository) {
     self.repository = repository
-    self.filterSubject = PublishSubject()
-    self.failuresOnlySubject = PublishSubject()
+    self.filterSubject = BehaviorSubject(value: WorkoutFilterProto())
+    self.failuresOnlySubject = BehaviorSubject(value: false)
   }
 
   func apply(filter: WorkoutFilter) {

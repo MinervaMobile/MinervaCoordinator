@@ -14,7 +14,6 @@ import RxSwift
 final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
   private let dataManager: DataManager
-  private let repository: WorkoutRepository
   private let interactor: WorkoutInteractor
   private let userID: String
   private let disposeBag: DisposeBag
@@ -26,10 +25,10 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     self.dataManager = dataManager
     self.disposeBag = DisposeBag()
 
-    self.repository = WorkoutRepository(dataManager: dataManager, userID: userID)
+    let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
     self.interactor = WorkoutInteractor(repository: repository)
     let presenter = WorkoutPresenter(interactor: interactor)
-    let viewController = WorkoutVC()
+    let viewController = WorkoutVC(interactor: interactor)
     super.init(navigator: navigator, viewController: viewController, dataSource: presenter)
 
   }
@@ -38,9 +37,6 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
   override public func viewControllerViewDidLoad(_ viewController: ViewController) {
     super.viewControllerViewDidLoad(viewController)
 
-    repository.user
-      .subscribe(onNext: updated(user:), onError: nil, onCompleted: nil, onDisposed: nil)
-      .disposed(by: disposeBag)
     dataSource.actions
       .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
@@ -81,21 +77,8 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     switch action {
     case .createWorkout:
       displayWorkoutPopup(with: nil, forUserID: userID)
-    case .updateFilter:
-//      displayFilterSelection()
-      break
-    case .toggleAll:
-//      interactor.showFailuresOnly()
-      break
-    }
-  }
-
-  private func updated(user: Result<User, Error>) {
-    switch user {
-    case .success(let user):
-      viewController.title = user.email
-    case .failure(let error):
-      viewController.alert(error, title: "Failed to load users data")
+    case .update(let filter):
+      displayFilterSelection(with: filter)
     }
   }
 
