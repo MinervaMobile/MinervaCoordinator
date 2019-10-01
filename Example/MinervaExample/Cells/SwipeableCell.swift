@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 import IGListKit
+import Minerva
 import SwipeCellKit
 
 open class SwipeableCellModel: DefaultListCellModel {
 
 }
 
-open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindable {
-  public private(set) var disposeBag = MinervaDisposeBag()
+open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
   open private(set) var cellModel: ListCellModel?
 
   public private(set) var containerTopConstraint: NSLayoutConstraint?
@@ -117,11 +117,24 @@ open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindabl
     fatalError("init(coder:) has not been implemented")
   }
 
+  override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    super.apply(layoutAttributes)
+    if let attributes = layoutAttributes as? ListViewLayoutAttributes,
+      let animation = attributes.animationGroup {
+      self.layer.add(animation, forKey: nil)
+    }
+  }
+
   override open func prepareForReuse() {
     super.prepareForReuse()
-    disposeBag.clear()
     cellModel = nil
     updatedCellModel()
+  }
+
+  open func willDisplayCell() {
+  }
+
+  open func didEndDisplayingCell() {
   }
 
   open func updatedCellModel() {
@@ -141,12 +154,6 @@ open class SwipeableCell: SwipeCollectionViewCell, ListBindableCell, ListBindabl
     contentView.backgroundColor = model.backgroundColor
     topMargin = model.topMargin
     bottomMargin = model.bottomMargin
-  }
-
-  open func willDisplayCell() {
-  }
-
-  open func didEndDisplayingCell() {
   }
 
   // MARK: - ListBindable

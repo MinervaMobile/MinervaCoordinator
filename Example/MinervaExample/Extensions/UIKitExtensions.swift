@@ -224,6 +224,12 @@ extension UIFont {
   }
 }
 
+extension UILayoutPriority {
+  internal static var notRequired: UILayoutPriority {
+    return UILayoutPriority.required - 1
+  }
+}
+
 extension UIModalPresentationStyle {
   static var safeAutomatic: UIModalPresentationStyle {
     if #available(iOS 13, *) {

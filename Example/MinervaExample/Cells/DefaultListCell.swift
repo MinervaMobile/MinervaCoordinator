@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+import Minerva
+
 open class DefaultListCellModel: BaseListCellModel {
 
   public static let defaultCellInset: CGFloat = 10

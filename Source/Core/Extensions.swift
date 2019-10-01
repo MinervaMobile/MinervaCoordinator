@@ -79,12 +79,6 @@ extension UIEdgeInsets: Hashable {
   }
 }
 
-extension UILayoutPriority {
-  internal static var notRequired: UILayoutPriority {
-    return UILayoutPriority.required - 1
-  }
-}
-
 extension UIView {
 
   internal func anchorToTopSafeAreaLayoutGuide(in view: UIView) {
