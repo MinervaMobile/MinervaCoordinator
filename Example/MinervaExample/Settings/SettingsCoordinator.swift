@@ -68,21 +68,12 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
   }
 
   private func displayUserUpdatePopup(for user: User) {
-    let dataSource = UpdateUserDataSource(user: user)
-    dataSource.delegate = self
-  }
-
-  private func save(user: User) {
-    LoadingHUD.show(in: viewController.view)
-    dataManager.update(user: user).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.dataSource.reload(animated: true)
-      strongSelf.viewController.dismiss(animated: true, completion: nil)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to save the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
+    let navigator = BasicNavigator(parent: self.navigator)
+    let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
     }
+    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 }
 
@@ -96,21 +87,6 @@ extension SettingsCoordinator: SettingsDataSourceDelegate {
       logoutUser()
     case .update(let user):
       displayUserUpdatePopup(for: user)
-    }
-  }
-}
-
-// MARK: - UpdateUserDataSourceDelegate
-extension SettingsCoordinator: UpdateUserDataSourceDelegate {
-  func updateUserActionSheetDataSource(
-    _ updateUserActionSheetDataSource: UpdateUserDataSource,
-    selected action: UpdateUserDataSource.Action
-  ) {
-    switch action {
-    case .dismiss:
-      viewController.dismiss(animated: true, completion: nil)
-    case .save(let user):
-      save(user: user)
     }
   }
 }

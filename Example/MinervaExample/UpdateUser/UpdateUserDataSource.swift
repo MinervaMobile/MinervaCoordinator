@@ -16,9 +16,8 @@ protocol UpdateUserDataSourceDelegate: AnyObject {
     selected action: UpdateUserDataSource.Action)
 }
 
-final class UpdateUserDataSource: DataSource {
+final class UpdateUserDataSource: BaseDataSource {
   enum Action {
-    case dismiss
     case save(user: User)
   }
 
@@ -37,30 +36,40 @@ final class UpdateUserDataSource: DataSource {
 
   // MARK: - Public
 
+  func reload(animated: Bool) {
+    updateDelegate?.dataSourceStartedUpdate(self)
+    let section = createSection()
+    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
+    updateDelegate?.dataSourceCompletedUpdate(self)
+  }
+
+  // MARK: - Helpers
+
+  private func createSection() -> ListSection {
+    let cellModels = loadCellModels()
+    let section = ListSection(cellModels: cellModels, identifier: "SECTION")
+    return section
+  }
+
   func loadCellModels() -> [ListCellModel] {
-    let leftAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.updateUserActionSheetDataSource(strongSelf, selected: .dismiss)
-    }
-    let rightAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
+    let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .titleLarge)
+    doneModel.leftMargin = 0
+    doneModel.rightMargin = 0
+    doneModel.textAlignment = .center
+    doneModel.textColor = .selectable
+    doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.delegate?.updateUserActionSheetDataSource(strongSelf, selected: .save(user: strongSelf.user))
     }
-    let headerSectionModel = createHeaderModel(
-      identifier: "ActionSheetHeader",
-      leftText: "Cancel",
-      centerText: "Edit User",
-      rightText: "Save",
-      leftAction: leftAction,
-      rightAction: rightAction)
 
     return [
-      headerSectionModel,
       MarginCellModel(cellIdentifier: "headerMarginModel", height: 12),
       createEmailCellModel(),
       MarginCellModel(cellIdentifier: "emailMarginModel", height: 12),
       createCaloriesCellModel(),
-      MarginCellModel(cellIdentifier: "caloriesMarginModel", height: 12)
+      MarginCellModel(cellIdentifier: "caloriesMarginModel", height: 12),
+      doneModel,
+      MarginCellModel(cellIdentifier: "doneMarginModel", height: 12)
     ]
   }
 

@@ -16,9 +16,8 @@ protocol EditWorkoutDataSourceDelegate: AnyObject {
     selected action: EditWorkoutDataSource.Action)
 }
 
-final class EditWorkoutDataSource: DataSource {
+final class EditWorkoutDataSource: BaseDataSource {
   enum Action {
-    case dismiss
     case save(workout: Workout)
   }
 
@@ -40,32 +39,45 @@ final class EditWorkoutDataSource: DataSource {
 
   // MARK: - Public
 
+  func reload(animated: Bool) {
+    updateDelegate?.dataSourceStartedUpdate(self)
+    let section = createSection()
+    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
+    updateDelegate?.dataSourceCompletedUpdate(self)
+  }
+
+  // MARK: - Helpers
+
+  private func createSection() -> ListSection {
+    let cellModels = loadCellModels()
+    let section = ListSection(cellModels: cellModels, identifier: "SECTION")
+    return section
+  }
+
   func loadCellModels() -> [ListCellModel] {
-    let leftAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.workoutActionSheetDataSource(strongSelf, selected: .dismiss)
-    }
-    let rightAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
+    let doneModel = LabelCellModel(
+      identifier: "doneModel",
+      text: "Save",
+      font: .titleLarge)
+    doneModel.leftMargin = 0
+    doneModel.rightMargin = 0
+    doneModel.textAlignment = .center
+    doneModel.textColor = .selectable
+    doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.delegate?.workoutActionSheetDataSource(strongSelf, selected: .save(workout: strongSelf.workout))
     }
-    let headerSectionModel = createHeaderModel(
-      identifier: "ActionSheetHeader",
-      leftText: "Cancel",
-      centerText: editing ? "Edit Workout" : "Add Workout",
-      rightText: "Save",
-      leftAction: leftAction,
-      rightAction: rightAction)
 
     return [
-      headerSectionModel,
       MarginCellModel(cellIdentifier: "headerMarginModel", height: 12),
       createDateCellModel(),
       MarginCellModel(cellIdentifier: "dateMarginModel", height: 12),
       createCaloriesCellModel(),
       MarginCellModel(cellIdentifier: "caloriesMarginModel", height: 12),
       createTextCellModel(),
-      MarginCellModel(cellIdentifier: "textMarginModel", height: 12)
+      MarginCellModel(cellIdentifier: "textMarginModel", height: 12),
+      doneModel,
+      MarginCellModel(cellIdentifier: "doneMarginModel", height: 12)
     ]
   }
 

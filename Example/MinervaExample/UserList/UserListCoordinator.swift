@@ -134,8 +134,12 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   }
 
   private func displayUserUpdatePopup(for user: User) {
-    let dataSource = UpdateUserDataSource(user: user)
-    dataSource.delegate = self
+    let navigator = BasicNavigator(parent: self.navigator)
+    let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
+    }
+    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 
   private func save(user: User) {
@@ -154,21 +158,5 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
       userID: userID)
     coordinator.viewController.title = title
     push(coordinator, animated: true)
-  }
-}
-
-// MARK: - UpdateUserDataSourceDelegate
-extension UserListCoordinator: UpdateUserDataSourceDelegate {
-  func updateUserActionSheetDataSource(
-    _ updateUserActionSheetDataSource: UpdateUserDataSource,
-    selected action: UpdateUserDataSource.Action
-  ) {
-    viewController.dismiss(animated: true, completion: nil)
-    switch action {
-    case .dismiss:
-      break
-    case .save(let user):
-      save(user: user)
-    }
   }
 }

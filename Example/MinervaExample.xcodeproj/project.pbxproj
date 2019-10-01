@@ -183,7 +183,6 @@
 		F576F998226E16BB0015D14E /* CreateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserDataSource.swift */; };
 		F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848576233A6673001DBF1E /* ListSectionWrapper.swift */; };
 		F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */; };
-		F5C908232343C2740038BD89 /* UserListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908222343C2740038BD89 /* UserListInteractor.swift */; };
 		F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */; };
 		F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */; };
 		F5C9082B2343C6B20038BD89 /* UpdateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */; };
@@ -194,6 +193,10 @@
 		F5C908322343DD520038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5C908332343DD520038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5C908342343DD530038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
+		F5C908352343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
+		F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
+		F5C908372343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
+		F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
 		F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47BF233E4ABE00983F72 /* PromiseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */; };
@@ -355,7 +358,6 @@
 		F576F99C226E20D20015D14E /* SwipeableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
 		F5848576233A6673001DBF1E /* ListSectionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionWrapper.swift; sourceTree = "<group>"; };
 		F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellModelWrapper.swift; sourceTree = "<group>"; };
-		F5C908222343C2740038BD89 /* UserListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListInteractor.swift; sourceTree = "<group>"; };
 		F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserCoordinator.swift; sourceTree = "<group>"; };
 		F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFilterCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserCoordinator.swift; sourceTree = "<group>"; };
@@ -451,7 +453,6 @@
 			isa = PBXGroup;
 			children = (
 				F501F899233C05E500012C5E /* UserListCoordinator.swift */,
-				F5C908222343C2740038BD89 /* UserListInteractor.swift */,
 				F576F988226E16BB0015D14E /* UserListPresenter.swift */,
 				F5CE47C5233E561C00983F72 /* UserListRepository.swift */,
 				F576F989226E16BB0015D14E /* UserListVC.swift */,
@@ -489,6 +490,7 @@
 				F576F933226E16960015D14E /* Cells */,
 				F576F945226E16970015D14E /* Core */,
 				F5C908262343C5D30038BD89 /* CreateUser */,
+				F5C908392343E3F30038BD89 /* EditWorkout */,
 				F576F8FD226DF1020015D14E /* Extensions */,
 				F576F902226E165E0015D14E /* Filter */,
 				F576F868226DEE250015D14E /* Lifecycle */,
@@ -661,11 +663,9 @@
 		F576F90B226E16820015D14E /* Workout */ = {
 			isa = PBXGroup;
 			children = (
-				F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */,
-				F576F914226E16820015D14E /* EditWorkoutDataSource.swift */,
+				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
 				F576F913226E16820015D14E /* WorkoutDataSource.swift */,
 				F576F912226E16820015D14E /* WorkoutVC.swift */,
-				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -747,6 +747,15 @@
 				F576F98A226E16BB0015D14E /* UpdateUserDataSource.swift */,
 			);
 			path = UpdateUser;
+			sourceTree = "<group>";
+		};
+		F5C908392343E3F30038BD89 /* EditWorkout */ = {
+			isa = PBXGroup;
+			children = (
+				F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */,
+				F576F914226E16820015D14E /* EditWorkoutDataSource.swift */,
+			);
+			path = EditWorkout;
 			sourceTree = "<group>";
 		};
 		F5DA2B88226D362900BA461A /* Core */ = {
@@ -1173,7 +1182,6 @@
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */,
-				F5C908232343C2740038BD89 /* UserListInteractor.swift in Sources */,
 				F576F97D226E16970015D14E /* Images.swift in Sources */,
 				F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */,
 				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
@@ -1219,6 +1227,7 @@
 				F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F925226E16820015D14E /* WorkoutVC.swift in Sources */,
 				F576F957226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
+				F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
 				F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8BF226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C8226DF0050015D14E /* WorkoutFilter.swift in Sources */,
@@ -1228,6 +1237,7 @@
 				F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */,
 				F576F8F5226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
+				F5C908352343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */,
 				F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */,
 				F576F8CE226DF0050015D14E /* FoundationExtensions.swift in Sources */,
@@ -1279,6 +1289,7 @@
 				F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F926226E16820015D14E /* WorkoutVC.swift in Sources */,
 				F576F958226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
+				F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
 				F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8C0226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C9226DF0050015D14E /* WorkoutFilter.swift in Sources */,
@@ -1288,6 +1299,7 @@
 				F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */,
 				F576F8F6226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
+				F5C908372343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */,
 				F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */,
 				F576F8CF226DF0050015D14E /* FoundationExtensions.swift in Sources */,
