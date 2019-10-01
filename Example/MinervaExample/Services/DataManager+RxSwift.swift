@@ -120,9 +120,8 @@ extension DataManager {
   private func curry<A, B, C>(
     _ f: @escaping (A, B) -> C) -> ((A) -> ((B) -> C)
   ) {
-    return { (a: A) -> ((B) -> C) in
-      return { (b: B) -> C in
-        return f(a, b)
+    return { (a: A) -> ((B) -> C) in { (b: B) -> C in
+        f(a, b)
       }
     }
   }

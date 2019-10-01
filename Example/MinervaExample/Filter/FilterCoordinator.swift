@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-import PromiseKit
 import Minerva
+import PromiseKit
 
 protocol FilterCoordinatorDelegate: AnyObject {
   func filterCoordinator(
@@ -37,29 +37,26 @@ final class FilterCoordinator: PromiseCoordinator<FilterDataSource, CollectionVi
 
   // MARK: - Private
 
-  private func apply(filter: WorkoutFilter) {
-    delegate?.filterCoordinator(self, updatedFilter: filter)
-  }
-
   private func displayFilterPopup(with filter: WorkoutFilter, type: FilterType) {
-    let dataSource = FilterActionSheetDataSource(type: type, filter: filter)
-    dataSource.delegate = self
-    let actionSheetVC = ActionSheetVC(dataSource: dataSource)
-    actionSheetVC.transitioningDelegate = self
-    actionSheetVC.present(from: viewController)
+    let navigator = BasicNavigator(parent: self.navigator)
+    let coordinator = UpdateFilterCoordinator(navigator: navigator, filter: filter, type: type)
+    coordinator.delegate = self
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
+    }
+    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 }
 
-// MARK: - FilterActionSheetDataSourceDelegate
-extension FilterCoordinator: FilterActionSheetDataSourceDelegate {
-  func filterActionSheetDataSource(
-    _ filterActionSheetDataSource: FilterActionSheetDataSource,
-    selected action: FilterActionSheetDataSource.Action
+// MARK: - UpdateFilterDataSourceDelegate
+extension FilterCoordinator: UpdateFilterCoordinatorDelegate {
+  func updateFilterCoordinator(
+    _ updateFilterCoordinator: UpdateFilterCoordinator,
+    updatedFilter filter: WorkoutFilter
   ) {
-    switch action {
-    case .update(let filter):
-      apply(filter: filter)
-    }
+    dataSource.filter = filter
+    dataSource.reload(animated: true)
+    delegate?.filterCoordinator(self, updatedFilter: filter)
   }
 }
 
@@ -72,6 +69,3 @@ extension FilterCoordinator: FilterDataSourceDelegate {
     }
   }
 }
-
-
-

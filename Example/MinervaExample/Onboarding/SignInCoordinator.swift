@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-import PromiseKit
 import Minerva
+import PromiseKit
 
 protocol SignInCoordinatorDelegate: AnyObject {
   func signInCoordinator(

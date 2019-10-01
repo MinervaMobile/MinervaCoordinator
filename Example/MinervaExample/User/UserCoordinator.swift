@@ -98,19 +98,3 @@ extension UserCoordinator: UserVCDelegate {
     }
   }
 }
-
-// MARK: - UIViewControllerTransitioningDelegate
-extension UserCoordinator: UIViewControllerTransitioningDelegate {
-  public func animationController(
-    forPresented presented: UIViewController,
-    presenting: UIViewController,
-    source: UIViewController
-  ) -> UIViewControllerAnimatedTransitioning? {
-    let transition = ActionSheetPresentAnimator()
-    return transition
-  }
-  public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    let transition = ActionSheetDismissAnimator()
-    return transition
-  }
-}

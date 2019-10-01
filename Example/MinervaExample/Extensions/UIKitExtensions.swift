@@ -22,6 +22,51 @@ extension Array where Element: NSAttributedString {
   }
 }
 
+extension DataSource {
+  func createHeaderModel(
+    identifier: String,
+    leftText: String?,
+    centerText: String,
+    rightText: String?,
+    leftAction: LabelCellModel.SelectionAction?,
+    rightAction: LabelCellModel.SelectionAction?
+  ) -> ListCellModel {
+    let cancelModel = LabelCellModel(identifier: "cancelModel", text: leftText ?? "", font: .headline)
+    cancelModel.leftMargin = 0
+    cancelModel.rightMargin = 0
+    cancelModel.textAlignment = .left
+    cancelModel.textColor = .selectable
+    cancelModel.selectionAction = leftAction
+
+    let titleModel = LabelCellModel(identifier: "titleModel", text: centerText, font: .headline)
+    titleModel.leftMargin = 0
+    titleModel.rightMargin = 0
+    titleModel.textAlignment = .center
+    titleModel.textColor = .black
+
+    let doneModel = LabelCellModel(identifier: "doneModel", text: rightText ?? "", font: .boldHeadline)
+    doneModel.leftMargin = 0
+    doneModel.rightMargin = 0
+    doneModel.textAlignment = .right
+    doneModel.textColor = .selectable
+    doneModel.selectionAction = rightAction
+
+    let cellModels = [cancelModel, titleModel, doneModel]
+    let collectionModel = HorizontalCollectionCellModel(
+      identifier: identifier,
+      cellModels: cellModels,
+      distribution: .equally(cellsInRow: cellModels.count),
+      listController: ListController()
+    )
+    collectionModel.followsInsets = true
+    collectionModel.topMargin = 10
+    collectionModel.bottomMargin = 10
+    collectionModel.isScrollEnabled = false
+    collectionModel.bottomSeparatorColor = .separator
+    return collectionModel
+  }
+}
+
 extension ListController {
   public var cellModels: [ListCellModel] {
     return listSections.flatMap { $0.cellModels }
@@ -176,6 +221,16 @@ extension UIFont {
   private static func boldFont(forTextStyle textStyle: UIFont.TextStyle) -> UIFont {
     let baseFont = UIFont.preferredFont(forTextStyle: textStyle)
     return self.boldSystemFont(ofSize: baseFont.pointSize)
+  }
+}
+
+extension UIModalPresentationStyle {
+  static var safeAutomatic: UIModalPresentationStyle {
+    if #available(iOS 13, *) {
+      return .automatic
+    } else {
+      return .fullScreen
+    }
   }
 }
 

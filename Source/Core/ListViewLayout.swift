@@ -11,7 +11,7 @@ import UIKit
 import IGListKit
 
 // TODO: Remove this dependency on IGListKit's ListCollectionViewLayout
-public class ListViewLayout: ListCollectionViewLayout {
+open class ListViewLayout: ListCollectionViewLayout {
 
   override public class var layoutAttributesClass: AnyClass {
     return ListViewLayoutAttributes.self

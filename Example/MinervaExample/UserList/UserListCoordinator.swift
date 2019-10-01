@@ -125,36 +125,22 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   }
 
   private func displayCreateUserPopup() {
-    let dataSource = CreateUserActionSheetDataSource()
-    dataSource.delegate = self
-    let actionSheetVC = ActionSheetVC(dataSource: dataSource)
-    actionSheetVC.transitioningDelegate = self
-    actionSheetVC.present(from: viewController)
+    let navigator = BasicNavigator(parent: self.navigator)
+    let coordinator = CreateUserCoordinator(navigator: navigator, dataManager: dataManager)
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
+    }
+    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 
   private func displayUserUpdatePopup(for user: User) {
-    let dataSource = UpdateUserActionSheetDataSource(user: user)
+    let dataSource = UpdateUserDataSource(user: user)
     dataSource.delegate = self
-    let actionSheetVC = ActionSheetVC(dataSource: dataSource)
-    actionSheetVC.transitioningDelegate = self
-    actionSheetVC.present(from: viewController)
   }
 
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
     dataManager.update(user: user).catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to save the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
-  }
-
-  private func create(email: String, password: String, dailyCalories: Int32, role: UserRole) {
-    LoadingHUD.show(in: viewController.view)
-    dataManager.create(withEmail: email, password: password, dailyCalories: dailyCalories, role: role).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.viewController.dismiss(animated: true, completion: nil)
-    }.catch { [weak self] error -> Void in
       self?.viewController.alert(error, title: "Failed to save the user")
     }.finally { [weak self] in
       LoadingHUD.hide(from: self?.viewController.view)
@@ -171,26 +157,11 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   }
 }
 
-// MARK: - CreateUserActionSheetDataSourceDelegate
-extension UserListCoordinator: CreateUserActionSheetDataSourceDelegate {
-  func createUserActionSheetDataSource(
-    _ createUserActionSheetDataSource: CreateUserActionSheetDataSource,
-    selected action: CreateUserActionSheetDataSource.Action
-  ) {
-    switch action {
-    case .dismiss:
-      viewController.dismiss(animated: true, completion: nil)
-    case let .create(email, password, dailyCalories, role):
-      create(email: email, password: password, dailyCalories: dailyCalories, role: role)
-    }
-  }
-}
-
-// MARK: - UpdateUserActionSheetDataSourceDelegate
-extension UserListCoordinator: UpdateUserActionSheetDataSourceDelegate {
+// MARK: - UpdateUserDataSourceDelegate
+extension UserListCoordinator: UpdateUserDataSourceDelegate {
   func updateUserActionSheetDataSource(
-    _ updateUserActionSheetDataSource: UpdateUserActionSheetDataSource,
-    selected action: UpdateUserActionSheetDataSource.Action
+    _ updateUserActionSheetDataSource: UpdateUserDataSource,
+    selected action: UpdateUserDataSource.Action
   ) {
     viewController.dismiss(animated: true, completion: nil)
     switch action {

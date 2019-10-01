@@ -46,6 +46,16 @@ extension CoordinatorNavigator {
 
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
+    from navigator: Navigator,
+    animated: Bool,
+    modalPresentationStyle: UIModalPresentationStyle = .fullScreen
+  ) {
+    navigator.setViewControllers([coordinator._viewController], animated: false)
+    present(coordinator, animated: true, modalPresentationStyle: modalPresentationStyle)
+  }
+
+  public func present(
+    _ coordinator: BaseCoordinatorPresentable,
     animated: Bool,
     modalPresentationStyle: UIModalPresentationStyle = .fullScreen
   ) {

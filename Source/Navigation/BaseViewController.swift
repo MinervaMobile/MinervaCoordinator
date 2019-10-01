@@ -13,17 +13,17 @@ import IGListKit
 open class BaseViewController: UIViewController, ViewController {
   public weak var lifecycleDelegate: ViewControllerDelegate?
 
-  public let collectionView: UICollectionView = {
-    let layout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
-    let collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
-    collectionView.contentInsetAdjustmentBehavior = .automatic
-    collectionView.keyboardDismissMode = .onDrag
-    return collectionView
-  }()
+  public let collectionView: UICollectionView
 
   // MARK: - Lifecycle
 
-  public init() {
+  public init(layout: ListViewLayout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)) {
+    self.collectionView = {
+      let collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
+      collectionView.contentInsetAdjustmentBehavior = .automatic
+      collectionView.keyboardDismissMode = .onDrag
+      return collectionView
+    }()
     super.init(nibName: nil, bundle: nil)
   }
 

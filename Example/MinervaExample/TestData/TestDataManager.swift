@@ -123,7 +123,6 @@ extension TestDataManager: DataManager {
     }
   }
 
-
   func store(workout: Workout, completion: @escaping Completion) {
     self.queue.async {
       guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin else {

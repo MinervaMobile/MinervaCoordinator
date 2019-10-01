@@ -34,7 +34,7 @@ final class UserListVC: BaseViewController {
 
   // MARK: - Lifecycle
 
-  required override init() {
+  required init() {
     self.actionsSubject = PublishSubject()
     super.init()
 

@@ -34,8 +34,9 @@ final class WorkoutVC: BaseViewController {
 
   // MARK: - Lifecycle
 
-  required override init() {
-    super.init()
+  required init() {
+    let layout = ListViewLayout(stickyHeaders: true, topContentInset: 0, stretchToEdge: true)
+    super.init(layout: layout)
     collectionView.contentInsetAdjustmentBehavior = .never
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     collectionView.backgroundColor = .white

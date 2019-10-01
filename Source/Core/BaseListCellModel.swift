@@ -13,7 +13,9 @@ open class BaseListCellModel: ListCellModel {
   public init() { }
 
   // MARK: - ListCellModel
-
+  open var description: String {
+    return typeDescription
+  }
   open var reorderable: Bool {
     return false
   }

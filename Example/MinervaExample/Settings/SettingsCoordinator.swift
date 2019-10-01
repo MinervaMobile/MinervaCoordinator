@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-import PromiseKit
 import Minerva
+import PromiseKit
 
 protocol SettingsCoordinatorDelegate: AnyObject {
   func settingsCoordinatorLogoutCurrentUser(
@@ -68,11 +68,8 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
   }
 
   private func displayUserUpdatePopup(for user: User) {
-    let dataSource = UpdateUserActionSheetDataSource(user: user)
+    let dataSource = UpdateUserDataSource(user: user)
     dataSource.delegate = self
-    let actionSheetVC = ActionSheetVC(dataSource: dataSource)
-    actionSheetVC.transitioningDelegate = self
-    actionSheetVC.present(from: viewController)
   }
 
   private func save(user: User) {
@@ -89,7 +86,6 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
   }
 }
 
-
 // MARK: - SettingsDataSourceDelegate
 extension SettingsCoordinator: SettingsDataSourceDelegate {
   func settingsDataSource(_ settingsDataSource: SettingsDataSource, selected action: SettingsDataSource.Action) {
@@ -104,11 +100,11 @@ extension SettingsCoordinator: SettingsDataSourceDelegate {
   }
 }
 
-// MARK: - UpdateUserActionSheetDataSourceDelegate
-extension SettingsCoordinator: UpdateUserActionSheetDataSourceDelegate {
+// MARK: - UpdateUserDataSourceDelegate
+extension SettingsCoordinator: UpdateUserDataSourceDelegate {
   func updateUserActionSheetDataSource(
-    _ updateUserActionSheetDataSource: UpdateUserActionSheetDataSource,
-    selected action: UpdateUserActionSheetDataSource.Action
+    _ updateUserActionSheetDataSource: UpdateUserDataSource,
+    selected action: UpdateUserDataSource.Action
   ) {
     switch action {
     case .dismiss:

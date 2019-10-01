@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-import PromiseKit
 import Minerva
+import PromiseKit
 
 final class WorkoutCoordinator: PromiseCoordinator<WorkoutDataSource, WorkoutVC> {
 
@@ -43,11 +43,8 @@ final class WorkoutCoordinator: PromiseCoordinator<WorkoutDataSource, WorkoutVC>
   private func displayWorkoutPopup(with workout: Workout?, forUserID userID: String) {
     let editing = workout != nil
     let workout = workout ?? WorkoutProto(workoutID: UUID().uuidString, userID: userID, text: "", calories: 0, date: Date())
-    let dataSource = WorkoutActionSheetDataSource(workout: workout, editing: editing)
+    let dataSource = EditWorkoutDataSource(workout: workout, editing: editing)
     dataSource.delegate = self
-    let actionSheetVC = ActionSheetVC(dataSource: dataSource)
-    actionSheetVC.transitioningDelegate = self
-    actionSheetVC.present(from: viewController)
   }
 
   private func delete(workout: Workout) {
@@ -95,9 +92,9 @@ extension WorkoutCoordinator: FilterCoordinatorDelegate {
   }
 }
 
-// MARK: - WorkoutActionSheetDataSourceDelegate
-extension WorkoutCoordinator: WorkoutActionSheetDataSourceDelegate {
-  func workoutActionSheetDataSource(_ workoutActionSheetDataSource: WorkoutActionSheetDataSource, selected action: WorkoutActionSheetDataSource.Action) {
+// MARK: - EditWorkoutDataSourceDelegate
+extension WorkoutCoordinator: EditWorkoutDataSourceDelegate {
+  func workoutActionSheetDataSource(_ workoutActionSheetDataSource: EditWorkoutDataSource, selected action: EditWorkoutDataSource.Action) {
     switch action {
     case .dismiss:
       viewController.dismiss(animated: true, completion: nil)

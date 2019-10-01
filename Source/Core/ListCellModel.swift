@@ -24,7 +24,7 @@ public protocol ListCellModel: CustomStringConvertible {
 }
 
 extension ListCellModel {
-  public var description: String {
+  public var typeDescription: String {
     return "[\(String(describing: type(of: self))) \(identifier)]"
   }
 }
