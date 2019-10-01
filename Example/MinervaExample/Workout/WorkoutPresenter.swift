@@ -1,5 +1,5 @@
 //
-//  WorkoutDataSource.swift
+//  WorkoutPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -9,57 +9,73 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
-protocol WorkoutDataSourceDelegate: AnyObject {
-  func workoutDataSource(_ workoutDataSource: WorkoutDataSource, selected action: WorkoutDataSource.Action)
-}
-
-final class WorkoutDataSource: BaseDataSource {
+final class WorkoutPresenter: Presenter {
 
   enum Action {
     case delete(workout: Workout)
     case edit(workout: Workout)
   }
-  weak var delegate: WorkoutDataSourceDelegate?
 
-  private let dataManager: DataManager
-  private let userID: String
-  public var filter: WorkoutFilter
+  private(set) var sections: Observable<PresenterState>
+  var actions: Observable<Action> {
+    actionsSubject.asObservable()
+  }
+
+  private let actionsSubject: PublishSubject<Action>
+  private let interactor: WorkoutInteractor
 
   // MARK: - Lifecycle
 
-  init(userID: String, dataManager: DataManager) {
-    self.userID = userID
-    self.dataManager = dataManager
-    self.filter = WorkoutFilterProto()
-  }
+  init(interactor: WorkoutInteractor) {
+    self.interactor = interactor
+    self.actionsSubject = PublishSubject()
+    self.sections = Observable.just(.loading)
+    self.sections = self.sections.concat(
+      Observable.combineLatest(
+        interactor.user,
+        interactor.workouts,
+        interactor.failuresOnly,
+        interactor.filter
+      ).map { [weak self] (userResult, workoutsResult, failuresOnly, filter) -> PresenterState in
+        guard let strongSelf = self else {
+          return .failure(error: SystemError.cancelled)
+        }
+        let user: User
+        switch userResult {
+        case .success(let u):
+          user = u
+        case .failure(let error):
+          return .failure(error: error)
+        }
 
-  // MARK: - Public
+        let workouts: [Workout]
+        switch workoutsResult {
+        case .success(let w):
+          workouts = w
+        case .failure(let error):
+          return .failure(error: error)
+        }
 
-  func loadTitle() -> Promise<String> {
-    return dataManager.loadUser(withID: userID).map { user -> String in
-      guard let user = user else { throw SystemError.doesNotExist }
-      return user.email
-    }
-  }
-
-  func reload(animated: Bool) {
-    let sectionsPromise = when(
-      fulfilled: dataManager.loadWorkouts(forUserID: userID),
-      dataManager.loadUser(withID: userID)
-    ).map { [weak self] workouts, user -> [ListSection] in
-      guard let strongSelf = self else { throw SystemError.cancelled }
-      guard let user = user else { throw SystemError.doesNotExist }
-      let sections = strongSelf.createSections(with: strongSelf.filter, workouts: workouts, user: user)
-      return sections
-    }
-    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
+        let sections = strongSelf.createSections(
+          with: filter,
+          workouts: workouts,
+          user: user,
+          failuresOnly: failuresOnly)
+        return .loaded(sections: sections)
+      }
+    )
   }
 
   // MARK: - Private
 
-  private func createSections(with filter: WorkoutFilter, workouts: [Workout], user: User) -> [ListSection] {
+  private func createSections(
+    with filter: WorkoutFilter,
+    workouts: [Workout],
+    user: User,
+    failuresOnly: Bool
+  ) -> [ListSection] {
     var sections = [ListSection]()
 
     let filterCellModel = LabelCellModel(text: filter.details, font: .subheadline)
@@ -80,14 +96,18 @@ final class WorkoutDataSource: BaseDataSource {
     for (date, workoutsForDate) in sortedGroups {
       var cellModels = [ListCellModel]()
       let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
-      let workoutBackgroundColor = totalCalories < user.dailyCalories
+      let failure = totalCalories > user.dailyCalories
+      guard !failuresOnly || !failure else {
+        continue
+      }
+      let workoutBackgroundColor = failure
         ? UIColor(red: 179, green: 255, blue: 179) : UIColor(red: 255, green: 179, blue: 179)
       let sortedWorkoutsForDate = workoutsForDate.sorted { $0.date > $1.date }
       for workout in sortedWorkoutsForDate {
         let workoutCellModel = createWorkoutCellModel(for: workout)
         workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
           guard let strongSelf = self else { return }
-          strongSelf.delegate?.workoutDataSource(strongSelf, selected: .edit(workout: workout))
+          strongSelf.actionsSubject.onNext(.edit(workout: workout))
         }
         workoutCellModel.backgroundColor = workoutBackgroundColor
         cellModels.append(workoutCellModel)
@@ -119,11 +139,11 @@ final class WorkoutDataSource: BaseDataSource {
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.workoutDataSource(strongSelf, selected: .delete(workout: workout))
+      strongSelf.actionsSubject.onNext(.delete(workout: workout))
     }
     cellModel.editAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.workoutDataSource(strongSelf, selected: .edit(workout: workout))
+      strongSelf.actionsSubject.onNext(.edit(workout: workout))
     }
     return cellModel
   }

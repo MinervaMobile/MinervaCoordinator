@@ -9,20 +9,21 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
-
-protocol WorkoutVCDelegate: AnyObject {
-  func workoutVC(_ workoutVC: WorkoutVC, selected action: WorkoutVC.Action)
-}
+import RxSwift
 
 final class WorkoutVC: BaseViewController {
 
   enum Action {
     case createWorkout
     case updateFilter
+    case toggleAll
   }
 
-  weak var delegate: WorkoutVCDelegate?
+  var actions: Observable<Action> {
+    actionsSubject.asObservable()
+  }
+
+  private let actionsSubject: PublishSubject<Action>
 
   private let addButton: UIButton = {
     let addButton = UIButton(frame: .zero)
@@ -35,6 +36,7 @@ final class WorkoutVC: BaseViewController {
   // MARK: - Lifecycle
 
   required init() {
+    self.actionsSubject = PublishSubject()
     let layout = ListViewLayout(stickyHeaders: true, topContentInset: 0, stretchToEdge: true)
     super.init(layout: layout)
     collectionView.contentInsetAdjustmentBehavior = .never
@@ -42,10 +44,27 @@ final class WorkoutVC: BaseViewController {
     collectionView.backgroundColor = .white
   }
 
+  // MARK: - Public
+  func showFailuresOnly(_ showFailuresOnly: Bool) {
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: showFailuresOnly ? "Failures Only" : "All",
+      style: .plain,
+      target: self,
+      action: #selector(toggleAll))
+    navigationItem.leftBarButtonItem?.tintColor = .selectable
+  }
+
   // MARK: - UIViewController
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: "ALL",
+      style: .plain,
+      target: self,
+      action: #selector(toggleAll))
+    navigationItem.leftBarButtonItem?.tintColor = .selectable
+
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
       style: .plain,
@@ -54,6 +73,7 @@ final class WorkoutVC: BaseViewController {
     navigationItem.rightBarButtonItem?.tintColor = .selectable
     setupViewsAndConstraints()
   }
+
   // MARK: - Private
 
   private func setupViewsAndConstraints() {
@@ -76,11 +96,16 @@ final class WorkoutVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    delegate?.workoutVC(self, selected: .createWorkout)
+    actionsSubject.on(.next(.createWorkout))
   }
 
   @objc
   private func selectFilter() {
-    delegate?.workoutVC(self, selected: .updateFilter)
+    actionsSubject.on(.next(.updateFilter))
+  }
+
+  @objc
+  private func toggleAll() {
+    actionsSubject.on(.next(.toggleAll))
   }
 }
