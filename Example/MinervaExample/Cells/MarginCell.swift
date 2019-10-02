@@ -24,7 +24,7 @@ struct MarginCellModel: TypedListCellModel {
     self.height = height
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
   var description: String { typeDescription }
 
   var reorderable: Bool { false }

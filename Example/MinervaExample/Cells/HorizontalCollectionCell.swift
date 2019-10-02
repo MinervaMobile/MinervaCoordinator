@@ -40,7 +40,7 @@ final class HorizontalCollectionCellModel: DefaultListCellModel {
     section.constraints.distribution = distribution
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier

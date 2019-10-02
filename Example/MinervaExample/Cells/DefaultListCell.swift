@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-open class DefaultListCellModel: BaseListCellModel {
+open class DefaultListCellModel: BaseListCell.Model {
 
   public static let defaultCellInset: CGFloat = 10
 

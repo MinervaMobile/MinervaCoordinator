@@ -49,7 +49,7 @@ struct PickerDataComponent: Equatable {
   }
 }
 
-final class PickerCellModel: BaseListCellModel {
+final class PickerCellModel: BaseListCell.Model {
   typealias Action = (
     _ cellModel: PickerCellModel,
     _ pickerView: UIPickerView,
@@ -72,7 +72,7 @@ final class PickerCellModel: BaseListCellModel {
     }
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier

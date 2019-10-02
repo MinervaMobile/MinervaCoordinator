@@ -69,7 +69,7 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
     self.init(identifier: text, text: text, font: font, textColor: textColor)
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier
