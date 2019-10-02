@@ -8,25 +8,33 @@
 import Foundation
 import UIKit
 
-open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject,
+open class BaseCoordinator<T: DataSource, U: ViewController>:
+  NSObject,
   CoordinatorNavigator,
   CoordinatorPresentable,
   ListControllerSizeDelegate,
-  ViewControllerDelegate {
+  ViewControllerDelegate
+{
   public typealias CoordinatorVC = U
 
   public weak var parent: Coordinator?
   public var childCoordinators = [Coordinator]()
-  public let listController = ListController()
+  public let listController: ListController
 
   public let viewController: U
   public let dataSource: T
   public let navigator: Navigator
 
-  public init(navigator: Navigator, viewController: U, dataSource: T) {
+  public init(
+    navigator: Navigator,
+    viewController: U,
+    dataSource: T,
+    listController: ListController
+  ) {
     self.navigator = navigator
     self.viewController = viewController
     self.dataSource = dataSource
+    self.listController = listController
 
     super.init()
 

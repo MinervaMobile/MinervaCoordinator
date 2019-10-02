@@ -38,13 +38,9 @@ final class FilterCoordinator: PromiseCoordinator<FilterDataSource, CollectionVi
   // MARK: - Private
 
   private func displayFilterPopup(with filter: WorkoutFilter, type: FilterType) {
-    let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = UpdateFilterCoordinator(navigator: navigator, filter: filter, type: type)
     coordinator.delegate = self
-    coordinator.addCloseButton() { [weak self] child in
-      self?.dismiss(child, animated: true)
-    }
-    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
+    push(coordinator, animated: true)
   }
 }
 

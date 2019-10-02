@@ -10,12 +10,18 @@ import Foundation
 import Minerva
 import RxSwift
 
-public enum PresenterState {
-  case loading
-  case failure(error: Error)
-  case loaded(sections: [ListSection])
+public protocol PresenterPersistentState {
+  var sections: [ListSection] { get }
+}
+
+public protocol PresenterTransientState {
+  var error: Error? { get }
 }
 
 public protocol Presenter: DataSource {
-  var sections: Observable<PresenterState> { get }
+  associatedtype PersistentState: PresenterPersistentState
+  associatedtype TransientState: PresenterTransientState
+
+  var persistentState: Observable<PersistentState> { get }
+  var transientState: Observable<TransientState> { get }
 }

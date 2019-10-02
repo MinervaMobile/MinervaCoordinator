@@ -15,21 +15,23 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
   private let dataManager: DataManager
   private let interactor: WorkoutInteractor
-  private let userID: String
-  private let disposeBag: DisposeBag
+  private let disposeBag = DisposeBag()
 
   // MARK: - Lifecycle
 
   init(navigator: Navigator, dataManager: DataManager, userID: String) {
-    self.userID = userID
     self.dataManager = dataManager
-    self.disposeBag = DisposeBag()
 
     let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
     self.interactor = WorkoutInteractor(repository: repository)
     let presenter = WorkoutPresenter(interactor: interactor)
-    let viewController = WorkoutVC(interactor: interactor)
-    super.init(navigator: navigator, viewController: viewController, dataSource: presenter)
+    let listController = ListController()
+    let viewController = WorkoutVC(interactor: interactor, presenter: presenter, listController: listController)
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: presenter,
+      listController: listController)
 
   }
 
@@ -37,46 +39,19 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
   override public func viewControllerViewDidLoad(_ viewController: ViewController) {
     super.viewControllerViewDidLoad(viewController)
 
-    dataSource.actions
-      .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
-      .disposed(by: disposeBag)
-
-    dataSource.sections
-      .subscribe(onNext: handle(state:), onError: nil, onCompleted: nil, onDisposed: nil)
-      .disposed(by: disposeBag)
-    self.viewController.actions
+    interactor.actions
       .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
   }
 
   // MARK: - Private
 
-  private func handle(state: PresenterState) {
-    switch state {
-    case .failure(let error):
-      LoadingHUD.hide(from: viewController.view)
-      viewController.alert(error, title: "Failed to load")
-    case .loaded(let sections):
-      LoadingHUD.hide(from: viewController.view)
-      listController.update(with: sections, animated: true, completion: nil)
-    case .loading:
-      LoadingHUD.show(in: viewController.view)
-    }
-  }
-
-  private func handle(action: WorkoutPresenter.Action) {
+  private func handle(action: WorkoutInteractor.Action) {
     switch action {
-    case .delete(let workout):
-      delete(workout: workout)
+    case .createWorkout(let userID):
+      displayWorkoutPopup(with: nil, forUserID: userID)
     case .edit(let workout):
       displayWorkoutPopup(with: workout, forUserID: workout.userID)
-    }
-  }
-
-  private func handle(action: WorkoutVC.Action) {
-    switch action {
-    case .createWorkout:
-      displayWorkoutPopup(with: nil, forUserID: userID)
     case .update(let filter):
       displayFilterSelection(with: filter)
     }
@@ -99,19 +74,14 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 
-  private func delete(workout: Workout) {
-    LoadingHUD.show(in: viewController.view)
-    dataManager.delete(workout: workout).catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to delete the workout")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
-  }
-
   private func displayFilterSelection(with filter: WorkoutFilter) {
+    let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = FilterCoordinator(navigator: navigator, filter: filter)
     coordinator.delegate = self
-    push(coordinator, animated: true)
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
+    }
+    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
   }
 }
 

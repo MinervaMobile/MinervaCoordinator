@@ -13,62 +13,83 @@ import RxSwift
 
 final class WorkoutPresenter: Presenter {
 
-  enum Action {
-    case delete(workout: Workout)
-    case edit(workout: Workout)
+  typealias PersistentState = Persistent
+  typealias TransientState = Transient
+
+  struct Persistent: PresenterPersistentState {
+    var sections: [ListSection] = []
+    var title: String = ""
+    var showFailuresOnly: Bool = false
+    var filter: WorkoutFilter = WorkoutFilterProto()
   }
 
-  private(set) var sections: Observable<PresenterState>
-  var actions: Observable<Action> {
-    actionsSubject.asObservable()
+  struct Transient: PresenterTransientState {
+    var error: Error? = nil
+    var showLoadingHUD: Bool = false
+    var hideLoadingHUD: Bool = false
   }
 
-  private let actionsSubject: PublishSubject<Action>
+  private let persistentStateSubject: BehaviorSubject<PersistentState>
+  var persistentState: Observable<PersistentState> {
+    persistentStateSubject.asObservable()
+  }
+
+  private let transientStateSubject: BehaviorSubject<TransientState>
+  var transientState: Observable<TransientState> {
+    transientStateSubject.asObservable()
+  }
+
   private let interactor: WorkoutInteractor
+
+  private let disposeBag = DisposeBag()
 
   // MARK: - Lifecycle
 
   init(interactor: WorkoutInteractor) {
     self.interactor = interactor
-    self.actionsSubject = PublishSubject()
-    self.sections = Observable.just(.loading)
-    self.sections = self.sections.concat(
-      Observable.combineLatest(
-        interactor.user,
-        interactor.workouts,
-        interactor.failuresOnly,
-        interactor.filter
-      ).map { [weak self] (userResult, workoutsResult, failuresOnly, filter) -> PresenterState in
-        guard let strongSelf = self else {
-          return .failure(error: SystemError.cancelled)
-        }
-        let user: User
-        switch userResult {
-        case .success(let u):
-          user = u
-        case .failure(let error):
-          return .failure(error: error)
-        }
+    self.persistentStateSubject = BehaviorSubject(value: Persistent())
+    self.transientStateSubject = BehaviorSubject(value: Transient())
 
-        let workouts: [Workout]
-        switch workoutsResult {
-        case .success(let w):
-          workouts = w
-        case .failure(let error):
-          return .failure(error: error)
-        }
-
-        let sections = strongSelf.createSections(
-          with: filter,
-          workouts: workouts,
-          user: user,
-          failuresOnly: failuresOnly)
-        return .loaded(sections: sections)
-      }
-    )
+    interactor.state
+      .observeOn(
+        SerialDispatchQueueScheduler(
+          queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
+          internalSerialQueueName: "userInteractive")
+      ).subscribe(
+        onNext: process(_:),
+        onError: nil,
+        onCompleted: nil,
+        onDisposed: nil
+      ).disposed(by: disposeBag)
   }
 
   // MARK: - Private
+
+  private func process(_ state: WorkoutInteractor.State) {
+    guard let user = state.user else {
+      transientStateSubject.onNext(TransientState(error: SystemError.doesNotExist))
+      return
+    }
+
+    let sections = createSections(
+      with: state.filter,
+      workouts: state.workouts,
+      user: user,
+      failuresOnly: state.showFailuresOnly)
+    let persistentState = PersistentState(
+      sections: sections,
+      title: user.email,
+      showFailuresOnly: state.showFailuresOnly,
+      filter: state.filter)
+    persistentStateSubject.onNext(persistentState)
+
+    let transientState = TransientState(
+      error: state.error,
+      showLoadingHUD: state.showLoadingHUD,
+      hideLoadingHUD: state.hideLoadingHUD
+    )
+    transientStateSubject.onNext(transientState)
+  }
 
   private func createSections(
     with filter: WorkoutFilter,
@@ -107,7 +128,7 @@ final class WorkoutPresenter: Presenter {
         let workoutCellModel = createWorkoutCellModel(for: workout)
         workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
           guard let strongSelf = self else { return }
-          strongSelf.actionsSubject.onNext(.edit(workout: workout))
+          strongSelf.interactor.edit(workout: workout)
         }
         workoutCellModel.backgroundColor = workoutBackgroundColor
         cellModels.append(workoutCellModel)
@@ -139,11 +160,11 @@ final class WorkoutPresenter: Presenter {
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.delete(workout: workout))
+      strongSelf.interactor.delete(workout: workout)
     }
     cellModel.editAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.edit(workout: workout))
+      strongSelf.interactor.edit(workout: workout)
     }
     return cellModel
   }
