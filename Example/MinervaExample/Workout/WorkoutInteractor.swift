@@ -19,66 +19,23 @@ final class WorkoutInteractor {
     case update(filter: WorkoutFilter)
   }
 
-  struct State {
-    var workouts: [Workout]
-    var user: User?
-    var filter: WorkoutFilter
-    var showFailuresOnly: Bool
-    var error: Error?
-    var showLoadingHUD: Bool
-    var hideLoadingHUD: Bool
-  }
-
   private let disposeBag = DisposeBag()
   private let repository: WorkoutRepository
 
   private let filterSubject = BehaviorSubject<WorkoutFilter>(value: WorkoutFilterProto())
+  var filter: Observable<WorkoutFilter> { filterSubject.asObservable() }
+
   private let showFailuresOnlySubject = BehaviorSubject<Bool>(value: false)
+  var showFailuresOnly: Observable<Bool> { showFailuresOnlySubject.asObservable().distinctUntilChanged() }
+
   private let errorSubject = BehaviorSubject<Error?>(value: nil)
-  private let showLoadingHUDSubject = BehaviorSubject<Bool>(value: false)
-  private let hideLoadingHUDSubject = BehaviorSubject<Bool>(value: false)
+  var error: Observable<Error?> { errorSubject.asObservable().distinctUntilChanged({ $0 == nil && $1 == nil }) }
 
-  private var transientStateClear: Bool = true
+  private let loadingSubject = BehaviorSubject<Bool>(value: false)
+  var loading: Observable<Bool> { loadingSubject.asObservable().distinctUntilChanged() }
 
-  var state: Observable<State> {
-    return Observable.combineLatest(
-      repository.workouts,
-      repository.user,
-      filterSubject,
-      showFailuresOnlySubject,
-      errorSubject,
-      showLoadingHUDSubject,
-      hideLoadingHUDSubject
-    ).map { [weak self] (workoutsResult, userResult, filter, showFailuresOnly, error, showLoadingHUD, hideLoadingHUD) -> State in
-      var error = error
-      let user: User?
-      switch userResult {
-      case .success(let u):
-        user = u
-      case .failure(let e):
-        error = error ?? e
-        user = nil
-      }
-
-      let workouts: [Workout]
-      switch workoutsResult {
-      case .success(let w):
-        workouts = w
-      case .failure(let e):
-        workouts = []
-        error = error ?? e
-      }
-      self?.transientStateClear = error == nil && !showLoadingHUD && !hideLoadingHUD
-      return State(
-        workouts: workouts,
-        user: user,
-        filter: filter,
-        showFailuresOnly: showFailuresOnly,
-        error: error,
-        showLoadingHUD: showLoadingHUD,
-        hideLoadingHUD: hideLoadingHUD)
-    }
-  }
+  var workouts: Observable<Result<[Workout], Error>> { repository.workouts }
+  var user: Observable<Result<User, Error>> { repository.user }
 
   private let actionsSubject = PublishSubject<Action>()
   var actions: Observable<Action> {
@@ -110,7 +67,7 @@ final class WorkoutInteractor {
   }
 
   func delete(workout: Workout) {
-    showLoadingHUDSubject.onNext(true)
+    loadingSubject.onNext(true)
     repository.delete(workout).subscribe { [weak self] event in
       guard let strongSelf = self else { return }
       switch event {
@@ -119,7 +76,7 @@ final class WorkoutInteractor {
       case .success:
         break
       }
-      strongSelf.hideLoadingHUDSubject.onNext(true)
+      strongSelf.loadingSubject.onNext(false)
     }.disposed(by: disposeBag)
   }
 
@@ -128,11 +85,7 @@ final class WorkoutInteractor {
   }
 
   func clearTransientState() {
-    guard !transientStateClear else {
-      return
-    }
-    showLoadingHUDSubject.onNext(false)
-    hideLoadingHUDSubject.onNext(false)
+    loadingSubject.onNext(false)
     errorSubject.onNext(nil)
   }
 }

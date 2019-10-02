@@ -11,30 +11,30 @@ import UIKit
 import Minerva
 import RxSwift
 
-final class WorkoutPresenter: Presenter {
+final class WorkoutPresenter: DataSource {
 
-  typealias PersistentState = Persistent
-  typealias TransientState = Transient
-
-  struct Persistent: PresenterPersistentState {
-    var sections: [ListSection] = []
+  struct PersistentState {
     var title: String = ""
     var showFailuresOnly: Bool = false
     var filter: WorkoutFilter = WorkoutFilterProto()
   }
 
-  struct Transient: PresenterTransientState {
+  struct TransientState {
     var error: Error? = nil
-    var showLoadingHUD: Bool = false
-    var hideLoadingHUD: Bool = false
+    var loading: Bool = false
   }
 
-  private let persistentStateSubject: BehaviorSubject<PersistentState>
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  var sections: Observable<[ListSection]> {
+    sectionsSubject.asObservable()
+  }
+
+  private let persistentStateSubject = BehaviorSubject(value: PersistentState())
   var persistentState: Observable<PersistentState> {
     persistentStateSubject.asObservable()
   }
 
-  private let transientStateSubject: BehaviorSubject<TransientState>
+  private let transientStateSubject = BehaviorSubject(value: TransientState())
   var transientState: Observable<TransientState> {
     transientStateSubject.asObservable()
   }
@@ -43,50 +43,84 @@ final class WorkoutPresenter: Presenter {
 
   private let disposeBag = DisposeBag()
 
+  private let queue = SerialDispatchQueueScheduler(
+    queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
+    internalSerialQueueName: "WorkoutPresenterQueue")
+
   // MARK: - Lifecycle
 
   init(interactor: WorkoutInteractor) {
     self.interactor = interactor
-    self.persistentStateSubject = BehaviorSubject(value: Persistent())
-    self.transientStateSubject = BehaviorSubject(value: Transient())
 
-    interactor.state
-      .observeOn(
-        SerialDispatchQueueScheduler(
-          queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
-          internalSerialQueueName: "userInteractive")
-      ).subscribe(
-        onNext: process(_:),
-        onError: nil,
-        onCompleted: nil,
-        onDisposed: nil
-      ).disposed(by: disposeBag)
+    Observable.combineLatest(
+      interactor.workouts,
+      interactor.user,
+      interactor.filter,
+      interactor.showFailuresOnly
+    ).observeOn(
+      queue
+    ).subscribe(
+      onNext: process(workoutsResult: userResult: filter: showFailuresOnly:)
+    ).disposed(
+      by: disposeBag
+    )
+
+    Observable.combineLatest(
+      interactor.error,
+      interactor.loading
+    ).map {
+      TransientState(error: $0.0, loading: $0.1)
+    }.subscribe(
+      transientStateSubject
+    ).disposed(
+      by: disposeBag
+    )
   }
 
   // MARK: - Private
 
-  private func process(_ state: WorkoutInteractor.State) {
-    guard let user = state.user else {
-      transientStateSubject.onNext(TransientState(error: SystemError.doesNotExist))
+  private func process(
+    workoutsResult: Result<[Workout], Error>,
+    userResult: Result<User, Error>,
+    filter: WorkoutFilter,
+    showFailuresOnly: Bool
+  ) {
+    let user: User
+    switch userResult {
+    case .success(let u):
+      user = u
+    case .failure(let error):
+      transientStateSubject.onNext(TransientState(error: error))
+      return
+    }
+
+    let workouts: [Workout]
+    switch workoutsResult {
+    case .success(let w):
+      workouts = w
+    case .failure(let error):
+      transientStateSubject.onNext(TransientState(error: error))
       return
     }
 
     let sections = createSections(
-      with: state.filter,
-      workouts: state.workouts,
+      with: filter,
+      workouts: workouts,
       user: user,
-      failuresOnly: state.showFailuresOnly)
+      failuresOnly: showFailuresOnly
+    )
+    sectionsSubject.onNext(sections)
+
     let persistentState = PersistentState(
-      sections: sections,
       title: user.email,
-      showFailuresOnly: state.showFailuresOnly,
-      filter: state.filter)
+      showFailuresOnly: showFailuresOnly,
+      filter: filter
+    )
     persistentStateSubject.onNext(persistentState)
 
     let transientState = TransientState(
-      error: state.error,
-      showLoadingHUD: state.showLoadingHUD,
-      hideLoadingHUD: state.hideLoadingHUD
+      error: nil,
+      loading: false
     )
     transientStateSubject.onNext(transientState)
   }
@@ -115,40 +149,56 @@ final class WorkoutPresenter: Presenter {
     }
     let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
     for (date, workoutsForDate) in sortedGroups {
-      var cellModels = [ListCellModel]()
-      let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
+      let totalCalories = workouts.reduce(0) { $0 + $1.calories }
       let failure = totalCalories > user.dailyCalories
       guard !failuresOnly || !failure else {
         continue
       }
-      let workoutBackgroundColor = failure
-        ? UIColor(red: 179, green: 255, blue: 179) : UIColor(red: 255, green: 179, blue: 179)
-      let sortedWorkoutsForDate = workoutsForDate.sorted { $0.date > $1.date }
-      for workout in sortedWorkoutsForDate {
-        let workoutCellModel = createWorkoutCellModel(for: workout)
-        workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
-          guard let strongSelf = self else { return }
-          strongSelf.interactor.edit(workout: workout)
-        }
-        workoutCellModel.backgroundColor = workoutBackgroundColor
-        cellModels.append(workoutCellModel)
-      }
-      var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sections.count)")
-
-      let dateCellModel = LabelCellModel(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
-      dateCellModel.textColor = .darkGray
-      dateCellModel.textAlignment = .left
-      dateCellModel.topMargin = 10
-      dateCellModel.bottomMargin = 10
-      dateCellModel.backgroundColor = .white
-      dateCellModel.bottomSeparatorColor = .separator
-      cellModels.append(dateCellModel)
-      section.headerModel = dateCellModel
-
+      let section = createSection(
+        date: date,
+        workouts: workoutsForDate,
+        user: user,
+        failure: failure,
+        sectionNumber: sections.count)
       sections.append(section)
     }
 
     return sections
+  }
+
+  private func createSection(
+    date: Date,
+    workouts: [Workout],
+    user: User,
+    failure: Bool,
+    sectionNumber: Int
+  ) -> ListSection {
+    var cellModels = [ListCellModel]()
+    let workoutBackgroundColor = failure
+      ? UIColor(red: 179, green: 255, blue: 179) : UIColor(red: 255, green: 179, blue: 179)
+    let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
+    for workout in sortedWorkoutsForDate {
+      let workoutCellModel = createWorkoutCellModel(for: workout)
+      workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
+        guard let strongSelf = self else { return }
+        strongSelf.interactor.edit(workout: workout)
+      }
+      workoutCellModel.backgroundColor = workoutBackgroundColor
+      cellModels.append(workoutCellModel)
+    }
+    var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sectionNumber)")
+
+    let dateCellModel = LabelCellModel(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
+    dateCellModel.textColor = .darkGray
+    dateCellModel.textAlignment = .left
+    dateCellModel.topMargin = 10
+    dateCellModel.bottomMargin = 10
+    dateCellModel.backgroundColor = .white
+    dateCellModel.bottomSeparatorColor = .separator
+    cellModels.append(dateCellModel)
+    section.headerModel = dateCellModel
+
+    return section
   }
 
   private func createWorkoutCellModel(for workout: Workout) -> SwipeableLabelCellModel {

@@ -202,7 +202,6 @@
 		F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47BF233E4ABE00983F72 /* PromiseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */; };
-		F5CE47C3233E4B3400983F72 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C2233E4B3400983F72 /* Presenter.swift */; };
 		F5CE47C4233E4E1700983F72 /* PromiseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F884233BE1E700012C5E /* PromiseDataSource.swift */; };
 		F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C5233E561C00983F72 /* UserListRepository.swift */; };
 		F5DA2B96226D367600BA461A /* MinervaObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* MinervaObservable.swift */; };
@@ -369,7 +368,6 @@
 		F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Promise.swift"; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
 		F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseCoordinator.swift; sourceTree = "<group>"; };
-		F5CE47C2233E4B3400983F72 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
 		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultListCell.swift; sourceTree = "<group>"; };
 		F5DA2B89226D367500BA461A /* MinervaObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinervaObservable.swift; sourceTree = "<group>"; };
@@ -711,7 +709,6 @@
 				F576F947226E16970015D14E /* Images.swift */,
 				F576F948226E16970015D14E /* LoadingHUD.swift */,
 				F501F890233BE77200012C5E /* MainCoordinator.swift */,
-				F5CE47C2233E4B3400983F72 /* Presenter.swift */,
 				F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */,
 				F501F884233BE1E700012C5E /* PromiseDataSource.swift */,
 			);
@@ -1178,7 +1175,6 @@
 				F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */,
 				F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */,
 				F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */,
-				F5CE47C3233E4B3400983F72 /* Presenter.swift in Sources */,
 				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
