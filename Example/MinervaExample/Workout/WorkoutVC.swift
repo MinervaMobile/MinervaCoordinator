@@ -45,6 +45,11 @@ final class WorkoutVC: BaseViewController {
     super.viewDidLoad()
     setupViewsAndConstraints()
 
+    presenter.sections
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+
     presenter.persistentState
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
@@ -56,12 +61,16 @@ final class WorkoutVC: BaseViewController {
       .disposed(by: disposeBag)
   }
 
-  // MARK: - Private
+  // MARK: - State Change
+
+  private func updated(_ sections: [ListSection]) {
+    listController.update(with: sections, animated: true, completion: nil)
+  }
+
   private func updated(_ state: WorkoutPresenter.TransientState) {
-    if state.showLoadingHUD {
+    if state.loading {
       LoadingHUD.show(in: view)
-    }
-    if state.hideLoadingHUD {
+    } else {
       LoadingHUD.hide(from: view)
     }
     if let error = state.error {
@@ -88,9 +97,9 @@ final class WorkoutVC: BaseViewController {
       self?.interactor.showFailuresOnly(!state.showFailuresOnly)
     }
     navigationItem.leftBarButtonItem?.tintColor = .selectable
-
-    listController.update(with: state.sections, animated: true, completion: nil)
   }
+
+  // MARK: - Private
 
   private func setupViewsAndConstraints() {
     view.backgroundColor = .white
