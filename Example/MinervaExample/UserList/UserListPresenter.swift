@@ -11,15 +11,20 @@ import UIKit
 import Minerva
 import RxSwift
 
-final class UserListPresenter: Presenter {
+final class UserListPresenter: DataSource {
 
   enum Action {
     case delete(user: User)
     case edit(user: User)
     case view(user: User)
   }
+  enum State {
+    case loading
+    case failure(error: Error)
+    case loaded(sections: [ListSection])
+  }
 
-  private(set) var sections: Observable<PresenterState>
+  private(set) var state: Observable<State>
   var actions: Observable<Action> {
     actionsSubject.asObservable()
   }
@@ -32,8 +37,8 @@ final class UserListPresenter: Presenter {
   init(repository: UserListRepository) {
     self.repository = repository
     self.actionsSubject = PublishSubject()
-    self.sections = Observable.just(.loading)
-    self.sections = self.sections.concat(repository.users.map { [weak self] usersResult -> PresenterState in
+    self.state = Observable.just(.loading)
+    self.state = self.state.concat(repository.users.map { [weak self] usersResult -> State in
       guard let strongSelf = self else {
         return .failure(error: SystemError.cancelled)
       }

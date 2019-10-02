@@ -16,8 +16,14 @@ public class PromiseCoordinator<T: PromiseDataSource, U: ViewController>: MainCo
 
   public var refreshBlock: RefreshBlock?
 
-  override public init(navigator: Navigator, viewController: U, dataSource: T) {
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
+  public init(navigator: Navigator, viewController: U, dataSource: T) {
+    let listController = ListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
     dataSource.updateDelegate = self
   }
 

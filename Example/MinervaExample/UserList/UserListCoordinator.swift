@@ -34,14 +34,20 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
     let repository = UserListRepository(dataManager: dataManager)
     let presenter = UserListPresenter(repository: repository)
     let viewController = UserListVC()
-    super.init(navigator: navigator, viewController: viewController, dataSource: presenter)
+    let listController = ListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: presenter,
+      listController: listController
+    )
   }
 
   // MARK: - ViewControllerDelegate
   override public func viewControllerViewDidLoad(_ viewController: ViewController) {
     super.viewControllerViewDidLoad(viewController)
 
-    dataSource.sections
+    dataSource.state
       .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
 
@@ -56,7 +62,7 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
 
   // MARK: - Private
 
-  private func handle(_ state: PresenterState) {
+  private func handle(_ state: UserListPresenter.State) {
     switch state {
     case .failure(let error):
       LoadingHUD.hide(from: viewController.view)

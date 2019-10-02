@@ -711,9 +711,9 @@
 				F576F947226E16970015D14E /* Images.swift */,
 				F576F948226E16970015D14E /* LoadingHUD.swift */,
 				F501F890233BE77200012C5E /* MainCoordinator.swift */,
+				F5CE47C2233E4B3400983F72 /* Presenter.swift */,
 				F5CE47BE233E4ABE00983F72 /* PromiseCoordinator.swift */,
 				F501F884233BE1E700012C5E /* PromiseDataSource.swift */,
-				F5CE47C2233E4B3400983F72 /* Presenter.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
