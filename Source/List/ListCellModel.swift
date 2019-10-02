@@ -70,14 +70,20 @@ public protocol ListSelectableCellModelWrapper {
 }
 
 public protocol ListSelectableCellModel: ListSelectableCellModelWrapper {
-  typealias SelectionAction = (_ cellModel: Self, _ indexPath: IndexPath) -> Void
+
+  associatedtype SelectableModelType: ListCellModel
+  typealias SelectionAction = (_ cellModel: SelectableModelType, _ indexPath: IndexPath) -> Void
 
   var selectionAction: SelectionAction? { get }
 }
 
 extension ListSelectableCellModel {
   public func selected(at indexPath: IndexPath) {
-    selectionAction?(self, indexPath)
+    guard let model = self as? SelectableModelType else {
+      assertionFailure("Invalid model type \(self) for \(SelectableModelType.self)")
+      return
+    }
+    selectionAction?(model, indexPath)
   }
 }
 
@@ -87,14 +93,19 @@ public protocol ListBindableCellModelWrapper {
 }
 
 public protocol ListBindableCellModel: ListBindableCellModelWrapper {
-  typealias BindAction = (_ cellModel: Self) -> Void
+  associatedtype BindableModelType: ListCellModel
+  typealias BindAction = (_ cellModel: BindableModelType) -> Void
 
   var willBindAction: BindAction? { get }
 }
 
 extension ListBindableCellModel {
   public func willBind() {
-    willBindAction?(self)
+    guard let model = self as? BindableModelType else {
+      assertionFailure("Invalid model type \(self) for \(BindableModelType.self)")
+      return
+    }
+    willBindAction?(model)
   }
 }
 
