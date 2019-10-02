@@ -10,6 +10,35 @@ import UIKit
 
 open class BaseListCell: ListCollectionViewCell {
 
+  open class Model: ListCellModel {
+
+    public init() { }
+
+    // MARK: - ListCellModel
+    open var description: String {
+      return typeDescription
+    }
+    open var reorderable: Bool {
+      return false
+    }
+    open var identifier: String {
+      return typeIdentifier
+    }
+    open var cellType: ListCollectionViewCell.Type {
+      return cellTypeFromModelName
+    }
+
+    open func identical(to model: ListCellModel) -> Bool {
+      return identifier == model.identifier
+    }
+    open func size(
+      constrainedTo containerSize: CGSize,
+      with templateProvider: () -> ListCollectionViewCell
+    ) -> ListCellSize {
+      return .autolayout
+    }
+  }
+
   open private(set) var cellModel: ListCellModel?
 
   override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -37,7 +66,7 @@ open class BaseListCell: ListCollectionViewCell {
 
   // MARK: - ListBindable
 
-  public func bindViewModel(_ viewModel: Any) {
+  open func bindViewModel(_ viewModel: Any) {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Invalid view model \(viewModel)")
       return

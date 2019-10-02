@@ -55,7 +55,7 @@ final class LabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListB
       attributedText: attributedText)
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier

@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
 
-  s.default_subspecs = 'Core', 'Navigation'
+  s.default_subspecs = 'Base', 'Bindable', 'Coordination', 'List'
 
   s.requires_arc               = true
   s.swift_versions             = '5.0'
@@ -18,22 +18,41 @@ Pod::Spec.new do |s|
   s.ios.deployment_target      = '11.0'
   s.ios.frameworks             = 'Foundation', 'UIKit'
 
-  s.subspec 'Core' do |ss|
-    ss.source_files = 'Source/Core/**/*.swift'
+  s.subspec 'Base' do |ss|
+    ss.source_files = 'Source/Base/**/*.swift'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
+
+    ss.dependency 'Minerva/Coordination'
+    ss.dependency 'Minerva/List'
 
     ss.dependency 'IGListKit', '~> 3.4.0'
   end
 
-  s.subspec 'Navigation' do |ss|
-    ss.source_files = 'Source/Navigation/**/*.swift'
+  s.subspec 'Bindable' do |ss|
+    ss.source_files = 'Source/Bindable/**/*.swift'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
 
-    ss.dependency 'Minerva/Core'
+    ss.dependency 'Minerva/List'
+
+    ss.dependency 'IGListKit', '~> 3.4.0'
+  end
+
+  s.subspec 'Coordination' do |ss|
+    ss.source_files = 'Source/Coordination/**/*.swift'
+
+    ss.ios.deployment_target      = '11.0'
+    ss.ios.frameworks             = 'Foundation', 'UIKit'
+  end
+
+  s.subspec 'List' do |ss|
+    ss.source_files = 'Source/List/**/*.swift'
+
+    ss.ios.deployment_target      = '11.0'
+    ss.ios.frameworks             = 'Foundation', 'UIKit'
 
     ss.dependency 'IGListKit', '~> 3.4.0'
   end

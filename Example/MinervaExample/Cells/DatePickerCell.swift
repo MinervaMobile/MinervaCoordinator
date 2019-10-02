@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-final class DatePickerCellModel: BaseListCellModel {
+final class DatePickerCellModel: BaseListCell.Model {
 
   typealias Action = (_ cellModel: DatePickerCellModel, _ date: Date) -> Void
 
@@ -28,7 +28,7 @@ final class DatePickerCellModel: BaseListCellModel {
     super.init()
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier

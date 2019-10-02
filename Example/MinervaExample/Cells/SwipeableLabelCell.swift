@@ -68,7 +68,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
     bottomMargin = 10
   }
 
-  // MARK: - BaseListCellModel
+  // MARK: - BaseListCell.Model
 
   override var identifier: String {
     return cellIdentifier

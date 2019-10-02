@@ -21,23 +21,6 @@ public protocol ListCell {
   func didEndDisplayingCell()
 }
 
-// MARK: - ListBindableCell
-public protocol ListBindableCell: ListCell {
-  var disposeBag: MinervaDisposeBag { get }
-}
-
-extension ListBindableCell {
-  public func bind(_ variable: MinervaObservable<UIImage?>, to imageView: UIImageView) {
-    bind(variable) { [weak imageView] image in
-      imageView?.image = image
-    }
-  }
-
-  public func bind<T>(_ variable: MinervaObservable<T>, with completion: @escaping (T) -> Void) {
-    variable.subscribe(in: self.disposeBag, completion)
-  }
-}
-
 // MARK: - ListCellHelper
 public protocol ListCellHelper: ListCell {
   associatedtype ModelType: ListCellModel
