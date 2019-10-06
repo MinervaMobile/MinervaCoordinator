@@ -133,7 +133,7 @@ final class WorkoutPresenter: DataSource {
   ) -> [ListSection] {
     var sections = [ListSection]()
 
-    let filterCellModel = LabelCellModel(text: filter.details, font: .subheadline)
+    let filterCellModel = LabelCell.Model(text: filter.details, font: .subheadline)
     filterCellModel.textColor = .darkGray
     filterCellModel.textAlignment = .right
     filterCellModel.topMargin = 10
@@ -149,9 +149,9 @@ final class WorkoutPresenter: DataSource {
     }
     let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
     for (date, workoutsForDate) in sortedGroups {
-      let totalCalories = workouts.reduce(0) { $0 + $1.calories }
+      let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
       let failure = totalCalories > user.dailyCalories
-      guard !failuresOnly || !failure else {
+      guard !failuresOnly || failure else {
         continue
       }
       let section = createSection(
@@ -175,7 +175,7 @@ final class WorkoutPresenter: DataSource {
   ) -> ListSection {
     var cellModels = [ListCellModel]()
     let workoutBackgroundColor = failure
-      ? UIColor(red: 179, green: 255, blue: 179) : UIColor(red: 255, green: 179, blue: 179)
+      ? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
     let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
     for workout in sortedWorkoutsForDate {
       let workoutCellModel = createWorkoutCellModel(for: workout)
@@ -188,7 +188,7 @@ final class WorkoutPresenter: DataSource {
     }
     var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sectionNumber)")
 
-    let dateCellModel = LabelCellModel(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
+    let dateCellModel = LabelCell.Model(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
     dateCellModel.textColor = .darkGray
     dateCellModel.textAlignment = .left
     dateCellModel.topMargin = 10
@@ -206,6 +206,12 @@ final class WorkoutPresenter: DataSource {
       identifier: workout.description,
       title: workout.details,
       details: workout.text)
+
+    cellModel.accessoryImageObservable = { [weak self] () -> Observable<UIImage?> in
+      guard let strongSelf = self else { return .just(nil) }
+      return strongSelf.interactor.image(forWorkoutID: workout.workoutID)
+    }
+
     cellModel.bottomSeparatorColor = .separator
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in

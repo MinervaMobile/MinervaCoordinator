@@ -49,7 +49,7 @@ struct PickerDataComponent: Equatable {
   }
 }
 
-final class PickerCellModel: BaseListCell.Model {
+final class PickerCellModel: BaseListCellModel {
   typealias Action = (
     _ cellModel: PickerCellModel,
     _ pickerView: UIPickerView,
@@ -72,7 +72,7 @@ final class PickerCellModel: BaseListCell.Model {
     }
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier
@@ -99,11 +99,6 @@ final class PickerCell: BaseListCell, ListCellHelper {
     contentView.addSubview(pickerView)
     pickerView.anchor(to: contentView)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-  }
-
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   override func updatedCellModel() {

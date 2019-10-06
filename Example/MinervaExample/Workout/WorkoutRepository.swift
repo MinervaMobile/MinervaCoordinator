@@ -34,7 +34,10 @@ class WorkoutRepository {
       }
     }
   }
-
+  
+  func image(forWorkoutID workoutID: String) -> Observable<UIImage?> {
+    return dataManager.image(forWorkoutID: workoutID).asObservable()
+  }
   func delete(_ workout: Workout) -> Single<Void> {
     return dataManager.delete(workout)
   }

@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-final class DatePickerCellModel: BaseListCell.Model {
+final class DatePickerCellModel: BaseListCellModel {
 
   typealias Action = (_ cellModel: DatePickerCellModel, _ date: Date) -> Void
 
@@ -28,7 +28,7 @@ final class DatePickerCellModel: BaseListCell.Model {
     super.init()
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier
@@ -61,11 +61,6 @@ final class DatePickerCell: BaseListCell, ListCellHelper {
     )
     self.contentView.addSubview(self.datePicker)
     self.setupConstraints()
-  }
-
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   @objc

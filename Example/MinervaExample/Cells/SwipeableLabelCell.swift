@@ -10,6 +10,7 @@ import UIKit
 
 import Minerva
 
+import RxSwift
 import SwipeCellKit
 
 final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
@@ -55,6 +56,8 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
   var editColor: UIColor = .blue
   var deleteColor: UIColor = .red
   var separatorColor: UIColor = .separator
+  var accessoryImageObservable: (() -> Observable<UIImage?>)?
+
   private let title: String
   private let details: String
   private let cellIdentifier: String
@@ -68,7 +71,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
     bottomMargin = 10
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier
@@ -91,6 +94,8 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
 final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
   typealias ModelType = SwipeableLabelCellModel
 
+  private var disposeBag = DisposeBag()
+
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -112,6 +117,12 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
     setupConstraints()
   }
 
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
+    accessoryImageView.image = nil
+  }
+
   override func updatedCellModel() {
     super.updatedCellModel()
     guard let model = self.model else {
@@ -121,10 +132,12 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
 
     contentView.backgroundColor = model.backgroundColor
     accessoryImageView.tintColor = model.detailsColor
-    if model.selectionAction != nil {
-      accessoryImageView.image = Asset.Disclosure.image.withRenderingMode(.alwaysTemplate)
-    } else {
-      accessoryImageView.image = nil
+    if let imageObservable = model.accessoryImageObservable?() {
+      imageObservable.observeOn(
+        MainScheduler.instance
+      ).subscribe(onNext: { [weak self] image in
+        self?.accessoryImageView.image = image
+      }).disposed(by: disposeBag)
     }
     titleLabel.attributedText = model.text
   }

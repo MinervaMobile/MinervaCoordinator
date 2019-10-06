@@ -40,7 +40,7 @@ final class WelcomeDataSource: BaseDataSource {
     logoModel.imageColor = .black
     logoModel.contentMode = .scaleAspectFit
 
-    let personalizedGuidanceModel = LabelCellModel(text: "WORKOUTS", font: .boldTitleLarge)
+    let personalizedGuidanceModel = LabelCell.Model(text: "WORKOUTS", font: .boldTitleLarge)
     personalizedGuidanceModel.textColor = .black
     personalizedGuidanceModel.textAlignment = .center
     personalizedGuidanceModel.bottomMargin = 20
@@ -60,7 +60,7 @@ final class WelcomeDataSource: BaseDataSource {
       value: paragraphStyle,
       range: NSRange(location: 0, length: mutableString.length)
     )
-    let paragraphCellModel = LabelCellModel(attributedText: mutableString)
+    let paragraphCellModel = LabelCell.Model(attributedText: mutableString)
     paragraphCellModel.textAlignment = .center
     paragraphCellModel.bottomMargin = 60
 
@@ -72,7 +72,7 @@ final class WelcomeDataSource: BaseDataSource {
       strongSelf.delegate?.welcomeDataSource(strongSelf, selected: .createAccount)
     }
 
-    let existingAccountModel = LabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
+    let existingAccountModel = LabelCell.Model(text: "USE EXISTING ACCOUNT", font: .subheadline)
     existingAccountModel.textAlignment = .center
     existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }

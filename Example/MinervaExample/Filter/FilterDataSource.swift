@@ -44,7 +44,7 @@ final class FilterDataSource: BaseDataSource {
   private func createSection() -> ListSection {
     var cellModels = [ListCellModel]()
 
-    cellModels.append(LabelCellModel.createSectionHeaderModel(title: "FILTERS"))
+    cellModels.append(LabelCell.Model.createSectionHeaderModel(title: "FILTERS"))
 
     for type in FilterType.allCases {
       let nameCellModel = LabelAccessoryCellModel.createSettingsCellModel(

@@ -136,9 +136,6 @@
 		F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
 		F576F954226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
 		F576F955226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
-		F576F956226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
-		F576F957226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
-		F576F958226E16970015D14E /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F938226E16960015D14E /* HorizontalCollectionCell.swift */; };
 		F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
 		F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
 		F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
@@ -342,7 +339,6 @@
 		F576F935226E16960015D14E /* SwipeableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableLabelCell.swift; sourceTree = "<group>"; };
 		F576F936226E16960015D14E /* PickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		F576F937226E16960015D14E /* BottomMarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMarginCell.swift; sourceTree = "<group>"; };
-		F576F938226E16960015D14E /* HorizontalCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCell.swift; sourceTree = "<group>"; };
 		F576F93B226E16960015D14E /* BorderLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLabelCell.swift; sourceTree = "<group>"; };
 		F576F93C226E16960015D14E /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		F576F93D226E16960015D14E /* LabelAccessoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAccessoryCell.swift; sourceTree = "<group>"; };
@@ -694,7 +690,6 @@
 				F576F937226E16960015D14E /* BottomMarginCell.swift */,
 				F576F93C226E16960015D14E /* DatePickerCell.swift */,
 				F5DA2B86226D32B000BA461A /* DefaultListCell.swift */,
-				F576F938226E16960015D14E /* HorizontalCollectionCell.swift */,
 				F576F93F226E16970015D14E /* ImageCellModel.swift */,
 				F576F93D226E16960015D14E /* LabelAccessoryCell.swift */,
 				F576F93E226E16960015D14E /* LabelCell.swift */,
@@ -1200,7 +1195,6 @@
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */,
 				F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */,
-				F576F956226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
 				F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */,
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
@@ -1249,7 +1243,6 @@
 				F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
 				F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F925226E16820015D14E /* WorkoutVC.swift in Sources */,
-				F576F957226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
 				F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
 				F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8BF226DF0050015D14E /* Workout.swift in Sources */,
@@ -1311,7 +1304,6 @@
 				F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
 				F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */,
 				F576F926226E16820015D14E /* WorkoutVC.swift in Sources */,
-				F576F958226E16970015D14E /* HorizontalCollectionCell.swift in Sources */,
 				F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
 				F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8C0226DF0050015D14E /* Workout.swift in Sources */,

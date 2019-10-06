@@ -53,7 +53,13 @@ final class UpdateFilterDataSource: BaseDataSource {
   }
 
   private func loadCellModels() -> [ListCellModel] {
-    let leftAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
+
+    let cancelModel = LabelCell.Model(identifier: "cancelModel", text: "Remove", font: .titleLarge)
+    cancelModel.leftMargin = 0
+    cancelModel.rightMargin = 0
+    cancelModel.textAlignment = .center
+    cancelModel.textColor = .selectable
+    cancelModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
       switch strongSelf.type {
       case .endDate:
@@ -67,23 +73,25 @@ final class UpdateFilterDataSource: BaseDataSource {
       }
       strongSelf.delegate?.updateFilterDataSource(strongSelf, selected: .update(filter: strongSelf.filter))
     }
-    let rightAction: LabelCellModel.SelectionAction = { [weak self] _, _ -> Void in
+
+    let doneModel = LabelCell.Model(identifier: "doneModel", text: "Update", font: .titleLarge)
+    doneModel.leftMargin = 0
+    doneModel.rightMargin = 0
+    doneModel.textAlignment = .center
+    doneModel.textColor = .selectable
+    doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.delegate?.updateFilterDataSource(strongSelf, selected: .update(filter: strongSelf.filter))
     }
-    let headerSectionModel = createHeaderModel(
-      identifier: "ActionSheetHeader",
-      leftText: "Remove",
-      centerText: type.description,
-      rightText: "Update",
-      leftAction: leftAction,
-      rightAction: rightAction)
 
     return [
-      headerSectionModel,
       MarginCellModel(cellIdentifier: "headerMarginModel", height: 12),
       createDateCellModel(),
-      MarginCellModel(cellIdentifier: "dateMarginModel", height: 12)
+      MarginCellModel(cellIdentifier: "dateMarginModel", height: 12),
+      doneModel,
+      MarginCellModel(cellIdentifier: "doneMarginModel", height: 12),
+      cancelModel,
+      MarginCellModel(cellIdentifier: "cancelMarginModel", height: 12)
     ]
   }
 

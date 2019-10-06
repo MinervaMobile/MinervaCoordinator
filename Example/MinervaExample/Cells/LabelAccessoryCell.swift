@@ -44,7 +44,7 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
     super.init()
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier
