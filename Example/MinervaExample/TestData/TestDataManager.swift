@@ -151,6 +151,12 @@ extension TestDataManager: DataManager {
     }
   }
 
+  func loadImage(forWorkoutID workoutID: String, completion: @escaping ImageCompletion) {
+    self.queue.asyncAfter(deadline: .now() + Double.random(in: 1...5)) {
+      completion(Asset.Logo.image, nil)
+    }
+  }
+
   func subscribeToWorkoutChanges(
     for userID: String,
     callback: @escaping WorkoutsCompletion

@@ -14,7 +14,7 @@ protocol TextInputCellModelDelegate: AnyObject {
   func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?)
 }
 
-final class TextInputCellModel: BaseListCell.Model {
+final class TextInputCellModel: BaseListCellModel {
   weak var delegate: TextInputCellModelDelegate?
 
   fileprivate static let bottomBorderHeight: CGFloat = 1.0
@@ -59,7 +59,7 @@ final class TextInputCellModel: BaseListCell.Model {
     reactiveFirstResponder.value = true
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier

@@ -8,38 +8,47 @@
 import Foundation
 import UIKit
 
-open class BaseListCell: ListCollectionViewCell {
+open class BaseListCellModel: ListCellModel {
 
-  open class Model: ListCellModel {
+  public init() { }
 
-    public init() { }
-
-    // MARK: - ListCellModel
-    open var description: String {
-      return typeDescription
-    }
-    open var reorderable: Bool {
-      return false
-    }
-    open var identifier: String {
-      return typeIdentifier
-    }
-    open var cellType: ListCollectionViewCell.Type {
-      return cellTypeFromModelName
-    }
-
-    open func identical(to model: ListCellModel) -> Bool {
-      return identifier == model.identifier
-    }
-    open func size(
-      constrainedTo containerSize: CGSize,
-      with templateProvider: () -> ListCollectionViewCell
-    ) -> ListCellSize {
-      return .autolayout
-    }
+  // MARK: - ListCellModel
+  open var description: String {
+    return typeDescription
+  }
+  open var reorderable: Bool {
+    return false
+  }
+  open var identifier: String {
+    return typeIdentifier
+  }
+  open var cellType: ListCollectionViewCell.Type {
+    return cellTypeFromModelName
   }
 
+  open func identical(to model: ListCellModel) -> Bool {
+    return identifier == model.identifier
+  }
+  open func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> ListCollectionViewCell
+  ) -> ListCellSize {
+    return .autolayout
+  }
+}
+
+open class BaseListCell: ListCollectionViewCell {
+
   open private(set) var cellModel: ListCellModel?
+
+  override public init(frame: CGRect = .zero) {
+    super.init(frame: frame)
+  }
+
+  @available(*, unavailable)
+  public required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)

@@ -54,7 +54,7 @@ final class SettingsDataSource: BaseDataSource {
   private func createSection() -> ListSection {
     var cellModels = [ListCellModel]()
 
-    cellModels.append(LabelCellModel.createSectionHeaderModel(title: "USER"))
+    cellModels.append(LabelCell.Model.createSectionHeaderModel(title: "USER"))
 
     let nameCellModel = LabelAccessoryCellModel.createSettingsCellModel(title: "Name", details: user.email, hasChevron: true)
     nameCellModel.selectionAction = { [weak self] _, _ -> Void in
@@ -79,7 +79,7 @@ final class SettingsDataSource: BaseDataSource {
       hasChevron: false)
     cellModels.append(roleCellModel)
 
-    cellModels.append(LabelCellModel.createSectionHeaderModel(title: "ACCOUNT"))
+    cellModels.append(LabelCell.Model.createSectionHeaderModel(title: "ACCOUNT"))
 
     let logoutCellModel = LabelAccessoryCellModel.createSettingsCellModel(title: "Logout", details: nil, hasChevron: true)
     logoutCellModel.selectionAction = { [weak self] _, _ -> Void in

@@ -32,7 +32,7 @@ final class ImageCellModel: DefaultListCellModel {
     super.init()
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier

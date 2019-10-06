@@ -55,7 +55,7 @@ final class EditWorkoutPresenter: BaseDataSource {
   }
 
   func loadCellModels() -> [ListCellModel] {
-    let doneModel = LabelCellModel(
+    let doneModel = LabelCell.Model(
       identifier: "doneModel",
       text: "Save",
       font: .titleLarge)

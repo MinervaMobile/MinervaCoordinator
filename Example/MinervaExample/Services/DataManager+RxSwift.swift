@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 import RxSwift
 
@@ -61,6 +62,11 @@ extension DataManager {
   func delete(_ workout: Workout) -> Single<Void> {
     let curried = curry(delete(workout: completion:))
     return asSingle(curried(workout))
+  }
+
+  func image(forWorkoutID workoutID: String) -> Single<UIImage?> {
+    let curried = curry(loadImage(forWorkoutID: completion:))
+    return asSingle(curried(workoutID))
   }
 
   func observeWorkouts(for userID: String) -> Observable<Result<[Workout], Error>> {

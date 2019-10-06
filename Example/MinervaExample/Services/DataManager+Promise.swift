@@ -62,4 +62,10 @@ extension DataManager {
       self.delete(workout: workout) { seal.resolve((), $0) }
     }
   }
+
+  func loadImage(forWorkoutID workoutID: String) -> Promise<UIImage?> {
+    return Promise { seal in
+      self.loadImage(forWorkoutID: workoutID, completion: seal.resolve)
+    }
+  }
 }

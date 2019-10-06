@@ -50,7 +50,7 @@ final class CreateUserDataSource: BaseDataSource {
   }
 
   func loadCellModels() -> [ListCellModel] {
-    let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .titleLarge)
+    let doneModel = LabelCell.Model(identifier: "doneModel", text: "Save", font: .titleLarge)
     doneModel.leftMargin = 0
     doneModel.rightMargin = 0
     doneModel.textAlignment = .center

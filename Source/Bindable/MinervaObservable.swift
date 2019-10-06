@@ -12,7 +12,7 @@ public protocol MinervaDisposable {
   func unsubscribe(_ token: MinervaObserverToken)
 }
 
-private class MinervaMinervaDisposableItem {
+private class MinervaDisposableItem {
   private let disposable: MinervaDisposable
   private let token: MinervaObserverToken
 
@@ -31,7 +31,7 @@ private class MinervaMinervaDisposableItem {
 }
 
 public final class MinervaDisposeBag {
-  private var disposables = [MinervaMinervaDisposableItem]()
+  private var disposables = [MinervaDisposableItem]()
 
   public init() {
   }
@@ -41,7 +41,7 @@ public final class MinervaDisposeBag {
   }
 
   fileprivate func add<T>(_ observable: MinervaObservable<T>, with token: MinervaObserverToken) {
-    disposables.append(MinervaMinervaDisposableItem(disposable: observable, token: token))
+    disposables.append(MinervaDisposableItem(disposable: observable, token: token))
   }
 
   public func clear() {

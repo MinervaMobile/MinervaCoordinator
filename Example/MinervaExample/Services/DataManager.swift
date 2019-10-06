@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 /// Manages user and workout information.
 protocol DataManager {
   typealias SubscriptionID = String
+  typealias ImageCompletion = (UIImage?, Error?) -> Void
   typealias WorkoutsCompletion = ([Workout], Error?) -> Void
   typealias UsersCompletion = ([User], Error?) -> Void
   typealias UserCompletion = (User?, Error?) -> Void
@@ -53,6 +55,8 @@ protocol DataManager {
 
   /// Deletes a workout with a matching ID if one exists.
   func delete(workout: Workout, completion: @escaping Completion)
+
+  func loadImage(forWorkoutID workoutID: String, completion: @escaping ImageCompletion)
 
   func subscribeToWorkoutChanges(
     for userID: String,

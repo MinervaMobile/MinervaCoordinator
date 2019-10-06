@@ -69,14 +69,14 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
     self.init(identifier: text, text: text, font: font, textColor: textColor)
   }
 
-  // MARK: - BaseListCell.Model
+  // MARK: - BaseListCellModel
 
   override var identifier: String {
     return cellIdentifier
   }
 
   override func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? BorderLabelCellModel else {
+    guard let model = model as? BorderLabelCellModel, super.identical(to: model) else {
       return false
     }
     return attributedText == model.attributedText

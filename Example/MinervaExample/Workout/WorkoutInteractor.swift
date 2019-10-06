@@ -50,6 +50,11 @@ final class WorkoutInteractor {
 
   // MARK: - Public
 
+
+  func image(forWorkoutID workoutID: String) -> Observable<UIImage?> {
+    return repository.image(forWorkoutID: workoutID)
+  }
+
   func apply(filter: WorkoutFilter) {
     filterSubject.onNext(filter)
   }
