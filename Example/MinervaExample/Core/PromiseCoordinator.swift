@@ -17,7 +17,7 @@ public class PromiseCoordinator<T: PromiseDataSource, U: ViewController>: MainCo
   public var refreshBlock: RefreshBlock?
 
   public init(navigator: Navigator, viewController: U, dataSource: T) {
-    let listController = ListController()
+    let listController = LegacyListController()
     super.init(
       navigator: navigator,
       viewController: viewController,

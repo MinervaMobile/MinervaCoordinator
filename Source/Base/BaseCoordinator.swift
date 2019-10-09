@@ -67,6 +67,6 @@ open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, Coordina
     _ viewController: ViewController,
     traitCollectionDidChangeFrom previousTraitCollection: UITraitCollection?
   ) {
-    listController.reloadData()
+    listController.invalidateLayout()
   }
 }

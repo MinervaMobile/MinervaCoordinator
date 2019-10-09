@@ -22,7 +22,7 @@ final class UserListVC: BaseViewController {
   }
 
   private let actionsSubject: PublishSubject<Action>
-  private let listController = ListController()
+  private let listController = LegacyListController()
 
   private let addButton: UIButton = {
     let addButton = UIButton(frame: .zero)
