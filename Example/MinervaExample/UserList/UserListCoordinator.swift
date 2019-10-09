@@ -34,7 +34,7 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
     let repository = UserListRepository(dataManager: dataManager)
     let presenter = UserListPresenter(repository: repository)
     let viewController = UserListVC()
-    let listController = ListController()
+    let listController = LegacyListController()
     super.init(
       navigator: navigator,
       viewController: viewController,

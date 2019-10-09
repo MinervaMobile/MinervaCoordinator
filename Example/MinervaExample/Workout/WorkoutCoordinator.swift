@@ -25,7 +25,7 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
     self.interactor = WorkoutInteractor(repository: repository)
     let presenter = WorkoutPresenter(interactor: interactor)
-    let listController = ListController()
+    let listController = LegacyListController()
     let viewController = WorkoutVC(interactor: interactor, presenter: presenter, listController: listController)
     super.init(
       navigator: navigator,

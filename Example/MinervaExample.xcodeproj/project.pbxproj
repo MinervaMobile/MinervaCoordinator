@@ -26,6 +26,7 @@
 		F5587D4C22502BF3004223E5 /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
 		F5587D4D22502BF3004223E5 /* Minerva.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5587D7022502D62004223E5 /* Minerva.h in Headers */ = {isa = PBXBuildFile; fileRef = F5587D5822502C5A004223E5 /* Minerva.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F562CF10234E2A3000402122 /* LegacyListController.swift */; };
 		F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */; };
 		F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
 		F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
@@ -295,6 +296,7 @@
 		F5587D4522502BF2004223E5 /* Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D5222502C5A004223E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5587D5822502C5A004223E5 /* Minerva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Minerva.h; sourceTree = "<group>"; };
+		F562CF10234E2A3000402122 /* LegacyListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyListController.swift; sourceTree = "<group>"; };
 		F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleCoordinator.swift; sourceTree = "<group>"; };
 		F576F86B226DEE740015D14E /* UserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoordinator.swift; sourceTree = "<group>"; };
 		F576F86E226DEFA90015D14E /* TestUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserManager.swift; sourceTree = "<group>"; };
@@ -764,6 +766,8 @@
 			isa = PBXGroup;
 			children = (
 				F5DA2B8A226D367500BA461A /* BaseListCell.swift */,
+				F5EF2DAF2344FBE300A0073E /* Extensions.swift */,
+				F562CF10234E2A3000402122 /* LegacyListController.swift */,
 				F5DA2B8E226D367500BA461A /* ListCell.swift */,
 				F5DA2B93226D367500BA461A /* ListCellModel.swift */,
 				F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */,
@@ -774,7 +778,6 @@
 				F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */,
 				F5DA2B8D226D367500BA461A /* ListViewLayout.swift */,
 				F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */,
-				F5EF2DAF2344FBE300A0073E /* Extensions.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -1335,6 +1338,7 @@
 			files = (
 				F5EF2DAB2344FAB600A0073E /* BaseListCell.swift in Sources */,
 				F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */,
+				F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
 				F5DA2B9A226D367600BA461A /* ListViewLayout.swift in Sources */,
 				F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */,
