@@ -13,9 +13,14 @@ import RxSwift
 
 final class WorkoutPresenter: DataSource {
 
+  enum Action {
+    case createWorkout(userID: String)
+    case editFilter(WorkoutFilter)
+    case editWorkout(Workout)
+  }
+
   struct PersistentState {
     var title: String = ""
-    var showFailuresOnly: Bool = false
     var filter: WorkoutFilter = WorkoutFilterProto()
   }
 
@@ -25,49 +30,47 @@ final class WorkoutPresenter: DataSource {
   }
 
   private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  var sections: Observable<[ListSection]> {
-    sectionsSubject.asObservable()
-  }
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
 
   private let persistentStateSubject = BehaviorSubject(value: PersistentState())
-  var persistentState: Observable<PersistentState> {
-    persistentStateSubject.asObservable()
-  }
+  public var persistentState: Observable<PersistentState> { persistentStateSubject.asObservable() }
 
-  private let transientStateSubject = BehaviorSubject(value: TransientState())
-  var transientState: Observable<TransientState> {
-    transientStateSubject.asObservable()
-  }
+  private let transientStateSubject = PublishSubject<TransientState>()
+  public var transientState: Observable<TransientState> { transientStateSubject.asObservable() }
 
-  private let interactor: WorkoutInteractor
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
 
+  private let filterSubject = BehaviorSubject<WorkoutFilter>(value: WorkoutFilterProto())
+  private let errorSubject = BehaviorSubject<Error?>(value: nil)
+  private let loadingSubject = BehaviorSubject<Bool>(value: false)
+
+  private let repository: WorkoutRepository
   private let disposeBag = DisposeBag()
-
   private let queue = SerialDispatchQueueScheduler(
     queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
     internalSerialQueueName: "WorkoutPresenterQueue")
 
   // MARK: - Lifecycle
 
-  init(interactor: WorkoutInteractor) {
-    self.interactor = interactor
+  init(repository: WorkoutRepository) {
+    self.repository = repository
 
     Observable.combineLatest(
-      interactor.workouts,
-      interactor.user,
-      interactor.filter,
-      interactor.showFailuresOnly
+      repository.workouts,
+      repository.user,
+      filterSubject.asObservable()
     ).observeOn(
       queue
     ).subscribe(
-      onNext: process(workoutsResult: userResult: filter: showFailuresOnly:)
+      onNext: process(workoutsResult: userResult: filter:)
     ).disposed(
       by: disposeBag
     )
 
     Observable.combineLatest(
-      interactor.error,
-      interactor.loading
+      errorSubject.asObservable().distinctUntilChanged({ $0 == nil && $1 == nil }),
+      loadingSubject.asObservable().distinctUntilChanged()
     ).map {
       TransientState(error: $0.0, loading: $0.1)
     }.subscribe(
@@ -77,13 +80,42 @@ final class WorkoutPresenter: DataSource {
     )
   }
 
+  func apply(filter: WorkoutFilter) {
+    filterSubject.onNext(filter)
+  }
+
+  func editFilter(with filter: WorkoutFilter) {
+    actionsSubject.onNext(.editFilter(filter))
+  }
+
+  func createWorkout() {
+    actionsSubject.onNext(.createWorkout(userID: repository.userID))
+  }
+
+  func edit(workout: Workout) {
+    actionsSubject.onNext(.editWorkout(workout))
+  }
+
+  func delete(workout: Workout) {
+    loadingSubject.onNext(true)
+    repository.delete(workout).subscribe { [weak self] event in
+      guard let strongSelf = self else { return }
+      switch event {
+      case .error(let error):
+        strongSelf.errorSubject.onNext(error)
+      case .success:
+        break
+      }
+      strongSelf.loadingSubject.onNext(false)
+    }.disposed(by: disposeBag)
+  }
+
   // MARK: - Private
 
   private func process(
     workoutsResult: Result<[Workout], Error>,
     userResult: Result<User, Error>,
-    filter: WorkoutFilter,
-    showFailuresOnly: Bool
+    filter: WorkoutFilter
   ) {
     let user: User
     switch userResult {
@@ -106,16 +138,11 @@ final class WorkoutPresenter: DataSource {
     let sections = createSections(
       with: filter,
       workouts: workouts,
-      user: user,
-      failuresOnly: showFailuresOnly
+      user: user
     )
     sectionsSubject.onNext(sections)
 
-    let persistentState = PersistentState(
-      title: user.email,
-      showFailuresOnly: showFailuresOnly,
-      filter: filter
-    )
+    let persistentState = PersistentState(title: user.email, filter: filter)
     persistentStateSubject.onNext(persistentState)
 
     let transientState = TransientState(
@@ -128,8 +155,7 @@ final class WorkoutPresenter: DataSource {
   private func createSections(
     with filter: WorkoutFilter,
     workouts: [Workout],
-    user: User,
-    failuresOnly: Bool
+    user: User
   ) -> [ListSection] {
     var sections = [ListSection]()
 
@@ -150,10 +176,7 @@ final class WorkoutPresenter: DataSource {
     let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
     for (date, workoutsForDate) in sortedGroups {
       let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
-      let failure = totalCalories > user.dailyCalories
-      guard !failuresOnly || failure else {
-        continue
-      }
+      let failure = totalCalories < user.dailyCalories
       let section = createSection(
         date: date,
         workouts: workoutsForDate,
@@ -181,7 +204,7 @@ final class WorkoutPresenter: DataSource {
       let workoutCellModel = createWorkoutCellModel(for: workout)
       workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.interactor.edit(workout: workout)
+        strongSelf.edit(workout: workout)
       }
       workoutCellModel.backgroundColor = workoutBackgroundColor
       cellModels.append(workoutCellModel)
@@ -207,20 +230,20 @@ final class WorkoutPresenter: DataSource {
       title: workout.details,
       details: workout.text)
 
-    cellModel.accessoryImageObservable = { [weak self] () -> Observable<UIImage?> in
+    cellModel.accessoryImageObservable = Observable.deferred { [weak self] () -> Observable<UIImage?> in
       guard let strongSelf = self else { return .just(nil) }
-      return strongSelf.interactor.image(forWorkoutID: workout.workoutID)
+      return strongSelf.repository.image(forWorkoutID: workout.workoutID)
     }
 
     cellModel.bottomSeparatorColor = .separator
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.interactor.delete(workout: workout)
+      strongSelf.delete(workout: workout)
     }
     cellModel.editAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.interactor.edit(workout: workout)
+      strongSelf.edit(workout: workout)
     }
     return cellModel
   }

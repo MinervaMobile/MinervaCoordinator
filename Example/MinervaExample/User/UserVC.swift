@@ -97,10 +97,6 @@ final class UserVC: UIViewController {
     return navigationController
   }
 
-  override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-    return UIApplication.shared.statusBarOrientation
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white

@@ -20,7 +20,6 @@ open class BaseViewController: UIViewController, ViewController {
   public init(layout: ListViewLayout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)) {
     self.collectionView = {
       let collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
-      collectionView.contentInsetAdjustmentBehavior = .automatic
       collectionView.keyboardDismissMode = .onDrag
       return collectionView
     }()

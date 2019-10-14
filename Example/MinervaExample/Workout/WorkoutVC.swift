@@ -22,20 +22,16 @@ final class WorkoutVC: BaseViewController {
   }()
 
   private let disposeBag = DisposeBag()
-  private let interactor: WorkoutInteractor
   private let presenter: WorkoutPresenter
   private let listController: ListController
 
   // MARK: - Lifecycle
 
-  required init(interactor: WorkoutInteractor, presenter: WorkoutPresenter, listController: ListController) {
-    self.interactor = interactor
+  required init(presenter: WorkoutPresenter, listController: ListController) {
     self.presenter = presenter
     self.listController = listController
     let layout = ListViewLayout(stickyHeaders: true, topContentInset: 0, stretchToEdge: true)
     super.init(layout: layout)
-    collectionView.contentInsetAdjustmentBehavior = .never
-    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     collectionView.backgroundColor = .white
   }
 
@@ -76,7 +72,6 @@ final class WorkoutVC: BaseViewController {
     if let error = state.error {
       alert(error, title: "Something went wrong.")
     }
-    interactor.clearTransientState()
   }
 
   private func updated(_ state: WorkoutPresenter.PersistentState) {
@@ -86,17 +81,9 @@ final class WorkoutVC: BaseViewController {
       image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
       style: .plain
     ) { [weak self] _ -> Void in
-      self?.interactor.updateFilter(with: state.filter)
+      self?.presenter.editFilter(with: state.filter)
     }
     navigationItem.rightBarButtonItem?.tintColor = .selectable
-
-    navigationItem.leftBarButtonItem = BlockBarButtonItem(
-      title: state.showFailuresOnly ? "Failures Only" : "All",
-      style: .plain
-    ) { [weak self] _ -> Void in
-      self?.interactor.showFailuresOnly(!state.showFailuresOnly)
-    }
-    navigationItem.leftBarButtonItem?.tintColor = .selectable
   }
 
   // MARK: - Private
@@ -108,7 +95,7 @@ final class WorkoutVC: BaseViewController {
 
     collectionView.contentInset.bottom = addButton.frame.height + 20
 
-    anchorViewToTopSafeAreaLayoutGuide(collectionView)
+    collectionView.anchor(to: view)
     view.shouldTranslateAutoresizingMaskIntoConstraints(false)
 
     addButton.addTarget(
@@ -121,6 +108,6 @@ final class WorkoutVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    interactor.createWorkout()
+    presenter.createWorkout()
   }
 }

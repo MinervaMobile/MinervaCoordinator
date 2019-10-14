@@ -56,7 +56,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
   var editColor: UIColor = .blue
   var deleteColor: UIColor = .red
   var separatorColor: UIColor = .separator
-  var accessoryImageObservable: (() -> Observable<UIImage?>)?
+  var accessoryImageObservable: Observable<UIImage?> = .just(nil)
 
   private let title: String
   private let details: String
@@ -123,8 +123,8 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
     accessoryImageView.image = nil
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else {
       return
     }
@@ -132,13 +132,11 @@ final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
 
     contentView.backgroundColor = model.backgroundColor
     accessoryImageView.tintColor = model.detailsColor
-    if let imageObservable = model.accessoryImageObservable?() {
-      imageObservable.observeOn(
-        MainScheduler.instance
-      ).subscribe(onNext: { [weak self] image in
-        self?.accessoryImageView.image = image
-      }).disposed(by: disposeBag)
-    }
+    model.accessoryImageObservable.observeOn(
+      MainScheduler.instance
+    ).subscribe(onNext: { [weak self] image in
+      self?.accessoryImageView.image = image
+    }).disposed(by: disposeBag)
     titleLabel.attributedText = model.text
   }
 

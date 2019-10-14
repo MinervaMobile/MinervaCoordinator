@@ -180,8 +180,8 @@ open class DefaultListCell: BaseListBindableCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override open func updatedCellModel() {
-    super.updatedCellModel()
+  override open func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.cellModel as? DefaultListCellModel else { return }
     constraintContainerViewHorizontally(toReadabilityWidth: model.constrainToReadablilityWidth)
 

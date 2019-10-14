@@ -44,8 +44,8 @@ final class BottomMarginCell: BaseListCell, ListCellHelper {
 
   typealias ModelType = BottomMarginCellModel
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else { return }
     self.contentView.backgroundColor = model.backgroundColor
   }

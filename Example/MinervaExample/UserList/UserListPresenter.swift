@@ -79,7 +79,7 @@ final class UserListPresenter: DataSource {
       title: user.email,
       details: String(user.dailyCalories))
 
-    cellModel.accessoryImageObservable = { .just(Asset.Disclosure.image.withRenderingMode(.alwaysTemplate)) }
+    cellModel.accessoryImageObservable = .just(Asset.Disclosure.image.withRenderingMode(.alwaysTemplate))
     cellModel.bottomSeparatorColor = .separator
     cellModel.bottomSeparatorLeftInset = true
     cellModel.deleteAction = { [weak self] _ -> Void in
