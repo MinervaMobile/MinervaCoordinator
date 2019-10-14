@@ -128,7 +128,7 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
   override open func prepareForReuse() {
     super.prepareForReuse()
     cellModel = nil
-    updatedCellModel()
+    didUpdateCellModel()
   }
 
   open func willDisplayCell() {
@@ -137,7 +137,7 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
   open func didEndDisplayingCell() {
   }
 
-  open func updatedCellModel() {
+  open func didUpdateCellModel() {
     guard let model = self.cellModel as? SwipeableCellModel else { return }
     topSeparatorView.backgroundColor = model.topSeparatorColor ?? model.backgroundColor
     topSeparatorLeftInset = model.topSeparatorLeftInset
@@ -167,7 +167,7 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
       model.willBind()
     }
     self.cellModel = wrapper.model
-    updatedCellModel()
+    didUpdateCellModel()
   }
 }
 

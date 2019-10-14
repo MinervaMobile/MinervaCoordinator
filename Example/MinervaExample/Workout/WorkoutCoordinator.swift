@@ -14,7 +14,7 @@ import RxSwift
 final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
   private let dataManager: DataManager
-  private let interactor: WorkoutInteractor
+  private let presenter: WorkoutPresenter
   private let disposeBag = DisposeBag()
 
   // MARK: - Lifecycle
@@ -23,10 +23,10 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     self.dataManager = dataManager
 
     let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
-    self.interactor = WorkoutInteractor(repository: repository)
-    let presenter = WorkoutPresenter(interactor: interactor)
+    let presenter = WorkoutPresenter(repository: repository)
+    self.presenter = presenter
     let listController = LegacyListController()
-    let viewController = WorkoutVC(interactor: interactor, presenter: presenter, listController: listController)
+    let viewController = WorkoutVC(presenter: presenter, listController: listController)
     super.init(
       navigator: navigator,
       viewController: viewController,
@@ -39,20 +39,20 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
   override public func viewControllerViewDidLoad(_ viewController: ViewController) {
     super.viewControllerViewDidLoad(viewController)
 
-    interactor.actions
+    presenter.actions
       .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
   }
 
   // MARK: - Private
 
-  private func handle(action: WorkoutInteractor.Action) {
+  private func handle(action: WorkoutPresenter.Action) {
     switch action {
     case .createWorkout(let userID):
       displayWorkoutPopup(with: nil, forUserID: userID)
-    case .edit(let workout):
+    case .editWorkout(let workout):
       displayWorkoutPopup(with: workout, forUserID: workout.userID)
-    case .update(let filter):
+    case .editFilter(let filter):
       displayFilterSelection(with: filter)
     }
   }
@@ -68,27 +68,21 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
       dataManager: dataManager,
       workout: workout,
       editing: editing)
-    coordinator.addCloseButton() { [weak self] child in
-      self?.dismiss(child, animated: true)
-    }
-    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
+    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 
   private func displayFilterSelection(with filter: WorkoutFilter) {
     let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = FilterCoordinator(navigator: navigator, filter: filter)
     coordinator.delegate = self
-    coordinator.addCloseButton() { [weak self] child in
-      self?.dismiss(child, animated: true)
-    }
-    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
+    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 }
 
 // MARK: - FilterCoordinatorDelegate
 extension WorkoutCoordinator: FilterCoordinatorDelegate {
   func filterCoordinator(_ filterCoordinator: FilterCoordinator, updatedFilter filter: WorkoutFilter) {
-    interactor.apply(filter: filter)
+    presenter.apply(filter: filter)
     dismiss(filterCoordinator, animated: true)
   }
 }

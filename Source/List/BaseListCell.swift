@@ -61,10 +61,10 @@ open class BaseListCell: ListCollectionViewCell {
   override open func prepareForReuse() {
     super.prepareForReuse()
     cellModel = nil
-    updatedCellModel()
+    didUpdateCellModel()
   }
 
-  open func updatedCellModel() {
+  open func didUpdateCellModel() {
   }
 
   open func willDisplayCell() {
@@ -84,6 +84,6 @@ open class BaseListCell: ListCollectionViewCell {
       model.willBind()
     }
     self.cellModel = wrapper.model
-    updatedCellModel()
+    didUpdateCellModel()
   }
 }

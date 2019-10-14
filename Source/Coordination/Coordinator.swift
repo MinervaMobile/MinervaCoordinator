@@ -47,16 +47,16 @@ extension CoordinatorNavigator {
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     from navigator: Navigator,
-    animated: Bool,
+    animated: Bool = true,
     modalPresentationStyle: UIModalPresentationStyle = .fullScreen
   ) {
     navigator.setViewControllers([coordinator.baseViewController], animated: false)
-    present(coordinator, animated: true, modalPresentationStyle: modalPresentationStyle)
+    present(coordinator, animated: animated, modalPresentationStyle: modalPresentationStyle)
   }
 
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
-    animated: Bool,
+    animated: Bool = true,
     modalPresentationStyle: UIModalPresentationStyle = .fullScreen
   ) {
     addChild(coordinator)
@@ -68,20 +68,24 @@ extension CoordinatorNavigator {
     }
   }
 
-  public func dismiss(_ coordinator: BaseCoordinatorPresentable, animated: Bool, completion: (() -> Void)? = nil) {
+  public func dismiss(
+    _ coordinator: BaseCoordinatorPresentable,
+    animated: Bool = true,
+    completion: (() -> Void)? = nil
+  ) {
     let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated) { _ in
       completion?()
     }
   }
 
-  public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {
+  public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
     navigator.push(coordinator.baseViewController, animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)
     }
   }
-  public func setCoordinators(_ coordinators: [BaseCoordinatorPresentable], animated: Bool) {
+  public func setCoordinators(_ coordinators: [BaseCoordinatorPresentable], animated: Bool = true) {
     coordinators.forEach { addChild($0) }
     navigator.setViewControllers(
       coordinators.map { $0.baseViewController },
@@ -95,7 +99,7 @@ extension CoordinatorNavigator {
     }
   }
 
-  public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool) {
+  public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
     navigator.setViewControllers([coordinator.baseViewController], animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)

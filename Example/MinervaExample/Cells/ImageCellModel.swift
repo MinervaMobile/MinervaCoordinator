@@ -71,8 +71,8 @@ final class ImageCell: DefaultListCell, ListCellHelper {
     imageView.image = nil
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else {
       return
     }

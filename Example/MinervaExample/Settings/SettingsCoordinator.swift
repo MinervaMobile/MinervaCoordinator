@@ -70,10 +70,7 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
   private func displayUserUpdatePopup(for user: User) {
     let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
-    coordinator.addCloseButton() { [weak self] child in
-      self?.dismiss(child, animated: true)
-    }
-    present(coordinator, from: navigator, animated: true, modalPresentationStyle: .safeAutomatic)
+    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 }
 

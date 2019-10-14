@@ -125,8 +125,8 @@ final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
     iconImageView.image = nil
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else {
       return
     }

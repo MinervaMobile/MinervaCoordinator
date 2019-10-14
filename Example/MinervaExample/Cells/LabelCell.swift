@@ -92,8 +92,8 @@ final class LabelCell: DefaultListCell, ListCellHelper {
     contentView.clipsToBounds = true
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = model else {
       return
     }

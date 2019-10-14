@@ -71,8 +71,8 @@ final class DatePickerCell: BaseListCell, ListCellHelper {
     model.changedDate?(model, datePicker.date)
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else {
       return
     }

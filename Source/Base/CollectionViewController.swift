@@ -41,7 +41,7 @@ open class CollectionViewController: BaseViewController {
       collectionView.backgroundColor = backgroundColor
     }
     view.addSubview(collectionView)
-    collectionView.anchorToTopSafeAreaLayoutGuide(in: view)
+    collectionView.anchor(to: view)
     view.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
 }

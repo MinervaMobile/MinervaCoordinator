@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		26CD12BC8E33D2B3DB8C382D /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */; };
-		45D271D1F7A38F4925EA9D09 /* Pods_MinervaExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028490B65F4CF7741CF4C814 /* Pods_MinervaExampleUITests.framework */; };
 		B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
 		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
-		F501F895233BFF7000012C5E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
-		F501F896233BFF7000012C5E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
 		F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F897233C016F00012C5E /* SettingsCoordinator.swift */; };
 		F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F899233C05E500012C5E /* UserListCoordinator.swift */; };
 		F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
@@ -21,158 +18,63 @@
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
 		F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */; };
-		F5587D2822502B12004223E5 /* MinervaExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D2722502B12004223E5 /* MinervaExampleTests.swift */; };
-		F5587D3322502B12004223E5 /* MinervaExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D3222502B12004223E5 /* MinervaExampleUITests.swift */; };
 		F5587D4C22502BF3004223E5 /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
 		F5587D4D22502BF3004223E5 /* Minerva.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5587D7022502D62004223E5 /* Minerva.h in Headers */ = {isa = PBXBuildFile; fileRef = F5587D5822502C5A004223E5 /* Minerva.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F562CF10234E2A3000402122 /* LegacyListController.swift */; };
+		F562CF392354894D00402122 /* SwiftUITextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F562CF382354894D00402122 /* SwiftUITextCell.swift */; };
+		F562CF3B2354B41500402122 /* DataManager+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F562CF3A2354B41500402122 /* DataManager+Combine.swift */; };
+		F562CF3C2354C8C200402122 /* SwiftUICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F562CF1223547DF300402122 /* SwiftUICell.swift */; };
 		F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */; };
 		F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86B226DEE740015D14E /* UserCoordinator.swift */; };
 		F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
-		F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
-		F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86E226DEFA90015D14E /* TestUserManager.swift */; };
 		F576F875226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
-		F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
-		F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F86F226DEFA90015D14E /* TestDataManager.swift */; };
 		F576F878226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
-		F576F879226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
-		F576F87A226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F870226DEFA90015D14E /* TestDataManagerFactory.swift */; };
 		F576F87B226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
-		F576F87C226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
-		F576F87D226DEFA90015D14E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F871226DEFA90015D14E /* TestData.swift */; };
 		F576F897226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
-		F576F898226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
-		F576F899226DF0050015D14E /* UserRole.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F880226DF0050015D14E /* UserRole.pb.swift */; };
 		F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
-		F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
-		F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F881226DF0050015D14E /* Workout.pb.swift */; };
 		F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
-		F576F89E226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
-		F576F89F226DF0050015D14E /* UserCredentials.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F882226DF0050015D14E /* UserCredentials.pb.swift */; };
 		F576F8A0226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
-		F576F8A1226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
-		F576F8A2226DF0050015D14E /* User.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F883226DF0050015D14E /* User.pb.swift */; };
 		F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
-		F576F8A4226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
-		F576F8A5226DF0050015D14E /* UserAuthorization.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F884226DF0050015D14E /* UserAuthorization.pb.swift */; };
 		F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
-		F576F8A7226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
-		F576F8A8226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F885226DF0050015D14E /* WorkoutFilter.pb.swift */; };
 		F576F8BB226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
-		F576F8BC226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
-		F576F8BD226DF0050015D14E /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88E226DF0050015D14E /* UserRole.swift */; };
 		F576F8BE226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
-		F576F8BF226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
-		F576F8C0226DF0050015D14E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F88F226DF0050015D14E /* Workout.swift */; };
 		F576F8C1226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
-		F576F8C2226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
-		F576F8C3226DF0050015D14E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F890226DF0050015D14E /* User.swift */; };
 		F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
-		F576F8C5226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
-		F576F8C6226DF0050015D14E /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F891226DF0050015D14E /* UserCredentials.swift */; };
 		F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
-		F576F8C8226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
-		F576F8C9226DF0050015D14E /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F892226DF0050015D14E /* WorkoutFilter.swift */; };
 		F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
-		F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
-		F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F893226DF0050015D14E /* UserAuthorization.swift */; };
 		F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
-		F576F8CE226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
-		F576F8CF226DF0050015D14E /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F895226DF0050015D14E /* FoundationExtensions.swift */; };
 		F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
-		F576F8D1226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
-		F576F8D2226DF0050015D14E /* ProtoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F896226DF0050015D14E /* ProtoExtensions.swift */; };
 		F576F8DB226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
-		F576F8DC226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
-		F576F8DD226DF04F0015D14E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D4226DF04F0015D14E /* DataManager.swift */; };
 		F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
-		F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
-		F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D5226DF04F0015D14E /* SystemError.swift */; };
 		F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
-		F576F8E2226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
-		F576F8E3226DF04F0015D14E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D6226DF04F0015D14E /* UserManager.swift */; };
 		F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
-		F576F8EB226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
-		F576F8EC226DF04F0015D14E /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */; };
 		F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
-		F576F8F5226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
-		F576F8F6226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
 		F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
-		F576F8F8226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
-		F576F8F9226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
 		F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
-		F576F8FB226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
-		F576F8FC226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
-		F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
-		F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
-		F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
+		F576F8FF226DF1020015D14E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* Extensions.swift */; };
 		F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
-		F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
-		F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
 		F576F908226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */; };
-		F576F909226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */; };
-		F576F90A226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */; };
 		F576F924226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
-		F576F925226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
-		F576F926226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
 		F576F927226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
-		F576F928226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
-		F576F929226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
 		F576F92A226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
-		F576F92B226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
-		F576F92C226E16820015D14E /* EditWorkoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutDataSource.swift */; };
 		F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
-		F576F930226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
-		F576F931226E168B0015D14E /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsDataSource.swift */; };
 		F576F94A226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
-		F576F94B226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
-		F576F94C226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
 		F576F94D226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
-		F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
-		F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
 		F576F950226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
-		F576F951226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
-		F576F952226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
 		F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
-		F576F954226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
-		F576F955226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
 		F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
-		F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
-		F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
 		F576F962226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
-		F576F963226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
-		F576F964226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
 		F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
-		F576F966226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
-		F576F967226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
 		F576F968226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
-		F576F969226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
-		F576F96A226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
 		F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
-		F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
-		F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
 		F576F96E226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
-		F576F96F226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
-		F576F970226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
 		F576F97D226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
-		F576F97E226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
-		F576F97F226E16970015D14E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Images.swift */; };
 		F576F980226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
-		F576F981226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
-		F576F982226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
 		F576F98C226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
-		F576F98D226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
-		F576F98E226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
 		F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
-		F576F990226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
-		F576F991226E16BB0015D14E /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F988226E16BB0015D14E /* UserListPresenter.swift */; };
 		F576F992226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
-		F576F993226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
-		F576F994226E16BB0015D14E /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F989226E16BB0015D14E /* UserListVC.swift */; };
 		F576F995226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserDataSource.swift */; };
-		F576F996226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserDataSource.swift */; };
-		F576F997226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98A226E16BB0015D14E /* UpdateUserDataSource.swift */; };
 		F576F998226E16BB0015D14E /* CreateUserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserDataSource.swift */; };
 		F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848576233A6673001DBF1E /* ListSectionWrapper.swift */; };
 		F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */; };
@@ -180,17 +82,8 @@
 		F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */; };
 		F5C9082B2343C6B20038BD89 /* UpdateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */; };
 		F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
-		F5C9082F2343DCD70038BD89 /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
-		F5C908302343DCD70038BD89 /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
 		F5C908312343DCD70038BD89 /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
 		F5C908322343DD520038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
-		F5C908332343DD520038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
-		F5C908342343DD530038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
-		F5C908352343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
-		F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
-		F5C908372343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
-		F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
-		F5C9083B2343E97B0038BD89 /* WorkoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */; };
 		F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */; };
 		F5CE47BB233E3FF800983F72 /* DataManager+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
@@ -218,24 +111,9 @@
 		F5EF2DBA2344FC9200A0073E /* MinervaObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* MinervaObservable.swift */; };
 		F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F08AF323192C4900C249E9 /* Coordinator.swift */; };
 		F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F08AF523192C9B00C249E9 /* Navigator.swift */; };
-		F7344623561FF256D6255C5F /* Pods_MinervaExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 315E398B8E773FD39750CB3C /* Pods_MinervaExampleTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F5587D2422502B12004223E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5587D0722502B10004223E5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F5587D0E22502B10004223E5;
-			remoteInfo = MinervaExample;
-		};
-		F5587D2F22502B12004223E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F5587D0722502B10004223E5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F5587D0E22502B10004223E5;
-			remoteInfo = MinervaExample;
-		};
 		F5587D4A22502BF3004223E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5587D0722502B10004223E5 /* Project object */;
@@ -287,16 +165,13 @@
 		F5587D1922502B11004223E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5587D1C22502B11004223E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F5587D1E22502B11004223E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5587D2322502B12004223E5 /* MinervaExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinervaExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5587D2722502B12004223E5 /* MinervaExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinervaExampleTests.swift; sourceTree = "<group>"; };
-		F5587D2922502B12004223E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5587D2E22502B12004223E5 /* MinervaExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinervaExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5587D3222502B12004223E5 /* MinervaExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinervaExampleUITests.swift; sourceTree = "<group>"; };
-		F5587D3422502B12004223E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5587D4522502BF2004223E5 /* Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D5222502C5A004223E5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5587D5822502C5A004223E5 /* Minerva.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Minerva.h; sourceTree = "<group>"; };
 		F562CF10234E2A3000402122 /* LegacyListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyListController.swift; sourceTree = "<group>"; };
+		F562CF1223547DF300402122 /* SwiftUICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICell.swift; sourceTree = "<group>"; };
+		F562CF382354894D00402122 /* SwiftUITextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITextCell.swift; sourceTree = "<group>"; };
+		F562CF3A2354B41500402122 /* DataManager+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Combine.swift"; sourceTree = "<group>"; };
 		F576F869226DEE4C0015D14E /* LifecycleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleCoordinator.swift; sourceTree = "<group>"; };
 		F576F86B226DEE740015D14E /* UserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoordinator.swift; sourceTree = "<group>"; };
 		F576F86E226DEFA90015D14E /* TestUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserManager.swift; sourceTree = "<group>"; };
@@ -330,7 +205,7 @@
 		F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeDataSource.swift; sourceTree = "<group>"; };
 		F576F8F3226DF0B40015D14E /* SignInDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInDataSource.swift; sourceTree = "<group>"; };
-		F576F8FE226DF1020015D14E /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
+		F576F8FE226DF1020015D14E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F576F903226E165E0015D14E /* FilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDataSource.swift; sourceTree = "<group>"; };
 		F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFilterDataSource.swift; sourceTree = "<group>"; };
 		F576F912226E16820015D14E /* WorkoutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutVC.swift; sourceTree = "<group>"; };
@@ -362,7 +237,6 @@
 		F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFilterCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutCoordinator.swift; sourceTree = "<group>"; };
-		F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInteractor.swift; sourceTree = "<group>"; };
 		F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRepository.swift; sourceTree = "<group>"; };
 		F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Promise.swift"; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
@@ -395,22 +269,6 @@
 			files = (
 				F5587D4C22502BF3004223E5 /* Minerva.framework in Frameworks */,
 				B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D2022502B12004223E5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F7344623561FF256D6255C5F /* Pods_MinervaExampleTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D2B22502B12004223E5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				45D271D1F7A38F4925EA9D09 /* Pods_MinervaExampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,8 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				F5587D1122502B10004223E5 /* MinervaExample */,
-				F5587D2622502B12004223E5 /* MinervaExampleTests */,
-				F5587D3122502B12004223E5 /* MinervaExampleUITests */,
 				F5587D4622502BF3004223E5 /* Minerva */,
 				F5587D1022502B10004223E5 /* Products */,
 				3F41C872B74F50848A9979C1 /* Pods */,
@@ -479,8 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				F5587D0F22502B10004223E5 /* MinervaExample.app */,
-				F5587D2322502B12004223E5 /* MinervaExampleTests.xctest */,
-				F5587D2E22502B12004223E5 /* MinervaExampleUITests.xctest */,
 				F5587D4522502BF2004223E5 /* Minerva.framework */,
 			);
 			name = Products;
@@ -508,24 +362,6 @@
 				F576F90B226E16820015D14E /* Workout */,
 			);
 			path = MinervaExample;
-			sourceTree = "<group>";
-		};
-		F5587D2622502B12004223E5 /* MinervaExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				F5587D2722502B12004223E5 /* MinervaExampleTests.swift */,
-				F5587D2922502B12004223E5 /* Info.plist */,
-			);
-			path = MinervaExampleTests;
-			sourceTree = "<group>";
-		};
-		F5587D3122502B12004223E5 /* MinervaExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				F5587D3222502B12004223E5 /* MinervaExampleUITests.swift */,
-				F5587D3422502B12004223E5 /* Info.plist */,
-			);
-			path = MinervaExampleUITests;
 			sourceTree = "<group>";
 		};
 		F5587D4622502BF3004223E5 /* Minerva */ = {
@@ -625,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				F576F8D4226DF04F0015D14E /* DataManager.swift */,
+				F562CF3A2354B41500402122 /* DataManager+Combine.swift */,
 				F5CE47BA233E3FF800983F72 /* DataManager+Promise.swift */,
 				F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */,
 				F576F8D9226DF04F0015D14E /* DataManagerFactory.swift */,
@@ -648,7 +485,7 @@
 		F576F8FD226DF1020015D14E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F576F8FE226DF1020015D14E /* UIKitExtensions.swift */,
+				F576F8FE226DF1020015D14E /* Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -668,7 +505,6 @@
 			isa = PBXGroup;
 			children = (
 				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
-				F5C9083A2343E97B0038BD89 /* WorkoutInteractor.swift */,
 				F576F913226E16820015D14E /* WorkoutPresenter.swift */,
 				F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */,
 				F576F912226E16820015D14E /* WorkoutVC.swift */,
@@ -697,6 +533,7 @@
 				F576F93E226E16960015D14E /* LabelCell.swift */,
 				F576F940226E16970015D14E /* MarginCell.swift */,
 				F576F936226E16960015D14E /* PickerCell.swift */,
+				F562CF382354894D00402122 /* SwiftUITextCell.swift */,
 				F576F99C226E20D20015D14E /* SwipeableCell.swift */,
 				F576F935226E16960015D14E /* SwipeableLabelCell.swift */,
 				F576F934226E16960015D14E /* TextInputCell.swift */,
@@ -799,6 +636,7 @@
 				F501F886233BE23700012C5E /* BaseViewController.swift */,
 				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F501F882233BE1BC00012C5E /* DataSource.swift */,
+				F562CF1223547DF300402122 /* SwiftUICell.swift */,
 				F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */,
 				F501F888233BE25C00012C5E /* ViewController.swift */,
 			);
@@ -849,46 +687,6 @@
 			productReference = F5587D0F22502B10004223E5 /* MinervaExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F5587D2222502B12004223E5 /* MinervaExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F5587D3A22502B12004223E5 /* Build configuration list for PBXNativeTarget "MinervaExampleTests" */;
-			buildPhases = (
-				98465DB87BDF5665ED33C173 /* [CP] Check Pods Manifest.lock */,
-				F5587D1F22502B12004223E5 /* Sources */,
-				F5587D2022502B12004223E5 /* Frameworks */,
-				F5587D2122502B12004223E5 /* Resources */,
-				D1CC3241A07BE1D8E980F29E /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F5587D2522502B12004223E5 /* PBXTargetDependency */,
-			);
-			name = MinervaExampleTests;
-			productName = MinervaExampleTests;
-			productReference = F5587D2322502B12004223E5 /* MinervaExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		F5587D2D22502B12004223E5 /* MinervaExampleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F5587D3D22502B12004223E5 /* Build configuration list for PBXNativeTarget "MinervaExampleUITests" */;
-			buildPhases = (
-				C40264AF57B44A0E533ECAB6 /* [CP] Check Pods Manifest.lock */,
-				F5587D2A22502B12004223E5 /* Sources */,
-				F5587D2B22502B12004223E5 /* Frameworks */,
-				F5587D2C22502B12004223E5 /* Resources */,
-				E694577222C816F270E5B202 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F5587D3022502B12004223E5 /* PBXTargetDependency */,
-			);
-			name = MinervaExampleUITests;
-			productName = MinervaExampleUITests;
-			productReference = F5587D2E22502B12004223E5 /* MinervaExampleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		F5587D4422502BF2004223E5 /* Minerva */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5587D5022502BF3004223E5 /* Build configuration list for PBXNativeTarget "Minerva" */;
@@ -921,14 +719,6 @@
 					F5587D0E22502B10004223E5 = {
 						CreatedOnToolsVersion = 10.2;
 					};
-					F5587D2222502B12004223E5 = {
-						CreatedOnToolsVersion = 10.2;
-						TestTargetID = F5587D0E22502B10004223E5;
-					};
-					F5587D2D22502B12004223E5 = {
-						CreatedOnToolsVersion = 10.2;
-						TestTargetID = F5587D0E22502B10004223E5;
-					};
 					F5587D4422502BF2004223E5 = {
 						CreatedOnToolsVersion = 10.2;
 						LastSwiftMigration = 1020;
@@ -949,8 +739,6 @@
 			projectRoot = "";
 			targets = (
 				F5587D0E22502B10004223E5 /* MinervaExample */,
-				F5587D2222502B12004223E5 /* MinervaExampleTests */,
-				F5587D2D22502B12004223E5 /* MinervaExampleUITests */,
 				F5587D4422502BF2004223E5 /* Minerva */,
 			);
 		};
@@ -963,20 +751,6 @@
 			files = (
 				F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */,
 				F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D2122502B12004223E5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D2C22502B12004223E5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,84 +825,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaExample/Pods-MinervaExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		98465DB87BDF5665ED33C173 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MinervaExampleTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C40264AF57B44A0E533ECAB6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MinervaExampleUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D1CC3241A07BE1D8E980F29E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E694577222C816F270E5B202 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1166,7 +862,7 @@
 				F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
 				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
 				F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */,
-				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
+				F576F8FF226DF1020015D14E /* Extensions.swift in Sources */,
 				F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */,
 				F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
@@ -1185,7 +881,6 @@
 				F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */,
 				F576F86C226DEE740015D14E /* UserCoordinator.swift in Sources */,
 				F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */,
-				F5C9083B2343E97B0038BD89 /* WorkoutInteractor.swift in Sources */,
 				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
 				F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */,
 				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
@@ -1196,7 +891,9 @@
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
+				F562CF3B2354B41500402122 /* DataManager+Combine.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */,
+				F562CF392354894D00402122 /* SwiftUITextCell.swift in Sources */,
 				F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */,
 				F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */,
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
@@ -1207,128 +904,6 @@
 				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
 				F576F950226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8C1226DF0050015D14E /* User.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D1F22502B12004223E5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F576F89E226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
-				F576F879226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
-				F576F8E2226DF04F0015D14E /* UserManager.swift in Sources */,
-				F576F996226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */,
-				F576F930226E168B0015D14E /* SettingsDataSource.swift in Sources */,
-				F576F898226DF0050015D14E /* UserRole.pb.swift in Sources */,
-				F576F981226E16970015D14E /* LoadingHUD.swift in Sources */,
-				F576F92B226E16820015D14E /* EditWorkoutDataSource.swift in Sources */,
-				F576F8FB226DF0B50015D14E /* SignInDataSource.swift in Sources */,
-				F576F8CB226DF0050015D14E /* UserAuthorization.swift in Sources */,
-				F576F89B226DF0050015D14E /* Workout.pb.swift in Sources */,
-				F576F928226E16820015D14E /* WorkoutPresenter.swift in Sources */,
-				F576F951226E16970015D14E /* PickerCell.swift in Sources */,
-				F576F8DF226DF04F0015D14E /* SystemError.swift in Sources */,
-				F576F97E226E16970015D14E /* Images.swift in Sources */,
-				F576F8C5226DF0050015D14E /* UserCredentials.swift in Sources */,
-				F576F963226E16970015D14E /* DatePickerCell.swift in Sources */,
-				F576F909226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */,
-				F576F8F8226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
-				F576F8A1226DF0050015D14E /* User.pb.swift in Sources */,
-				F576F954226E16970015D14E /* BottomMarginCell.swift in Sources */,
-				F576F8BC226DF0050015D14E /* UserRole.swift in Sources */,
-				F576F966226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
-				F576F8C2226DF0050015D14E /* User.swift in Sources */,
-				F576F94B226E16970015D14E /* TextInputCell.swift in Sources */,
-				F5C9082F2343DCD70038BD89 /* DefaultListCell.swift in Sources */,
-				F576F8DC226DF04F0015D14E /* DataManager.swift in Sources */,
-				F576F98D226E16BB0015D14E /* UserVC.swift in Sources */,
-				F576F990226E16BB0015D14E /* UserListPresenter.swift in Sources */,
-				F576F94E226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
-				F576F876226DEFA90015D14E /* TestDataManager.swift in Sources */,
-				F576F925226E16820015D14E /* WorkoutVC.swift in Sources */,
-				F5C908362343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
-				F576F96C226E16970015D14E /* ImageCellModel.swift in Sources */,
-				F576F8BF226DF0050015D14E /* Workout.swift in Sources */,
-				F576F8C8226DF0050015D14E /* WorkoutFilter.swift in Sources */,
-				F576F8A7226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
-				F5C908332343DD520038BD89 /* SwipeableCell.swift in Sources */,
-				F576F969226E16970015D14E /* LabelCell.swift in Sources */,
-				F576F900226DF1020015D14E /* UIKitExtensions.swift in Sources */,
-				F576F960226E16970015D14E /* BorderLabelCell.swift in Sources */,
-				F576F8F5226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
-				F5C908352343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */,
-				F576F873226DEFA90015D14E /* TestUserManager.swift in Sources */,
-				F576F906226E165E0015D14E /* FilterDataSource.swift in Sources */,
-				F576F8CE226DF0050015D14E /* FoundationExtensions.swift in Sources */,
-				F576F87C226DEFA90015D14E /* TestData.swift in Sources */,
-				F576F993226E16BB0015D14E /* UserListVC.swift in Sources */,
-				F576F96F226E16970015D14E /* MarginCell.swift in Sources */,
-				F501F896233BFF7000012C5E /* UserCoordinator.swift in Sources */,
-				F5587D2822502B12004223E5 /* MinervaExampleTests.swift in Sources */,
-				F576F8A4226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
-				F576F8D1226DF0050015D14E /* ProtoExtensions.swift in Sources */,
-				F576F8EB226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F5587D2A22502B12004223E5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F576F89F226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
-				F576F87A226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
-				F576F8E3226DF04F0015D14E /* UserManager.swift in Sources */,
-				F576F997226E16BB0015D14E /* UpdateUserDataSource.swift in Sources */,
-				F576F931226E168B0015D14E /* SettingsDataSource.swift in Sources */,
-				F576F899226DF0050015D14E /* UserRole.pb.swift in Sources */,
-				F576F982226E16970015D14E /* LoadingHUD.swift in Sources */,
-				F576F92C226E16820015D14E /* EditWorkoutDataSource.swift in Sources */,
-				F576F8FC226DF0B50015D14E /* SignInDataSource.swift in Sources */,
-				F576F8CC226DF0050015D14E /* UserAuthorization.swift in Sources */,
-				F576F89C226DF0050015D14E /* Workout.pb.swift in Sources */,
-				F576F929226E16820015D14E /* WorkoutPresenter.swift in Sources */,
-				F576F952226E16970015D14E /* PickerCell.swift in Sources */,
-				F576F8E0226DF04F0015D14E /* SystemError.swift in Sources */,
-				F576F97F226E16970015D14E /* Images.swift in Sources */,
-				F576F8C6226DF0050015D14E /* UserCredentials.swift in Sources */,
-				F576F964226E16970015D14E /* DatePickerCell.swift in Sources */,
-				F576F90A226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */,
-				F576F8F9226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
-				F576F8A2226DF0050015D14E /* User.pb.swift in Sources */,
-				F576F955226E16970015D14E /* BottomMarginCell.swift in Sources */,
-				F576F8BD226DF0050015D14E /* UserRole.swift in Sources */,
-				F576F967226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
-				F576F8C3226DF0050015D14E /* User.swift in Sources */,
-				F576F94C226E16970015D14E /* TextInputCell.swift in Sources */,
-				F5C908302343DCD70038BD89 /* DefaultListCell.swift in Sources */,
-				F576F8DD226DF04F0015D14E /* DataManager.swift in Sources */,
-				F576F98E226E16BB0015D14E /* UserVC.swift in Sources */,
-				F576F991226E16BB0015D14E /* UserListPresenter.swift in Sources */,
-				F576F94F226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
-				F576F877226DEFA90015D14E /* TestDataManager.swift in Sources */,
-				F576F926226E16820015D14E /* WorkoutVC.swift in Sources */,
-				F5C908382343E2A00038BD89 /* WorkoutCoordinator.swift in Sources */,
-				F576F96D226E16970015D14E /* ImageCellModel.swift in Sources */,
-				F576F8C0226DF0050015D14E /* Workout.swift in Sources */,
-				F576F8C9226DF0050015D14E /* WorkoutFilter.swift in Sources */,
-				F576F8A8226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
-				F5C908342343DD530038BD89 /* SwipeableCell.swift in Sources */,
-				F576F96A226E16970015D14E /* LabelCell.swift in Sources */,
-				F576F901226DF1020015D14E /* UIKitExtensions.swift in Sources */,
-				F576F961226E16970015D14E /* BorderLabelCell.swift in Sources */,
-				F576F8F6226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
-				F5C908372343E2A00038BD89 /* EditWorkoutCoordinator.swift in Sources */,
-				F576F874226DEFA90015D14E /* TestUserManager.swift in Sources */,
-				F576F907226E165E0015D14E /* FilterDataSource.swift in Sources */,
-				F576F8CF226DF0050015D14E /* FoundationExtensions.swift in Sources */,
-				F576F87D226DEFA90015D14E /* TestData.swift in Sources */,
-				F576F994226E16BB0015D14E /* UserListVC.swift in Sources */,
-				F576F970226E16970015D14E /* MarginCell.swift in Sources */,
-				F501F895233BFF7000012C5E /* UserCoordinator.swift in Sources */,
-				F5587D3322502B12004223E5 /* MinervaExampleUITests.swift in Sources */,
-				F576F8A5226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
-				F576F8D2226DF0050015D14E /* ProtoExtensions.swift in Sources */,
-				F576F8EC226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1351,6 +926,7 @@
 				F5EF2DB42344FC4500A0073E /* CollectionViewController.swift in Sources */,
 				F5EF2DB72344FC4500A0073E /* ViewController.swift in Sources */,
 				F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */,
+				F562CF3C2354C8C200402122 /* SwiftUICell.swift in Sources */,
 				F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */,
 				F5EF2DB92344FC9200A0073E /* ListBindableCell.swift in Sources */,
 				F5EF2DB62344FC4500A0073E /* UIView+Extensions.swift in Sources */,
@@ -1366,16 +942,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F5587D2522502B12004223E5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F5587D0E22502B10004223E5 /* MinervaExample */;
-			targetProxy = F5587D2422502B12004223E5 /* PBXContainerItemProxy */;
-		};
-		F5587D3022502B12004223E5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F5587D0E22502B10004223E5 /* MinervaExample */;
-			targetProxy = F5587D2F22502B12004223E5 /* PBXContainerItemProxy */;
-		};
 		F5587D4B22502BF3004223E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F5587D4422502BF2004223E5 /* Minerva */;
@@ -1519,7 +1085,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExample/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1539,7 +1105,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExample/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1548,88 +1114,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F5587D3B22502B12004223E5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MinervaExample.app/MinervaExample";
-			};
-			name = Debug;
-		};
-		F5587D3C22502B12004223E5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MinervaExample.app/MinervaExample";
-			};
-			name = Release;
-		};
-		F5587D3E22502B12004223E5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CD832F1A0AB69B3BAB146B5 /* Pods-MinervaExampleUITests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MinervaExample;
-			};
-			name = Debug;
-		};
-		F5587D3F22502B12004223E5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F7CEFBA4112F57545A1B92D /* Pods-MinervaExampleUITests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MinervaExample;
 			};
 			name = Release;
 		};
@@ -1713,24 +1197,6 @@
 			buildConfigurations = (
 				F5587D3822502B12004223E5 /* Debug */,
 				F5587D3922502B12004223E5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F5587D3A22502B12004223E5 /* Build configuration list for PBXNativeTarget "MinervaExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F5587D3B22502B12004223E5 /* Debug */,
-				F5587D3C22502B12004223E5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F5587D3D22502B12004223E5 /* Build configuration list for PBXNativeTarget "MinervaExampleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F5587D3E22502B12004223E5 /* Debug */,
-				F5587D3F22502B12004223E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

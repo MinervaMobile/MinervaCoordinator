@@ -5,6 +5,7 @@
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
+import Combine
 import Foundation
 import UIKit
 
@@ -51,6 +52,24 @@ class BlockBarButtonItem: UIBarButtonItem {
   }
 }
 
+extension CoordinatorNavigator {
+
+  public func presentWithCloseButton<P, VC>(
+    _ coordinator: MainCoordinator<P, VC>,
+    animated: Bool = true,
+    modalPresentationStyle: UIModalPresentationStyle = .fullScreen
+  ) {
+    coordinator.addCloseButton() { [weak self] child in
+      self?.dismiss(child, animated: true)
+    }
+    present(
+      coordinator,
+      from: coordinator.navigator,
+      animated: animated,
+      modalPresentationStyle: modalPresentationStyle)
+  }
+}
+
 extension ListController {
   public var cellModels: [ListCellModel] {
     return listSections.flatMap { $0.cellModels }
@@ -78,6 +97,12 @@ extension NSAttributedString {
 
     let width = rect.size.width
     return ceil(width)
+  }
+}
+
+extension Published {
+  public static func just(_ initialValue: Value) -> Published<Value> {
+    Published(initialValue: initialValue)
   }
 }
 

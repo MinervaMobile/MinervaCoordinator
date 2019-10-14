@@ -48,8 +48,8 @@ final class MarginCell: BaseListCell, ListCellHelper {
 
   typealias ModelType = MarginCellModel
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else { return }
     self.contentView.backgroundColor = model.backgroundColor
   }

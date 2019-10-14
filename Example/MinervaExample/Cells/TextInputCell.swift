@@ -125,8 +125,8 @@ final class TextInputCell: BaseListBindableCell, ListCellHelper {
     model.delegate?.textInputCellModel(model, textChangedTo: textField.text)
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = self.model else { return }
     textField.autocapitalizationType = model.autocapitalizationType
     textField.autocorrectionType = model.autocorrectionType

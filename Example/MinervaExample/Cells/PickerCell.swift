@@ -101,8 +101,8 @@ final class PickerCell: BaseListCell, ListCellHelper {
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
 
-  override func updatedCellModel() {
-    super.updatedCellModel()
+  override func didUpdateCellModel() {
+    super.didUpdateCellModel()
     guard let model = model else {
       return
     }
