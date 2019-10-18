@@ -18,7 +18,7 @@ public final class ListCellModelWrapper: NSObject {
   }
 
   override public var description: String {
-    return model.description
+    return model.typeDescription
   }
 }
 
