@@ -73,36 +73,55 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     return sizeConstraints
   }
 
-  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
-    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
+    internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+        let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
-    let collectionCell = cell(for: model)
-    collectionCell.bindViewModel(ListCellModelWrapper(model: model))
+        let collectionCell = cell(for: model)
+        collectionCell.bind(cellModel: model, sizing: true)
 
-    defer {
-      collectionCell.prepareForReuse()
+        let view = collectionCell.contentView
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        let isVertical = sizeConstraints.scrollDirection == .vertical
+        let proportional = sizeConstraints.distribution == .proportionally
+        let constraint: NSLayoutConstraint
+        if proportional {
+            if isVertical {
+                constraint = view.widthAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.width)
+            } else {
+                constraint = view.heightAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.height)
+            }
+        } else {
+            if isVertical {
+                constraint = view.widthAnchor.constraint(equalToConstant: adjustedContainerSize.width)
+            } else {
+                constraint = view.heightAnchor.constraint(equalToConstant: adjustedContainerSize.height)
+            }
+        }
+        constraint.isActive = true
+
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+
+        let size: CGSize
+        let boundsSize = view.bounds.size
+        if proportional {
+            if isVertical {
+                size = CGSize(width: min(boundsSize.width, adjustedContainerSize.width), height: boundsSize.height)
+            } else {
+                size = CGSize(width: boundsSize.width, height: min(boundsSize.height, adjustedContainerSize.height))
+            }
+        } else {
+            if isVertical {
+                size = CGSize(width: adjustedContainerSize.width, height: boundsSize.height)
+            } else {
+                size = CGSize(width: boundsSize.width, height: adjustedContainerSize.height)
+            }
+        }
+        view.removeConstraint(constraint)
+        collectionCell.prepareForReuse()
+        return size
     }
-
-    switch sizeConstraints.distribution {
-    case .equally, .entireRow:
-      let isVertical = sizeConstraints.scrollDirection == .vertical
-      let size = collectionCell.systemLayoutSizeFitting(
-        adjustedContainerSize,
-        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
-        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
-      if isVertical {
-        return CGSize(width: adjustedContainerSize.width, height: size.height)
-      } else {
-        return CGSize(width: size.width, height: adjustedContainerSize.height)
-      }
-    case .proportionally:
-      let size = collectionCell.systemLayoutSizeFitting(
-        adjustedContainerSize,
-        withHorizontalFittingPriority: .fittingSizeLevel,
-        verticalFittingPriority: .fittingSizeLevel)
-      return size
-    }
-  }
 
   internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize? {
     let size = listCellSize(for: model, with: sizeConstraints)
@@ -191,7 +210,7 @@ extension ListModelSectionController {
 
   override internal func canMoveItem(at index: Int) -> Bool {
     guard let section = self.object?.section else { return false }
-    return section.cellModels[index].reorderable
+    return (section.cellModels[index] as? ListReorderableCellModel)?.reorderable ?? false
   }
 
   override internal func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
@@ -408,10 +427,7 @@ extension ListModelSectionController: ListDisplayDelegate {
     cell: UICollectionViewCell,
     at index: Int
   ) {
-    guard let minervaCell = cell as? ListCell else {
-      assertionFailure("invalid cell type \(cell)")
-      return
-    }
+    guard let minervaCell = cell as? ListDisplayableCell else {      return    }
     minervaCell.willDisplayCell()
   }
 
@@ -421,10 +437,7 @@ extension ListModelSectionController: ListDisplayDelegate {
     cell: UICollectionViewCell,
     at index: Int
   ) {
-    guard let minervaCell = cell as? ListCell else {
-      assertionFailure("invalid cell type \(cell)")
-      return
-    }
+    guard let minervaCell = cell as? ListDisplayableCell else {      return    }
     minervaCell.didEndDisplayingCell()
   }
 }
