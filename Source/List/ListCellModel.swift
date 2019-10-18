@@ -15,8 +15,7 @@ public enum ListCellSize {
 }
 
 // MARK: - ListCellModel
-public protocol ListCellModel: CustomStringConvertible {
-  var reorderable: Bool { get }
+public protocol ListCellModel {
   var identifier: String { get }
   var cellType: ListCollectionViewCell.Type { get }
 
@@ -62,6 +61,10 @@ extension ListCellModel where Self: Equatable {
     guard let other = model as? Self else { return false }
     return self == other
   }
+}
+
+public protocol ListReorderableCellModel {
+    var reorderable: Bool { get }
 }
 
 // MARK: - ListSelectableCellModel
@@ -124,9 +127,7 @@ extension TypedListCellModel {
   }
 
   public func identical(to other: ListCellModel) -> Bool {
-    guard let model = other as? Self else {
-      return false
-    }
+    guard let model = other as? Self else {      return false    }
     return identical(to: model)
   }
   public func size(
