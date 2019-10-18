@@ -98,7 +98,6 @@
 		F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B91226D367500BA461A /* ListSection.swift */; };
 		F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B93226D367500BA461A /* ListCellModel.swift */; };
 		F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */; };
-		F5EF2DAB2344FAB600A0073E /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8A226D367500BA461A /* BaseListCell.swift */; };
 		F5EF2DB02344FBE300A0073E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EF2DAF2344FBE300A0073E /* Extensions.swift */; };
 		F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F880233BE18800012C5E /* BaseCoordinator.swift */; };
 		F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F886233BE23700012C5E /* BaseViewController.swift */; };
@@ -244,7 +243,6 @@
 		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
 		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultListCell.swift; sourceTree = "<group>"; };
 		F5DA2B89226D367500BA461A /* MinervaObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinervaObservable.swift; sourceTree = "<group>"; };
-		F5DA2B8A226D367500BA461A /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
 		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F5DA2B8D226D367500BA461A /* ListViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayout.swift; sourceTree = "<group>"; };
@@ -602,7 +600,6 @@
 		F5DA2B88226D362900BA461A /* List */ = {
 			isa = PBXGroup;
 			children = (
-				F5DA2B8A226D367500BA461A /* BaseListCell.swift */,
 				F5EF2DAF2344FBE300A0073E /* Extensions.swift */,
 				F562CF10234E2A3000402122 /* LegacyListController.swift */,
 				F5DA2B8E226D367500BA461A /* ListCell.swift */,
@@ -911,7 +908,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5EF2DAB2344FAB600A0073E /* BaseListCell.swift in Sources */,
 				F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */,
 				F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,

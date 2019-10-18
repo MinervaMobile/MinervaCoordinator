@@ -72,38 +72,38 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     )
     return sizeConstraints
   }
- 
+
   internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
-        let adjustedContainerSize = sizeConstraints.adjustedContainerSize
+    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
-        let collectionCell = cell(for: model)
-        collectionCell.bind(cellModel: model, sizing: true)
-        defer {
-          collectionCell.prepareForReuse()
-        }
-
-        let view = collectionCell.contentView
-
-        switch sizeConstraints.distribution {
-        case .equally, .entireRow:
-          let isVertical = sizeConstraints.scrollDirection == .vertical
-          let size = view.systemLayoutSizeFitting(
-            adjustedContainerSize,
-            withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
-            verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
-          if isVertical {
-            return CGSize(width: adjustedContainerSize.width, height: size.height)
-          } else {
-            return CGSize(width: size.width, height: adjustedContainerSize.height)
-          }
-        case .proportionally:
-          let size = view.systemLayoutSizeFitting(
-            adjustedContainerSize,
-            withHorizontalFittingPriority: .fittingSizeLevel,
-            verticalFittingPriority: .fittingSizeLevel)
-          return size
-        }
+    let collectionCell = cell(for: model)
+    collectionCell.bind(cellModel: model, sizing: true)
+    defer {
+      collectionCell.prepareForReuse()
     }
+
+    let view = collectionCell.contentView
+
+    switch sizeConstraints.distribution {
+    case .equally, .entireRow:
+      let isVertical = sizeConstraints.scrollDirection == .vertical
+      let size = view.systemLayoutSizeFitting(
+        adjustedContainerSize,
+        withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+      if isVertical {
+        return CGSize(width: adjustedContainerSize.width, height: size.height)
+      } else {
+        return CGSize(width: size.width, height: adjustedContainerSize.height)
+      }
+    case .proportionally:
+      let size = view.systemLayoutSizeFitting(
+        adjustedContainerSize,
+        withHorizontalFittingPriority: .fittingSizeLevel,
+        verticalFittingPriority: .fittingSizeLevel)
+      return size
+    }
+  }
 
   internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize? {
     let size = listCellSize(for: model, with: sizeConstraints)
