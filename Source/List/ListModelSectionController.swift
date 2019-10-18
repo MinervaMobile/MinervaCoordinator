@@ -373,6 +373,8 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
     let indexPath = IndexPath(item: index, section: self.section)
     if let model = wrapper.model as? ListSelectableCellModelWrapper {
       model.selected(at: indexPath)
+    } else {
+      collectionContext?.deselectItem(at: index, sectionController: sectionController, animated: false)
     }
   }
   internal func sectionController(
