@@ -73,55 +73,55 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
     return sizeConstraints
   }
 
-    internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
-        let adjustedContainerSize = sizeConstraints.adjustedContainerSize
+  internal func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+    let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
-        let collectionCell = cell(for: model)
-        collectionCell.bind(cellModel: model, sizing: true)
+    let collectionCell = cell(for: model)
+    collectionCell.bind(cellModel: model, sizing: true)
 
-        let view = collectionCell.contentView
-        view.translatesAutoresizingMaskIntoConstraints = false
+    let view = collectionCell.contentView
+    view.translatesAutoresizingMaskIntoConstraints = false
 
-        let isVertical = sizeConstraints.scrollDirection == .vertical
-        let proportional = sizeConstraints.distribution == .proportionally
-        let constraint: NSLayoutConstraint
-        if proportional {
-            if isVertical {
-                constraint = view.widthAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.width)
-            } else {
-                constraint = view.heightAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.height)
-            }
-        } else {
-            if isVertical {
-                constraint = view.widthAnchor.constraint(equalToConstant: adjustedContainerSize.width)
-            } else {
-                constraint = view.heightAnchor.constraint(equalToConstant: adjustedContainerSize.height)
-            }
-        }
-        constraint.isActive = true
-
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-
-        let size: CGSize
-        let boundsSize = view.bounds.size
-        if proportional {
-            if isVertical {
-                size = CGSize(width: min(boundsSize.width, adjustedContainerSize.width), height: boundsSize.height)
-            } else {
-                size = CGSize(width: boundsSize.width, height: min(boundsSize.height, adjustedContainerSize.height))
-            }
-        } else {
-            if isVertical {
-                size = CGSize(width: adjustedContainerSize.width, height: boundsSize.height)
-            } else {
-                size = CGSize(width: boundsSize.width, height: adjustedContainerSize.height)
-            }
-        }
-        view.removeConstraint(constraint)
-        collectionCell.prepareForReuse()
-        return size
+    let isVertical = sizeConstraints.scrollDirection == .vertical
+    let proportional = sizeConstraints.distribution == .proportionally
+    let constraint: NSLayoutConstraint
+    if proportional {
+      if isVertical {
+        constraint = view.widthAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.width)
+      } else {
+        constraint = view.heightAnchor.constraint(lessThanOrEqualToConstant: adjustedContainerSize.height)
+      }
+    } else {
+      if isVertical {
+        constraint = view.widthAnchor.constraint(equalToConstant: adjustedContainerSize.width)
+      } else {
+        constraint = view.heightAnchor.constraint(equalToConstant: adjustedContainerSize.height)
+      }
     }
+    constraint.isActive = true
+
+    view.setNeedsLayout()
+    view.layoutIfNeeded()
+
+    let size: CGSize
+    let boundsSize = view.bounds.size
+    if proportional {
+      if isVertical {
+        size = CGSize(width: min(boundsSize.width, adjustedContainerSize.width), height: boundsSize.height)
+      } else {
+        size = CGSize(width: boundsSize.width, height: min(boundsSize.height, adjustedContainerSize.height))
+      }
+    } else {
+      if isVertical {
+        size = CGSize(width: adjustedContainerSize.width, height: boundsSize.height)
+      } else {
+        size = CGSize(width: boundsSize.width, height: adjustedContainerSize.height)
+      }
+    }
+    view.removeConstraint(constraint)
+    collectionCell.prepareForReuse()
+    return size
+  }
 
   internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize? {
     let size = listCellSize(for: model, with: sizeConstraints)
@@ -427,7 +427,7 @@ extension ListModelSectionController: ListDisplayDelegate {
     cell: UICollectionViewCell,
     at index: Int
   ) {
-    guard let minervaCell = cell as? ListDisplayableCell else {      return    }
+    guard let minervaCell = cell as? ListDisplayableCell else { return }
     minervaCell.willDisplayCell()
   }
 
@@ -437,7 +437,7 @@ extension ListModelSectionController: ListDisplayDelegate {
     cell: UICollectionViewCell,
     at index: Int
   ) {
-    guard let minervaCell = cell as? ListDisplayableCell else {      return    }
+    guard let minervaCell = cell as? ListDisplayableCell else { return }
     minervaCell.didEndDisplayingCell()
   }
 }
