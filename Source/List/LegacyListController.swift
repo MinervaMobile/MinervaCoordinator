@@ -90,7 +90,7 @@ public final class LegacyListController: NSObject, ListController {
     dispatchPrecondition(condition: .onQueue(.main))
     guard noLongerDisplayingCells else { return }
     guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.willDisplayCell() }
+    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.willDisplayCell() }
     noLongerDisplayingCells = false
   }
 
@@ -98,7 +98,7 @@ public final class LegacyListController: NSObject, ListController {
     dispatchPrecondition(condition: .onQueue(.main))
     guard !noLongerDisplayingCells else { return }
     guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListCell }.forEach { $0.didEndDisplayingCell() }
+    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.didEndDisplayingCell() }
     noLongerDisplayingCells = true
   }
 
