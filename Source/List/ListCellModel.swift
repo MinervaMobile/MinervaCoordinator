@@ -64,7 +64,7 @@ extension ListCellModel where Self: Equatable {
 }
 
 public protocol ListReorderableCellModel {
-    var reorderable: Bool { get }
+  var reorderable: Bool { get }
 }
 
 // MARK: - ListSelectableCellModel
@@ -127,7 +127,7 @@ extension TypedListCellModel {
   }
 
   public func identical(to other: ListCellModel) -> Bool {
-    guard let model = other as? Self else {      return false    }
+    guard let model = other as? Self else { return false }
     return identical(to: model)
   }
   public func size(
