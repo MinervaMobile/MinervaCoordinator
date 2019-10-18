@@ -8,7 +8,9 @@ def minerva_pods
   pod 'IQKeyboardManagerSwift'
   pod 'MBProgressHUD'
   pod 'PromiseKit/CorePromise'
+  pod 'RxCocoa'
   pod 'RxSwift'
+  pod 'RxSwiftExt'
   pod 'SwiftLint'
   pod 'SwiftProtobuf'
   pod 'SwipeCellKit'
@@ -20,16 +22,6 @@ target 'Minerva' do
 end
 
 target 'MinervaExample' do
-  platform :ios, '11.0'
-  minerva_pods
-end
-
-target 'MinervaExampleTests' do
-  platform :ios, '11.0'
-  minerva_pods
-end
-
-target 'MinervaExampleUITests' do
   platform :ios, '11.0'
   minerva_pods
 end
