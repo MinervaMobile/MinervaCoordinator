@@ -367,8 +367,7 @@
 		F5587D4622502BF3004223E5 /* Minerva */ = {
 			isa = PBXGroup;
 			children = (
-				F5EF2D932344FA0000A0073E /* Base */,
-				F5EF2D882344F95D00A0073E /* Bindable */,
+				F5EF2D932344FA0000A0073E /* Convenience */,
 				F5F08AF223192C2900C249E9 /* Coordination */,
 				F5587D5222502C5A004223E5 /* Info.plist */,
 				F5DA2B88226D362900BA461A /* List */,
@@ -618,29 +617,22 @@
 			path = List;
 			sourceTree = "<group>";
 		};
-		F5EF2D882344F95D00A0073E /* Bindable */ = {
+		F5EF2D932344FA0000A0073E /* Convenience */ = {
 			isa = PBXGroup;
 			children = (
-				F5564883235B0E5B009D8778 /* BaseListBindableCell.swift */,
-				F5EF2D8F2344F99200A0073E /* ListBindableCell.swift */,
-				F5DA2B89226D367500BA461A /* MinervaObservable.swift */,
-			);
-			path = Bindable;
-			sourceTree = "<group>";
-		};
-		F5EF2D932344FA0000A0073E /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				F5564880235B0E54009D8778 /* BaseListCell.swift */,
 				F501F880233BE18800012C5E /* BaseCoordinator.swift */,
+				F5564883235B0E5B009D8778 /* BaseListBindableCell.swift */,
+				F5564880235B0E54009D8778 /* BaseListCell.swift */,
 				F501F886233BE23700012C5E /* BaseViewController.swift */,
 				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F501F882233BE1BC00012C5E /* DataSource.swift */,
+				F5EF2D8F2344F99200A0073E /* ListBindableCell.swift */,
+				F5DA2B89226D367500BA461A /* MinervaObservable.swift */,
 				F562CF1223547DF300402122 /* SwiftUICell.swift */,
 				F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */,
 				F501F888233BE25C00012C5E /* ViewController.swift */,
 			);
-			path = Base;
+			path = Convenience;
 			sourceTree = "<group>";
 		};
 		F5F08AF223192C2900C249E9 /* Coordination */ = {

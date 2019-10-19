@@ -52,7 +52,7 @@ extension ListCellModel where Self: AnyObject {
       return cellType
     }
     assertionFailure("Unable to determine the cell type")
-    return BaseListCell.self
+    return MissingListCell.self
   }
 }
 
