@@ -15,6 +15,8 @@
 		F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F899233C05E500012C5E /* UserListCoordinator.swift */; };
 		F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
 		F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89D233C0E5900012C5E /* FilterCoordinator.swift */; };
+		F5564882235B0E55009D8778 /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5564880235B0E54009D8778 /* BaseListCell.swift */; };
+		F5564884235B0E5B009D8778 /* BaseListBindableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5564883235B0E5B009D8778 /* BaseListBindableCell.swift */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
 		F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */; };
@@ -105,7 +107,6 @@
 		F5EF2DB52344FC4500A0073E /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F882233BE1BC00012C5E /* DataSource.swift */; };
 		F5EF2DB62344FC4500A0073E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */; };
 		F5EF2DB72344FC4500A0073E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F888233BE25C00012C5E /* ViewController.swift */; };
-		F5EF2DB82344FC9200A0073E /* BaseListBindableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B94226D367500BA461A /* BaseListBindableCell.swift */; };
 		F5EF2DB92344FC9200A0073E /* ListBindableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EF2D8F2344F99200A0073E /* ListBindableCell.swift */; };
 		F5EF2DBA2344FC9200A0073E /* MinervaObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B89226D367500BA461A /* MinervaObservable.swift */; };
 		F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F08AF323192C4900C249E9 /* Coordinator.swift */; };
@@ -159,6 +160,8 @@
 		F501F899233C05E500012C5E /* UserListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoordinator.swift; sourceTree = "<group>"; };
 		F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCoordinator.swift; sourceTree = "<group>"; };
 		F501F89D233C0E5900012C5E /* FilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCoordinator.swift; sourceTree = "<group>"; };
+		F5564880235B0E54009D8778 /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
+		F5564883235B0E5B009D8778 /* BaseListBindableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListBindableCell.swift; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5587D1922502B11004223E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -251,7 +254,6 @@
 		F5DA2B90226D367500BA461A /* ListModelSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListModelSectionController.swift; sourceTree = "<group>"; };
 		F5DA2B91226D367500BA461A /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
 		F5DA2B93226D367500BA461A /* ListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCellModel.swift; sourceTree = "<group>"; };
-		F5DA2B94226D367500BA461A /* BaseListBindableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListBindableCell.swift; sourceTree = "<group>"; };
 		F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSizeConstraints.swift; sourceTree = "<group>"; };
 		F5EF2D8F2344F99200A0073E /* ListBindableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBindableCell.swift; sourceTree = "<group>"; };
 		F5EF2DAF2344FBE300A0073E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -619,7 +621,7 @@
 		F5EF2D882344F95D00A0073E /* Bindable */ = {
 			isa = PBXGroup;
 			children = (
-				F5DA2B94226D367500BA461A /* BaseListBindableCell.swift */,
+				F5564883235B0E5B009D8778 /* BaseListBindableCell.swift */,
 				F5EF2D8F2344F99200A0073E /* ListBindableCell.swift */,
 				F5DA2B89226D367500BA461A /* MinervaObservable.swift */,
 			);
@@ -629,6 +631,7 @@
 		F5EF2D932344FA0000A0073E /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				F5564880235B0E54009D8778 /* BaseListCell.swift */,
 				F501F880233BE18800012C5E /* BaseCoordinator.swift */,
 				F501F886233BE23700012C5E /* BaseViewController.swift */,
 				F576F949226E16970015D14E /* CollectionViewController.swift */,
@@ -912,10 +915,10 @@
 				F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
 				F5DA2B9A226D367600BA461A /* ListViewLayout.swift in Sources */,
+				F5564882235B0E55009D8778 /* BaseListCell.swift in Sources */,
 				F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */,
 				F5EF2DBA2344FC9200A0073E /* MinervaObservable.swift in Sources */,
 				F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */,
-				F5EF2DB82344FC9200A0073E /* BaseListBindableCell.swift in Sources */,
 				F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
 				F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */,
@@ -931,6 +934,7 @@
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
 				F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
+				F5564884235B0E5B009D8778 /* BaseListBindableCell.swift in Sources */,
 				F5EF2DB02344FBE300A0073E /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

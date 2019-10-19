@@ -98,8 +98,8 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
   }
 }
 
-final class BorderLabelCell: DefaultListCell, ListCellHelper {
-  typealias ModelType = BorderLabelCellModel
+final class BorderLabelCell: DefaultListCell {
+  private var model: BorderLabelCellModel? { cellModel as? BorderLabelCellModel }
 
   private var labelLeadingConstraint: NSLayoutConstraint?
 

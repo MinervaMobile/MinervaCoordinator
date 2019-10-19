@@ -17,6 +17,7 @@ open class SwipeableCellModel: DefaultListCellModel {
 }
 
 open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
+
   open private(set) var cellModel: ListCellModel?
 
   public private(set) var containerTopConstraint: NSLayoutConstraint?
@@ -131,12 +132,6 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
     didUpdateCellModel()
   }
 
-  open func willDisplayCell() {
-  }
-
-  open func didEndDisplayingCell() {
-  }
-
   open func didUpdateCellModel() {
     guard let model = self.cellModel as? SwipeableCellModel else { return }
     topSeparatorView.backgroundColor = model.topSeparatorColor ?? model.backgroundColor
@@ -156,18 +151,22 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
     bottomMargin = model.bottomMargin
   }
 
+  public final func bind(cellModel: ListCellModel, sizing: Bool) {
+    if let model = cellModel as? ListBindableCellModelWrapper {
+      model.willBind()
+    }
+    self.cellModel = cellModel
+    didUpdateCellModel()
+  }
+
   // MARK: - ListBindable
 
-  public func bindViewModel(_ viewModel: Any) {
+  public final func bindViewModel(_ viewModel: Any) {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Invalid view model \(viewModel)")
       return
     }
-    if let model = wrapper.model as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
-    self.cellModel = wrapper.model
-    didUpdateCellModel()
+    bind(cellModel: wrapper.model, sizing: false)
   }
 }
 

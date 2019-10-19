@@ -87,9 +87,9 @@ final class PickerCellModel: BaseListCellModel {
   }
 }
 
-final class PickerCell: BaseListCell, ListCellHelper {
+final class PickerCell: BaseListCell {
 
-  typealias ModelType = PickerCellModel
+  private var model: PickerCellModel? { cellModel as? PickerCellModel }
 
   private let pickerView: UIPickerView
 

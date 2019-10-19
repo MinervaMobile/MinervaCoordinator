@@ -53,7 +53,7 @@ extension ListCellHelper {
 }
 
 // This should not be used, it is a placeholder for failures to bridge the IGListKit obj-c to Swift gap.
-internal class BaseListCell: ListCollectionViewCell {
+internal class MissingListCell: ListCollectionViewCell {
   func bind(cellModel: ListCellModel, sizing: Bool) { }
   func bindViewModel(_ viewModel: Any) { }
 }

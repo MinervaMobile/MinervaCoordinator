@@ -19,8 +19,8 @@ open class BaseListBindableCell: BaseListCell, ListBindableCell {
 
   // MARK: - ListBindable
 
-  override public func bindViewModel(_ viewModel: Any) {
+  override open func didUpdateCellModel() {
     disposeBag.clear()
-    super.bindViewModel(viewModel)
+    super.didUpdateCellModel()
   }
 }

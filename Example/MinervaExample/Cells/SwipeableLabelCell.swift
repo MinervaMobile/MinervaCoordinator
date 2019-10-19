@@ -91,8 +91,8 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
   }
 }
 
-final class SwipeableLabelCell: SwipeableCell, ListCellHelper {
-  typealias ModelType = SwipeableLabelCellModel
+final class SwipeableLabelCell: SwipeableCell {
+  private var model: SwipeableLabelCellModel? { cellModel as? SwipeableLabelCellModel }
 
   private var disposeBag = DisposeBag()
 

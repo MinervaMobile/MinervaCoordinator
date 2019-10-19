@@ -44,9 +44,9 @@ struct MarginCellModel: TypedListCellModel {
   }
 }
 
-final class MarginCell: BaseListCell, ListCellHelper {
+final class MarginCell: BaseListCell {
 
-  typealias ModelType = MarginCellModel
+  private var model: MarginCellModel? { cellModel as? MarginCellModel }
 
   override func didUpdateCellModel() {
     super.didUpdateCellModel()

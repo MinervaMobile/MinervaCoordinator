@@ -40,9 +40,9 @@ struct BottomMarginCellModel: TypedListCellModel, Equatable {
   }
 }
 
-final class BottomMarginCell: BaseListCell, ListCellHelper {
+final class BottomMarginCell: BaseListCell {
 
-  typealias ModelType = BottomMarginCellModel
+  private var model: BottomMarginCellModel? { cellModel as? BottomMarginCellModel }
 
   override func didUpdateCellModel() {
     super.didUpdateCellModel()

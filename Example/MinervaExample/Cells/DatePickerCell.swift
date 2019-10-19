@@ -43,9 +43,9 @@ final class DatePickerCellModel: BaseListCellModel {
   }
 }
 
-final class DatePickerCell: BaseListCell, ListCellHelper {
+final class DatePickerCell: BaseListCell {
 
-  typealias ModelType = DatePickerCellModel
+  private var model: DatePickerCellModel? { cellModel as? DatePickerCellModel }
 
   private let datePicker: UIDatePicker = {
     let datePicker = UIDatePicker()

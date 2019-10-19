@@ -66,8 +66,8 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
   }
 }
 
-final class LabelAccessoryCell: DefaultListCell, ListCellHelper {
-  typealias ModelType = LabelAccessoryCellModel
+final class LabelAccessoryCell: DefaultListCell {
+  private var model: LabelAccessoryCellModel? { cellModel as? LabelAccessoryCellModel }
 
   private let label: UILabel = {
     let label = UILabel()
