@@ -10,7 +10,7 @@ import UIKit
 
 import Minerva
 
-final class LabelCell: DefaultListCell, ListCellHelper {
+final class LabelCell: DefaultListCell {
 
   final class Model: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
@@ -75,7 +75,7 @@ final class LabelCell: DefaultListCell, ListCellHelper {
     }
   }
 
-  typealias ModelType = Model
+  private var model: Model? { cellModel as? Model }
 
   private let label: UILabel = {
     let label = UILabel()

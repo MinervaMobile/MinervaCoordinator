@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
 
-  s.default_subspecs = 'Base', 'Bindable', 'Coordination', 'List'
+  s.default_subspecs = 'Convenience', 'Coordination', 'List'
 
   s.requires_arc               = true
   s.swift_versions             = '5.1'
@@ -18,24 +18,13 @@ Pod::Spec.new do |s|
   s.ios.deployment_target      = '11.0'
   s.ios.frameworks             = 'Foundation', 'UIKit'
 
-  s.subspec 'Base' do |ss|
-    ss.source_files = 'Source/Base/**/*.swift'
+  s.subspec 'Convenience' do |ss|
+    ss.source_files = 'Source/Convenience/**/*.swift'
 
     ss.ios.deployment_target      = '11.0'
     ss.ios.frameworks             = 'Foundation', 'UIKit'
 
     ss.dependency 'Minerva/Coordination'
-    ss.dependency 'Minerva/List'
-
-    ss.dependency 'IGListKit', '~> 3.4.0'
-  end
-
-  s.subspec 'Bindable' do |ss|
-    ss.source_files = 'Source/Bindable/**/*.swift'
-
-    ss.ios.deployment_target      = '11.0'
-    ss.ios.frameworks             = 'Foundation', 'UIKit'
-
     ss.dependency 'Minerva/List'
 
     ss.dependency 'IGListKit', '~> 3.4.0'

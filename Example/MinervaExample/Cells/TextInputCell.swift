@@ -82,8 +82,8 @@ final class TextInputCellModel: BaseListCellModel {
   }
 }
 
-final class TextInputCell: BaseListBindableCell, ListCellHelper {
-  typealias ModelType = TextInputCellModel
+final class TextInputCell: BaseListBindableCell {
+  private var model: TextInputCellModel? { cellModel as? TextInputCellModel }
 
   private let textField: UITextField = {
     let textField = UITextField(frame: .zero)
@@ -111,11 +111,6 @@ final class TextInputCell: BaseListBindableCell, ListCellHelper {
       for: .editingChanged
     )
     setupConstraints()
-  }
-
-  @available(*, unavailable)
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   @objc

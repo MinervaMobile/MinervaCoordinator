@@ -78,16 +78,12 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, Li
 }
 
 @available(iOS 13.0, *)
-public final class SwiftUITextCell: BaseListCell, SwiftUICell {
-
-  public typealias Content = SwiftUITextView
-  public typealias ModelType = SwiftUITextCellModel
-
+public final class SwiftUITextCell: UICollectionViewCell, SwiftUICell {
+  public var model: SwiftUITextCellModel?
   public var hostingController: UIHostingController<SwiftUITextView>?
 
-  public override func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else { return }
+  public func bindViewModel(_ viewModel: Any) { bind(viewModel) }
+  public func bind(model: SwiftUITextCellModel, sizing: Bool) {
     setupHostingController(with: model)
     hostingController?.rootView.model = model
   }

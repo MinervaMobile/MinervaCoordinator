@@ -217,7 +217,7 @@ extension ListModelSectionController {
   private func cell(for viewModel: Any, index: Int) -> ListCollectionViewCell {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Unsupported view model type \(viewModel)")
-      return BaseListCell()
+      return MissingListCell()
     }
     return cell(for: wrapper.model, index: index)
   }
@@ -225,7 +225,7 @@ extension ListModelSectionController {
   private func cell(for cellModel: ListCellModel, index: Int) -> ListCollectionViewCell {
     guard let collectionContext = self.collectionContext else {
       assertionFailure("The collectionContext should exist")
-      return BaseListCell()
+      return MissingListCell()
     }
     let cellType = cellModel.cellType
     guard let cell = collectionContext.dequeueReusableCell(
@@ -234,7 +234,7 @@ extension ListModelSectionController {
       at: index
     ) as? ListCollectionViewCell else {
       assertionFailure("Failed to load the reuseable cell for \(cellType)")
-      return BaseListCell()
+      return MissingListCell()
     }
     return cell
   }
@@ -246,7 +246,7 @@ extension ListModelSectionController {
   ) -> ListCollectionViewCell {
     guard let collectionContext = self.collectionContext else {
       assertionFailure("The collectionContext should exist")
-      return BaseListCell()
+      return MissingListCell()
     }
     let cellType = cellModel.cellType
     guard let cell = collectionContext.dequeueReusableSupplementaryView(
@@ -256,7 +256,7 @@ extension ListModelSectionController {
       at: index
     ) as? ListCollectionViewCell else {
       assertionFailure("Failed to load the reuseable cell for \(cellType)")
-      return BaseListCell()
+      return MissingListCell()
     }
     return cell
   }

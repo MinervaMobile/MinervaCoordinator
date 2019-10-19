@@ -50,8 +50,8 @@ final class ImageCellModel: DefaultListCellModel {
   }
 }
 
-final class ImageCell: DefaultListCell, ListCellHelper {
-  typealias ModelType = ImageCellModel
+final class ImageCell: DefaultListCell {
+  private var model: ImageCellModel? { cellModel as? ImageCellModel }
 
   private let imageView: UIImageView = {
     let imageView = UIImageView()
