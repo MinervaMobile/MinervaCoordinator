@@ -57,7 +57,7 @@ extension CoordinatorNavigator {
   public func presentWithCloseButton<P, VC>(
     _ coordinator: MainCoordinator<P, VC>,
     animated: Bool = true,
-    modalPresentationStyle: UIModalPresentationStyle = .fullScreen
+    modalPresentationStyle: UIModalPresentationStyle = .automatic
   ) {
     coordinator.addCloseButton() { [weak self] child in
       self?.dismiss(child, animated: true)
@@ -65,8 +65,8 @@ extension CoordinatorNavigator {
     present(
       coordinator,
       from: coordinator.navigator,
-      animated: animated,
-      modalPresentationStyle: modalPresentationStyle)
+      modalPresentationStyle: modalPresentationStyle,
+      animated: animated)
   }
 }
 
