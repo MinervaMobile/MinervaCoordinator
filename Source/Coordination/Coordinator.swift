@@ -47,17 +47,17 @@ extension CoordinatorNavigator {
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     from navigator: Navigator,
-    animated: Bool = true,
-    modalPresentationStyle: UIModalPresentationStyle = .fullScreen
+    modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
+    animated: Bool = true
   ) {
     navigator.setViewControllers([coordinator.baseViewController], animated: false)
-    present(coordinator, animated: animated, modalPresentationStyle: modalPresentationStyle)
+    present(coordinator, modalPresentationStyle: modalPresentationStyle, animated: animated)
   }
 
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
-    animated: Bool = true,
-    modalPresentationStyle: UIModalPresentationStyle = .fullScreen
+    modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
+    animated: Bool = true
   ) {
     addChild(coordinator)
 
@@ -103,6 +103,16 @@ extension CoordinatorNavigator {
     addChild(coordinator)
     navigator.setViewControllers([coordinator.baseViewController], animated: animated) { [weak self] _ in
       self?.removeChild(coordinator)
+    }
+  }
+}
+
+extension UIModalPresentationStyle {
+  public static var safeAutomatic: UIModalPresentationStyle {
+    if #available(iOS 13, *) {
+      return .automatic
+    } else {
+      return .fullScreen
     }
   }
 }

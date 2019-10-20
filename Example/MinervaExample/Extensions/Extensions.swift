@@ -239,16 +239,6 @@ extension UILayoutPriority {
   }
 }
 
-extension UIModalPresentationStyle {
-  static var safeAutomatic: UIModalPresentationStyle {
-    if #available(iOS 13, *) {
-      return .automatic
-    } else {
-      return .fullScreen
-    }
-  }
-}
-
 extension UIView {
 
   func shouldTranslateAutoresizingMaskIntoConstraints(_ value: Bool) {
