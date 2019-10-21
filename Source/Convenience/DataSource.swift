@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import RxSwift
 import UIKit
 
-public protocol DataSource: AnyObject {
+public protocol DataSource {
+  var sections: Observable<[ListSection]> { get }
 }

@@ -193,12 +193,14 @@ extension LabelAccessoryCell {
 // MARK: - Factory
 extension LabelAccessoryCellModel {
   public static func createSettingsCellModel(
+    identifier: String? = nil,
     title: String,
     details: String?,
     hasChevron: Bool
   ) -> LabelAccessoryCellModel {
     let text = NSAttributedString(string: title, font: .subheadline, fontColor: .black)
-    let cellModel = LabelAccessoryCellModel(identifier: "\(title)-\(details ?? "")", attributedText: text)
+    let id = identifier ?? "\(title)-\(details ?? "")"
+    let cellModel = LabelAccessoryCellModel(identifier: id, attributedText: text)
     cellModel.accessoryImage = Asset.Disclosure.image.withRenderingMode(.alwaysTemplate)
     cellModel.accessoryColor = .darkGray
     cellModel.topMargin = 15

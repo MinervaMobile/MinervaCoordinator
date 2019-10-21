@@ -7,16 +7,10 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
-protocol CreateUserDataSourceDelegate: AnyObject {
-  func createUserActionSheetDataSource(
-    _ createUserActionSheetDataSource: CreateUserDataSource,
-    selected action: CreateUserDataSource.Action)
-}
-
-final class CreateUserDataSource: BaseDataSource {
+final class CreateUserDataSource: DataSource {
   enum Action {
     case create(email: String, password: String, dailyCalories: Int32, role: UserRole)
   }
@@ -25,22 +19,22 @@ final class CreateUserDataSource: BaseDataSource {
   private static let passwordCellModelIdentifier = "passwordCellModelIdentifier"
   private static let caloriesCellModelIdentifier = "caloriesCellModelIdentifier"
 
-  weak var delegate: CreateUserDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
+
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
 
   private var email: String = ""
   private var password: String = ""
   private var dailyCalories: Int32 = 2_000
   private var role: UserRole = .user
 
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+  public init() {
+    sectionsSubject.onNext([createSection()])
   }
-
   // MARK: - Helpers
 
   private func createSection() -> ListSection {
@@ -62,7 +56,7 @@ final class CreateUserDataSource: BaseDataSource {
         password: strongSelf.password,
         dailyCalories: strongSelf.dailyCalories,
         role: strongSelf.role)
-      strongSelf.delegate?.createUserActionSheetDataSource(strongSelf, selected: action)
+      strongSelf.actionsSubject.onNext(action)
     }
 
     return [
@@ -94,7 +88,7 @@ final class CreateUserDataSource: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }
@@ -110,7 +104,7 @@ final class CreateUserDataSource: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }
@@ -128,7 +122,7 @@ final class CreateUserDataSource: BaseDataSource {
     cellModel.cursorColor = .selectable
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .darkGray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }

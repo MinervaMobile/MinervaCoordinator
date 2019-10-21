@@ -7,16 +7,10 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
-protocol UpdateUserDataSourceDelegate: AnyObject {
-  func updateUserActionSheetDataSource(
-    _ updateUserActionSheetDataSource: UpdateUserDataSource,
-    selected action: UpdateUserDataSource.Action)
-}
-
-final class UpdateUserDataSource: BaseDataSource {
+final class UpdateUserDataSource: DataSource {
   enum Action {
     case save(user: User)
   }
@@ -24,31 +18,37 @@ final class UpdateUserDataSource: BaseDataSource {
   private static let emailCellModelIdentifier = "EmailCellModel"
   private static let caloriesCellModelIdentifier = "CaloriesCellModel"
 
-  weak var delegate: UpdateUserDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
 
-  private var user: UserProto
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
+
+  private var user: UserProto {
+    didSet {
+      userSubject.onNext(user)
+    }
+  }
+  private let userSubject: BehaviorSubject<UserProto>
 
   // MARK: - Lifecycle
 
   init(user: User) {
     self.user = user.proto
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+    self.userSubject = BehaviorSubject(value: self.user)
+    userSubject.map({ [weak self] user -> [ListSection] in self?.createSections() ?? [] })
+      .subscribe(sectionsSubject)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Helpers
 
-  private func createSection() -> ListSection {
+  private func createSections() -> [ListSection] {
     let cellModels = loadCellModels()
     let section = ListSection(cellModels: cellModels, identifier: "SECTION")
-    return section
+    return [section]
   }
 
   func loadCellModels() -> [ListCellModel] {
@@ -59,7 +59,7 @@ final class UpdateUserDataSource: BaseDataSource {
     doneModel.textColor = .selectable
     doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.updateUserActionSheetDataSource(strongSelf, selected: .save(user: strongSelf.user))
+      strongSelf.actionsSubject.onNext(.save(user: strongSelf.user))
     }
 
     return [
@@ -87,7 +87,7 @@ final class UpdateUserDataSource: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }
@@ -103,7 +103,7 @@ final class UpdateUserDataSource: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }

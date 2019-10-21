@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
-final class CreateUserCoordinator: PromiseCoordinator<CreateUserDataSource, CollectionViewController> {
+final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, CollectionViewController> {
 
   private let dataManager: DataManager
 
@@ -21,39 +21,40 @@ final class CreateUserCoordinator: PromiseCoordinator<CreateUserDataSource, Coll
     self.dataManager = dataManager
     let dataSource = CreateUserDataSource()
     let viewController = CollectionViewController()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
     viewController.title = "Create User"
   }
 
   private func create(email: String, password: String, dailyCalories: Int32, role: UserRole) {
     LoadingHUD.show(in: viewController.view)
-    dataManager.create(
+    dataManager.createUser(
       withEmail: email,
       password: password,
       dailyCalories: dailyCalories,
       role: role
-    ).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.navigator.dismiss(strongSelf.viewController, animated: true, completion: nil)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to save the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    )
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] () -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.navigator.dismiss(strongSelf.viewController, animated: true, completion: nil)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to save the user")
+        }
+      ).disposed(by: disposeBag)
   }
-}
-
-// MARK: - CreateUserDataSourceDelegate
-extension CreateUserCoordinator: CreateUserDataSourceDelegate {
-
-  func createUserActionSheetDataSource(
-    _ createUserActionSheetDataSource: CreateUserDataSource,
-    selected action: CreateUserDataSource.Action
-  ) {
+  private func handle(_ action: CreateUserDataSource.Action) {
     switch action {
     case let .create(email, password, dailyCalories, role):
       create(email: email, password: password, dailyCalories: dailyCalories, role: role)

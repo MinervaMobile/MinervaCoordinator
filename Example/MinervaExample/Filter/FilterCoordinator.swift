@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
 protocol FilterCoordinatorDelegate: AnyObject {
   func filterCoordinator(
@@ -18,21 +18,24 @@ protocol FilterCoordinatorDelegate: AnyObject {
   )
 }
 
-final class FilterCoordinator: PromiseCoordinator<FilterDataSource, CollectionViewController> {
+final class FilterCoordinator: MainCoordinator<FilterDataSource, CollectionViewController> {
 
   weak var delegate: FilterCoordinatorDelegate?
 
   // MARK: - Lifecycle
 
-  init(navigator: Navigator, filter: WorkoutFilter) {
+  init(navigator: Navigator, filter: Observable<WorkoutFilter>) {
 
     let dataSource = FilterDataSource(filter: filter)
     let viewController = CollectionViewController()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
   }
 
   // MARK: - Private
@@ -42,6 +45,12 @@ final class FilterCoordinator: PromiseCoordinator<FilterDataSource, CollectionVi
     coordinator.delegate = self
     push(coordinator, animated: true)
   }
+  private func handle(_ action: FilterDataSource.Action) {
+    switch action {
+    case let .edit(filter, type):
+      displayFilterPopup(with: filter, type: type)
+    }
+  }
 }
 
 // MARK: - UpdateFilterDataSourceDelegate
@@ -50,18 +59,6 @@ extension FilterCoordinator: UpdateFilterCoordinatorDelegate {
     _ updateFilterCoordinator: UpdateFilterCoordinator,
     updatedFilter filter: WorkoutFilter
   ) {
-    dataSource.filter = filter
-    dataSource.reload(animated: true)
     delegate?.filterCoordinator(self, updatedFilter: filter)
-  }
-}
-
-// MARK: - FilterDataSourceDelegate
-extension FilterCoordinator: FilterDataSourceDelegate {
-  func filterDataSource(_ filterDataSource: FilterDataSource, selected action: FilterDataSource.Action) {
-    switch action {
-    case let .edit(filter, type):
-      displayFilterPopup(with: filter, type: type)
-    }
   }
 }

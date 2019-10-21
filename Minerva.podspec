@@ -28,6 +28,7 @@ Pod::Spec.new do |s|
     ss.dependency 'Minerva/List'
 
     ss.dependency 'IGListKit', '~> 3.4.0'
+    ss.dependency 'RxSwift', '~> 5.0.0'
   end
 
   s.subspec 'Coordination' do |ss|

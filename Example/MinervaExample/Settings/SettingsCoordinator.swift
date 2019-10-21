@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
 protocol SettingsCoordinatorDelegate: AnyObject {
   func settingsCoordinatorLogoutCurrentUser(
@@ -17,7 +17,7 @@ protocol SettingsCoordinatorDelegate: AnyObject {
   )
 }
 
-final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, CollectionViewController> {
+final class SettingsCoordinator: MainCoordinator<SettingsDataSource, CollectionViewController> {
 
   weak var delegate: SettingsCoordinatorDelegate?
   private let userManager: UserManager
@@ -30,13 +30,16 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
     self.dataManager = dataManager
 
     let dataSource = SettingsDataSource(dataManager: dataManager)
-    let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
+    let viewController = CollectionViewController()
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
     viewController.title = "Settings"
-    dataSource.delegate = self
   }
 
   // MARK: - Private
@@ -44,27 +47,39 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
   private func deleteUser() {
     let userID = dataManager.userAuthorization.userID
     LoadingHUD.show(in: viewController.view)
-    userManager.delete(userID: userID).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.settingsCoordinatorLogoutCurrentUser(strongSelf)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to delete the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    userManager.delete(userID: userID)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] () -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.delegate?.settingsCoordinatorLogoutCurrentUser(strongSelf)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to delete the user")
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func logoutUser() {
     let userID = dataManager.userAuthorization.userID
     LoadingHUD.show(in: viewController.view)
-    userManager.logout(userID: userID).done { [weak self] () -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.settingsCoordinatorLogoutCurrentUser(strongSelf)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to logout")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    userManager.logout(userID: userID)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] () -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.delegate?.settingsCoordinatorLogoutCurrentUser(strongSelf)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to logout")
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func displayUserUpdatePopup(for user: User) {
@@ -72,11 +87,7 @@ final class SettingsCoordinator: PromiseCoordinator<SettingsDataSource, Collecti
     let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
-}
-
-// MARK: - SettingsDataSourceDelegate
-extension SettingsCoordinator: SettingsDataSourceDelegate {
-  func settingsDataSource(_ settingsDataSource: SettingsDataSource, selected action: SettingsDataSource.Action) {
+  private func handle(_ action: SettingsDataSource.Action) {
     switch action {
     case .deleteAccount:
       deleteUser()

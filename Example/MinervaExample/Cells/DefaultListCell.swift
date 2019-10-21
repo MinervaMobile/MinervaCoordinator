@@ -7,8 +7,8 @@
 
 import Foundation
 import UIKit
-
 import Minerva
+import RxSwift
 
 open class DefaultListCellModel: BaseListCellModel {
 
@@ -61,8 +61,9 @@ open class DefaultListCellModel: BaseListCellModel {
   }
 }
 
-open class DefaultListCell: BaseListBindableCell {
+open class DefaultListCell: BaseListCell {
 
+  public var disposeBag = DisposeBag()
   public private(set) var containerCenterXConstraint: NSLayoutConstraint?
   public private(set) var containerTopConstraint: NSLayoutConstraint?
   public private(set) var containerBottomConstraint: NSLayoutConstraint?
@@ -175,9 +176,9 @@ open class DefaultListCell: BaseListBindableCell {
     setupConstraints()
   }
 
-  @available(*, unavailable)
-  public required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  override open func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
   }
 
   override open func didUpdateCellModel() {

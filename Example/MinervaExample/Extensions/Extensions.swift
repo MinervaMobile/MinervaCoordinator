@@ -5,12 +5,10 @@
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
-import Combine
 import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
 
 extension Array where Element: NSAttributedString {
   public func height(constraintedToWidth width: CGFloat) -> CGFloat {

@@ -7,28 +7,25 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
-protocol WelcomeDataSourceDelegate: AnyObject {
-  func welcomeDataSource(_ welcomeDataSource: WelcomeDataSource, selected action: WelcomeDataSource.Action)
-}
-
-final class WelcomeDataSource: BaseDataSource {
+final class WelcomeDataSource: DataSource {
   enum Action {
     case createAccount
     case login
   }
 
-  weak var delegate: WelcomeDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
 
-  // MARK: - Public
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
 
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+  private let disposeBag = DisposeBag()
+
+  init() {
+    sectionsSubject.onNext([createSection()])
   }
 
   // MARK: - Private
@@ -69,14 +66,14 @@ final class WelcomeDataSource: BaseDataSource {
     newAccountModel.buttonColor = .selectable
     newAccountModel.selectionAction = { [weak self] _, _ in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.welcomeDataSource(strongSelf, selected: .createAccount)
+      strongSelf.actionsSubject.onNext(.createAccount)
     }
 
     let existingAccountModel = LabelCell.Model(text: "USE EXISTING ACCOUNT", font: .subheadline)
     existingAccountModel.textAlignment = .center
     existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.welcomeDataSource(strongSelf, selected: .login)
+      strongSelf.actionsSubject.onNext(.login)
     }
     existingAccountModel.textColor = .selectable
     existingAccountModel.topMargin = 30

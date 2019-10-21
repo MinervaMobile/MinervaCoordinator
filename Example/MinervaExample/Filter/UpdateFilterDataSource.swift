@@ -7,49 +7,49 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
-protocol UpdateFilterDataSourceDelegate: AnyObject {
-  func updateFilterDataSource(
-    _ updateFilterDataSource: UpdateFilterDataSource,
-    selected action: UpdateFilterDataSource.Action)
-}
-
-final class UpdateFilterDataSource: BaseDataSource {
+final class UpdateFilterDataSource: DataSource {
   enum Action {
     case update(filter: WorkoutFilter)
   }
 
   private static let dateCellModelIdentifier = "DateCellModel"
 
-  weak var delegate: UpdateFilterDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
+
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
 
   private let type: FilterType
-  private var filter: WorkoutFilterProto
+  private var filter: WorkoutFilterProto {
+    didSet {
+      filterSubject.onNext(filter)
+    }
+  }
+  private var filterSubject: BehaviorSubject<WorkoutFilterProto>
 
   // MARK: - Lifecycle
 
   init(type: FilterType, filter: WorkoutFilter) {
     self.type = type
     self.filter = filter.proto
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+    self.filterSubject = BehaviorSubject(value: self.filter)
+    filterSubject.map({ [weak self] filter in self?.createSection() ?? [] })
+      .subscribe(sectionsSubject)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Helpers
 
-  private func createSection() -> ListSection {
+  private func createSection() -> [ListSection] {
     let cellModels = loadCellModels()
     let section = ListSection(cellModels: cellModels, identifier: "SECTION")
-    return section
+    return [section]
   }
 
   private func loadCellModels() -> [ListCellModel] {
@@ -71,7 +71,7 @@ final class UpdateFilterDataSource: BaseDataSource {
       case .startTime:
         strongSelf.filter.startTime = nil
       }
-      strongSelf.delegate?.updateFilterDataSource(strongSelf, selected: .update(filter: strongSelf.filter))
+      strongSelf.actionsSubject.onNext(.update(filter: strongSelf.filter))
     }
 
     let doneModel = LabelCell.Model(identifier: "doneModel", text: "Update", font: .titleLarge)
@@ -81,7 +81,7 @@ final class UpdateFilterDataSource: BaseDataSource {
     doneModel.textColor = .selectable
     doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.updateFilterDataSource(strongSelf, selected: .update(filter: strongSelf.filter))
+      strongSelf.actionsSubject.onNext(.update(filter: strongSelf.filter))
     }
 
     return [
@@ -97,7 +97,6 @@ final class UpdateFilterDataSource: BaseDataSource {
 
   private func createDateCellModel() -> ListCellModel {
     let startDate = filter.date(for: type) ?? Date()
-    updateFilter(for: startDate)
     let cellModel = DatePickerCellModel(identifier: "dateCellModel", startDate: startDate)
     switch type {
     case .startDate:

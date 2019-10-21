@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-import PromiseKit
-
 protocol UserVCDelegate: AnyObject {
   func userVC(_ userVC: UserVC, selected tab: UserVC.Tab)
 }
