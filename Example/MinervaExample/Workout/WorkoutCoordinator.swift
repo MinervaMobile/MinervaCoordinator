@@ -15,7 +15,6 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
   private let dataManager: DataManager
   private let presenter: WorkoutPresenter
-  private let disposeBag = DisposeBag()
 
   // MARK: - Lifecycle
 
@@ -52,8 +51,8 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
       displayWorkoutPopup(with: nil, forUserID: userID)
     case .editWorkout(let workout):
       displayWorkoutPopup(with: workout, forUserID: workout.userID)
-    case .editFilter(let filter):
-      displayFilterSelection(with: filter)
+    case .editFilter:
+      displayFilterSelection()
     }
   }
 
@@ -71,9 +70,9 @@ final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 
-  private func displayFilterSelection(with filter: WorkoutFilter) {
+  private func displayFilterSelection() {
     let navigator = BasicNavigator(parent: self.navigator)
-    let coordinator = FilterCoordinator(navigator: navigator, filter: filter)
+    let coordinator = FilterCoordinator(navigator: navigator, filter: presenter.filter)
     coordinator.delegate = self
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }

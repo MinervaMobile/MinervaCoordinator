@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
 protocol TextInputCellModelDelegate: AnyObject {
@@ -24,11 +24,6 @@ final class TextInputCellModel: BaseListCellModel {
   fileprivate var attributedPlaceholder: NSAttributedString {
     return NSAttributedString(string: placeholder, font: font, fontColor: placeholderTextColor)
   }
-  var bottomBorderColor: UIColor? {
-    get { return reactiveBottomBorderColor.value }
-    set { reactiveBottomBorderColor.value = newValue }
-  }
-
   var text: String?
   var backgroundColor: UIColor?
   var cursorColor: UIColor?
@@ -42,8 +37,8 @@ final class TextInputCellModel: BaseListCellModel {
   var placeholderTextColor: UIColor = .white
   private let cellIdentifier: String
 
-  fileprivate var reactiveFirstResponder = MinervaObservable<Bool>(false)
-  fileprivate var reactiveBottomBorderColor = MinervaObservable<UIColor?>(nil)
+  var firstResponder = BehaviorSubject<Bool>(value: false)
+  var bottomBorderColor = BehaviorSubject<UIColor?>(value: nil)
 
   fileprivate let placeholder: String
   fileprivate let font: UIFont
@@ -56,7 +51,7 @@ final class TextInputCellModel: BaseListCellModel {
   }
 
   func becomeFirstResponder() {
-    reactiveFirstResponder.value = true
+    firstResponder.onNext(true)
   }
 
   // MARK: - BaseListCellModel
@@ -68,7 +63,6 @@ final class TextInputCellModel: BaseListCellModel {
   override func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? TextInputCellModel else { return false }
     return text == model.text
-      && bottomBorderColor == model.bottomBorderColor
       && backgroundColor == model.backgroundColor
       && cursorColor == model.cursorColor
       && textColor == model.textColor
@@ -82,8 +76,9 @@ final class TextInputCellModel: BaseListCellModel {
   }
 }
 
-final class TextInputCell: BaseListBindableCell {
+final class TextInputCell: BaseListCell {
   private var model: TextInputCellModel? { cellModel as? TextInputCellModel }
+  private var disposeBag = DisposeBag()
 
   private let textField: UITextField = {
     let textField = UITextField(frame: .zero)
@@ -113,6 +108,11 @@ final class TextInputCell: BaseListBindableCell {
     setupConstraints()
   }
 
+  override public func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
+  }
+
   @objc
   func textFieldDidChange(_ textField: UITextField) {
     guard let model = self.model else { return }
@@ -137,14 +137,14 @@ final class TextInputCell: BaseListBindableCell {
     textField.font = model.font
     contentView.backgroundColor = model.backgroundColor
 
-    bind(model.reactiveBottomBorderColor) { [weak self] bottomBorderColor -> Void in
-      self?.bottomBorder.backgroundColor = model.bottomBorderColor
-    }
-    bind(model.reactiveFirstResponder) { [weak self] isFirstResponder -> Void in
+    model.bottomBorderColor.subscribe(onNext: { [weak self] bottomBorderColor -> Void in
+      self?.bottomBorder.backgroundColor = bottomBorderColor
+    }).disposed(by: disposeBag)
+    model.firstResponder.subscribe(onNext: { [weak self] isFirstResponder -> Void in
       guard isFirstResponder else { return }
       self?.textField.becomeFirstResponder()
-      model.reactiveFirstResponder.value = false
-    }
+      model.firstResponder.onNext(false)
+    }).disposed(by: disposeBag)
   }
 }
 

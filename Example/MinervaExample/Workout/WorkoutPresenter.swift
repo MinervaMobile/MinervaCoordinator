@@ -15,7 +15,7 @@ final class WorkoutPresenter: DataSource {
 
   enum Action {
     case createWorkout(userID: String)
-    case editFilter(WorkoutFilter)
+    case editFilter
     case editWorkout(Workout)
   }
 
@@ -29,6 +29,9 @@ final class WorkoutPresenter: DataSource {
     var loading: Bool = false
   }
 
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
+
   private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
   public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
 
@@ -38,10 +41,8 @@ final class WorkoutPresenter: DataSource {
   private let transientStateSubject = PublishSubject<TransientState>()
   public var transientState: Observable<TransientState> { transientStateSubject.asObservable() }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
-
   private let filterSubject = BehaviorSubject<WorkoutFilter>(value: WorkoutFilterProto())
+  public var filter: Observable<WorkoutFilter> { filterSubject.asObservable() }
   private let errorSubject = BehaviorSubject<Error?>(value: nil)
   private let loadingSubject = BehaviorSubject<Bool>(value: false)
 
@@ -84,8 +85,8 @@ final class WorkoutPresenter: DataSource {
     filterSubject.onNext(filter)
   }
 
-  func editFilter(with filter: WorkoutFilter) {
-    actionsSubject.onNext(.editFilter(filter))
+  func editFilter() {
+    actionsSubject.onNext(.editFilter)
   }
 
   func createWorkout() {

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
 protocol SignInCoordinatorDelegate: AnyObject {
   func signInCoordinator(
@@ -18,7 +18,7 @@ protocol SignInCoordinatorDelegate: AnyObject {
   )
 }
 
-final class SignInCoordinator: PromiseCoordinator<SignInDataSource, CollectionViewController> {
+final class SignInCoordinator: MainCoordinator<SignInDataSource, CollectionViewController> {
 
   weak var delegate: SignInCoordinatorDelegate?
   private let userManager: UserManager
@@ -29,53 +29,64 @@ final class SignInCoordinator: PromiseCoordinator<SignInDataSource, CollectionVi
     self.userManager = userManager
 
     let dataSource = SignInDataSource(mode: mode)
-    let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let viewController = CollectionViewController()
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
   }
 
   // MARK: - Private
 
   private func createAccount(withEmail email: String, password: String) {
     LoadingHUD.show(in: viewController.view)
-    userManager.createAccount(withEmail: email, password: password).done { [weak self] dataManager in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.signInCoordinator(strongSelf, activated: dataManager)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(
-        error,
-        title: "Failed to create the account."
-      )
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    userManager.createAccount(withEmail: email, password: password)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] dataManager in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.delegate?.signInCoordinator(strongSelf, activated: dataManager)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(
+            error,
+            title: "Failed to create the account."
+          )
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func login(withEmail email: String, password: String) {
     LoadingHUD.show(in: viewController.view)
-    userManager.login(withEmail: email, password: password).done { [weak self] dataManager in
-      guard let strongSelf = self else { return }
-      strongSelf.delegate?.signInCoordinator(strongSelf, activated: dataManager)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(
-        error,
-        title: "Failed to login to the account."
-      )
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    userManager.login(withEmail: email, password: password)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] dataManager in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.delegate?.signInCoordinator(strongSelf, activated: dataManager)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(
+            error,
+            title: "Failed to login to the account."
+          )
+        }
+      ).disposed(by: disposeBag)
   }
-}
-
-// MARK: - SignInDataSourceDelegate
-extension SignInCoordinator: SignInDataSourceDelegate {
-  func signInDataSource(_ signInDataSource: SignInDataSource, selected action: SignInDataSource.Action) {
+  private func handle(_ action: SignInDataSource.Action) {
     switch action {
-    case let .signIn(email, password):
-      switch signInDataSource.mode {
+    case let .signIn(email, password, mode):
+      switch mode {
       case .createAccount:
         createAccount(withEmail: email, password: password)
       case .login:

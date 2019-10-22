@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+/// Adds support for custom layout animations for individual cells.
 public class ListViewLayoutAttributes: UICollectionViewLayoutAttributes {
   public var animationGroup: CAAnimationGroup?
 

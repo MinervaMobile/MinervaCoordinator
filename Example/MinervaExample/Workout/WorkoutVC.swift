@@ -55,6 +55,14 @@ final class WorkoutVC: BaseViewController {
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
+
+    navigationItem.rightBarButtonItem = BlockBarButtonItem(
+      image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
+      style: .plain
+    ) { [weak self] _ -> Void in
+      self?.presenter.editFilter()
+    }
+    navigationItem.rightBarButtonItem?.tintColor = .selectable
   }
 
   // MARK: - State Change
@@ -76,14 +84,6 @@ final class WorkoutVC: BaseViewController {
 
   private func updated(_ state: WorkoutPresenter.PersistentState) {
     title = state.title
-
-    navigationItem.rightBarButtonItem = BlockBarButtonItem(
-      image: Asset.Filter.image.withRenderingMode(.alwaysTemplate),
-      style: .plain
-    ) { [weak self] _ -> Void in
-      self?.presenter.editFilter(with: state.filter)
-    }
-    navigationItem.rightBarButtonItem?.tintColor = .selectable
   }
 
   // MARK: - Private

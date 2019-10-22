@@ -8,11 +8,17 @@
 import Foundation
 import UIKit
 
+/// Sizing information to help size individual cells.
 public struct ListSizeConstraints: Hashable {
 
+  /// The overall size for the container the cell is in.
   public let containerSize: CGSize
+  /// The constraints for the section containing the model.
   public let sectionConstraints: ListSection.Constraints
 
+  /// Sizing information to help size individual cells.
+  /// - Parameter containerSize: The overall size for the container the cell is in.
+  /// - Parameter sectionConstraints: The constraints for the section containing the model.
   public init(
     containerSize: CGSize,
     sectionConstraints: ListSection.Constraints
@@ -21,7 +27,7 @@ public struct ListSizeConstraints: Hashable {
     self.sectionConstraints = sectionConstraints
   }
 
-  /// The container size adjusted for the insets, distribution, minimumInteritemSpacing, scroll direction
+  /// The container size adjusted for the insets, distribution, minimumInteritemSpacing, and scroll direction.
   public var adjustedContainerSize: CGSize {
     let insetSize = containerSize.adjust(for: inset)
     guard case .equally(let cellsInRow) = distribution else {

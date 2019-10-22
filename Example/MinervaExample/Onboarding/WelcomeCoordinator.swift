@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
 
 protocol WelcomeCoordinatorDelegate: AnyObject {
   func onboardingCoordinator(
@@ -18,7 +17,7 @@ protocol WelcomeCoordinatorDelegate: AnyObject {
 }
 
 /// Manages the user flows for logging in and creating new accounts
-final class WelcomeCoordinator: PromiseCoordinator<WelcomeDataSource, CollectionViewController> {
+final class WelcomeCoordinator: MainCoordinator<WelcomeDataSource, CollectionViewController> {
 
   weak var delegate: WelcomeCoordinatorDelegate?
   private let userManager: UserManager
@@ -29,12 +28,15 @@ final class WelcomeCoordinator: PromiseCoordinator<WelcomeDataSource, Collection
     self.userManager = userManager
 
     let dataSource = WelcomeDataSource()
-    let welcomeVC = CollectionViewController()
-    super.init(navigator: navigator, viewController: welcomeVC, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let viewController = CollectionViewController()
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
   }
 
   // MARK: - Private
@@ -44,20 +46,16 @@ final class WelcomeCoordinator: PromiseCoordinator<WelcomeDataSource, Collection
     coordinator.delegate = self
     push(coordinator, animated: true)
   }
+  private func handle(_ action: WelcomeDataSource.Action) {
+    switch action {
+    case .login: displaySignInVC(mode: .login)
+    case .createAccount: displaySignInVC(mode: .createAccount)
+    }
+  }
 }
 
 extension WelcomeCoordinator: SignInCoordinatorDelegate {
   func signInCoordinator(_ signInCoordinator: SignInCoordinator, activated dataManager: DataManager) {
     delegate?.onboardingCoordinator(self, activated: dataManager)
-  }
-}
-
-// MARK: - WelcomeDataSourceDelegate
-extension WelcomeCoordinator: WelcomeDataSourceDelegate {
-  func welcomeDataSource(_ welcomeDataSource: WelcomeDataSource, selected action: WelcomeDataSource.Action) {
-    switch action {
-    case .login: displaySignInVC(mode: .login)
-    case .createAccount: displaySignInVC(mode: .createAccount)
-    }
   }
 }

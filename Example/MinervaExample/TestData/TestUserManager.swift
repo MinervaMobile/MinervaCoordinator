@@ -7,7 +7,7 @@
 
 import Foundation
 
-import PromiseKit
+import RxSwift
 
 final class TestUserManager {
 
@@ -28,12 +28,12 @@ extension TestUserManager: UserManager {
     return dataManagerFactory.createDataManager(for: activeUser, userManager: self)
   }
 
-  func createAccount(withEmail email: String, password: String) -> Promise<DataManager> {
+  func createAccount(withEmail email: String, password: String) -> Single<DataManager> {
     guard email.isEmail else {
-      return .init(error: SystemError.invalidEmail)
+      return .error(SystemError.invalidEmail)
     }
     guard testData.emailToAuthorizationMap[email] == nil else {
-      return .init(error: SystemError.alreadyExists)
+      return .error(SystemError.alreadyExists)
     }
     let userID = UUID().uuidString
     let accessToken = UUID().uuidString
@@ -45,45 +45,45 @@ extension TestUserManager: UserManager {
     let user = UserProto(userID: userID, email: email, dailyCalories: 2_000)
     testData.idToUserMap[userID] = user
     activeUser = authorization
-    return .value(dataManagerFactory.createDataManager(for: authorization, userManager: self))
+    return .just(dataManagerFactory.createDataManager(for: authorization, userManager: self))
   }
 
-  func login(withEmail email: String, password: String) -> Promise<DataManager> {
+  func login(withEmail email: String, password: String) -> Single<DataManager> {
     guard email.isEmail else {
-      return .init(error: SystemError.invalidEmail)
+      return .error(SystemError.invalidEmail)
     }
     guard let authorization = testData.emailToAuthorizationMap[email],
       let actualPassword = testData.emailToPasswordMap[email] else {
-        return .init(error: SystemError.doesNotExist)
+        return .error(SystemError.doesNotExist)
     }
     guard actualPassword == password else {
-      return .init(error: SystemError.invalidEmailAndPassword)
+      return .error(SystemError.invalidEmailAndPassword)
     }
     activeUser = authorization
-    return .value(dataManagerFactory.createDataManager(for: authorization, userManager: self))
+    return .just(dataManagerFactory.createDataManager(for: authorization, userManager: self))
   }
 
-  func logout(userID: String) -> Promise<Void> {
+  func logout(userID: String) -> Single<Void> {
     guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID else {
-      return .init(error: SystemError.unauthorized)
+      return .error(SystemError.unauthorized)
     }
     guard var authorization = testData.idToAuthorizationMap[userID]?.proto else {
-      return .init(error: SystemError.doesNotExist)
+      return .error(SystemError.doesNotExist)
     }
     authorization.accessToken = UUID().uuidString
     testData.idToAuthorizationMap[userID] = authorization
     if userID == currentUser.userID {
       activeUser = nil
     }
-    return .value(())
+    return .just(())
   }
 
-  func delete(userID: String) -> Promise<Void> {
+  func delete(userID: String) -> Single<Void> {
     guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID else {
-      return .init(error: SystemError.unauthorized)
+      return .error(SystemError.unauthorized)
     }
     guard let user = testData.idToUserMap[userID] else {
-      return .init(error: SystemError.doesNotExist)
+      return .error(SystemError.doesNotExist)
     }
     testData.idToUserMap[userID] = nil
     testData.idToAuthorizationMap[userID] = nil
@@ -92,6 +92,6 @@ extension TestUserManager: UserManager {
     if userID == currentUser.userID {
       activeUser = nil
     }
-    return .value(())
+    return .just(())
   }
 }

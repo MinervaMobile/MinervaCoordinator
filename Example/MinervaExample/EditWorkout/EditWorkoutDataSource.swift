@@ -7,16 +7,10 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
-protocol EditWorkoutPresenterDelegate: AnyObject {
-  func workoutActionSheetDataSource(
-    _ workoutActionSheetDataSource: EditWorkoutPresenter,
-    selected action: EditWorkoutPresenter.Action)
-}
-
-final class EditWorkoutPresenter: BaseDataSource {
+final class EditWorkoutPresenter: DataSource {
   enum Action {
     case save(workout: Workout)
   }
@@ -25,36 +19,40 @@ final class EditWorkoutPresenter: BaseDataSource {
   private static let caloriesCellModelIdentifier = "CaloriesCellModel"
   private static let textCellModelIdentifier = "TextCellModel"
 
-  weak var delegate: EditWorkoutPresenterDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
 
-  private var workout: WorkoutProto
-  private let editing: Bool
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
+
+  private var workout: WorkoutProto {
+    didSet {
+      workoutSubject.onNext(workout)
+    }
+  }
+  private var workoutSubject: BehaviorSubject<WorkoutProto>
 
   // MARK: - Lifecycle
 
-  init(workout: Workout, editing: Bool) {
+  init(workout: Workout) {
     self.workout = workout.proto
-    self.editing = editing
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+    self.workoutSubject = BehaviorSubject<WorkoutProto>(value: self.workout)
+    workoutSubject.map({ [weak self] workout -> [ListSection] in self?.createSection(with: workout) ?? [] })
+      .subscribe(sectionsSubject)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Helpers
 
-  private func createSection() -> ListSection {
-    let cellModels = loadCellModels()
+  private func createSection(with workout: WorkoutProto) -> [ListSection] {
+    let cellModels = loadCellModels(with: workout)
     let section = ListSection(cellModels: cellModels, identifier: "SECTION")
-    return section
+    return [section]
   }
 
-  func loadCellModels() -> [ListCellModel] {
+  private func loadCellModels(with workout: WorkoutProto) -> [ListCellModel] {
     let doneModel = LabelCell.Model(
       identifier: "doneModel",
       text: "Save",
@@ -65,25 +63,23 @@ final class EditWorkoutPresenter: BaseDataSource {
     doneModel.textColor = .selectable
     doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.workoutActionSheetDataSource(strongSelf, selected: .save(workout: strongSelf.workout))
+      strongSelf.actionsSubject.onNext(.save(workout: strongSelf.workout))
     }
 
     return [
       MarginCellModel(cellIdentifier: "headerMarginModel", height: 12),
-      createDateCellModel(),
+      createDateCellModel(with: workout),
       MarginCellModel(cellIdentifier: "dateMarginModel", height: 12),
-      createCaloriesCellModel(),
+      createCaloriesCellModel(with: workout),
       MarginCellModel(cellIdentifier: "caloriesMarginModel", height: 12),
-      createTextCellModel(),
+      createTextCellModel(with: workout),
       MarginCellModel(cellIdentifier: "textMarginModel", height: 12),
       doneModel,
       MarginCellModel(cellIdentifier: "doneMarginModel", height: 12)
     ]
   }
 
-  // MARK: - Helpers
-
-  private func createDateCellModel() -> ListCellModel {
+  private func createDateCellModel(with workout: WorkoutProto) -> ListCellModel {
     let cellModel = DatePickerCellModel(identifier: "dateCellModel", startDate: workout.date)
     cellModel.maximumDate = Date()
     cellModel.changedDate = { [weak self] _, date -> Void in
@@ -92,7 +88,7 @@ final class EditWorkoutPresenter: BaseDataSource {
     return cellModel
   }
 
-  private func createTextCellModel() -> ListCellModel {
+  private func createTextCellModel(with workout: WorkoutProto) -> ListCellModel {
     let cellModel = TextInputCellModel(
       identifier: EditWorkoutPresenter.textCellModelIdentifier,
       placeholder: "Description of the workout...",
@@ -103,12 +99,12 @@ final class EditWorkoutPresenter: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }
 
-  private func createCaloriesCellModel() -> ListCellModel {
+  private func createCaloriesCellModel(with workout: WorkoutProto) -> ListCellModel {
     let cellModel = TextInputCellModel(
       identifier: EditWorkoutPresenter.caloriesCellModelIdentifier,
       placeholder: "Calories",
@@ -119,7 +115,7 @@ final class EditWorkoutPresenter: BaseDataSource {
     cellModel.textColor = .black
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
     cellModel.delegate = self
     return cellModel
   }

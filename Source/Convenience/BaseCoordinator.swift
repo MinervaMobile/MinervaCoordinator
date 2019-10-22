@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 import UIKit
 
 open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, CoordinatorNavigator, CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate {
@@ -19,6 +20,7 @@ open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, Coordina
   public let viewController: U
   public let dataSource: T
   public let navigator: Navigator
+  public let disposeBag = DisposeBag()
 
   public init(
     navigator: Navigator,
@@ -52,7 +54,10 @@ open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, Coordina
 
   // MARK: - ViewControllerDelegate
   open func viewControllerViewDidLoad(_ viewController: ViewController) {
-
+    dataSource.sections
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
+      .disposed(by: disposeBag)
   }
   open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
     listController.willDisplay()

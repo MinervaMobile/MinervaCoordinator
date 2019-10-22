@@ -22,14 +22,12 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   weak var delegate: UserListCoordinatorDelegate?
   private let userManager: UserManager
   private let dataManager: DataManager
-  private let disposeBag: DisposeBag
 
   // MARK: - Lifecycle
 
   init(navigator: Navigator, userManager: UserManager, dataManager: DataManager) {
     self.userManager = userManager
     self.dataManager = dataManager
-    self.disposeBag = DisposeBag()
 
     let repository = UserListRepository(dataManager: dataManager)
     let presenter = UserListPresenter(repository: repository)
@@ -48,15 +46,15 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
     super.viewControllerViewDidLoad(viewController)
 
     dataSource.state
-      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
 
     dataSource.actions
-      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
 
     self.viewController.actions
-      .subscribe(onNext: handle(_:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
   }
 
@@ -96,29 +94,41 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
   private func deleteUser(withID userID: String) {
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
-    dataManager.delete(userID: userID).done { [weak self] in
-      guard let strongSelf = self else { return }
-      guard logoutCurrentUser else { return }
-      strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to delete the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    dataManager.deleteUser(withUserID: userID)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          guard logoutCurrentUser else { return }
+          strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to delete the user")
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func logoutUser(withID userID: String) {
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
-    userManager.logout(userID: userID).done { [weak self] in
-      guard let strongSelf = self else { return }
-      guard logoutCurrentUser else { return }
-      strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
-    }.catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to logout")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    userManager.logout(userID: userID)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          guard logoutCurrentUser else { return }
+          strongSelf.delegate?.userListCoordinatorLogoutCurrentUser(strongSelf)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to logout")
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func displayCreateUserPopup() {
@@ -135,11 +145,19 @@ final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> 
 
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
-    dataManager.update(user: user).catch { [weak self] error -> Void in
-      self?.viewController.alert(error, title: "Failed to save the user")
-    }.finally { [weak self] in
-      LoadingHUD.hide(from: self?.viewController.view)
-    }
+    dataManager.update(user)
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onSuccess: { [weak self] in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+        },
+        onError: { [weak self] error -> Void in
+          guard let strongSelf = self else { return }
+          LoadingHUD.hide(from: strongSelf.viewController.view)
+          strongSelf.viewController.alert(error, title: "Failed to save the user")
+        }
+      ).disposed(by: disposeBag)
   }
 
   private func displayWorkoutList(forUserID userID: String, title: String) {

@@ -6,21 +6,15 @@
 //
 
 import UIKit
-
 import Minerva
+import RxSwift
 
-import PromiseKit
-
-protocol SignInDataSourceDelegate: AnyObject {
-  func signInDataSource(_ signInDataSource: SignInDataSource, selected action: SignInDataSource.Action)
-}
-
-final class SignInDataSource: BaseDataSource {
+final class SignInDataSource: DataSource {
   private static let emailCellModelIdentifier = "emailInputCellModel"
   private static let passwordCellModelIdentifier = "passwordInputCellModel"
 
   enum Action {
-    case signIn(email: String, password: String)
+    case signIn(email: String, password: String, mode: Mode)
     case invalidInput
   }
 
@@ -36,26 +30,24 @@ final class SignInDataSource: BaseDataSource {
     }
   }
 
-  weak var delegate: SignInDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
+
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
 
   private var email: String?
   private var password: String?
 
-  let mode: Mode
+  private let mode: Mode
 
   // MARK: - Lifecycle
 
   init(mode: Mode) {
     self.mode = mode
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    updateDelegate?.dataSourceStartedUpdate(self)
-    let section = createSection()
-    updateDelegate?.dataSource(self, update: [section], animated: animated, completion: nil)
-    updateDelegate?.dataSourceCompletedUpdate(self)
+    sectionsSubject.onNext([createSection()])
   }
 
   // MARK: - Private
@@ -111,9 +103,9 @@ final class SignInDataSource: BaseDataSource {
 
   private func handleContinueButtonPress() {
     if let email = self.email, let password = self.password {
-      delegate?.signInDataSource(self, selected: .signIn(email: email, password: password))
+      actionsSubject.onNext(.signIn(email: email, password: password, mode: self.mode))
     } else {
-      delegate?.signInDataSource(self, selected: .invalidInput)
+      actionsSubject.onNext(.invalidInput)
     }
   }
 
@@ -129,7 +121,7 @@ final class SignInDataSource: BaseDataSource {
     cellModel.cursorColor = .selectable
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .darkGray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
 
     cellModel.delegate = self
     return cellModel
@@ -149,7 +141,7 @@ final class SignInDataSource: BaseDataSource {
     cellModel.cursorColor = .selectable
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .darkGray
-    cellModel.bottomBorderColor = .black
+    cellModel.bottomBorderColor.onNext(.black)
 
     cellModel.delegate = self
     return cellModel

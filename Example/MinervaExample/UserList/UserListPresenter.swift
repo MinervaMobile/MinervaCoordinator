@@ -12,6 +12,8 @@ import Minerva
 import RxSwift
 
 final class UserListPresenter: DataSource {
+  // TODO: Update the old presenter to use the new persistent / transient state model
+  var sections: Observable<[ListSection]> = .just([])
 
   enum Action {
     case delete(user: User)

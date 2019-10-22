@@ -9,21 +9,22 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
 import RxSwift
 
-protocol SettingsDataSourceDelegate: AnyObject {
-  func settingsDataSource(_ settingsDataSource: SettingsDataSource, selected action: SettingsDataSource.Action)
-}
-
-final class SettingsDataSource: BaseDataSource {
+final class SettingsDataSource: DataSource {
   enum Action {
     case deleteAccount
     case logout
     case update(user: User)
   }
 
-  weak var delegate: SettingsDataSourceDelegate?
+  private let actionsSubject = PublishSubject<Action>()
+  public var actions: Observable<Action> { actionsSubject.asObservable() }
+
+  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+
+  private let disposeBag = DisposeBag()
 
   private let dataManager: DataManager
 
@@ -31,23 +32,16 @@ final class SettingsDataSource: BaseDataSource {
 
   init(dataManager: DataManager) {
     self.dataManager = dataManager
-  }
-
-  // MARK: - Public
-
-  func reload(animated: Bool) {
-    let sectionsPromise = dataManager.loadUser(
-      withID: dataManager.userAuthorization.userID
-    ).map { [weak self] user -> [ListSection] in
-      guard let strongSelf = self else { throw SystemError.cancelled }
-      guard let user = user else { throw SystemError.doesNotExist }
-      return strongSelf.createSections(with: user)
-    }.recover { [weak self] error -> Promise<[ListSection]> in
-      guard let strongSelf = self else { return Promise(error: error) }
-      strongSelf.updateDelegate?.dataSource(strongSelf, encountered: error)
-      return .value(strongSelf.createSections(with: nil))
-    }
-    updateDelegate?.dataSource(self, process: sectionsPromise, animated: animated, completion: nil)
+    dataManager.user(withID: dataManager.userAuthorization.userID).subscribe(
+      onSuccess: { [weak self] (user: User?) -> Void in
+        guard let strongSelf = self else { return }
+        strongSelf.sectionsSubject.onNext(strongSelf.createSections(with: user))
+      },
+      onError: { [weak self] (error: Error) -> Void in
+        guard let strongSelf = self else { return }
+        strongSelf.sectionsSubject.onNext(strongSelf.createSections(with: nil))
+      }
+    ).disposed(by: disposeBag)
   }
 
   // MARK: - Private
@@ -61,14 +55,14 @@ final class SettingsDataSource: BaseDataSource {
       let nameCellModel = SwiftUITextCellModel(title: "Name", subtitle: user.email)
       nameCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.delegate?.settingsDataSource(strongSelf, selected: .update(user: user))
+        strongSelf.actionsSubject.onNext(.update(user: user))
       }
       cellModels.append(nameCellModel)
 
       let caloriesCellModel = SwiftUITextCellModel(title: "Daily Calories", subtitle: String(user.dailyCalories))
       caloriesCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.delegate?.settingsDataSource(strongSelf, selected: .update(user: user))
+        strongSelf.actionsSubject.onNext(.update(user: user))
       }
       cellModels.append(caloriesCellModel)
 
@@ -93,7 +87,7 @@ final class SettingsDataSource: BaseDataSource {
     let logoutCellModel = SwiftUITextCellModel(title: "Logout")
     logoutCellModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.settingsDataSource(strongSelf, selected: .logout)
+      strongSelf.actionsSubject.onNext(.logout)
     }
     cellModels.append(logoutCellModel)
 
@@ -104,7 +98,7 @@ final class SettingsDataSource: BaseDataSource {
     }
     deleteCellModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.delegate?.settingsDataSource(strongSelf, selected: .deleteAccount)
+      strongSelf.actionsSubject.onNext(.deleteAccount)
     }
     cellModels.append(deleteCellModel)
 

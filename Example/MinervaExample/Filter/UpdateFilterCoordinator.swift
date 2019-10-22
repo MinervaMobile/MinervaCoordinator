@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 import Minerva
-import PromiseKit
+import RxSwift
 
 protocol UpdateFilterCoordinatorDelegate: AnyObject {
   func updateFilterCoordinator(
@@ -18,7 +18,7 @@ protocol UpdateFilterCoordinatorDelegate: AnyObject {
   )
 }
 
-final class UpdateFilterCoordinator: PromiseCoordinator<UpdateFilterDataSource, CollectionViewController> {
+final class UpdateFilterCoordinator: MainCoordinator<UpdateFilterDataSource, CollectionViewController> {
 
   weak var delegate: UpdateFilterCoordinatorDelegate?
 
@@ -28,20 +28,16 @@ final class UpdateFilterCoordinator: PromiseCoordinator<UpdateFilterDataSource, 
 
     let dataSource = UpdateFilterDataSource(type: type, filter: filter)
     let viewController = CollectionViewController()
-    super.init(navigator: navigator, viewController: viewController, dataSource: dataSource)
-    self.refreshBlock = { dataSource, animated in
-      dataSource.reload(animated: animated)
-    }
-    dataSource.delegate = self
+    let listController = LegacyListController()
+    super.init(
+      navigator: navigator,
+      viewController: viewController,
+      dataSource: dataSource,
+      listController: listController
+    )
+    dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
   }
-}
-
-// MARK: - UpdateFilterDataSourceDelegate
-extension UpdateFilterCoordinator: UpdateFilterDataSourceDelegate {
-  func updateFilterDataSource(
-    _ updateFilterDataSource: UpdateFilterDataSource,
-    selected action: UpdateFilterDataSource.Action
-  ) {
+  private func handle(_ action: UpdateFilterDataSource.Action) {
     switch action {
     case .update(let filter):
       delegate?.updateFilterCoordinator(self, updatedFilter: filter)

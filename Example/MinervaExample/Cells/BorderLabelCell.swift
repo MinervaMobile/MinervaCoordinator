@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-
+import RxSwift
 import Minerva
 
 final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
@@ -19,11 +19,6 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
   // MARK: - ListBindableCellModel
   typealias BindableModelType = BorderLabelCellModel
   var willBindAction: BindAction?
-
-  var isSelected: Bool {
-    get { return reactiveIsSelected.value }
-    set { reactiveIsSelected.value = newValue }
-  }
 
   private let cellIdentifier: String
 
@@ -46,7 +41,7 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
   var borderColor: UIColor?
   var selectedBorderColor: UIColor?
 
-  fileprivate var reactiveIsSelected = MinervaObservable<Bool>(false)
+  var isSelected = BehaviorSubject<Bool>(value: false)
 
   fileprivate let attributedText: NSAttributedString
 
@@ -80,7 +75,6 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
       return false
     }
     return attributedText == model.attributedText
-      && isSelected == model.isSelected
       && numberOfLines == model.numberOfLines
       && textVerticalMargin == model.textVerticalMargin
       && textHorizontalMargin == model.textHorizontalMargin
@@ -141,12 +135,12 @@ final class BorderLabelCell: DefaultListCell {
     accessoryImageWidthConstraint?.constant = model.accessoryImage != nil ? model.accessoryImageWidthHeight : 0
     accessoryLeadingConstraint?.constant = model.accessoryImage != nil ? model.textHorizontalMargin : 0
 
-    bind(model.reactiveIsSelected) { [weak self, weak model] isSelected -> Void in
+    model.isSelected.subscribe(onNext: { [weak self, weak model] isSelected -> Void in
       self?.label.attributedText = isSelected ? model?.selectedAttributedText : model?.attributedText
       self?.containerView.backgroundColor = isSelected ? model?.selectedButtonColor : model?.buttonColor
       let borderColor = isSelected ? model?.selectedBorderColor?.cgColor : model?.borderColor?.cgColor
       self?.containerView.layer.borderColor = borderColor
-    }
+    }).disposed(by: disposeBag)
 
     containerView.layer.borderWidth = model.borderWidth
     containerView.layer.cornerRadius = model.borderRadius

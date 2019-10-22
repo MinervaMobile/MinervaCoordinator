@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class TestDataManager {
   struct Subscription<T> {
@@ -15,6 +16,7 @@ final class TestDataManager {
   let userAuthorization: UserAuthorization
 
   private let queue = DispatchQueue(label: "TestDataManager", qos: .userInitiated)
+  private let disposeBag = DisposeBag()
   private let testData: TestData
   private let userManager: UserManager
 
@@ -63,14 +65,17 @@ extension TestDataManager: DataManager {
   }
 
   func delete(userID: String, completion: @escaping Completion) {
-    userManager.delete(userID: userID).done {
-      self.queue.async {
-        self.notifyForUserChanges()
-        completion(nil)
+    userManager.delete(userID: userID).subscribe(
+      onSuccess: { () -> Void in
+        self.queue.async {
+          self.notifyForUserChanges()
+          completion(nil)
+        }
+      },
+      onError: { error -> Void in
+        completion(error)
       }
-    }.catch {
-      completion($0)
-    }
+    ).disposed(by: disposeBag)
   }
 
   func create(
