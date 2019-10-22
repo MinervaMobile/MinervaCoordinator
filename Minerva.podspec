@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Minerva"
-  s.version      = "2.8.1"
+  s.version      = "2.9.0"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary      = "This framework is a lightweight wrapper around IGListKit."
