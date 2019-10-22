@@ -140,7 +140,7 @@ extension ListBindableCellModel {
   }
 }
 
-/// Adds type information to the cell model with convient type safe functions.
+/// Adds type information to the cell model with convenient type safe functions.
 public protocol TypedListCellModel: ListCellModel {
   associatedtype CellType: ListCollectionViewCell
 
