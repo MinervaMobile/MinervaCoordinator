@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import IGListKit
 import UIKit
 
-import IGListKit
-
+/// This class should not be used directly. It wraps the requirement that all IGListKit models are NSObject's and
+/// obj-c compatible.
 public final class ListCellModelWrapper: NSObject {
   public let model: ListCellModel
 
@@ -22,7 +23,6 @@ public final class ListCellModelWrapper: NSObject {
   }
 }
 
-// MARK: - ListDiffable
 extension ListCellModelWrapper: ListDiffable {
   public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
     guard let wrapper = object as? ListCellModelWrapper else {

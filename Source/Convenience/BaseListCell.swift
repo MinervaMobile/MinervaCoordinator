@@ -35,7 +35,7 @@ open class BaseListCell: ListCollectionViewCell {
 
   open private(set) var cellModel: ListCellModel?
 
-  public override init(frame: CGRect) {
+  override public init(frame: CGRect) {
     super.init(frame: frame)
   }
 
