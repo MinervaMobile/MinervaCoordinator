@@ -127,7 +127,15 @@ extension BasicNavigator {
 
   // This allows explicitly setting the modalPresentationStyle from a view controller.
   public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-    return controller.presentedViewController.modalPresentationStyle
+    controller.presentedViewController.modalPresentationStyle
+  }
+
+  // This allows explicitly setting the modalPresentationStyle from a view controller.
+  public func adaptivePresentationStyle(
+    for controller: UIPresentationController,
+    traitCollection: UITraitCollection
+  ) -> UIModalPresentationStyle {
+    controller.presentedViewController.modalPresentationStyle
   }
 }
 
