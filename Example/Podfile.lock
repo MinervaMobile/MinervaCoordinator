@@ -26,7 +26,7 @@ PODS:
   - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
-  - IGListKit (from `https://github.com/Instagram/IGListKit`)
+  - IGListKit (from `https://github.com/Instagram/IGListKit`, commit `16df6cb220b4b5bfa545cbfd822119e5a56bc3e4`)
   - IQKeyboardManagerSwift
   - MBProgressHUD
   - RxCocoa
@@ -52,15 +52,16 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   IGListKit:
+    :commit: 16df6cb220b4b5bfa545cbfd822119e5a56bc3e4
     :git: https://github.com/Instagram/IGListKit
 
 CHECKOUT OPTIONS:
   IGListKit:
-    :commit: 2fa963bfa34ecffeddef2cb01d2503b251f9397b
+    :commit: 16df6cb220b4b5bfa545cbfd822119e5a56bc3e4
     :git: https://github.com/Instagram/IGListKit
 
 SPEC CHECKSUMS:
-  IGListKit: 74b8f0ef0829e5d993387e48a719cb82ffe40e02
+  IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   IQKeyboardManagerSwift: c75366f1f19590e8caeae45fcd5815c9289d6099
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
@@ -72,6 +73,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 598ed42bdfa7a75dace34dd05bd13209b7f590b0
+PODFILE CHECKSUM: 3e86ef2a2927954df9ccf438e51eaee4d9435d6f
 
 COCOAPODS: 1.8.4
