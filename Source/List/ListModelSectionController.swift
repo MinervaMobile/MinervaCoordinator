@@ -120,11 +120,12 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
   internal func size(of listSection: ListSection, with constraints: ListSizeConstraints) -> CGSize? {
     let isVertical = constraints.scrollDirection == .vertical
     let containerSize = constraints.containerSize
+    var height: CGFloat = listSection.constraints.inset.top + listSection.constraints.inset.bottom
 
     switch listSection.constraints.distribution {
     case .entireRow:
       if isVertical {
-        let height = listSection.cellModels.reduce(0, { sum, model -> CGFloat in
+        height += listSection.cellModels.reduce(0, { sum, model -> CGFloat in
           let length = size(for: model, with: constraints)?.height ?? 0
           return sum + length + constraints.minimumLineSpacing
         })
@@ -134,25 +135,24 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
           let length = size(for: model, with: constraints)?.width ?? 0
           return sum + length + constraints.minimumLineSpacing
         })
-        return CGSize(width: width, height: constraints.containerSize.height)
+        height += constraints.containerSize.height
+        return CGSize(width: width, height: height)
       }
     case .equally(let cellsInRow):
       guard isVertical else { fatalError("Horizontal is not yet supported") }
-      var totalHeight: CGFloat = 0
       var rowHeight: CGFloat = 0
       for (index, model) in listSection.cellModels.enumerated() {
         if index.isMultiple(of: cellsInRow) {
-          totalHeight += (rowHeight + constraints.minimumLineSpacing)
+          height += (rowHeight + constraints.minimumLineSpacing)
           rowHeight = 0
         }
         let modelHeight = size(for: model, with: constraints)?.height ?? 0
         rowHeight = max(rowHeight, modelHeight)
       }
-      totalHeight += (rowHeight + constraints.minimumLineSpacing)
-      return CGSize(width: constraints.containerSize.width, height: totalHeight)
+      height += (rowHeight + constraints.minimumLineSpacing)
+      return CGSize(width: constraints.containerSize.width, height: height)
     case .proportionally:
       guard isVertical else { fatalError("Horizontal is not yet supported") }
-      var height: CGFloat = 0
       var maxCellHeightInRow: CGFloat = 0
       var currentRowWidth: CGFloat = 0
       for model in listSection.cellModels {
