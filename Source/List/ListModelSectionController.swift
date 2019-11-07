@@ -119,7 +119,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
 
   internal func size(of listSection: ListSection, with constraints: ListSizeConstraints) -> CGSize? {
     let isVertical = constraints.scrollDirection == .vertical
-    let containerSize = constraints.containerSize
+    let adjustedContainerSize = constraints.containerSize.adjust(for: listSection.constraints.inset)
     var height: CGFloat = listSection.constraints.inset.top + listSection.constraints.inset.bottom
 
     switch listSection.constraints.distribution {
@@ -129,14 +129,13 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
           let length = size(for: model, with: constraints)?.height ?? 0
           return sum + length + constraints.minimumLineSpacing
         })
-        return CGSize(width: constraints.containerSize.width, height: height)
+        return CGSize(width: adjustedContainerSize.width, height: height)
       } else {
         let width = listSection.cellModels.reduce(0, { sum, model -> CGFloat in
           let length = size(for: model, with: constraints)?.width ?? 0
           return sum + length + constraints.minimumLineSpacing
         })
-        height += constraints.containerSize.height
-        return CGSize(width: width, height: height)
+        return CGSize(width: width, height: adjustedContainerSize.height)
       }
     case .equally(let cellsInRow):
       guard isVertical else { fatalError("Horizontal is not yet supported") }
@@ -150,7 +149,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
         rowHeight = max(rowHeight, modelHeight)
       }
       height += (rowHeight + constraints.minimumLineSpacing)
-      return CGSize(width: constraints.containerSize.width, height: height)
+      return CGSize(width: adjustedContainerSize.width, height: height)
     case .proportionally:
       guard isVertical else { fatalError("Horizontal is not yet supported") }
       var maxCellHeightInRow: CGFloat = 0
@@ -163,7 +162,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
         let modelWidth = modelSize.width + constraints.minimumInteritemSpacing
         maxCellHeightInRow = max(maxCellHeightInRow, modelHeight)
         currentRowWidth += modelWidth
-        guard currentRowWidth < containerSize.width else {
+        guard currentRowWidth < adjustedContainerSize.width else {
           height += maxCellHeightInRow
           maxCellHeightInRow = modelHeight
           currentRowWidth = modelWidth
@@ -171,7 +170,7 @@ internal class ListModelSectionController: ListBindingSectionController<ListSect
         }
       }
       height += maxCellHeightInRow
-      return CGSize(width: constraints.containerSize.width, height: height)
+      return CGSize(width: adjustedContainerSize.width, height: height)
     }
   }
 }
