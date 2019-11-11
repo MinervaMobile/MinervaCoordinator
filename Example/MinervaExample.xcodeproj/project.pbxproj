@@ -154,6 +154,7 @@
 		F501F899233C05E500012C5E /* UserListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoordinator.swift; sourceTree = "<group>"; };
 		F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCoordinator.swift; sourceTree = "<group>"; };
 		F501F89D233C0E5900012C5E /* FilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCoordinator.swift; sourceTree = "<group>"; };
+		F53D0B6A2378F0780051A063 /* MinervaExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MinervaExample.entitlements; sourceTree = "<group>"; };
 		F5564880235B0E54009D8778 /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -551,6 +552,7 @@
 		F584857523395474001DBF1E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F53D0B6A2378F0780051A063 /* MinervaExample.entitlements */,
 				F5587D1922502B11004223E5 /* Assets.xcassets */,
 				F5587D1E22502B11004223E5 /* Info.plist */,
 				F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */,
@@ -984,7 +986,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1039,7 +1041,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1054,7 +1056,9 @@
 			baseConfigurationReference = A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MinervaExample/Resources/MinervaExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1064,6 +1068,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1074,7 +1079,9 @@
 			baseConfigurationReference = 642F154AAFFFCF52EA421705 /* Pods-MinervaExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MinervaExample/Resources/MinervaExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				INFOPLIST_FILE = MinervaExample/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1084,6 +1091,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
