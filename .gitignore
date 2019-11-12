@@ -45,7 +45,8 @@ DerivedData
 cobertura.xml
 
 # CocoaPods
-Pods/
+# Travis CI times out loading pods, so check them in
+# Pods/
 
 # Carthage
 Carthage
