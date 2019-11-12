@@ -17,7 +17,7 @@ See the MinervaExample project for a full-featured example application built wit
 
 ### Coordinator
 
-```
+```swift
 /// A Coordinator handles the state transition between Coordinators. This logic was previously part of the UIViewController's.
 public protocol Coordinator: AnyObject {
 	var parent: Coordinator? { get set }
@@ -27,7 +27,7 @@ public protocol Coordinator: AnyObject {
 
 ### Navigator
 
-```
+```swift
 /// Manages the presentation of view controllers both modally and through a navigation controller.
 public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigationControllerDelegate {
 	/// The block to use when a view controller is removed from the navigation controller.
@@ -77,7 +77,7 @@ public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigatio
 
 ### ListCellModel
 
-```
+```swift
 /// The model that will bind to a cell.
 public protocol ListCellModel {
 	/// A unique identifier for the cell model. If the model identifiers are different,
