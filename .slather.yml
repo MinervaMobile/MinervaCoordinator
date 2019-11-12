@@ -2,4 +2,5 @@
 
 coverage_service: cobertura_xml
 xcodeproj: MinervaExample.xcodeproj
-scheme: MinervaTests
+workspace: MinervaExample.xcworkspace
+scheme: MinervaExample
