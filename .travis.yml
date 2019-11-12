@@ -15,7 +15,6 @@ jobs:
         - brew outdated cocoapods || brew upgrade cocoapods
         - brew install xcodegen
         - gem install slather
-        - pod install
       script:
         - pod lib lint
         - set -o pipefail && xcodebuild -workspace MinervaExample.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.2' build test | xcpretty
