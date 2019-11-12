@@ -12,89 +12,89 @@ import Minerva
 
 final class ImageCellModel: DefaultListCellModel {
 
-  private let cellIdentifier: String
-  var imageColor: UIColor?
-  var contentMode: UIView.ContentMode = .scaleAspectFit
+	private let cellIdentifier: String
+	var imageColor: UIColor?
+	var contentMode: UIView.ContentMode = .scaleAspectFit
 
-  let image: UIImage
-  let width: CGFloat
-  let height: CGFloat
+	let image: UIImage
+	let width: CGFloat
+	let height: CGFloat
 
-  convenience init(image: UIImage, width: CGFloat, height: CGFloat) {
-    self.init(identifier: "ImageCellModel", image: image, width: width, height: height)
-  }
+	convenience init(image: UIImage, width: CGFloat, height: CGFloat) {
+		self.init(identifier: "ImageCellModel", image: image, width: width, height: height)
+	}
 
-  init(identifier: String, image: UIImage, width: CGFloat, height: CGFloat) {
-    self.image = image
-    self.width = width
-    self.height = height
-    self.cellIdentifier = identifier
-    super.init()
-  }
+	init(identifier: String, image: UIImage, width: CGFloat, height: CGFloat) {
+		self.image = image
+		self.width = width
+		self.height = height
+		self.cellIdentifier = identifier
+		super.init()
+	}
 
-  // MARK: - BaseListCellModel
+	// MARK: - BaseListCellModel
 
-  override var identifier: String {
-    return cellIdentifier
-  }
+	override var identifier: String {
+		return cellIdentifier
+	}
 
-  override func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageCellModel, super.identical(to: model) else {
-      return false
-    }
-    return image == model.image
-      && width == model.width
-      && height == model.height
-      && contentMode == model.contentMode
-      && imageColor == model.imageColor
-  }
+	override func identical(to model: ListCellModel) -> Bool {
+		guard let model = model as? ImageCellModel, super.identical(to: model) else {
+			return false
+		}
+		return image == model.image
+			&& width == model.width
+			&& height == model.height
+			&& contentMode == model.contentMode
+			&& imageColor == model.imageColor
+	}
 }
 
 final class ImageCell: DefaultListCell {
-  private var model: ImageCellModel? { cellModel as? ImageCellModel }
+	private var model: ImageCellModel? { cellModel as? ImageCellModel }
 
-  private let imageView: UIImageView = {
-    let imageView = UIImageView()
-    return imageView
-  }()
-  private let imageWidthConstraint: NSLayoutConstraint
+	private let imageView: UIImageView = {
+		let imageView = UIImageView()
+		return imageView
+	}()
+	private let imageWidthConstraint: NSLayoutConstraint
 
-  override init(frame: CGRect) {
-    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-    super.init(frame: frame)
-    contentView.addSubview(imageView)
-    setupConstraints()
-  }
+	override init(frame: CGRect) {
+		imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+		super.init(frame: frame)
+		contentView.addSubview(imageView)
+		setupConstraints()
+	}
 
-  override func prepareForReuse() {
-    super.prepareForReuse()
-    imageView.image = nil
-  }
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		imageView.image = nil
+	}
 
-  override func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    imageWidthConstraint.constant = model.width
-    imageWidthConstraint.isActive = true
-    imageView.contentMode = model.contentMode
-    if let imageColor = model.imageColor {
-      imageView.image = model.image.withRenderingMode(.alwaysTemplate)
-      imageView.tintColor = imageColor
-    } else {
-      imageView.image = model.image
-    }
-  }
+	override func didUpdateCellModel() {
+		super.didUpdateCellModel()
+		guard let model = self.model else {
+			return
+		}
+		imageWidthConstraint.constant = model.width
+		imageWidthConstraint.isActive = true
+		imageView.contentMode = model.contentMode
+		if let imageColor = model.imageColor {
+			imageView.image = model.image.withRenderingMode(.alwaysTemplate)
+			imageView.tintColor = imageColor
+		} else {
+			imageView.image = model.image
+		}
+	}
 }
 
 // MARK: - Constraints
 extension ImageCell {
-  private func setupConstraints() {
-    imageView.anchor(toLeading: nil, top: containerView.topAnchor, trailing: nil, bottom: containerView.bottomAnchor)
-    imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+	private func setupConstraints() {
+		imageView.anchor(toLeading: nil, top: containerView.topAnchor, trailing: nil, bottom: containerView.bottomAnchor)
+		imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
 
-    containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-    contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-  }
+		containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+		contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+	}
 }

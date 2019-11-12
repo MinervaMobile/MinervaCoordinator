@@ -9,19 +9,19 @@ import Foundation
 
 import RxSwift
 
-class UserListRepository {
+public class UserListRepository {
 
-  private let dataManager: DataManager
-  let users: Observable<Result<[User], Error>>
+	private let dataManager: DataManager
+	public let users: Observable<Result<[User], Error>>
 
-  // MARK: - Lifecycle
+	// MARK: - Lifecycle
 
-  init(dataManager: DataManager) {
-    self.dataManager = dataManager
-    self.users = dataManager.observeUsers()
-  }
+	public init(dataManager: DataManager) {
+		self.dataManager = dataManager
+		self.users = dataManager.observeUsers()
+	}
 
-  var allowSelection: Bool {
-    return dataManager.userAuthorization.role == .admin
-  }
+	public var allowSelection: Bool {
+		return dataManager.userAuthorization.role == .admin
+	}
 }

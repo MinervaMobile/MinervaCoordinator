@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol DataManagerFactory {
-  func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager
+public protocol DataManagerFactory {
+	func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager
 }

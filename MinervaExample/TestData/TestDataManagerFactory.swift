@@ -7,15 +7,15 @@
 
 import Foundation
 
-final class TestDataManagerFactory: DataManagerFactory {
-  private let testData: TestData
+public final class TestDataManagerFactory: DataManagerFactory {
+	private let testData: TestData
 
-  init(testData: TestData) {
-    self.testData = testData
-  }
+	public init(testData: TestData) {
+		self.testData = testData
+	}
 
-  // MARK: - DataManagerFactory
-  func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager {
-    return TestDataManager(testData: testData, userAuthorization: userAuthorization, userManager: userManager)
-  }
+	// MARK: - DataManagerFactory
+	public func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager {
+		return TestDataManager(testData: testData, userAuthorization: userAuthorization, userManager: userManager)
+	}
 }

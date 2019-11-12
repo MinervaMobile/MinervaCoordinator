@@ -11,242 +11,244 @@ import UIKit
 import Minerva
 import RxSwift
 
-final class WorkoutPresenter: DataSource {
+public final class WorkoutPresenter: DataSource {
 
-  enum Action {
-    case createWorkout(userID: String)
-    case editFilter
-    case editWorkout(Workout)
-  }
+	public enum Action {
+		case createWorkout(userID: String)
+		case editFilter
+		case editWorkout(Workout)
+	}
 
-  struct PersistentState {
-    var title: String = ""
-    var filter: WorkoutFilter = WorkoutFilterProto()
-  }
+	public struct PersistentState {
+		public var title: String = ""
+		public var filter: WorkoutFilter = WorkoutFilterProto()
+	}
 
-  struct TransientState {
-    var error: Error? = nil
-    var loading: Bool = false
-  }
+	public struct TransientState {
+		public var error: Error?
+		public var loading: Bool = false
+	}
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+	private let actionsSubject = PublishSubject<Action>()
+	public var actions: Observable<Action> { actionsSubject.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+	private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
+	public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
 
-  private let persistentStateSubject = BehaviorSubject(value: PersistentState())
-  public var persistentState: Observable<PersistentState> { persistentStateSubject.asObservable() }
+	private let persistentStateSubject = BehaviorSubject(value: PersistentState())
+	public var persistentState: Observable<PersistentState> { persistentStateSubject.asObservable() }
 
-  private let transientStateSubject = PublishSubject<TransientState>()
-  public var transientState: Observable<TransientState> { transientStateSubject.asObservable() }
+	private let transientStateSubject = PublishSubject<TransientState>()
+	public var transientState: Observable<TransientState> { transientStateSubject.asObservable() }
 
-  private let filterSubject = BehaviorSubject<WorkoutFilter>(value: WorkoutFilterProto())
-  public var filter: Observable<WorkoutFilter> { filterSubject.asObservable() }
-  private let errorSubject = BehaviorSubject<Error?>(value: nil)
-  private let loadingSubject = BehaviorSubject<Bool>(value: false)
+	private let filterSubject = BehaviorSubject<WorkoutFilter>(value: WorkoutFilterProto())
+	public var filter: Observable<WorkoutFilter> { filterSubject.asObservable() }
+	private let errorSubject = BehaviorSubject<Error?>(value: nil)
+	private let loadingSubject = BehaviorSubject<Bool>(value: false)
 
-  private let repository: WorkoutRepository
-  private let disposeBag = DisposeBag()
-  private let queue = SerialDispatchQueueScheduler(
-    queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
-    internalSerialQueueName: "WorkoutPresenterQueue")
+	private let repository: WorkoutRepository
+	private let disposeBag = DisposeBag()
+	private let queue = SerialDispatchQueueScheduler(
+		queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
+		internalSerialQueueName: "WorkoutPresenterQueue")
 
-  // MARK: - Lifecycle
+	// MARK: - Lifecycle
 
-  init(repository: WorkoutRepository) {
-    self.repository = repository
+	public init(repository: WorkoutRepository) {
+		self.repository = repository
 
-    Observable.combineLatest(
-      repository.workouts,
-      repository.user,
-      filterSubject.asObservable()
-    ).observeOn(
-      queue
-    ).subscribe(
-      onNext: process(workoutsResult: userResult: filter:)
-    ).disposed(
-      by: disposeBag
-    )
+		Observable.combineLatest(
+			repository.workouts,
+			repository.user,
+			filterSubject.asObservable()
+		).observeOn(
+			queue
+		).subscribe(
+			onNext: process(workoutsResult: userResult: filter:)
+		).disposed(
+			by: disposeBag
+		)
 
-    Observable.combineLatest(
-      errorSubject.asObservable().distinctUntilChanged({ $0 == nil && $1 == nil }),
-      loadingSubject.asObservable().distinctUntilChanged()
-    ).map {
-      TransientState(error: $0.0, loading: $0.1)
-    }.subscribe(
-      transientStateSubject
-    ).disposed(
-      by: disposeBag
-    )
-  }
+		Observable.combineLatest(
+			errorSubject.asObservable().distinctUntilChanged({ $0 == nil && $1 == nil }),
+			loadingSubject.asObservable().distinctUntilChanged()
+		).map {
+			TransientState(error: $0.0, loading: $0.1)
+		}.subscribe(
+			transientStateSubject
+		).disposed(
+			by: disposeBag
+		)
+	}
 
-  func apply(filter: WorkoutFilter) {
-    filterSubject.onNext(filter)
-  }
+	public func apply(filter: WorkoutFilter) {
+		filterSubject.onNext(filter)
+	}
 
-  func editFilter() {
-    actionsSubject.onNext(.editFilter)
-  }
+	public func editFilter() {
+		actionsSubject.onNext(.editFilter)
+	}
 
-  func createWorkout() {
-    actionsSubject.onNext(.createWorkout(userID: repository.userID))
-  }
+	public func createWorkout() {
+		actionsSubject.onNext(.createWorkout(userID: repository.userID))
+	}
 
-  func edit(workout: Workout) {
-    actionsSubject.onNext(.editWorkout(workout))
-  }
+	public func edit(workout: Workout) {
+		actionsSubject.onNext(.editWorkout(workout))
+	}
 
-  func delete(workout: Workout) {
-    loadingSubject.onNext(true)
-    repository.delete(workout).subscribe { [weak self] event in
-      guard let strongSelf = self else { return }
-      switch event {
-      case .error(let error):
-        strongSelf.errorSubject.onNext(error)
-      case .success:
-        break
-      }
-      strongSelf.loadingSubject.onNext(false)
-    }.disposed(by: disposeBag)
-  }
+	public func delete(workout: Workout) {
+		loadingSubject.onNext(true)
+		repository.delete(workout).subscribe { [weak self] event in
+			guard let strongSelf = self else { return }
+			switch event {
+			case .error(let error):
+				strongSelf.errorSubject.onNext(error)
+			case .success:
+				break
+			}
+			strongSelf.loadingSubject.onNext(false)
+		}.disposed(by: disposeBag)
+	}
 
-  // MARK: - Private
+	// MARK: - Private
 
-  private func process(
-    workoutsResult: Result<[Workout], Error>,
-    userResult: Result<User, Error>,
-    filter: WorkoutFilter
-  ) {
-    let user: User
-    switch userResult {
-    case .success(let u):
-      user = u
-    case .failure(let error):
-      transientStateSubject.onNext(TransientState(error: error))
-      return
-    }
+	private func process(
+		workoutsResult: Result<[Workout], Error>,
+		userResult: Result<User, Error>,
+		filter: WorkoutFilter
+	) {
+		let user: User
+		switch userResult {
+		case .success(let u):
+			user = u
+		case .failure(let error):
+			transientStateSubject.onNext(TransientState(error: error))
+			return
+		}
 
-    let workouts: [Workout]
-    switch workoutsResult {
-    case .success(let w):
-      workouts = w
-    case .failure(let error):
-      transientStateSubject.onNext(TransientState(error: error))
-      return
-    }
+		let workouts: [Workout]
+		switch workoutsResult {
+		case .success(let w):
+			workouts = w
+		case .failure(let error):
+			transientStateSubject.onNext(TransientState(error: error))
+			return
+		}
 
-    let sections = createSections(
-      with: filter,
-      workouts: workouts,
-      user: user
-    )
-    sectionsSubject.onNext(sections)
+		let sections = createSections(
+			with: filter,
+			workouts: workouts,
+			user: user
+		)
+		sectionsSubject.onNext(sections)
 
-    let persistentState = PersistentState(title: user.email, filter: filter)
-    persistentStateSubject.onNext(persistentState)
+		let persistentState = PersistentState(title: user.email, filter: filter)
+		persistentStateSubject.onNext(persistentState)
 
-    let transientState = TransientState(
-      error: nil,
-      loading: false
-    )
-    transientStateSubject.onNext(transientState)
-  }
+		let transientState = TransientState(
+			error: nil,
+			loading: false
+		)
+		transientStateSubject.onNext(transientState)
+	}
 
-  private func createSections(
-    with filter: WorkoutFilter,
-    workouts: [Workout],
-    user: User
-  ) -> [ListSection] {
-    var sections = [ListSection]()
+	private func createSections(
+		with filter: WorkoutFilter,
+		workouts: [Workout],
+		user: User
+	) -> [ListSection] {
+		var sections = [ListSection]()
 
-    let filterCellModel = LabelCell.Model(text: filter.details, font: .subheadline)
-    filterCellModel.textColor = .darkGray
-    filterCellModel.textAlignment = .right
-    filterCellModel.topMargin = 10
-    filterCellModel.bottomMargin = 10
-    filterCellModel.backgroundColor = .section
-    filterCellModel.bottomSeparatorColor = .separator
-    sections.append(ListSection(cellModels: [filterCellModel], identifier: "FILTER"))
+		let filterCellModel = LabelCell.Model(text: filter.details, font: .subheadline)
+		filterCellModel.textColor = .darkGray
+		filterCellModel.textAlignment = .right
+		filterCellModel.topMargin = 10
+		filterCellModel.bottomMargin = 10
+		filterCellModel.backgroundColor = .section
+		filterCellModel.bottomSeparatorColor = .separator
+		sections.append(ListSection(cellModels: [filterCellModel], identifier: "FILTER"))
 
-    let calendar = Calendar.current
-    let filteredWorkouts = workouts.filter { filter.shouldInclude(workout: $0) }
-    let workoutGroups = filteredWorkouts.group { workout -> Date in
-      calendar.startOfDay(for: workout.date)
-    }
-    let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
-    for (date, workoutsForDate) in sortedGroups {
-      let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
-      let failure = totalCalories < user.dailyCalories
-      let section = createSection(
-        date: date,
-        workouts: workoutsForDate,
-        user: user,
-        failure: failure,
-        sectionNumber: sections.count)
-      sections.append(section)
-    }
+		let calendar = Calendar.current
+		let filteredWorkouts = workouts.filter { filter.shouldInclude(workout: $0) }
+		let workoutGroups = filteredWorkouts.group { workout -> Date in
+			calendar.startOfDay(for: workout.date)
+		}
+		let sortedGroups = workoutGroups.sorted { $0.key > $1.key }
+		for (date, workoutsForDate) in sortedGroups {
+			let totalCalories = workoutsForDate.reduce(0) { $0 + $1.calories }
+			let failure = totalCalories < user.dailyCalories
+			let section = createSection(
+				date: date,
+				workouts: workoutsForDate,
+				user: user,
+				failure: failure,
+				sectionNumber: sections.count)
+			sections.append(section)
+		}
 
-    return sections
-  }
+		return sections
+	}
 
-  private func createSection(
-    date: Date,
-    workouts: [Workout],
-    user: User,
-    failure: Bool,
-    sectionNumber: Int
-  ) -> ListSection {
-    var cellModels = [ListCellModel]()
-    let workoutBackgroundColor = failure
-      ? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
-    let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
-    for workout in sortedWorkoutsForDate {
-      let workoutCellModel = createWorkoutCellModel(for: workout)
-      workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
-        guard let strongSelf = self else { return }
-        strongSelf.edit(workout: workout)
-      }
-      workoutCellModel.backgroundColor = workoutBackgroundColor
-      cellModels.append(workoutCellModel)
-    }
-    var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sectionNumber)")
+	private func createSection(
+		date: Date,
+		workouts: [Workout],
+		user: User,
+		failure: Bool,
+		sectionNumber: Int
+	) -> ListSection {
+		var cellModels = [ListCellModel]()
+		let workoutBackgroundColor = failure
+			? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
+		let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
+		for workout in sortedWorkoutsForDate {
+			let workoutCellModel = createWorkoutCellModel(for: workout)
+			workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
+				guard let strongSelf = self else { return }
+				strongSelf.edit(workout: workout)
+			}
+			workoutCellModel.backgroundColor = workoutBackgroundColor
+			cellModels.append(workoutCellModel)
+		}
+		var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sectionNumber)")
 
-    let dateCellModel = LabelCell.Model(text: DateFormatter.dateOnlyFormatter.string(from: date), font: .boldHeadline)
-    dateCellModel.textColor = .darkGray
-    dateCellModel.textAlignment = .left
-    dateCellModel.topMargin = 10
-    dateCellModel.bottomMargin = 10
-    dateCellModel.backgroundColor = .white
-    dateCellModel.bottomSeparatorColor = .separator
-    cellModels.append(dateCellModel)
-    section.headerModel = dateCellModel
+		let dateCellModel = LabelCell.Model(
+			text: DateFormatter.dateOnlyFormatter.string(from: date),
+			font: UIFont.headline.bold)
+		dateCellModel.textColor = .darkGray
+		dateCellModel.textAlignment = .left
+		dateCellModel.topMargin = 10
+		dateCellModel.bottomMargin = 10
+		dateCellModel.backgroundColor = .white
+		dateCellModel.bottomSeparatorColor = .separator
+		cellModels.append(dateCellModel)
+		section.headerModel = dateCellModel
 
-    return section
-  }
+		return section
+	}
 
-  private func createWorkoutCellModel(for workout: Workout) -> SwipeableLabelCellModel {
-    let cellModel = SwipeableLabelCellModel(
-      identifier: workout.description,
-      title: workout.details,
-      details: workout.text)
+	private func createWorkoutCellModel(for workout: Workout) -> SwipeableLabelCellModel {
+		let cellModel = SwipeableLabelCellModel(
+			identifier: workout.description,
+			title: workout.details,
+			details: workout.text)
 
-    cellModel.accessoryImageObservable = Observable.deferred { [weak self] () -> Observable<UIImage?> in
-      guard let strongSelf = self else { return .just(nil) }
-      return strongSelf.repository.image(forWorkoutID: workout.workoutID)
-    }
+		cellModel.accessoryImageObservable = Observable.deferred { [weak self] () -> Observable<UIImage?> in
+			guard let strongSelf = self else { return .just(nil) }
+			return strongSelf.repository.image(forWorkoutID: workout.workoutID)
+		}
 
-    cellModel.bottomSeparatorColor = .separator
-    cellModel.bottomSeparatorLeftInset = true
-    cellModel.deleteAction = { [weak self] _ -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.delete(workout: workout)
-    }
-    cellModel.editAction = { [weak self] _ -> Void in
-      guard let strongSelf = self else { return }
-      strongSelf.edit(workout: workout)
-    }
-    return cellModel
-  }
+		cellModel.bottomSeparatorColor = .separator
+		cellModel.bottomSeparatorLeftInset = true
+		cellModel.deleteAction = { [weak self] _ -> Void in
+			guard let strongSelf = self else { return }
+			strongSelf.delete(workout: workout)
+		}
+		cellModel.editAction = { [weak self] _ -> Void in
+			guard let strongSelf = self else { return }
+			strongSelf.edit(workout: workout)
+		}
+		return cellModel
+	}
 
 }

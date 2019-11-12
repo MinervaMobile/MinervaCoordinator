@@ -9,39 +9,39 @@ import UIKit
 
 open class CollectionViewController: BaseViewController {
 
-  public var hideNavigationBar: Bool = false
-  public var backgroundImage: UIImage?
-  public var backgroundColor: UIColor = .white
+	public var hideNavigationBar: Bool = false
+	public var backgroundImage: UIImage?
+	public var backgroundColor: UIColor = .white
 
-  // MARK: - UIViewController
+	// MARK: - UIViewController
 
-  override public func viewDidLoad() {
-    super.viewDidLoad()
-    setupViewsAndConstraints()
-  }
+	override public func viewDidLoad() {
+		super.viewDidLoad()
+		setupViewsAndConstraints()
+	}
 
-  override public func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    navigationController?.setNavigationBarHidden(hideNavigationBar, animated: animated)
-    if backgroundImage != nil {
-      collectionView.backgroundColor = nil
-    }
-  }
+	override public func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(hideNavigationBar, animated: animated)
+		if backgroundImage != nil {
+			collectionView.backgroundColor = nil
+		}
+	}
 
-  // MARK: - Private
+	// MARK: - Private
 
-  private func setupViewsAndConstraints() {
-    if let backgroundImage = backgroundImage {
-      let imageView = UIImageView(image: backgroundImage)
-      imageView.contentMode = .scaleAspectFill
-      view.addSubview(imageView)
-      imageView.anchor(to: view)
-      collectionView.backgroundColor = nil
-    } else {
-      collectionView.backgroundColor = backgroundColor
-    }
-    view.addSubview(collectionView)
-    collectionView.anchor(to: view)
-    view.shouldTranslateAutoresizingMaskIntoConstraints(false)
-  }
+	private func setupViewsAndConstraints() {
+		if let backgroundImage = backgroundImage {
+			let imageView = UIImageView(image: backgroundImage)
+			imageView.contentMode = .scaleAspectFill
+			view.addSubview(imageView)
+			imageView.anchor(to: view)
+			collectionView.backgroundColor = nil
+		} else {
+			collectionView.backgroundColor = backgroundColor
+		}
+		view.addSubview(collectionView)
+		collectionView.anchor(to: view)
+		view.shouldTranslateAutoresizingMaskIntoConstraints(false)
+	}
 }

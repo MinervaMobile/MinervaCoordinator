@@ -12,45 +12,45 @@ import Minerva
 
 struct MarginCellModel: TypedListCellModel {
 
-  typealias CellType = MarginCell
+	typealias CellType = MarginCell
 
-  let identifier: String
+	let identifier: String
 
-  var backgroundColor: UIColor?
-  let height: CGFloat?
+	var backgroundColor: UIColor?
+	let height: CGFloat?
 
-  init(cellIdentifier: String = "MarginCellModel", height: CGFloat? = nil) {
-    self.identifier = cellIdentifier
-    self.height = height
-  }
+	init(cellIdentifier: String = "MarginCellModel", height: CGFloat? = nil) {
+		self.identifier = cellIdentifier
+		self.height = height
+	}
 
-  // MARK: - BaseListCellModel
-  var description: String { typeDescription }
+	// MARK: - BaseListCellModel
+	var description: String { typeDescription }
 
-  var reorderable: Bool { false }
+	var reorderable: Bool { false }
 
-  func identical(to model: MarginCellModel) -> Bool {
-    return backgroundColor == model.backgroundColor
-      && height == model.height
-  }
+	func identical(to model: MarginCellModel) -> Bool {
+		return backgroundColor == model.backgroundColor
+			&& height == model.height
+	}
 
-  func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> CellType
-  ) -> ListCellSize {
-    guard let height = self.height else { return .relative }
-    let width = containerSize.width
-    return .explicit(size: CGSize(width: width, height: height))
-  }
+	func size(
+		constrainedTo containerSize: CGSize,
+		with templateProvider: () -> CellType
+	) -> ListCellSize {
+		guard let height = self.height else { return .relative }
+		let width = containerSize.width
+		return .explicit(size: CGSize(width: width, height: height))
+	}
 }
 
 final class MarginCell: BaseListCell {
 
-  private var model: MarginCellModel? { cellModel as? MarginCellModel }
+	private var model: MarginCellModel? { cellModel as? MarginCellModel }
 
-  override func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else { return }
-    self.contentView.backgroundColor = model.backgroundColor
-  }
+	override func didUpdateCellModel() {
+		super.didUpdateCellModel()
+		guard let model = self.model else { return }
+		self.contentView.backgroundColor = model.backgroundColor
+	}
 }

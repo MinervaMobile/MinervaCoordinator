@@ -10,5 +10,5 @@ import RxSwift
 import UIKit
 
 public protocol DataSource {
-  var sections: Observable<[ListSection]> { get }
+	var sections: Observable<[ListSection]> { get }
 }

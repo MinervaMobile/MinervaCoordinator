@@ -42,6 +42,7 @@ blacklist_rules:
   - strong_iboutlet
   - switch_case_on_newline
   - todo
+  - trailing_closure
   - type_contents_order
   - unused_setter_value
   - valid_ibinspectable
@@ -160,7 +161,6 @@ whitelist_rules:
   - switch_case_alignment
   - syntactic_sugar
   - toggle_bool
-  - trailing_closure
   - trailing_comma
   - trailing_newline
   - trailing_semicolon

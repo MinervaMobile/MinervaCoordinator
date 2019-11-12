@@ -10,72 +10,72 @@ import UIKit
 
 open class BaseListCellModel: ListCellModel {
 
-  public init() { }
+	public init() { }
 
-  // MARK: - ListCellModel
-  open var identifier: String {
-    return typeIdentifier
-  }
-  open var cellType: ListCollectionViewCell.Type {
-    return cellTypeFromModelName
-  }
+	// MARK: - ListCellModel
+	open var identifier: String {
+		return typeIdentifier
+	}
+	open var cellType: ListCollectionViewCell.Type {
+		return cellTypeFromModelName
+	}
 
-  open func identical(to model: ListCellModel) -> Bool {
-    return identifier == model.identifier
-  }
-  open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
-    return .autolayout
-  }
+	open func identical(to model: ListCellModel) -> Bool {
+		return identifier == model.identifier
+	}
+	open func size(
+		constrainedTo containerSize: CGSize,
+		with templateProvider: () -> ListCollectionViewCell
+	) -> ListCellSize {
+		return .autolayout
+	}
 }
 
 open class BaseListCell: ListCollectionViewCell {
 
-  open private(set) var cellModel: ListCellModel?
+	open private(set) var cellModel: ListCellModel?
 
-  override public init(frame: CGRect) {
-    super.init(frame: frame)
-  }
+	override public init(frame: CGRect) {
+		super.init(frame: frame)
+	}
 
-  @available(*, unavailable)
-  public required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+	@available(*, unavailable)
+	public required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
-  override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-    super.apply(layoutAttributes)
-    if let attributes = layoutAttributes as? ListViewLayoutAttributes,
-      let animation = attributes.animationGroup {
-      self.layer.add(animation, forKey: nil)
-    }
-  }
+	override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+		super.apply(layoutAttributes)
+		if let attributes = layoutAttributes as? ListViewLayoutAttributes,
+			let animation = attributes.animationGroup {
+			self.layer.add(animation, forKey: nil)
+		}
+	}
 
-  override open func prepareForReuse() {
-    super.prepareForReuse()
-    cellModel = nil
-    didUpdateCellModel()
-  }
+	override open func prepareForReuse() {
+		super.prepareForReuse()
+		cellModel = nil
+		didUpdateCellModel()
+	}
 
-  open func didUpdateCellModel() {
-  }
+	open func didUpdateCellModel() {
+	}
 
-  public final func bind(cellModel: ListCellModel, sizing: Bool) {
-    if let model = cellModel as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
-    self.cellModel = cellModel
-    didUpdateCellModel()
-  }
+	public final func bind(cellModel: ListCellModel, sizing: Bool) {
+		if let model = cellModel as? ListBindableCellModelWrapper {
+			model.willBind()
+		}
+		self.cellModel = cellModel
+		didUpdateCellModel()
+	}
 
-  // MARK: - ListBindable
+	// MARK: - ListBindable
 
-  public final func bindViewModel(_ viewModel: Any) {
-    guard let wrapper = viewModel as? ListCellModelWrapper else {
-      assertionFailure("Invalid view model \(viewModel)")
-      return
-    }
-    bind(cellModel: wrapper.model, sizing: false)
-  }
+	public final func bindViewModel(_ viewModel: Any) {
+		guard let wrapper = viewModel as? ListCellModelWrapper else {
+			assertionFailure("Invalid view model \(viewModel)")
+			return
+		}
+		bind(cellModel: wrapper.model, sizing: false)
+	}
 }

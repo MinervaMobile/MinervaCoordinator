@@ -13,7 +13,7 @@ import UIKit
 /// TODO: Remove this dependency on IGListKit's ListCollectionViewLayout
 open class ListViewLayout: ListCollectionViewLayout {
 
-  override public class var layoutAttributesClass: AnyClass {
-    return ListViewLayoutAttributes.self
-  }
+	override public class var layoutAttributesClass: AnyClass {
+		return ListViewLayoutAttributes.self
+	}
 }

@@ -23,3 +23,8 @@ target 'MinervaExample' do
   platform :ios, '11.0'
   minerva_pods
 end
+
+target 'MinervaTests' do
+  platform :ios, '11.0'
+  minerva_pods
+end
