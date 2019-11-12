@@ -1,5 +1,6 @@
-# List of ignore directories for code coverage.
 ignore:
-  - "MinervaExample"
-  - "MinervaTests"
-  - "Pods"
+  - "MinervaExample/**/*"
+  - "MinervaTests/**/*"
+  - "Pods/**/*"
+  - "MBProgressHUD.*"
+  - "IGListKit.*"
