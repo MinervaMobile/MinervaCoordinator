@@ -1,0 +1,5 @@
+# List of ignore directories for code coverage.
+ignore:
+  - "MinervaExample"
+  - "MinervaTests"
+  - "Pods"

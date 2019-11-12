@@ -39,16 +39,19 @@ public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigatio
 
   /// Removes all but the top view controller from the Navigator's navigation controller.
   /// - Parameter animated: Whether or not to animate the transition.
-  @discardableResult func popToRootViewController(animated: Bool) -> [UIViewController]?
+  @discardableResult
+  func popToRootViewController(animated: Bool) -> [UIViewController]?
 
   /// Removes all view controller's above the provided view controller from the Navigator's navigation controller.
   /// - Parameter viewController: The view controller to display.
   /// - Parameter animated: Whether or not to animate the transition.
-  @discardableResult func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]?
+  @discardableResult
+  func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]?
 
   /// Removes the top navigation controller from the navigation stack.
   /// - Parameter animated: Whether or not to animate the transition.
-  @discardableResult func popViewController(animated: Bool) -> UIViewController?
+  @discardableResult
+  func popViewController(animated: Bool) -> UIViewController?
 }
 
 extension Navigator {

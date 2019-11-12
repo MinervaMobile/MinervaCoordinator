@@ -1,7 +1,6 @@
 excluded:
-  - Example
-  - Example/MinervaExample/Shared/Generated
-  - Example/Pods
+  - MinervaExample/Shared/Generated
+  - Pods
 
 blacklist_rules:
   - array_init
