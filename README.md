@@ -5,7 +5,7 @@
 [![Version](https://img.shields.io/cocoapods/v/Minerva.svg?style=flat)](http://cocoapods.org/pods/Minerva)
 [![License](https://img.shields.io/cocoapods/l/Minerva.svg?style=flat)](http://cocoapods.org/pods/Minerva)
 
-Minerva is an easy to use framework for structuring iOS, MacOS, iPadOS and TvOS applications. It's key features include:
+Minerva is an easy to use framework for structuring iOS, iPadOS and TvOS applications. It's key features include:
 
 * A simplified Swift friendly MVVM framework built on top of IGListKit.
 * A Coordinator framework that is similar to working with UIViewControllers.
