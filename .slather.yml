@@ -3,4 +3,8 @@
 coverage_service: cobertura_xml
 xcodeproj: MinervaExample.xcodeproj
 workspace: MinervaExample.xcworkspace
-scheme: MinervaExample
+scheme: Minerva
+ignore:
+  - MinervaExample/*
+  - MinervaTests/*
+  - Pods/*
