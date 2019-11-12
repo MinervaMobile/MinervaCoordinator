@@ -40,6 +40,10 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+# Slather
+*.coverage.txt
+cobertura.xml
+
 # CocoaPods
 Pods/
 
