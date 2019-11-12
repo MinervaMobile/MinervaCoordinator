@@ -10,17 +10,14 @@ before_install:
 
 jobs:
   include:
-    - stage: Lint CocoaPod
-      install:
-        - brew outdated cocoapods || brew upgrade cocoapods
-      script:
-        - pod lib lint
-    - stage: Test & Code Coverage
+    - stage: Lint Pod, Test, Generate Coverage
       install:
         - brew outdated cocoapods || brew upgrade cocoapods
         - brew install xcodegen
         - gem install slather
+        - pod install
       script:
+        - pod lib lint
         - set -o pipefail && xcodebuild -workspace MinervaExample.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.2' build test | xcpretty
         - slather
         - bash <(curl -s https://codecov.io/bash)
