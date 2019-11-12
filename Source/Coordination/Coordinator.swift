@@ -141,7 +141,7 @@ extension CoordinatorNavigator {
 extension UIModalPresentationStyle {
   /// On iOS13+ this is UIModalPresentationStyle.automatic and earler versions are UIModalPresentationStyle.fullScreen
   public static var safeAutomatic: UIModalPresentationStyle {
-    if #available(iOS 13, *) {
+    if #available(iOS 13, tvOS 13.0, *) {
       return .automatic
     } else {
       return .fullScreen

@@ -1,0 +1,23 @@
+osx_image: xcode11.2
+language: swift
+cache:
+  bundler: true
+  cocoapods: true
+  directories:
+  - Carthage
+before_install:
+- brew update
+
+jobs:
+  include:
+    - stage: Build CocoaPods
+      script:
+        - brew outdated cocoapods || brew upgrade cocoapods
+        - pod repo update
+        - travis_wait 500 pod lib lint --fail-fast --use-libraries --platforms=ios --skip-import-validation --skip-tests --verbose
+    - stage: Run Tests
+      script:
+        - gem install slather
+        - set -o pipefail && xcodebuild test -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone XS,OS=13.2' ONLY_ACTIVE_ARCH=YES | xcpretty
+        - slather
+        - bash <(curl -s https://codecov.io/bash)
