@@ -16,7 +16,7 @@ public protocol SettingsCoordinatorDelegate: AnyObject {
 	)
 }
 
-public final class SettingsCoordinator: MainCoordinator<SettingsDataSource, CollectionViewController> {
+public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, CollectionViewController> {
 
 	public weak var delegate: SettingsCoordinatorDelegate?
 	private let userManager: UserManager
@@ -28,16 +28,16 @@ public final class SettingsCoordinator: MainCoordinator<SettingsDataSource, Coll
 		self.userManager = userManager
 		self.dataManager = dataManager
 
-		let dataSource = SettingsDataSource(dataManager: dataManager)
+		let presenter = SettingsPresenter(dataManager: dataManager)
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = "Settings"
 	}
 
@@ -86,7 +86,7 @@ public final class SettingsCoordinator: MainCoordinator<SettingsDataSource, Coll
 		let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
 		presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
 	}
-	private func handle(_ action: SettingsDataSource.Action) {
+	private func handle(_ action: SettingsPresenter.Action) {
 		switch action {
 		case .deleteAccount:
 			deleteUser()

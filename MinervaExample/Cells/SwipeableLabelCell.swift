@@ -6,18 +6,16 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
-
 import RxSwift
 import SwipeCellKit
+import UIKit
 
-final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
+public final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
 
 	// MARK: - ListSelectableCellModel
-	typealias SelectableModelType = SwipeableLabelCellModel
-	var selectionAction: SelectionAction?
+	public typealias SelectableModelType = SwipeableLabelCellModel
+	public var selectionAction: SelectionAction?
 
 	typealias Action = (_ cellModel: SwipeableLabelCellModel) -> Void
 
@@ -73,11 +71,11 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? SwipeableLabelCellModel, super.identical(to: model) else {
 			return false
 		}
@@ -91,7 +89,7 @@ final class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel
 	}
 }
 
-final class SwipeableLabelCell: SwipeableCell {
+public final class SwipeableLabelCell: SwipeableCell {
 	private var model: SwipeableLabelCellModel? { cellModel as? SwipeableLabelCellModel }
 
 	private var disposeBag = DisposeBag()
@@ -117,13 +115,13 @@ final class SwipeableLabelCell: SwipeableCell {
 		setupConstraints()
 	}
 
-	override func prepareForReuse() {
+	override public func prepareForReuse() {
 		super.prepareForReuse()
 		disposeBag = DisposeBag()
 		accessoryImageView.image = nil
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else {
 			return
@@ -169,7 +167,7 @@ extension SwipeableLabelCell {
 
 // MARK: - SwipeCollectionViewCellDelegate
 extension SwipeableLabelCellModel: SwipeCollectionViewCellDelegate {
-	func collectionView(
+	public func collectionView(
 		_ collectionView: UICollectionView,
 		editActionsForItemAt indexPath: IndexPath,
 		for orientation: SwipeActionsOrientation

@@ -1,81 +1,80 @@
 //
-//  LabelCell.Model.swift
+//  LabelCellModel.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
+public final class LabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
-final class LabelCell: DefaultListCell {
+	fileprivate static let maxTextWidth: CGFloat = 600
 
-	final class Model: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
+	// MARK: - ListSelectableCellModel
+	public typealias SelectableModelType = LabelCellModel
+	public var selectionAction: SelectionAction?
 
-		fileprivate static let maxTextWidth: CGFloat = 600
+	// MARK: - ListBindableCellModel
+	public typealias BindableModelType = LabelCellModel
+	public var willBindAction: BindAction?
 
-		// MARK: - ListSelectableCellModel
-		typealias SelectableModelType = Model
-		var selectionAction: SelectionAction?
+	var textAlignment: NSTextAlignment = .left
+	var numberOfLines = 0
+	var textColor: UIColor?
 
-		// MARK: - ListBindableCellModel
-		typealias BindableModelType = Model
-		var willBindAction: BindAction?
+	fileprivate let attributedText: NSAttributedString?
+	fileprivate let text: String
+	fileprivate let font: UIFont
+	private let cellIdentifier: String
 
-		var textAlignment: NSTextAlignment = .left
-		var numberOfLines = 0
-		var textColor: UIColor?
-
-		fileprivate let attributedText: NSAttributedString?
-		fileprivate let text: String
-		fileprivate let font: UIFont
-		private let cellIdentifier: String
-
-		init(identifier: String, text: String, font: UIFont, attributedText: NSAttributedString? = nil) {
-			self.cellIdentifier = identifier
-			self.text = text
-			self.font = font
-			self.attributedText = attributedText
-			super.init()
-		}
-
-		convenience init(text: String, font: UIFont) {
-			self.init(identifier: text, text: text, font: font)
-		}
-
-		convenience init(attributedText: NSAttributedString) {
-			self.init(identifier: attributedText.string, attributedText: attributedText)
-		}
-
-		convenience init(identifier: String, attributedText: NSAttributedString) {
-			self.init(
-				identifier: identifier,
-				text: attributedText.string,
-				font: UIFont.preferredFont(forTextStyle: .subheadline),
-				attributedText: attributedText)
-		}
-
-		// MARK: - BaseListCellModel
-
-		override var identifier: String { return cellIdentifier }
-		override var cellType: ListCollectionViewCell.Type { return LabelCell.self }
-
-		override func identical(to model: ListCellModel) -> Bool {
-			guard let model = model as? Self, super.identical(to: model) else {
-				return false
-			}
-			return text == model.text
-				&& font == model.font
-				&& attributedText == model.attributedText
-				&& textColor == model.textColor
-				&& textAlignment == model.textAlignment
-				&& numberOfLines == model.numberOfLines
-		}
+	init(identifier: String, text: String, font: UIFont, attributedText: NSAttributedString? = nil) {
+		self.cellIdentifier = identifier
+		self.text = text
+		self.font = font
+		self.attributedText = attributedText
+		super.init()
 	}
 
-	private var model: Model? { cellModel as? Model }
+	convenience init(text: String, font: UIFont) {
+		self.init(identifier: text, text: text, font: font)
+	}
+
+	convenience init(attributedText: NSAttributedString) {
+		self.init(identifier: attributedText.string, attributedText: attributedText)
+	}
+
+	convenience init(identifier: String, attributedText: NSAttributedString) {
+		self.init(
+			identifier: identifier,
+			text: attributedText.string,
+			font: UIFont.preferredFont(forTextStyle: .subheadline),
+			attributedText: attributedText)
+	}
+
+	// MARK: - BaseListCellModel
+
+	override public var identifier: String { return cellIdentifier }
+	override public var cellType: ListCollectionViewCell.Type { return LabelCell.self }
+
+	override public func identical(to model: ListCellModel) -> Bool {
+		guard let model = model as? Self, super.identical(to: model) else {
+			return false
+		}
+		return text == model.text
+			&& font == model.font
+			&& attributedText == model.attributedText
+			&& textColor == model.textColor
+			&& textAlignment == model.textAlignment
+			&& numberOfLines == model.numberOfLines
+	}
+}
+
+public final class LabelCell: DefaultListCell {
+
+	private var model: LabelCellModel? { cellModel as? LabelCellModel }
 
 	private let label: UILabel = {
 		let label = UILabel()
@@ -92,7 +91,7 @@ final class LabelCell: DefaultListCell {
 		contentView.clipsToBounds = true
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = model else {
 			return
@@ -115,9 +114,9 @@ final class LabelCell: DefaultListCell {
 }
 
 // MARK: - Factory
-extension LabelCell.Model {
-	public static func createSectionHeaderModel(title: String) -> LabelCell.Model {
-		let cellModel = LabelCell.Model(text: title, font: .footnote)
+extension LabelCellModel {
+	public static func createSectionHeaderModel(title: String) -> LabelCellModel {
+		let cellModel = LabelCellModel(text: title, font: .footnote)
 		cellModel.backgroundColor = .section
 		cellModel.topMargin = 24
 		cellModel.bottomMargin = 8

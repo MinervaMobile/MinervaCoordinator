@@ -7,11 +7,10 @@
 
 import Combine
 import Foundation
-import SwiftUI
-import UIKit
-
 import Minerva
 import RxSwift
+import SwiftUI
+import UIKit
 
 @available(iOS 13.0, *)
 public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, ListSelectableCellModel, ListBindableCellModel {

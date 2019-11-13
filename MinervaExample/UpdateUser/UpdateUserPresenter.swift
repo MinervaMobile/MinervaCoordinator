@@ -1,5 +1,5 @@
 //
-//  UpdateUserDataSource.swift
+//  UpdateUserPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UpdateUserDataSource: DataSource {
+public final class UpdateUserPresenter: Presenter {
 	public enum Action {
 		case save(user: User)
 	}
@@ -52,7 +52,7 @@ public final class UpdateUserDataSource: DataSource {
 	}
 
 	private func loadCellModels() -> [ListCellModel] {
-		let doneModel = LabelCell.Model(identifier: "doneModel", text: "Save", font: .title1)
+		let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
 		doneModel.leftMargin = 0
 		doneModel.rightMargin = 0
 		doneModel.textAlignment = .center
@@ -75,7 +75,7 @@ public final class UpdateUserDataSource: DataSource {
 
 	private func createEmailCellModel() -> ListCellModel {
 		let cellModel = TextInputCellModel(
-			identifier: UpdateUserDataSource.emailCellModelIdentifier,
+			identifier: UpdateUserPresenter.emailCellModelIdentifier,
 			placeholder: "Email",
 			font: .subheadline)
 		cellModel.text = user.email
@@ -92,7 +92,7 @@ public final class UpdateUserDataSource: DataSource {
 
 	private func createCaloriesCellModel() -> ListCellModel {
 		let cellModel = TextInputCellModel(
-			identifier: UpdateUserDataSource.caloriesCellModelIdentifier,
+			identifier: UpdateUserPresenter.caloriesCellModelIdentifier,
 			placeholder: "Daily Calories",
 			font: .subheadline)
 		cellModel.text = user.dailyCalories > 0 ? String(user.dailyCalories) : nil
@@ -108,13 +108,13 @@ public final class UpdateUserDataSource: DataSource {
 }
 
 // MARK: - TextInputCellModelDelegate
-extension UpdateUserDataSource: TextInputCellModelDelegate {
+extension UpdateUserPresenter: TextInputCellModelDelegate {
 	public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
 		guard let text = text else { return }
 		switch textInputCellModel.identifier {
-		case UpdateUserDataSource.emailCellModelIdentifier:
+		case UpdateUserPresenter.emailCellModelIdentifier:
 			user.email = text
-		case UpdateUserDataSource.caloriesCellModelIdentifier:
+		case UpdateUserPresenter.caloriesCellModelIdentifier:
 			user.dailyCalories = Int32(text) ?? user.dailyCalories
 		default:
 			assertionFailure("Unknown text input cell model")

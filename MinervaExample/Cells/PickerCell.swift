@@ -6,11 +6,10 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
-
-struct PickerImageData: Equatable {
+public struct PickerImageData: Equatable {
 	let image: UIImage
 	let imageColor: UIColor
 	let imageMargin: CGFloat
@@ -26,16 +25,17 @@ struct PickerImageData: Equatable {
 	}
 }
 
-struct PickerDataRow: Equatable {
+public struct PickerDataRow: Equatable {
 	let text: NSAttributedString
 	let imageData: PickerImageData?
+
 	init(text: NSAttributedString, imageData: PickerImageData?) {
 		self.text = text
 		self.imageData = imageData
 	}
 }
 
-struct PickerDataComponent: Equatable {
+public struct PickerDataComponent: Equatable {
 	let data: [PickerDataRow]
 	let textAlignment: NSTextAlignment
 	let verticalMargin: CGFloat
@@ -49,13 +49,14 @@ struct PickerDataComponent: Equatable {
 	}
 }
 
-final class PickerCellModel: BaseListCellModel {
+public final class PickerCellModel: BaseListCellModel {
 	typealias Action = (
 		_ cellModel: PickerCellModel,
 		_ pickerView: UIPickerView,
 		_ row: Int,
 		_ component: Int
 	) -> Void
+
 	var height: CGFloat = 220
 	fileprivate static let cellMargin: CGFloat = 15.0
 	private let cellIdentifier: String
@@ -74,11 +75,11 @@ final class PickerCellModel: BaseListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? PickerCellModel else {
 			return false
 		}
@@ -87,7 +88,7 @@ final class PickerCellModel: BaseListCellModel {
 	}
 }
 
-final class PickerCell: BaseListCell {
+public final class PickerCell: BaseListCell {
 
 	private var model: PickerCellModel? { cellModel as? PickerCellModel }
 
@@ -101,7 +102,7 @@ final class PickerCell: BaseListCell {
 		contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = model else {
 			return
@@ -120,6 +121,7 @@ private class PickerCellModelHelper: NSObject {
 		_ row: Int,
 		_ component: Int
 	) -> Void
+
 	let pickerDataComponents: [PickerDataComponent]
 	var changedValue: Action?
 

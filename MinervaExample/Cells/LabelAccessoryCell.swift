@@ -6,21 +6,20 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
-
-final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
+public final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
 	fileprivate static let iconTrailingLength: CGFloat = 10
 	fileprivate static let accessoryImageMargin: CGFloat = 10
 
 	// MARK: - ListSelectableCellModel
-	typealias SelectableModelType = LabelAccessoryCellModel
-	var selectionAction: SelectionAction?
+	public typealias SelectableModelType = LabelAccessoryCellModel
+	public var selectionAction: SelectionAction?
 
 	// MARK: - ListBindableCellModel
-	typealias BindableModelType = LabelAccessoryCellModel
-	var willBindAction: BindAction?
+	public typealias BindableModelType = LabelAccessoryCellModel
+	public var willBindAction: BindAction?
 
 	private let cellIdentifier: String
 
@@ -46,11 +45,11 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? LabelAccessoryCellModel, super.identical(to: model) else {
 			return false
 		}
@@ -66,7 +65,7 @@ final class LabelAccessoryCellModel: DefaultListCellModel, ListSelectableCellMod
 	}
 }
 
-final class LabelAccessoryCell: DefaultListCell {
+public final class LabelAccessoryCell: DefaultListCell {
 	private var model: LabelAccessoryCellModel? { cellModel as? LabelAccessoryCellModel }
 
 	private let label: UILabel = {
@@ -115,7 +114,7 @@ final class LabelAccessoryCell: DefaultListCell {
 		contentView.clipsToBounds = true
 	}
 
-	override func prepareForReuse() {
+	override public func prepareForReuse() {
 		super.prepareForReuse()
 		accessoryImageWidthHeightConstraint?.constant = 0
 		accessoryImageLeadingConstraint?.constant = 0
@@ -125,7 +124,7 @@ final class LabelAccessoryCell: DefaultListCell {
 		iconImageView.image = nil
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else {
 			return
@@ -194,9 +193,9 @@ extension LabelAccessoryCell {
 extension LabelAccessoryCellModel {
 	public static func createSettingsCellModel(
 		identifier: String? = nil,
-		title: String,
-		details: String?,
-		hasChevron: Bool
+		title: String = "",
+		details: String? = nil,
+		hasChevron: Bool = false
 	) -> LabelAccessoryCellModel {
 		let text = NSAttributedString(string: title, font: .subheadline, fontColor: .black)
 		let id = identifier ?? "\(title)-\(details ?? "")"

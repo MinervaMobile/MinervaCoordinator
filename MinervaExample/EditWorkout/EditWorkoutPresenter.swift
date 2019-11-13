@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class EditWorkoutPresenter: DataSource {
+public final class EditWorkoutPresenter: Presenter {
 	public enum Action {
 		case save(workout: Workout)
 	}
@@ -53,7 +53,7 @@ public final class EditWorkoutPresenter: DataSource {
 	}
 
 	private func loadCellModels(with workout: WorkoutProto) -> [ListCellModel] {
-		let doneModel = LabelCell.Model(
+		let doneModel = LabelCellModel(
 			identifier: "doneModel",
 			text: "Save",
 			font: .title1)

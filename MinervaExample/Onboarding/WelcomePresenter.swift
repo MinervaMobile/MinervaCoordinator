@@ -1,5 +1,5 @@
 //
-//  WelcomeDataSource.swift
+//  WelcomePresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class WelcomeDataSource: DataSource {
+public final class WelcomePresenter: Presenter {
 	public enum Action {
 		case createAccount
 		case login
@@ -37,7 +37,7 @@ public final class WelcomeDataSource: DataSource {
 		logoModel.imageColor = .black
 		logoModel.contentMode = .scaleAspectFit
 
-		let personalizedGuidanceModel = LabelCell.Model(text: "WORKOUTS", font: UIFont.title1.bold)
+		let personalizedGuidanceModel = LabelCellModel(text: "WORKOUTS", font: UIFont.title1.bold)
 		personalizedGuidanceModel.textColor = .black
 		personalizedGuidanceModel.textAlignment = .center
 		personalizedGuidanceModel.bottomMargin = 20
@@ -57,7 +57,7 @@ public final class WelcomeDataSource: DataSource {
 			value: paragraphStyle,
 			range: NSRange(location: 0, length: mutableString.length)
 		)
-		let paragraphCellModel = LabelCell.Model(attributedText: mutableString)
+		let paragraphCellModel = LabelCellModel(attributedText: mutableString)
 		paragraphCellModel.textAlignment = .center
 		paragraphCellModel.bottomMargin = 60
 
@@ -69,7 +69,7 @@ public final class WelcomeDataSource: DataSource {
 			strongSelf.actionsSubject.onNext(.createAccount)
 		}
 
-		let existingAccountModel = LabelCell.Model(text: "USE EXISTING ACCOUNT", font: .subheadline)
+		let existingAccountModel = LabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
 		existingAccountModel.textAlignment = .center
 		existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
 			guard let strongSelf = self else { return }

@@ -35,7 +35,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: presenter,
+			presenter: presenter,
 			listController: listController
 		)
 	}
@@ -44,11 +44,11 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
 	override public func viewControllerViewDidLoad(_ viewController: ViewController) {
 		super.viewControllerViewDidLoad(viewController)
 
-		dataSource.state
+		presenter.state
 			.subscribe(onNext: handle(_:))
 			.disposed(by: disposeBag)
 
-		dataSource.actions
+		presenter.actions
 			.subscribe(onNext: handle(_:))
 			.disposed(by: disposeBag)
 

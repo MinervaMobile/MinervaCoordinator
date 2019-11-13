@@ -22,7 +22,7 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
 	private let dataManager: DataManager
 	public var userVC: UserVC
 
-	private var filterDataSource: FilterDataSource?
+	private var filterPresenter: FilterPresenter?
 	private var filterViewController: CollectionViewController?
 	private var workoutFilter: WorkoutFilter = WorkoutFilterProto(startDate: nil, endDate: nil, startTime: nil, endTime: nil)
 

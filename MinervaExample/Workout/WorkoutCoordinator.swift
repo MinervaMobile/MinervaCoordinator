@@ -13,7 +13,6 @@ import UIKit
 public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
 	private let dataManager: DataManager
-	private let presenter: WorkoutPresenter
 
 	// MARK: - Lifecycle
 
@@ -22,13 +21,12 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
 
 		let repository = WorkoutRepository(dataManager: dataManager, userID: userID)
 		let presenter = WorkoutPresenter(repository: repository)
-		self.presenter = presenter
 		let listController = LegacyListController()
 		let viewController = WorkoutVC(presenter: presenter, listController: listController)
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: presenter,
+			presenter: presenter,
 			listController: listController)
 
 	}

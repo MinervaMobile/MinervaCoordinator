@@ -1,5 +1,5 @@
 //
-//  FilterDataSource.swift
+//  FilterPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class FilterDataSource: DataSource {
+public final class FilterPresenter: Presenter {
 	public enum Action {
 		case edit(filter: WorkoutFilter, type: FilterType)
 	}
@@ -36,7 +36,7 @@ public final class FilterDataSource: DataSource {
 	private func createSection(with filter: WorkoutFilter) -> [ListSection] {
 		var cellModels = [ListCellModel]()
 
-		cellModels.append(LabelCell.Model.createSectionHeaderModel(title: "FILTERS"))
+		cellModels.append(LabelCellModel.createSectionHeaderModel(title: "FILTERS"))
 
 		for type in FilterType.allCases {
 			let details = filter.details(for: type) ?? "---"

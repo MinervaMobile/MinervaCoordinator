@@ -9,7 +9,7 @@ import Foundation
 import Minerva
 import UIKit
 
-public class MainCoordinator<T: DataSource, U: ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
+public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
 
 	public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
 

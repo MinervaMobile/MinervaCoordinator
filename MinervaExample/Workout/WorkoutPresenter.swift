@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class WorkoutPresenter: DataSource {
+public final class WorkoutPresenter: Presenter {
 
 	public enum Action {
 		case createWorkout(userID: String)
@@ -159,7 +159,7 @@ public final class WorkoutPresenter: DataSource {
 	) -> [ListSection] {
 		var sections = [ListSection]()
 
-		let filterCellModel = LabelCell.Model(text: filter.details, font: .subheadline)
+		let filterCellModel = LabelCellModel(text: filter.details, font: .subheadline)
 		filterCellModel.textColor = .darkGray
 		filterCellModel.textAlignment = .right
 		filterCellModel.topMargin = 10
@@ -211,7 +211,7 @@ public final class WorkoutPresenter: DataSource {
 		}
 		var section = ListSection(cellModels: cellModels, identifier: "WORKOUTS-\(sectionNumber)")
 
-		let dateCellModel = LabelCell.Model(
+		let dateCellModel = LabelCellModel(
 			text: DateFormatter.dateOnlyFormatter.string(from: date),
 			font: UIFont.headline.bold)
 		dateCellModel.textColor = .darkGray

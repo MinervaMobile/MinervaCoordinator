@@ -6,11 +6,10 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
-
-final class DatePickerCellModel: BaseListCellModel {
+public final class DatePickerCellModel: BaseListCellModel {
 
 	typealias Action = (_ cellModel: DatePickerCellModel, _ date: Date) -> Void
 
@@ -30,11 +29,11 @@ final class DatePickerCellModel: BaseListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? DatePickerCellModel else {
 			return false
 		}
@@ -43,7 +42,7 @@ final class DatePickerCellModel: BaseListCellModel {
 	}
 }
 
-final class DatePickerCell: BaseListCell {
+public final class DatePickerCell: BaseListCell {
 
 	private var model: DatePickerCellModel? { cellModel as? DatePickerCellModel }
 
@@ -71,7 +70,7 @@ final class DatePickerCell: BaseListCell {
 		model.changedDate?(model, datePicker.date)
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else {
 			return
