@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public protocol FilterCoordinatorDelegate: AnyObject {
 	func filterCoordinator(
@@ -25,7 +24,6 @@ public final class FilterCoordinator: MainCoordinator<FilterDataSource, Collecti
 	// MARK: - Lifecycle
 
 	public init(navigator: Navigator, filter: Observable<WorkoutFilter>) {
-
 		let dataSource = FilterDataSource(filter: filter)
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()

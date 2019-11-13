@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public protocol UserListCoordinatorDelegate: AnyObject {
 	func userListCoordinatorLogoutCurrentUser(

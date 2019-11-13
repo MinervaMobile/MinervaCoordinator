@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import MBProgressHUD
+import UIKit
 
 public enum LoadingHUD {
 	public static func update(in view: UIView?, visible: Bool) {

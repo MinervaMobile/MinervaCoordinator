@@ -44,7 +44,7 @@ public final class UpdateFilterDataSource: DataSource {
 			.disposed(by: disposeBag)
 	}
 
-	// MARK: - Helpers
+	// MARK: - Private
 
 	private func createSection() -> [ListSection] {
 		let cellModels = loadCellModels()

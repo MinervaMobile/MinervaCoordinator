@@ -35,7 +35,8 @@ public final class CreateUserDataSource: DataSource {
 	public init() {
 		sectionsSubject.onNext([createSection()])
 	}
-	// MARK: - Helpers
+
+	// MARK: - Private
 
 	private func createSection() -> ListSection {
 		let cellModels = loadCellModels()
@@ -43,7 +44,7 @@ public final class CreateUserDataSource: DataSource {
 		return section
 	}
 
-	public func loadCellModels() -> [ListCellModel] {
+	private func loadCellModels() -> [ListCellModel] {
 		let doneModel = LabelCell.Model(identifier: "doneModel", text: "Save", font: .title1)
 		doneModel.leftMargin = 0
 		doneModel.rightMargin = 0
@@ -73,8 +74,6 @@ public final class CreateUserDataSource: DataSource {
 			MarginCellModel(cellIdentifier: "doneMarginModel", height: 12)
 		]
 	}
-
-	// MARK: - Helpers
 
 	private func createEmailCellModel() -> ListCellModel {
 		let cellModel = TextInputCellModel(

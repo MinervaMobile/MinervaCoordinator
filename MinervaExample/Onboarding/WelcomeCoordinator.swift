@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
+import UIKit
 
 public protocol WelcomeCoordinatorDelegate: AnyObject {
 	func onboardingCoordinator(

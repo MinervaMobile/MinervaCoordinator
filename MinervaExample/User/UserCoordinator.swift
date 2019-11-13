@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
+import UIKit
 
 public protocol UserCoordinatorDelegate: AnyObject {
 	func userCoordinatorLogoutCurrentUser(_ userCoordinator: UserCoordinator)
