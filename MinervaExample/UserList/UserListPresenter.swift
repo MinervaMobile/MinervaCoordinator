@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public final class UserListPresenter: DataSource {
 	// TODO: Update the old presenter to use the new persistent / transient state model

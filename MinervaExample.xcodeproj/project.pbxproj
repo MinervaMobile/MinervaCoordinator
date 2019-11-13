@@ -55,7 +55,7 @@
 		F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */; };
 		F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */; };
 		F576F8FA226DF0B50015D14E /* SignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8F3226DF0B40015D14E /* SignInDataSource.swift */; };
-		F576F8FF226DF1020015D14E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* Extensions.swift */; };
+		F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F8FE226DF1020015D14E /* UIKitExtensions.swift */; };
 		F576F905226E165E0015D14E /* FilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F903226E165E0015D14E /* FilterDataSource.swift */; };
 		F576F908226E165E0015D14E /* UpdateFilterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */; };
 		F576F924226E16820015D14E /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F912226E16820015D14E /* WorkoutVC.swift */; };
@@ -223,7 +223,7 @@
 		F576F8F1226DF0B40015D14E /* WelcomeCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeCoordinator.swift; sourceTree = "<group>"; };
 		F576F8F2226DF0B40015D14E /* WelcomeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeDataSource.swift; sourceTree = "<group>"; };
 		F576F8F3226DF0B40015D14E /* SignInDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInDataSource.swift; sourceTree = "<group>"; };
-		F576F8FE226DF1020015D14E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F576F8FE226DF1020015D14E /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		F576F903226E165E0015D14E /* FilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDataSource.swift; sourceTree = "<group>"; };
 		F576F904226E165E0015D14E /* UpdateFilterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFilterDataSource.swift; sourceTree = "<group>"; };
 		F576F912226E16820015D14E /* WorkoutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutVC.swift; sourceTree = "<group>"; };
@@ -386,12 +386,14 @@
 				F5C908392343E3F30038BD89 /* EditWorkout */,
 				F576F8FD226DF1020015D14E /* Extensions */,
 				F576F902226E165E0015D14E /* Filter */,
+				F576F87F226DF0050015D14E /* Generated */,
 				F576F868226DEE250015D14E /* Lifecycle */,
+				F576F88D226DF0050015D14E /* Models */,
 				F576F8F0226DF0B40015D14E /* Onboarding */,
+				F576F886226DF0050015D14E /* Protos */,
 				F584857523395474001DBF1E /* Resources */,
 				F576F8D3226DF04F0015D14E /* Services */,
 				F576F92D226E168B0015D14E /* Settings */,
-				F576F87E226DF0050015D14E /* Shared */,
 				F576F86D226DEEF10015D14E /* TestData */,
 				F5C908272343C6340038BD89 /* UpdateUser */,
 				F576F986226E16BB0015D14E /* User */,
@@ -434,17 +436,6 @@
 			path = TestData;
 			sourceTree = "<group>";
 		};
-		F576F87E226DF0050015D14E /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				F576F894226DF0050015D14E /* Extensions */,
-				F576F87F226DF0050015D14E /* Generated */,
-				F576F88D226DF0050015D14E /* Models */,
-				F576F886226DF0050015D14E /* Protos */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		F576F87F226DF0050015D14E /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,15 +475,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F576F894226DF0050015D14E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				F576F895226DF0050015D14E /* FoundationExtensions.swift */,
-				F576F896226DF0050015D14E /* ProtoExtensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		F576F8D3226DF04F0015D14E /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,7 +502,9 @@
 		F576F8FD226DF1020015D14E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F576F8FE226DF1020015D14E /* Extensions.swift */,
+				F576F895226DF0050015D14E /* FoundationExtensions.swift */,
+				F576F896226DF0050015D14E /* ProtoExtensions.swift */,
+				F576F8FE226DF1020015D14E /* UIKitExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -984,7 +968,7 @@
 				F576F8F7226DF0B50015D14E /* WelcomeDataSource.swift in Sources */,
 				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
 				F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */,
-				F576F8FF226DF1020015D14E /* Extensions.swift in Sources */,
+				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F92F226E168B0015D14E /* SettingsDataSource.swift in Sources */,
 				F5AF642F235DE7980042F342 /* DataManager+Combine.swift in Sources */,
 				F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */,

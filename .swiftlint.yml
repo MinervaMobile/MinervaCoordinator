@@ -1,5 +1,5 @@
 excluded:
-  - MinervaExample/Shared/Generated
+  - MinervaExample/Generated
   - Pods
 
 blacklist_rules:

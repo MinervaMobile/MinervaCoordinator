@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import RxSwift
+import UIKit
 
 extension DataManager {
 

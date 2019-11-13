@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, CollectionViewController> {
 
@@ -31,6 +30,8 @@ public final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, 
 		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = "Create User"
 	}
+
+	// MARK: - Private
 
 	private func create(email: String, password: String, dailyCalories: Int32, role: UserRole) {
 		LoadingHUD.show(in: viewController.view)

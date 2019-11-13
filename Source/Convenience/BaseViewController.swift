@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import IGListKit
+import UIKit
 
 open class BaseViewController: UIViewController, ViewController {
 	public weak var lifecycleDelegate: ViewControllerDelegate?

@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public final class EditWorkoutCoordinator: MainCoordinator<EditWorkoutPresenter, CollectionViewController> {
 
@@ -31,6 +30,8 @@ public final class EditWorkoutCoordinator: MainCoordinator<EditWorkoutPresenter,
 		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = editing ? "Update Workout" : "Add Workout"
 	}
+
+	// MARK: - Private
 
 	private func save(workout: Workout) {
 		LoadingHUD.show(in: viewController.view)

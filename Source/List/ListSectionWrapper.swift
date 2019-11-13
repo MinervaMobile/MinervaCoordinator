@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import IGListKit
+import UIKit
 
 internal class ListSectionWrapper: NSObject {
 	internal var section: ListSection

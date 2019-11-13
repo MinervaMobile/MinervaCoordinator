@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SwiftProtobuf
 
 public protocol Workout: CustomStringConvertible {

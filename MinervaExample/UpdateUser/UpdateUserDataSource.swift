@@ -43,7 +43,7 @@ public final class UpdateUserDataSource: DataSource {
 			.disposed(by: disposeBag)
 	}
 
-	// MARK: - Helpers
+	// MARK: - Private
 
 	private func createSections() -> [ListSection] {
 		let cellModels = loadCellModels()

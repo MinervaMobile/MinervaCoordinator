@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-/// A Coordinator handles the state transition between Coordinators. This logic was previously part of the UIViewController's. 
+/// A Coordinator handles the state transition between Coordinators. This logic was previously part of the UIViewController's.
 public protocol Coordinator: AnyObject {
 	var parent: Coordinator? { get set }
 	var childCoordinators: [Coordinator] { get set }

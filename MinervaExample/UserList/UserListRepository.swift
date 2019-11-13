@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import RxSwift
 
 public class UserListRepository {

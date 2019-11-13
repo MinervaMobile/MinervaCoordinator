@@ -44,7 +44,7 @@ public final class EditWorkoutPresenter: DataSource {
 			.disposed(by: disposeBag)
 	}
 
-	// MARK: - Helpers
+	// MARK: - Private
 
 	private func createSection(with workout: WorkoutProto) -> [ListSection] {
 		let cellModels = loadCellModels(with: workout)

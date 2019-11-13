@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import UIKit
-
 import Minerva
 import RxSwift
+import UIKit
 
 public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 

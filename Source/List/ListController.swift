@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
-
 import IGListKit
+import UIKit
 
 public protocol ListController: AnyObject {
 
