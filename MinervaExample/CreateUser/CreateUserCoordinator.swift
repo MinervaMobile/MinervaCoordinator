@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, CollectionViewController> {
+public final class CreateUserCoordinator: MainCoordinator<CreateUserPresenter, CollectionViewController> {
 
 	private let dataManager: DataManager
 
@@ -18,16 +18,16 @@ public final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, 
 
 	public init(navigator: Navigator, dataManager: DataManager) {
 		self.dataManager = dataManager
-		let dataSource = CreateUserDataSource()
+		let presenter = CreateUserPresenter()
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = "Create User"
 	}
 
@@ -55,7 +55,7 @@ public final class CreateUserCoordinator: MainCoordinator<CreateUserDataSource, 
 				}
 			).disposed(by: disposeBag)
 	}
-	private func handle(_ action: CreateUserDataSource.Action) {
+	private func handle(_ action: CreateUserPresenter.Action) {
 		switch action {
 		case let .create(email, password, dailyCalories, role):
 			create(email: email, password: password, dailyCalories: dailyCalories, role: role)

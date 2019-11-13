@@ -1,5 +1,5 @@
 //
-//  SettingsDataSource.swift
+//  SettingsPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class SettingsDataSource: DataSource {
+public final class SettingsPresenter: Presenter {
 	public enum Action {
 		case deleteAccount
 		case logout

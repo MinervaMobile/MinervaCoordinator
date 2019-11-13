@@ -17,7 +17,7 @@ public protocol WelcomeCoordinatorDelegate: AnyObject {
 }
 
 /// Manages the user flows for logging in and creating new accounts
-public final class WelcomeCoordinator: MainCoordinator<WelcomeDataSource, CollectionViewController> {
+public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, CollectionViewController> {
 
 	public weak var delegate: WelcomeCoordinatorDelegate?
 	private let userManager: UserManager
@@ -27,26 +27,26 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomeDataSource, Collec
 	public init(navigator: Navigator, userManager: UserManager) {
 		self.userManager = userManager
 
-		let dataSource = WelcomeDataSource()
+		let presenter = WelcomePresenter()
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 	}
 
 	// MARK: - Private
 
-	private func displaySignInVC(mode: SignInDataSource.Mode) {
+	private func displaySignInVC(mode: SignInPresenter.Mode) {
 		let coordinator = SignInCoordinator(navigator: navigator, userManager: userManager, mode: mode)
 		coordinator.delegate = self
 		push(coordinator, animated: true)
 	}
-	private func handle(_ action: WelcomeDataSource.Action) {
+	private func handle(_ action: WelcomePresenter.Action) {
 		switch action {
 		case .login: displaySignInVC(mode: .login)
 		case .createAccount: displaySignInVC(mode: .createAccount)

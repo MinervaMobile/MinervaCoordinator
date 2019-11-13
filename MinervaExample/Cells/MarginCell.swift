@@ -6,15 +6,14 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
+public struct MarginCellModel: TypedListCellModel {
 
-struct MarginCellModel: TypedListCellModel {
+	public typealias CellType = MarginCell
 
-	typealias CellType = MarginCell
-
-	let identifier: String
+	public let identifier: String
 
 	var backgroundColor: UIColor?
 	let height: CGFloat?
@@ -29,12 +28,12 @@ struct MarginCellModel: TypedListCellModel {
 
 	var reorderable: Bool { false }
 
-	func identical(to model: MarginCellModel) -> Bool {
+	public func identical(to model: MarginCellModel) -> Bool {
 		return backgroundColor == model.backgroundColor
 			&& height == model.height
 	}
 
-	func size(
+	public func size(
 		constrainedTo containerSize: CGSize,
 		with templateProvider: () -> CellType
 	) -> ListCellSize {
@@ -44,11 +43,11 @@ struct MarginCellModel: TypedListCellModel {
 	}
 }
 
-final class MarginCell: BaseListCell {
+public final class MarginCell: BaseListCell {
 
 	private var model: MarginCellModel? { cellModel as? MarginCellModel }
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else { return }
 		self.contentView.backgroundColor = model.backgroundColor

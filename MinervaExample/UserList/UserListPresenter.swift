@@ -1,5 +1,5 @@
 //
-//  UserListDataSource.swift
+//  UserListPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UserListPresenter: DataSource {
+public final class UserListPresenter: Presenter {
 	// TODO: Update the old presenter to use the new persistent / transient state model
 	public var sections: Observable<[ListSection]> = .just([])
 

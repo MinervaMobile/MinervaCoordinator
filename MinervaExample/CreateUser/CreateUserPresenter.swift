@@ -1,5 +1,5 @@
 //
-//  CreateUserDataSource.swift
+//  CreateUserPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class CreateUserDataSource: DataSource {
+public final class CreateUserPresenter: Presenter {
 	public enum Action {
 		case create(email: String, password: String, dailyCalories: Int32, role: UserRole)
 	}
@@ -45,7 +45,7 @@ public final class CreateUserDataSource: DataSource {
 	}
 
 	private func loadCellModels() -> [ListCellModel] {
-		let doneModel = LabelCell.Model(identifier: "doneModel", text: "Save", font: .title1)
+		let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
 		doneModel.leftMargin = 0
 		doneModel.rightMargin = 0
 		doneModel.textAlignment = .center
@@ -77,7 +77,7 @@ public final class CreateUserDataSource: DataSource {
 
 	private func createEmailCellModel() -> ListCellModel {
 		let cellModel = TextInputCellModel(
-			identifier: CreateUserDataSource.emailCellModelIdentifier,
+			identifier: CreateUserPresenter.emailCellModelIdentifier,
 			placeholder: "Email",
 			font: .subheadline)
 		cellModel.text = email
@@ -94,7 +94,7 @@ public final class CreateUserDataSource: DataSource {
 
 	private func createCaloriesCellModel() -> ListCellModel {
 		let cellModel = TextInputCellModel(
-			identifier: CreateUserDataSource.caloriesCellModelIdentifier,
+			identifier: CreateUserPresenter.caloriesCellModelIdentifier,
 			placeholder: "Daily Calories",
 			font: .subheadline)
 		cellModel.text = dailyCalories > 0 ? String(dailyCalories) : nil
@@ -111,7 +111,7 @@ public final class CreateUserDataSource: DataSource {
 	private func createPasswordCellModel() -> ListCellModel {
 		let inputFont = UIFont.headline
 		let cellModel = TextInputCellModel(
-			identifier: CreateUserDataSource.passwordCellModelIdentifier,
+			identifier: CreateUserPresenter.passwordCellModelIdentifier,
 			placeholder: "Password",
 			font: inputFont)
 		cellModel.keyboardType = .asciiCapable
@@ -157,15 +157,15 @@ public final class CreateUserDataSource: DataSource {
 }
 
 // MARK: - TextInputCellModelDelegate
-extension CreateUserDataSource: TextInputCellModelDelegate {
+extension CreateUserPresenter: TextInputCellModelDelegate {
 	public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
 		guard let text = text else { return }
 		switch textInputCellModel.identifier {
-		case CreateUserDataSource.emailCellModelIdentifier:
+		case CreateUserPresenter.emailCellModelIdentifier:
 			email = text
-		case CreateUserDataSource.caloriesCellModelIdentifier:
+		case CreateUserPresenter.caloriesCellModelIdentifier:
 			dailyCalories = Int32(text) ?? dailyCalories
-		case CreateUserDataSource.passwordCellModelIdentifier:
+		case CreateUserPresenter.passwordCellModelIdentifier:
 			password = text
 		default:
 			assertionFailure("Unknown text input cell model")

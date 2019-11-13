@@ -17,26 +17,26 @@ public protocol SignInCoordinatorDelegate: AnyObject {
 	)
 }
 
-public final class SignInCoordinator: MainCoordinator<SignInDataSource, CollectionViewController> {
+public final class SignInCoordinator: MainCoordinator<SignInPresenter, CollectionViewController> {
 
 	public weak var delegate: SignInCoordinatorDelegate?
 	private let userManager: UserManager
 
 	// MARK: - Lifecycle
 
-	public init(navigator: Navigator, userManager: UserManager, mode: SignInDataSource.Mode) {
+	public init(navigator: Navigator, userManager: UserManager, mode: SignInPresenter.Mode) {
 		self.userManager = userManager
 
-		let dataSource = SignInDataSource(mode: mode)
+		let presenter = SignInPresenter(mode: mode)
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 	}
 
 	// MARK: - Private
@@ -82,7 +82,7 @@ public final class SignInCoordinator: MainCoordinator<SignInDataSource, Collecti
 				}
 			).disposed(by: disposeBag)
 	}
-	private func handle(_ action: SignInDataSource.Action) {
+	private func handle(_ action: SignInPresenter.Action) {
 		switch action {
 		case let .signIn(email, password, mode):
 			switch mode {

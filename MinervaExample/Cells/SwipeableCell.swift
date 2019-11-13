@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import UIKit
-
 import IGListKit
 import Minerva
 import SwipeCellKit
+import UIKit
 
 open class SwipeableCellModel: DefaultListCellModel {
 

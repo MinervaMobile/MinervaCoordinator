@@ -6,11 +6,10 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
-
-final class ImageCellModel: DefaultListCellModel {
+public final class ImageCellModel: DefaultListCellModel {
 
 	private let cellIdentifier: String
 	var imageColor: UIColor?
@@ -34,11 +33,11 @@ final class ImageCellModel: DefaultListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? ImageCellModel, super.identical(to: model) else {
 			return false
 		}
@@ -50,7 +49,7 @@ final class ImageCellModel: DefaultListCellModel {
 	}
 }
 
-final class ImageCell: DefaultListCell {
+public final class ImageCell: DefaultListCell {
 	private var model: ImageCellModel? { cellModel as? ImageCellModel }
 
 	private let imageView: UIImageView = {
@@ -66,12 +65,12 @@ final class ImageCell: DefaultListCell {
 		setupConstraints()
 	}
 
-	override func prepareForReuse() {
+	override public func prepareForReuse() {
 		super.prepareForReuse()
 		imageView.image = nil
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else {
 			return

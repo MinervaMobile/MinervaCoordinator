@@ -18,16 +18,16 @@ public final class EditWorkoutCoordinator: MainCoordinator<EditWorkoutPresenter,
 
 	public init(navigator: Navigator, dataManager: DataManager, workout: Workout, editing: Bool) {
 		self.dataManager = dataManager
-		let dataSource = EditWorkoutPresenter(workout: workout)
+		let presenter = EditWorkoutPresenter(workout: workout)
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = editing ? "Update Workout" : "Add Workout"
 	}
 

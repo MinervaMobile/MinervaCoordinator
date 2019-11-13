@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UpdateUserCoordinator: MainCoordinator<UpdateUserDataSource, CollectionViewController> {
+public final class UpdateUserCoordinator: MainCoordinator<UpdateUserPresenter, CollectionViewController> {
 
 	private let dataManager: DataManager
 
@@ -18,16 +18,16 @@ public final class UpdateUserCoordinator: MainCoordinator<UpdateUserDataSource, 
 
 	public init(navigator: Navigator, dataManager: DataManager, user: User) {
 		self.dataManager = dataManager
-		let dataSource = UpdateUserDataSource(user: user)
+		let presenter = UpdateUserPresenter(user: user)
 		let viewController = CollectionViewController()
 		let listController = LegacyListController()
 		super.init(
 			navigator: navigator,
 			viewController: viewController,
-			dataSource: dataSource,
+			presenter: presenter,
 			listController: listController
 		)
-		dataSource.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+		presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
 		viewController.title = "Update User"
 	}
 
@@ -49,7 +49,7 @@ public final class UpdateUserCoordinator: MainCoordinator<UpdateUserDataSource, 
 			).disposed(by: disposeBag)
 	}
 
-	private func handle(_ action: UpdateUserDataSource.Action) {
+	private func handle(_ action: UpdateUserPresenter.Action) {
 		switch action {
 		case .save(let user):
 			save(user: user)

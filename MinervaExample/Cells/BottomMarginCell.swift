@@ -6,13 +6,12 @@
 //
 
 import Foundation
+import Minerva
 import UIKit
 
-import Minerva
+public struct BottomMarginCellModel: TypedListCellModel, Equatable {
 
-struct BottomMarginCellModel: TypedListCellModel, Equatable {
-
-	typealias CellType = BottomMarginCell
+	public typealias CellType = BottomMarginCell
 
 	var backgroundColor: UIColor?
 
@@ -20,9 +19,9 @@ struct BottomMarginCellModel: TypedListCellModel, Equatable {
 
 	var description: String { typeDescription }
 	var reorderable: Bool { false }
-	var identifier: String { "BottomMarginCellModel" }
+	public var identifier: String { "BottomMarginCellModel" }
 
-	func size(
+	public func size(
 		constrainedTo containerSize: CGSize,
 		with templateProvider: () -> CellType
 	) -> ListCellSize {
@@ -40,11 +39,11 @@ struct BottomMarginCellModel: TypedListCellModel, Equatable {
 	}
 }
 
-final class BottomMarginCell: BaseListCell {
+public final class BottomMarginCell: BaseListCell {
 
 	private var model: BottomMarginCellModel? { cellModel as? BottomMarginCellModel }
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else { return }
 		self.contentView.backgroundColor = model.backgroundColor

@@ -1,5 +1,5 @@
 //
-//  UpdateFilterDataSource.swift
+//  UpdateFilterPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -10,7 +10,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UpdateFilterDataSource: DataSource {
+public final class UpdateFilterPresenter: Presenter {
 	public enum Action {
 		case update(filter: WorkoutFilter)
 	}
@@ -54,7 +54,7 @@ public final class UpdateFilterDataSource: DataSource {
 
 	private func loadCellModels() -> [ListCellModel] {
 
-		let cancelModel = LabelCell.Model(identifier: "cancelModel", text: "Remove", font: .title1)
+		let cancelModel = LabelCellModel(identifier: "cancelModel", text: "Remove", font: .title1)
 		cancelModel.leftMargin = 0
 		cancelModel.rightMargin = 0
 		cancelModel.textAlignment = .center
@@ -74,7 +74,7 @@ public final class UpdateFilterDataSource: DataSource {
 			strongSelf.actionsSubject.onNext(.update(filter: strongSelf.filter))
 		}
 
-		let doneModel = LabelCell.Model(identifier: "doneModel", text: "Update", font: .title1)
+		let doneModel = LabelCellModel(identifier: "doneModel", text: "Update", font: .title1)
 		doneModel.leftMargin = 0
 		doneModel.rightMargin = 0
 		doneModel.textAlignment = .center

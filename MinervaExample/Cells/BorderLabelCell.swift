@@ -10,15 +10,15 @@ import Minerva
 import RxSwift
 import UIKit
 
-final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
+public final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
 	// MARK: - ListSelectableCellModel
-	typealias SelectableModelType = BorderLabelCellModel
-	var selectionAction: SelectionAction?
+	public typealias SelectableModelType = BorderLabelCellModel
+	public var selectionAction: SelectionAction?
 
 	// MARK: - ListBindableCellModel
-	typealias BindableModelType = BorderLabelCellModel
-	var willBindAction: BindAction?
+	public typealias BindableModelType = BorderLabelCellModel
+	public var willBindAction: BindAction?
 
 	private let cellIdentifier: String
 
@@ -66,11 +66,11 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
 
 	// MARK: - BaseListCellModel
 
-	override var identifier: String {
+	override public var identifier: String {
 		return cellIdentifier
 	}
 
-	override func identical(to model: ListCellModel) -> Bool {
+	override public func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? BorderLabelCellModel, super.identical(to: model) else {
 			return false
 		}
@@ -92,7 +92,7 @@ final class BorderLabelCellModel: DefaultListCellModel, ListSelectableCellModel,
 	}
 }
 
-final class BorderLabelCell: DefaultListCell {
+public final class BorderLabelCell: DefaultListCell {
 	private var model: BorderLabelCellModel? { cellModel as? BorderLabelCellModel }
 
 	private var labelLeadingConstraint: NSLayoutConstraint?
@@ -122,7 +122,7 @@ final class BorderLabelCell: DefaultListCell {
 		setupConstraints()
 	}
 
-	override func didUpdateCellModel() {
+	override public func didUpdateCellModel() {
 		super.didUpdateCellModel()
 		guard let model = self.model else {
 			return

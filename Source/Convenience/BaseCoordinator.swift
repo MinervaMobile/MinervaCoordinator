@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, CoordinatorNavigator, CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate {
+open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, CoordinatorNavigator, CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate {
 
 	public typealias CoordinatorVC = U
 
@@ -18,19 +18,19 @@ open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, Coordina
 	public let listController: ListController
 
 	public let viewController: U
-	public let dataSource: T
+	public let presenter: T
 	public let navigator: Navigator
 	public let disposeBag = DisposeBag()
 
 	public init(
 		navigator: Navigator,
 		viewController: U,
-		dataSource: T,
+		presenter: T,
 		listController: ListController
 	) {
 		self.navigator = navigator
 		self.viewController = viewController
-		self.dataSource = dataSource
+		self.presenter = presenter
 		self.listController = listController
 
 		super.init()
@@ -54,7 +54,7 @@ open class BaseCoordinator<T: DataSource, U: ViewController>: NSObject, Coordina
 
 	// MARK: - ViewControllerDelegate
 	open func viewControllerViewDidLoad(_ viewController: ViewController) {
-		dataSource.sections
+		presenter.sections
 			.observeOn(MainScheduler.instance)
 			.subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
 			.disposed(by: disposeBag)

@@ -1,5 +1,5 @@
 //
-//  SignInDataSource.swift
+//  SignInPresenter.swift
 //  MinervaExample
 //
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
@@ -9,7 +9,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class SignInDataSource: DataSource {
+public final class SignInPresenter: Presenter {
 	private static let emailCellModelIdentifier = "emailInputCellModel"
 	private static let passwordCellModelIdentifier = "passwordInputCellModel"
 
@@ -98,7 +98,7 @@ public final class SignInDataSource: DataSource {
 			bottomMarginModel
 		]
 
-		return ListSection(cellModels: cellModels, identifier: "SignInDataSourceSection")
+		return ListSection(cellModels: cellModels, identifier: "SignInPresenterSection")
 	}
 
 	private func handleContinueButtonPress() {
@@ -112,7 +112,7 @@ public final class SignInDataSource: DataSource {
 	private func createEmailCellModel() -> ListCellModel {
 		let inputFont = UIFont.headline
 		let cellModel = TextInputCellModel(
-			identifier: SignInDataSource.emailCellModelIdentifier,
+			identifier: SignInPresenter.emailCellModelIdentifier,
 			placeholder: "Email Address",
 			font: inputFont)
 
@@ -130,7 +130,7 @@ public final class SignInDataSource: DataSource {
 	private func createPasswordCellModel() -> ListCellModel {
 		let inputFont = UIFont.headline
 		let cellModel = TextInputCellModel(
-			identifier: SignInDataSource.passwordCellModelIdentifier,
+			identifier: SignInPresenter.passwordCellModelIdentifier,
 			placeholder: "Password",
 			font: inputFont)
 
@@ -149,12 +149,12 @@ public final class SignInDataSource: DataSource {
 }
 
 // MARK: - TextInputCellModelDelegate
-extension SignInDataSource: TextInputCellModelDelegate {
+extension SignInPresenter: TextInputCellModelDelegate {
 	public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
 		switch textInputCellModel.identifier {
-		case SignInDataSource.emailCellModelIdentifier:
+		case SignInPresenter.emailCellModelIdentifier:
 			email = text
-		case SignInDataSource.passwordCellModelIdentifier:
+		case SignInPresenter.passwordCellModelIdentifier:
 			password = text
 		default:
 			assertionFailure("Invalid text input cell \(textInputCellModel.identifier)")
