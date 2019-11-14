@@ -1,12 +1,8 @@
 //
-//  TextInputCell.swift
-//  MinervaExample
-//
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
 import Foundation
-import Minerva
 import RxSwift
 import UIKit
 
@@ -15,7 +11,7 @@ public protocol TextInputCellModelDelegate: AnyObject {
 }
 
 public final class TextInputCellModel: BaseListCellModel {
-	weak var delegate: TextInputCellModelDelegate?
+	public weak var delegate: TextInputCellModelDelegate?
 
 	fileprivate static let bottomBorderHeight: CGFloat = 1.0
 	fileprivate static let textBottomMargin: CGFloat = 8.0
@@ -24,34 +20,31 @@ public final class TextInputCellModel: BaseListCellModel {
 	fileprivate var attributedPlaceholder: NSAttributedString {
 		return NSAttributedString(string: placeholder, font: font, fontColor: placeholderTextColor)
 	}
-	var text: String?
-	var backgroundColor: UIColor?
-	var cursorColor: UIColor?
-	var textColor: UIColor?
-	var textContentType: UITextContentType?
-	var isSecureTextEntry: Bool = false
-	var autocorrectionType: UITextAutocorrectionType = .default
-	var autocapitalizationType: UITextAutocapitalizationType = .none
-	var keyboardType: UIKeyboardType = .default
-	var inputTextColor: UIColor = .white
-	var placeholderTextColor: UIColor = .white
+	public var bottomBorderColor = BehaviorSubject<UIColor?>(value: nil)
+
+	public var becomesFirstResponder = false
+	public var text: String?
+	fileprivate let font: UIFont
+	fileprivate let placeholder: String
+
+	public var cursorColor: UIColor?
+	public var textColor: UIColor?
+	public var textContentType: UITextContentType?
+	public var isSecureTextEntry: Bool = false
+	public var autocorrectionType: UITextAutocorrectionType = .default
+	public var autocapitalizationType: UITextAutocapitalizationType = .none
+	public var keyboardType: UIKeyboardType = .default
+	public var inputTextColor: UIColor = .white
+	public var placeholderTextColor: UIColor = .white
+	public var maxControlWidth: CGFloat = 340
+
 	private let cellIdentifier: String
 
-	var firstResponder = BehaviorSubject<Bool>(value: false)
-	var bottomBorderColor = BehaviorSubject<UIColor?>(value: nil)
-
-	fileprivate let placeholder: String
-	fileprivate let font: UIFont
-
-	init(identifier: String, placeholder: String, font: UIFont) {
+	public init(identifier: String, placeholder: String, font: UIFont) {
 		self.cellIdentifier = identifier
 		self.placeholder = placeholder
 		self.font = font
 		super.init()
-	}
-
-	func becomeFirstResponder() {
-		firstResponder.onNext(true)
 	}
 
 	// MARK: - BaseListCellModel
@@ -61,9 +54,10 @@ public final class TextInputCellModel: BaseListCellModel {
 	}
 
 	override public func identical(to model: ListCellModel) -> Bool {
-		guard let model = model as? TextInputCellModel else { return false }
+		guard let model = model as? TextInputCellModel, super.identical(to: model) else { return false }
 		return text == model.text
-			&& backgroundColor == model.backgroundColor
+			&& font == model.font
+			&& placeholder == model.placeholder
 			&& cursorColor == model.cursorColor
 			&& textColor == model.textColor
 			&& textContentType == model.textContentType
@@ -73,13 +67,13 @@ public final class TextInputCellModel: BaseListCellModel {
 			&& keyboardType == model.keyboardType
 			&& inputTextColor == model.inputTextColor
 			&& placeholderTextColor == model.placeholderTextColor
+			&& maxControlWidth == model.maxControlWidth
 	}
 }
 
 public final class TextInputCell: BaseListCell {
-	private var model: TextInputCellModel? { cellModel as? TextInputCellModel }
-	private var disposeBag = DisposeBag()
-
+	public var model: TextInputCellModel? { cellModel as? TextInputCellModel }
+	public var disposeBag = DisposeBag()
 	private let textField: UITextField = {
 		let textField = UITextField(frame: .zero)
 		textField.borderStyle = .none
@@ -90,15 +84,10 @@ public final class TextInputCell: BaseListCell {
 		let bottomBorder = UIView()
 		return bottomBorder
 	}()
-	private let textFieldContainer: UIView = {
-		let textFieldContainer = UIView()
-		return textFieldContainer
-	}()
 
-	override init(frame: CGRect) {
+	override public init(frame: CGRect) {
 		super.init(frame: frame)
-		contentView.addSubview(textFieldContainer)
-		textFieldContainer.addSubview(textField)
+		contentView.addSubview(textField)
 		contentView.addSubview(bottomBorder)
 		textField.addTarget(
 			self,
@@ -114,7 +103,7 @@ public final class TextInputCell: BaseListCell {
 	}
 
 	@objc
-	func textFieldDidChange(_ textField: UITextField) {
+	private func textFieldDidChange(_ textField: UITextField) {
 		guard let model = self.model else { return }
 		model.text = textField.text
 		model.delegate?.textInputCellModel(model, textChangedTo: textField.text)
@@ -135,57 +124,41 @@ public final class TextInputCell: BaseListCell {
 		textField.textColor = model.inputTextColor
 		textField.textContentType = model.textContentType
 		textField.font = model.font
-		contentView.backgroundColor = model.backgroundColor
 
 		model.bottomBorderColor.subscribe(onNext: { [weak self] bottomBorderColor -> Void in
 			self?.bottomBorder.backgroundColor = bottomBorderColor
 		}).disposed(by: disposeBag)
-		model.firstResponder.subscribe(onNext: { [weak self] isFirstResponder -> Void in
-			guard isFirstResponder else { return }
-			self?.textField.becomeFirstResponder()
-			model.firstResponder.onNext(false)
-		}).disposed(by: disposeBag)
+
+		if model.becomesFirstResponder {
+			textField.becomeFirstResponder()
+		}
 	}
 }
 
 // MARK: - Constraints
 extension TextInputCell {
 	private func setupConstraints() {
+		let layoutGuide = contentView.layoutMarginsGuide
 
-		textField.leadingAnchor.constraint(
-			equalTo: textFieldContainer.leadingAnchor,
-			constant: TextInputCellModel.textInputIndent
-		).isActive = true
-		textField.trailingAnchor.constraint(
-			equalTo: textFieldContainer.trailingAnchor,
-			constant: -TextInputCellModel.textInputIndent
-		).isActive = true
-		textField.topAnchor.constraint(equalTo: textFieldContainer.topAnchor).isActive = true
-		textField.bottomAnchor.constraint(equalTo: textFieldContainer.bottomAnchor).isActive = true
-
-		textFieldContainer.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor).isActive = true
-		textFieldContainer.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor).isActive = true
-		textFieldContainer.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-		textFieldContainer.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-		textFieldContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 340).isActive = true
-		let widthAnchor = textField.widthAnchor.constraint(equalToConstant: 340)
-		widthAnchor.priority = .defaultLow
-		widthAnchor.isActive = true
-		textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		textField.anchor(
+			toLeading: layoutGuide.leadingAnchor,
+			top: layoutGuide.topAnchor,
+			trailing: layoutGuide.trailingAnchor,
+			bottom: nil
+		)
 
 		bottomBorder.anchorHeight(to: TextInputCellModel.bottomBorderHeight)
 		bottomBorder.anchor(
-			toLeading: textFieldContainer.leadingAnchor,
+			toLeading: layoutGuide.leadingAnchor,
 			top: nil,
-			trailing: textFieldContainer.trailingAnchor,
-			bottom: contentView.bottomAnchor
+			trailing: layoutGuide.trailingAnchor,
+			bottom: layoutGuide.bottomAnchor
 		)
 		bottomBorder.topAnchor.constraint(
-			equalTo: textFieldContainer.bottomAnchor,
+			equalTo: textField.bottomAnchor,
 			constant: TextInputCellModel.textBottomMargin
 		).isActive = true
 
-		textFieldContainer.shouldTranslateAutoresizingMaskIntoConstraints(false)
 		contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
 	}
 }

@@ -53,8 +53,8 @@ public final class UpdateUserPresenter: Presenter {
 
 	private func loadCellModels() -> [ListCellModel] {
 		let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
-		doneModel.leftMargin = 0
-		doneModel.rightMargin = 0
+    doneModel.directionalLayoutMargins.leading = 0
+    doneModel.directionalLayoutMargins.trailing = 0
 		doneModel.textAlignment = .center
 		doneModel.textColor = .selectable
 		doneModel.selectionAction = { [weak self] _, _ -> Void in
@@ -63,13 +63,13 @@ public final class UpdateUserPresenter: Presenter {
 		}
 
 		return [
-			MarginCellModel(cellIdentifier: "headerMarginModel", height: 12),
+			MarginCellModel(identifier: "headerMarginModel", height: 12),
 			createEmailCellModel(),
-			MarginCellModel(cellIdentifier: "emailMarginModel", height: 12),
+			MarginCellModel(identifier: "emailMarginModel", height: 12),
 			createCaloriesCellModel(),
-			MarginCellModel(cellIdentifier: "caloriesMarginModel", height: 12),
+			MarginCellModel(identifier: "caloriesMarginModel", height: 12),
 			doneModel,
-			MarginCellModel(cellIdentifier: "doneMarginModel", height: 12)
+			MarginCellModel(identifier: "doneMarginModel", height: 12)
 		]
 	}
 

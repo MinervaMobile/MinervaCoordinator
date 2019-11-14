@@ -18,7 +18,6 @@
 		F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89D233C0E5900012C5E /* FilterCoordinator.swift */; };
 		F53EAF04237B01A200CB7FFA /* MinervaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53EAF03237B01A200CB7FFA /* MinervaTests.swift */; };
 		F53EAF06237B01A200CB7FFA /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
-		F5564882235B0E55009D8778 /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5564880235B0E54009D8778 /* BaseListCell.swift */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
 		F5587D1D22502B11004223E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */; };
@@ -62,16 +61,6 @@
 		F576F927226E16820015D14E /* WorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F913226E16820015D14E /* WorkoutPresenter.swift */; };
 		F576F92A226E16820015D14E /* EditWorkoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F914226E16820015D14E /* EditWorkoutPresenter.swift */; };
 		F576F92F226E168B0015D14E /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F92E226E168B0015D14E /* SettingsPresenter.swift */; };
-		F576F94A226E16970015D14E /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F934226E16960015D14E /* TextInputCell.swift */; };
-		F576F94D226E16970015D14E /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F935226E16960015D14E /* SwipeableLabelCell.swift */; };
-		F576F950226E16970015D14E /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F936226E16960015D14E /* PickerCell.swift */; };
-		F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F937226E16960015D14E /* BottomMarginCell.swift */; };
-		F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93B226E16960015D14E /* BorderLabelCell.swift */; };
-		F576F962226E16970015D14E /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93C226E16960015D14E /* DatePickerCell.swift */; };
-		F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93D226E16960015D14E /* LabelAccessoryCell.swift */; };
-		F576F968226E16970015D14E /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93E226E16960015D14E /* LabelCell.swift */; };
-		F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F93F226E16970015D14E /* ImageCellModel.swift */; };
-		F576F96E226E16970015D14E /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F940226E16970015D14E /* MarginCell.swift */; };
 		F576F97D226E16970015D14E /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F947226E16970015D14E /* Asset.swift */; };
 		F576F980226E16970015D14E /* LoadingHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F948226E16970015D14E /* LoadingHUD.swift */; };
 		F576F98C226E16BB0015D14E /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F987226E16BB0015D14E /* UserVC.swift */; };
@@ -81,14 +70,39 @@
 		F576F998226E16BB0015D14E /* CreateUserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F98B226E16BB0015D14E /* CreateUserPresenter.swift */; };
 		F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848576233A6673001DBF1E /* ListSectionWrapper.swift */; };
 		F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */; };
+		F595F459237DCE4E00A424E2 /* ImageTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F442237DCE4D00A424E2 /* ImageTextCell.swift */; };
+		F595F45A237DCE4E00A424E2 /* LabelAccessoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F443237DCE4D00A424E2 /* LabelAccessoryCell.swift */; };
+		F595F45B237DCE4E00A424E2 /* PickerLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F444237DCE4D00A424E2 /* PickerLabelCell.swift */; };
+		F595F45C237DCE4E00A424E2 /* ImageLabelBorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F445237DCE4D00A424E2 /* ImageLabelBorderCell.swift */; };
+		F595F45D237DCE4E00A424E2 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F446237DCE4D00A424E2 /* SegmentedControlCell.swift */; };
+		F595F45E237DCE4E00A424E2 /* ImageTextCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F447237DCE4D00A424E2 /* ImageTextCardCell.swift */; };
+		F595F45F237DCE4E00A424E2 /* MarginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F448237DCE4D00A424E2 /* MarginCell.swift */; };
+		F595F460237DCE4E00A424E2 /* SwitchTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F449237DCE4D00A424E2 /* SwitchTextCell.swift */; };
+		F595F461237DCE4E00A424E2 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44A237DCE4E00A424E2 /* ButtonCell.swift */; };
+		F595F462237DCE4E00A424E2 /* BaseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44B237DCE4E00A424E2 /* BaseListCell.swift */; };
+		F595F463237DCE4E00A424E2 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44C237DCE4E00A424E2 /* ImageCell.swift */; };
+		F595F464237DCE4E00A424E2 /* IconTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44D237DCE4E00A424E2 /* IconTextCell.swift */; };
+		F595F465237DCE4E00A424E2 /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44E237DCE4E00A424E2 /* SeparatorCell.swift */; };
+		F595F466237DCE4E00A424E2 /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F44F237DCE4E00A424E2 /* PickerCell.swift */; };
+		F595F467237DCE4E00A424E2 /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F450237DCE4E00A424E2 /* HorizontalCollectionCell.swift */; };
+		F595F468237DCE4E00A424E2 /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F451237DCE4E00A424E2 /* TextViewCell.swift */; };
+		F595F469237DCE4E00A424E2 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F452237DCE4E00A424E2 /* TextInputCell.swift */; };
+		F595F46A237DCE4E00A424E2 /* ButtonImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F453237DCE4E00A424E2 /* ButtonImageCell.swift */; };
+		F595F46B237DCE4E00A424E2 /* TextSeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F454237DCE4E00A424E2 /* TextSeparatorCell.swift */; };
+		F595F46C237DCE4E00A424E2 /* DetailedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F455237DCE4E00A424E2 /* DetailedLabelCell.swift */; };
+		F595F46D237DCE4E00A424E2 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F456237DCE4E00A424E2 /* LabelCell.swift */; };
+		F595F46E237DCE4E00A424E2 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F457237DCE4E00A424E2 /* DatePickerCell.swift */; };
+		F595F46F237DCE4E00A424E2 /* ImageButtonCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F458237DCE4E00A424E2 /* ImageButtonCardCell.swift */; };
+		F595F474237DCE8900A424E2 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F471237DCE8900A424E2 /* SwipeableCell.swift */; };
+		F595F475237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F472237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift */; };
+		F595F476237DCE8900A424E2 /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F473237DCE8900A424E2 /* SwipeableLabelCell.swift */; };
+		F595F478237DE2CD00A424E2 /* CellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F477237DE2CD00A424E2 /* CellExtensions.swift */; };
 		F5AF642F235DE7980042F342 /* DataManager+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF642E235DE7980042F342 /* DataManager+Combine.swift */; };
 		F5AF6431235E414A0042F342 /* BasicNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF6430235E414A0042F342 /* BasicNavigator.swift */; };
 		F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */; };
 		F5C908292343C6960038BD89 /* UpdateFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */; };
 		F5C9082B2343C6B20038BD89 /* UpdateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */; };
 		F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
-		F5C908312343DCD70038BD89 /* DefaultListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B86226D32B000BA461A /* DefaultListCell.swift */; };
-		F5C908322343DD520038BD89 /* SwipeableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F99C226E20D20015D14E /* SwipeableCell.swift */; };
 		F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C5233E561C00983F72 /* UserListRepository.swift */; };
@@ -100,12 +114,11 @@
 		F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B91226D367500BA461A /* ListSection.swift */; };
 		F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B93226D367500BA461A /* ListCellModel.swift */; };
 		F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */; };
-		F5EF2DB02344FBE300A0073E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EF2DAF2344FBE300A0073E /* Extensions.swift */; };
+		F5EF2DB02344FBE300A0073E /* ListExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */; };
 		F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F880233BE18800012C5E /* BaseCoordinator.swift */; };
 		F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F886233BE23700012C5E /* BaseViewController.swift */; };
 		F5EF2DB42344FC4500A0073E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F576F949226E16970015D14E /* CollectionViewController.swift */; };
 		F5EF2DB52344FC4500A0073E /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F882233BE1BC00012C5E /* Presenter.swift */; };
-		F5EF2DB62344FC4500A0073E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */; };
 		F5EF2DB72344FC4500A0073E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F888233BE25C00012C5E /* ViewController.swift */; };
 		F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F08AF323192C4900C249E9 /* Coordinator.swift */; };
 		F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F08AF523192C9B00C249E9 /* Navigator.swift */; };
@@ -178,7 +191,6 @@
 		F53EAF01237B01A200CB7FFA /* MinervaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinervaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53EAF03237B01A200CB7FFA /* MinervaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinervaTests.swift; sourceTree = "<group>"; };
 		F53EAF05237B01A200CB7FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5564880235B0E54009D8778 /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5587D1922502B11004223E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,16 +242,6 @@
 		F576F913226E16820015D14E /* WorkoutPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutPresenter.swift; sourceTree = "<group>"; };
 		F576F914226E16820015D14E /* EditWorkoutPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditWorkoutPresenter.swift; sourceTree = "<group>"; };
 		F576F92E226E168B0015D14E /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
-		F576F934226E16960015D14E /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
-		F576F935226E16960015D14E /* SwipeableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableLabelCell.swift; sourceTree = "<group>"; };
-		F576F936226E16960015D14E /* PickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
-		F576F937226E16960015D14E /* BottomMarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMarginCell.swift; sourceTree = "<group>"; };
-		F576F93B226E16960015D14E /* BorderLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLabelCell.swift; sourceTree = "<group>"; };
-		F576F93C226E16960015D14E /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
-		F576F93D226E16960015D14E /* LabelAccessoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAccessoryCell.swift; sourceTree = "<group>"; };
-		F576F93E226E16960015D14E /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
-		F576F93F226E16970015D14E /* ImageCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellModel.swift; sourceTree = "<group>"; };
-		F576F940226E16970015D14E /* MarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarginCell.swift; sourceTree = "<group>"; };
 		F576F947226E16970015D14E /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		F576F948226E16970015D14E /* LoadingHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingHUD.swift; sourceTree = "<group>"; };
 		F576F949226E16970015D14E /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -248,9 +250,35 @@
 		F576F989226E16BB0015D14E /* UserListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
 		F576F98A226E16BB0015D14E /* UpdateUserPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserPresenter.swift; sourceTree = "<group>"; };
 		F576F98B226E16BB0015D14E /* CreateUserPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserPresenter.swift; sourceTree = "<group>"; };
-		F576F99C226E20D20015D14E /* SwipeableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
 		F5848576233A6673001DBF1E /* ListSectionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionWrapper.swift; sourceTree = "<group>"; };
 		F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellModelWrapper.swift; sourceTree = "<group>"; };
+		F595F442237DCE4D00A424E2 /* ImageTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTextCell.swift; sourceTree = "<group>"; };
+		F595F443237DCE4D00A424E2 /* LabelAccessoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAccessoryCell.swift; sourceTree = "<group>"; };
+		F595F444237DCE4D00A424E2 /* PickerLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerLabelCell.swift; sourceTree = "<group>"; };
+		F595F445237DCE4D00A424E2 /* ImageLabelBorderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelBorderCell.swift; sourceTree = "<group>"; };
+		F595F446237DCE4D00A424E2 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
+		F595F447237DCE4D00A424E2 /* ImageTextCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTextCardCell.swift; sourceTree = "<group>"; };
+		F595F448237DCE4D00A424E2 /* MarginCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarginCell.swift; sourceTree = "<group>"; };
+		F595F449237DCE4D00A424E2 /* SwitchTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTextCell.swift; sourceTree = "<group>"; };
+		F595F44A237DCE4E00A424E2 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		F595F44B237DCE4E00A424E2 /* BaseListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseListCell.swift; sourceTree = "<group>"; };
+		F595F44C237DCE4E00A424E2 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		F595F44D237DCE4E00A424E2 /* IconTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTextCell.swift; sourceTree = "<group>"; };
+		F595F44E237DCE4E00A424E2 /* SeparatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorCell.swift; sourceTree = "<group>"; };
+		F595F44F237DCE4E00A424E2 /* PickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
+		F595F450237DCE4E00A424E2 /* HorizontalCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCell.swift; sourceTree = "<group>"; };
+		F595F451237DCE4E00A424E2 /* TextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
+		F595F452237DCE4E00A424E2 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
+		F595F453237DCE4E00A424E2 /* ButtonImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonImageCell.swift; sourceTree = "<group>"; };
+		F595F454237DCE4E00A424E2 /* TextSeparatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSeparatorCell.swift; sourceTree = "<group>"; };
+		F595F455237DCE4E00A424E2 /* DetailedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedLabelCell.swift; sourceTree = "<group>"; };
+		F595F456237DCE4E00A424E2 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		F595F457237DCE4E00A424E2 /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
+		F595F458237DCE4E00A424E2 /* ImageButtonCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageButtonCardCell.swift; sourceTree = "<group>"; };
+		F595F471237DCE8900A424E2 /* SwipeableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableCell.swift; sourceTree = "<group>"; };
+		F595F472237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableDetailedLabelCell.swift; sourceTree = "<group>"; };
+		F595F473237DCE8900A424E2 /* SwipeableLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeableLabelCell.swift; sourceTree = "<group>"; };
+		F595F477237DE2CD00A424E2 /* CellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellExtensions.swift; sourceTree = "<group>"; };
 		F5AF642E235DE7980042F342 /* DataManager+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataManager+Combine.swift"; sourceTree = "<group>"; };
 		F5AF6430235E414A0042F342 /* BasicNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNavigator.swift; sourceTree = "<group>"; };
 		F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserCoordinator.swift; sourceTree = "<group>"; };
@@ -260,9 +288,7 @@
 		F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRepository.swift; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
 		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
-		F5DA2B86226D32B000BA461A /* DefaultListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultListCell.swift; sourceTree = "<group>"; };
 		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
-		F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F5DA2B8D226D367500BA461A /* ListViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayout.swift; sourceTree = "<group>"; };
 		F5DA2B8E226D367500BA461A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayoutAttributes.swift; sourceTree = "<group>"; };
@@ -270,7 +296,7 @@
 		F5DA2B91226D367500BA461A /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
 		F5DA2B93226D367500BA461A /* ListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCellModel.swift; sourceTree = "<group>"; };
 		F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSizeConstraints.swift; sourceTree = "<group>"; };
-		F5EF2DAF2344FBE300A0073E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExtensions.swift; sourceTree = "<group>"; };
 		F5F08AF323192C4900C249E9 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F5F08AF523192C9B00C249E9 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -406,11 +432,13 @@
 		F5587D4622502BF3004223E5 /* Minerva */ = {
 			isa = PBXGroup;
 			children = (
+				F595F409237DBC8300A424E2 /* Cells */,
 				F5EF2D932344FA0000A0073E /* Convenience */,
 				F5F08AF223192C2900C249E9 /* Coordination */,
 				F5587D5222502C5A004223E5 /* Info.plist */,
 				F5DA2B88226D362900BA461A /* List */,
 				F5587D5822502C5A004223E5 /* Minerva.h */,
+				F595F470237DCE5F00A424E2 /* Swipe */,
 			);
 			name = Minerva;
 			path = Source;
@@ -543,19 +571,7 @@
 		F576F933226E16960015D14E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F576F93B226E16960015D14E /* BorderLabelCell.swift */,
-				F576F937226E16960015D14E /* BottomMarginCell.swift */,
-				F576F93C226E16960015D14E /* DatePickerCell.swift */,
-				F5DA2B86226D32B000BA461A /* DefaultListCell.swift */,
-				F576F93F226E16970015D14E /* ImageCellModel.swift */,
-				F576F93D226E16960015D14E /* LabelAccessoryCell.swift */,
-				F576F93E226E16960015D14E /* LabelCell.swift */,
-				F576F940226E16970015D14E /* MarginCell.swift */,
-				F576F936226E16960015D14E /* PickerCell.swift */,
 				F562CF382354894D00402122 /* SwiftUITextCell.swift */,
-				F576F99C226E20D20015D14E /* SwipeableCell.swift */,
-				F576F935226E16960015D14E /* SwipeableLabelCell.swift */,
-				F576F934226E16960015D14E /* TextInputCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -590,6 +606,48 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F595F409237DBC8300A424E2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F595F44B237DCE4E00A424E2 /* BaseListCell.swift */,
+				F595F44A237DCE4E00A424E2 /* ButtonCell.swift */,
+				F595F453237DCE4E00A424E2 /* ButtonImageCell.swift */,
+				F595F477237DE2CD00A424E2 /* CellExtensions.swift */,
+				F595F457237DCE4E00A424E2 /* DatePickerCell.swift */,
+				F595F455237DCE4E00A424E2 /* DetailedLabelCell.swift */,
+				F595F450237DCE4E00A424E2 /* HorizontalCollectionCell.swift */,
+				F595F44D237DCE4E00A424E2 /* IconTextCell.swift */,
+				F595F458237DCE4E00A424E2 /* ImageButtonCardCell.swift */,
+				F595F44C237DCE4E00A424E2 /* ImageCell.swift */,
+				F595F445237DCE4D00A424E2 /* ImageLabelBorderCell.swift */,
+				F595F447237DCE4D00A424E2 /* ImageTextCardCell.swift */,
+				F595F442237DCE4D00A424E2 /* ImageTextCell.swift */,
+				F595F443237DCE4D00A424E2 /* LabelAccessoryCell.swift */,
+				F595F456237DCE4E00A424E2 /* LabelCell.swift */,
+				F595F448237DCE4D00A424E2 /* MarginCell.swift */,
+				F595F44F237DCE4E00A424E2 /* PickerCell.swift */,
+				F595F444237DCE4D00A424E2 /* PickerLabelCell.swift */,
+				F595F446237DCE4D00A424E2 /* SegmentedControlCell.swift */,
+				F595F44E237DCE4E00A424E2 /* SeparatorCell.swift */,
+				F562CF1223547DF300402122 /* SwiftUICell.swift */,
+				F595F449237DCE4D00A424E2 /* SwitchTextCell.swift */,
+				F595F452237DCE4E00A424E2 /* TextInputCell.swift */,
+				F595F454237DCE4E00A424E2 /* TextSeparatorCell.swift */,
+				F595F451237DCE4E00A424E2 /* TextViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F595F470237DCE5F00A424E2 /* Swipe */ = {
+			isa = PBXGroup;
+			children = (
+				F595F471237DCE8900A424E2 /* SwipeableCell.swift */,
+				F595F472237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift */,
+				F595F473237DCE8900A424E2 /* SwipeableLabelCell.swift */,
+			);
+			path = Swipe;
+			sourceTree = "<group>";
+		};
 		F5C908262343C5D30038BD89 /* CreateUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,12 +678,12 @@
 		F5DA2B88226D362900BA461A /* List */ = {
 			isa = PBXGroup;
 			children = (
-				F5EF2DAF2344FBE300A0073E /* Extensions.swift */,
 				F562CF10234E2A3000402122 /* LegacyListController.swift */,
 				F5DA2B8E226D367500BA461A /* ListCell.swift */,
 				F5DA2B93226D367500BA461A /* ListCellModel.swift */,
 				F5848578233A669F001DBF1E /* ListCellModelWrapper.swift */,
 				F5DA2B8B226D367500BA461A /* ListController.swift */,
+				F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */,
 				F5DA2B90226D367500BA461A /* ListModelSectionController.swift */,
 				F5DA2B91226D367500BA461A /* ListSection.swift */,
 				F5848576233A6673001DBF1E /* ListSectionWrapper.swift */,
@@ -640,12 +698,9 @@
 			isa = PBXGroup;
 			children = (
 				F501F880233BE18800012C5E /* BaseCoordinator.swift */,
-				F5564880235B0E54009D8778 /* BaseListCell.swift */,
 				F501F886233BE23700012C5E /* BaseViewController.swift */,
 				F576F949226E16970015D14E /* CollectionViewController.swift */,
 				F501F882233BE1BC00012C5E /* Presenter.swift */,
-				F562CF1223547DF300402122 /* SwiftUICell.swift */,
-				F5DA2B8C226D367500BA461A /* UIView+Extensions.swift */,
 				F501F888233BE25C00012C5E /* ViewController.swift */,
 			);
 			path = Convenience;
@@ -950,20 +1005,15 @@
 				F576F8BE226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */,
 				F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */,
-				F5C908322343DD520038BD89 /* SwipeableCell.swift in Sources */,
 				F576F924226E16820015D14E /* WorkoutVC.swift in Sources */,
 				F576F998226E16BB0015D14E /* CreateUserPresenter.swift in Sources */,
 				F576F92A226E16820015D14E /* EditWorkoutPresenter.swift in Sources */,
-				F5C908312343DCD70038BD89 /* DefaultListCell.swift in Sources */,
 				F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */,
-				F576F962226E16970015D14E /* DatePickerCell.swift in Sources */,
 				F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
 				F576F878226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
-				F576F94D226E16970015D14E /* SwipeableLabelCell.swift in Sources */,
 				F576F87B226DEFA90015D14E /* TestData.swift in Sources */,
 				F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
 				F576F8A0226DF0050015D14E /* User.pb.swift in Sources */,
-				F576F968226E16970015D14E /* LabelCell.swift in Sources */,
 				F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */,
 				F576F8F7226DF0B50015D14E /* WelcomePresenter.swift in Sources */,
 				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
@@ -973,14 +1023,12 @@
 				F5AF642F235DE7980042F342 /* DataManager+Combine.swift in Sources */,
 				F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,
-				F576F965226E16970015D14E /* LabelAccessoryCell.swift in Sources */,
 				F576F8D0226DF0050015D14E /* ProtoExtensions.swift in Sources */,
 				F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */,
 				F576F8A3226DF0050015D14E /* UserAuthorization.pb.swift in Sources */,
 				F576F995226E16BB0015D14E /* UpdateUserPresenter.swift in Sources */,
 				F576F927226E16820015D14E /* WorkoutPresenter.swift in Sources */,
 				F576F875226DEFA90015D14E /* TestDataManager.swift in Sources */,
-				F576F96E226E16970015D14E /* MarginCell.swift in Sources */,
 				F576F8BB226DF0050015D14E /* UserRole.swift in Sources */,
 				F5C9082B2343C6B20038BD89 /* UpdateUserCoordinator.swift in Sources */,
 				F576F8E1226DF04F0015D14E /* UserManager.swift in Sources */,
@@ -989,25 +1037,20 @@
 				F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */,
 				F576F8A6226DF0050015D14E /* WorkoutFilter.pb.swift in Sources */,
 				F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */,
-				F576F94A226E16970015D14E /* TextInputCell.swift in Sources */,
 				F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */,
 				F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */,
 				F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */,
 				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
-				F576F96B226E16970015D14E /* ImageCellModel.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterPresenter.swift in Sources */,
 				F562CF392354894D00402122 /* SwiftUITextCell.swift in Sources */,
-				F576F953226E16970015D14E /* BottomMarginCell.swift in Sources */,
-				F576F95F226E16970015D14E /* BorderLabelCell.swift in Sources */,
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F8FA226DF0B50015D14E /* SignInPresenter.swift in Sources */,
 				F576F97D226E16970015D14E /* Asset.swift in Sources */,
 				F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */,
 				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
-				F576F950226E16970015D14E /* PickerCell.swift in Sources */,
 				F576F8C1226DF0050015D14E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,29 +1059,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F595F45C237DCE4E00A424E2 /* ImageLabelBorderCell.swift in Sources */,
 				F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */,
 				F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */,
+				F595F469237DCE4E00A424E2 /* TextInputCell.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
 				F5DA2B9A226D367600BA461A /* ListViewLayout.swift in Sources */,
-				F5564882235B0E55009D8778 /* BaseListCell.swift in Sources */,
 				F5848579233A669F001DBF1E /* ListCellModelWrapper.swift in Sources */,
+				F595F461237DCE4E00A424E2 /* ButtonCell.swift in Sources */,
 				F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */,
 				F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */,
+				F595F46C237DCE4E00A424E2 /* DetailedLabelCell.swift in Sources */,
+				F595F46A237DCE4E00A424E2 /* ButtonImageCell.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
+				F595F46E237DCE4E00A424E2 /* DatePickerCell.swift in Sources */,
+				F595F46F237DCE4E00A424E2 /* ImageButtonCardCell.swift in Sources */,
+				F595F476237DCE8900A424E2 /* SwipeableLabelCell.swift in Sources */,
 				F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */,
+				F595F468237DCE4E00A424E2 /* TextViewCell.swift in Sources */,
 				F5EF2DB42344FC4500A0073E /* CollectionViewController.swift in Sources */,
+				F595F45A237DCE4E00A424E2 /* LabelAccessoryCell.swift in Sources */,
+				F595F475237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift in Sources */,
 				F5EF2DB72344FC4500A0073E /* ViewController.swift in Sources */,
+				F595F465237DCE4E00A424E2 /* SeparatorCell.swift in Sources */,
+				F595F45E237DCE4E00A424E2 /* ImageTextCardCell.swift in Sources */,
 				F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */,
 				F562CF3C2354C8C200402122 /* SwiftUICell.swift in Sources */,
 				F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */,
-				F5EF2DB62344FC4500A0073E /* UIView+Extensions.swift in Sources */,
+				F595F464237DCE4E00A424E2 /* IconTextCell.swift in Sources */,
+				F595F474237DCE8900A424E2 /* SwipeableCell.swift in Sources */,
+				F595F466237DCE4E00A424E2 /* PickerCell.swift in Sources */,
+				F595F460237DCE4E00A424E2 /* SwitchTextCell.swift in Sources */,
+				F595F45B237DCE4E00A424E2 /* PickerLabelCell.swift in Sources */,
+				F595F45F237DCE4E00A424E2 /* MarginCell.swift in Sources */,
+				F595F463237DCE4E00A424E2 /* ImageCell.swift in Sources */,
 				F5EF2DB52344FC4500A0073E /* Presenter.swift in Sources */,
 				F5DA2B9C226D367600BA461A /* ListViewLayoutAttributes.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
+				F595F45D237DCE4E00A424E2 /* SegmentedControlCell.swift in Sources */,
 				F5AF6431235E414A0042F342 /* BasicNavigator.swift in Sources */,
+				F595F462237DCE4E00A424E2 /* BaseListCell.swift in Sources */,
 				F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */,
+				F595F46D237DCE4E00A424E2 /* LabelCell.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
-				F5EF2DB02344FBE300A0073E /* Extensions.swift in Sources */,
+				F595F46B237DCE4E00A424E2 /* TextSeparatorCell.swift in Sources */,
+				F595F467237DCE4E00A424E2 /* HorizontalCollectionCell.swift in Sources */,
+				F595F478237DE2CD00A424E2 /* CellExtensions.swift in Sources */,
+				F595F459237DCE4E00A424E2 /* ImageTextCell.swift in Sources */,
+				F5EF2DB02344FBE300A0073E /* ListExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

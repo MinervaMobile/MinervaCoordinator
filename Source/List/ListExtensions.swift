@@ -1,18 +1,25 @@
 //
-//  Extensions.swift
-//  Minerva
-//
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-internal enum Extensions { }
+internal enum ListExtensions { }
 
 extension Array {
 	internal func at(_ index: Int) -> Element? {
 		guard index >= 0, index < count else {
+			return nil
+		}
+		return self[index]
+	}
+}
+
+extension Collection {
+
+	internal func element(at index: Self.Index) -> Self.Iterator.Element? {
+		guard index >= startIndex && index < endIndex else {
 			return nil
 		}
 		return self[index]
