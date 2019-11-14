@@ -6,7 +6,7 @@ import Foundation
 import SwipeCellKit
 import UIKit
 
-public class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
+open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
 	fileprivate static let labelSpacing: CGFloat = 8
 
 	public typealias Action = (_ cellModel: SwipeableDetailedLabelCellModel) -> Void
@@ -29,11 +29,11 @@ public class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectable
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return cellIdentifier
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? SwipeableDetailedLabelCellModel, super.identical(to: model) else {
 			return false
 		}

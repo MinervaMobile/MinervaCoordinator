@@ -33,11 +33,11 @@ open class PickerCellModel: BaseListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return cellIdentifier
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? PickerCellModel, super.identical(to: model) else {
 			return false
 		}
@@ -178,41 +178,41 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
 }
 
 public struct PickerImageData: Equatable {
-  public let image: UIImage
-  public let imageColor: UIColor
-  public let imageMargin: CGFloat
-  public let imageHeight: CGFloat
-  public let imageWidth: CGFloat
+	public let image: UIImage
+	public let imageColor: UIColor
+	public let imageMargin: CGFloat
+	public let imageHeight: CGFloat
+	public let imageWidth: CGFloat
 
-  public init(image: UIImage, imageColor: UIColor, imageMargin: CGFloat, imageHeight: CGFloat, imageWidth: CGFloat) {
-    self.image = image
-    self.imageColor = imageColor
-    self.imageMargin = imageMargin
-    self.imageHeight = imageHeight
-    self.imageWidth = imageWidth
-  }
+	public init(image: UIImage, imageColor: UIColor, imageMargin: CGFloat, imageHeight: CGFloat, imageWidth: CGFloat) {
+		self.image = image
+		self.imageColor = imageColor
+		self.imageMargin = imageMargin
+		self.imageHeight = imageHeight
+		self.imageWidth = imageWidth
+	}
 }
 
 public struct PickerDataRow: Equatable {
-  public let text: NSAttributedString
-  public let imageData: PickerImageData?
+	public let text: NSAttributedString
+	public let imageData: PickerImageData?
 
-  public init(text: NSAttributedString, imageData: PickerImageData?) {
-    self.text = text
-    self.imageData = imageData
-  }
+	public init(text: NSAttributedString, imageData: PickerImageData?) {
+		self.text = text
+		self.imageData = imageData
+	}
 }
 
 public struct PickerDataComponent: Equatable {
-  public let data: [PickerDataRow]
-  public let textAlignment: NSTextAlignment
-  public let verticalMargin: CGFloat
-  public let startingRow: Int
+	public let data: [PickerDataRow]
+	public let textAlignment: NSTextAlignment
+	public let verticalMargin: CGFloat
+	public let startingRow: Int
 
-  public init(data: [PickerDataRow], textAlignment: NSTextAlignment, verticalMargin: CGFloat, startingRow: Int) {
-    self.data = data
-    self.textAlignment = textAlignment
-    self.verticalMargin = verticalMargin
-    self.startingRow = startingRow
-  }
+	public init(data: [PickerDataRow], textAlignment: NSTextAlignment, verticalMargin: CGFloat, startingRow: Int) {
+		self.data = data
+		self.textAlignment = textAlignment
+		self.verticalMargin = verticalMargin
+		self.startingRow = startingRow
+	}
 }

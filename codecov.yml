@@ -2,5 +2,3 @@ ignore:
   - "MinervaExample/**/*"
   - "MinervaTests/**/*"
   - "Pods/**/*"
-  - "MBProgressHUD.*"
-  - "IGListKit.*"

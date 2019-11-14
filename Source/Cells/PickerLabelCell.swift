@@ -228,39 +228,39 @@ extension PickerLabelCell {
 }
 
 public enum CellAlignment: Equatable {
-  case left(leftMargin: CGFloat)
-  case right(rightMargin: CGFloat)
-  case center
+	case left(leftMargin: CGFloat)
+	case right(rightMargin: CGFloat)
+	case center
 }
 
 public struct PickerData: Equatable {
-  public let data: [NSAttributedString]
-  public let options: PickerDataOptions?
+	public let data: [NSAttributedString]
+	public let options: PickerDataOptions?
 
-  public init(data: [NSAttributedString], options: PickerDataOptions?) {
-    self.data = data
-    self.options = options
-  }
+	public init(data: [NSAttributedString], options: PickerDataOptions?) {
+		self.data = data
+		self.options = options
+	}
 }
 
 public struct PickerDataOptions: Equatable {
-  public let label: NSAttributedString?
-  public let labelMargin: CGFloat
-  public let rowMargin: CGFloat
-  public let startingRow: Int
-  public let rowTextAlignment: NSTextAlignment
+	public let label: NSAttributedString?
+	public let labelMargin: CGFloat
+	public let rowMargin: CGFloat
+	public let startingRow: Int
+	public let rowTextAlignment: NSTextAlignment
 
-  public init(
-    label: NSAttributedString?,
-    labelMargin: CGFloat,
-    rowMargin: CGFloat,
-    startingRow: Int,
-    rowTextAlignment: NSTextAlignment
-  ) {
-    self.label = label
-    self.labelMargin = labelMargin
-    self.rowMargin = rowMargin
-    self.startingRow = startingRow
-    self.rowTextAlignment = rowTextAlignment
-  }
+	public init(
+		label: NSAttributedString?,
+		labelMargin: CGFloat,
+		rowMargin: CGFloat,
+		startingRow: Int,
+		rowTextAlignment: NSTextAlignment
+	) {
+		self.label = label
+		self.labelMargin = labelMargin
+		self.rowMargin = rowMargin
+		self.startingRow = startingRow
+		self.rowTextAlignment = rowTextAlignment
+	}
 }

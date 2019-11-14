@@ -23,11 +23,11 @@ open class SegmentedControlCellModel: BaseListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return "SegmentedControlCellModel"
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? SegmentedControlCellModel, super.identical(to: model) else {
 			return false
 		}

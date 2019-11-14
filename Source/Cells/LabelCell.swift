@@ -58,11 +58,11 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return cellIdentifier
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? LabelCellModel, super.identical(to: model) else {
 			return false
 		}
