@@ -406,6 +406,7 @@
 		F5587D4622502BF3004223E5 /* Minerva */ = {
 			isa = PBXGroup;
 			children = (
+				F595F409237DBC8300A424E2 /* Cells */,
 				F5EF2D932344FA0000A0073E /* Convenience */,
 				F5F08AF223192C2900C249E9 /* Coordination */,
 				F5587D5222502C5A004223E5 /* Info.plist */,
@@ -588,6 +589,13 @@
 				F53D0B6A2378F0780051A063 /* MinervaExample.entitlements */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F595F409237DBC8300A424E2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		F5C908262343C5D30038BD89 /* CreateUser */ = {
