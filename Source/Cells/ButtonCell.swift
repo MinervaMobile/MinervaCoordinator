@@ -63,11 +63,11 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return cellIdentifier
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? ButtonCellModel, super.identical(to: model) else {
 			return false
 		}

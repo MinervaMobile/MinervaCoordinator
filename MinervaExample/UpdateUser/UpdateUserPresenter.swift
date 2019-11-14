@@ -53,8 +53,8 @@ public final class UpdateUserPresenter: Presenter {
 
 	private func loadCellModels() -> [ListCellModel] {
 		let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
-    doneModel.directionalLayoutMargins.leading = 0
-    doneModel.directionalLayoutMargins.trailing = 0
+		doneModel.directionalLayoutMargins.leading = 0
+		doneModel.directionalLayoutMargins.trailing = 0
 		doneModel.textAlignment = .center
 		doneModel.textColor = .selectable
 		doneModel.selectionAction = { [weak self] _, _ -> Void in

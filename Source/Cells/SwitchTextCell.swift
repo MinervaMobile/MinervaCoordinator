@@ -43,11 +43,11 @@ open class SwitchTextCellModel: BaseListCellModel {
 
 	// MARK: - BaseListCellModel
 
-	override public var identifier: String {
+	override open var identifier: String {
 		return self.cellIdentifier
 	}
 
-	override public func identical(to model: ListCellModel) -> Bool {
+	override open func identical(to model: ListCellModel) -> Bool {
 		guard let model = model as? SwitchTextCellModel, super.identical(to: model) else {
 			return false
 		}
