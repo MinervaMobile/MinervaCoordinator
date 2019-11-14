@@ -1,0 +1,153 @@
+//
+//  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+	public typealias LabelAction = (_ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel) -> Void
+
+	// MARK: - ListSelectableCellModel
+	public typealias SelectableModelType = LabelCellModel
+	public var selectionAction: SelectionAction?
+
+	// MARK: - ListBindableCellModel
+	public typealias BindableModelType = LabelCellModel
+	public var willBindAction: BindAction?
+
+	public var labelAction: LabelAction?
+
+	public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+	public var textAlignment: NSTextAlignment = .left
+	public var numberOfLines = 0
+	public var textColor: UIColor?
+	public var cornerMask: CACornerMask?
+	public var cornerRadius: CGFloat = 0
+	public var backgroundColor: UIColor?
+	public var labelBackgroundColor: UIColor?
+
+	fileprivate let attributedText: NSAttributedString?
+	fileprivate let text: String
+	fileprivate let font: UIFont
+	private let cellIdentifier: String
+
+	public init(identifier: String, text: String, font: UIFont, attributedText: NSAttributedString? = nil) {
+		self.cellIdentifier = identifier
+		self.text = text
+		self.font = font
+		self.attributedText = attributedText
+		super.init()
+	}
+
+	public convenience init(text: String, font: UIFont) {
+		self.init(identifier: text, text: text, font: font)
+	}
+
+	public convenience init(attributedText: NSAttributedString) {
+		self.init(identifier: attributedText.string, attributedText: attributedText)
+	}
+
+	public convenience init(identifier: String, attributedText: NSAttributedString) {
+		self.init(
+			identifier: identifier,
+			text: attributedText.string,
+			font: UIFont.preferredFont(forTextStyle: .subheadline),
+			attributedText: attributedText)
+	}
+
+	// MARK: - BaseListCellModel
+
+	override public var identifier: String {
+		return cellIdentifier
+	}
+
+	override public func identical(to model: ListCellModel) -> Bool {
+		guard let model = model as? LabelCellModel, super.identical(to: model) else {
+			return false
+		}
+		return text == model.text
+			&& font == model.font
+			&& attributedText == model.attributedText
+			&& textColor == model.textColor
+			&& textAlignment == model.textAlignment
+			&& numberOfLines == model.numberOfLines
+			&& cornerMask == model.cornerMask
+			&& cornerRadius == model.cornerRadius
+			&& backgroundColor == model.backgroundColor
+			&& directionalLayoutMargins == model.directionalLayoutMargins
+			&& labelBackgroundColor == model.labelBackgroundColor
+	}
+}
+
+public class LabelCell: BaseListCell {
+	public var model: LabelCellModel? { cellModel as? LabelCellModel }
+
+	private let labelBackgroundView = UIView()
+	private let label: UILabel = {
+		let label = UILabel()
+		label.adjustsFontSizeToFitWidth = true
+		label.minimumScaleFactor = 0.5
+		label.allowsDefaultTighteningForTruncation = true
+		label.adjustsFontForContentSizeCategory = true
+		return label
+	}()
+
+	override public init(frame: CGRect) {
+		super.init(frame: frame)
+		contentView.addSubview(labelBackgroundView)
+		contentView.addSubview(label)
+		let recognizer = UITapGestureRecognizer(
+			target: self,
+			action: #selector(tappedLabel)
+		)
+		label.addGestureRecognizer(recognizer)
+		setupConstraints()
+		contentView.clipsToBounds = true
+		backgroundView = UIView()
+	}
+
+	override public func didUpdateCellModel() {
+		super.didUpdateCellModel()
+		guard let model = model else {
+			return
+		}
+		label.numberOfLines = model.numberOfLines
+		if let attributedText = model.attributedText {
+			label.attributedText = attributedText
+		} else {
+			label.text = model.text
+			label.font = model.font
+			label.textColor = model.textColor
+		}
+
+		if let maskedCorners = model.cornerMask {
+			labelBackgroundView.layer.maskedCorners = maskedCorners
+		}
+		labelBackgroundView.layer.cornerRadius = model.cornerRadius
+		labelBackgroundView.layer.masksToBounds = true
+		labelBackgroundView.backgroundColor = model.labelBackgroundColor
+		labelBackgroundView.layer.borderColor = model.backgroundColor?.cgColor
+
+		label.isUserInteractionEnabled = model.labelAction != nil
+		label.textAlignment = model.textAlignment
+
+		contentView.directionalLayoutMargins = model.directionalLayoutMargins
+		backgroundView?.backgroundColor = model.backgroundColor
+	}
+
+	@objc
+	private func tappedLabel(_ gesture: UITapGestureRecognizer) {
+		guard let model = model else { return }
+		model.labelAction?(model, gesture, label)
+	}
+}
+
+// MARK: - Constraints
+extension LabelCell {
+	private func setupConstraints() {
+		labelBackgroundView.anchor(to: label)
+		label.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
+		contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+	}
+}

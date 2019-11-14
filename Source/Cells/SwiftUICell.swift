@@ -1,7 +1,4 @@
 //
-//  SwiftUICell.swift
-//  MinervaExample
-//
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
@@ -26,7 +23,6 @@ extension SwiftUICell where Self: UICollectionViewCell {
 		self.hostingController = hostingController
 		contentView.addSubview(hostingController.view)
 		hostingController.view.anchor(to: contentView)
-		hostingController.view.shouldTranslateAutoresizingMaskIntoConstraints(false)
 		contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
 	}
 }

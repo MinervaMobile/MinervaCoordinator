@@ -1,7 +1,4 @@
 //
-//  Presenter.swift
-//  Minerva
-//
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
