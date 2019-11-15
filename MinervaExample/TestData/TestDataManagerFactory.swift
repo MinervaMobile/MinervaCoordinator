@@ -8,14 +8,14 @@
 import Foundation
 
 public final class TestDataManagerFactory: DataManagerFactory {
-	private let testData: TestData
+  private let testData: TestData
 
-	public init(testData: TestData) {
-		self.testData = testData
-	}
+  public init(testData: TestData) {
+    self.testData = testData
+  }
 
-	// MARK: - DataManagerFactory
-	public func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager {
-		return TestDataManager(testData: testData, userAuthorization: userAuthorization, userManager: userManager)
-	}
+  // MARK: - DataManagerFactory
+  public func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager) -> DataManager {
+    return TestDataManager(testData: testData, userAuthorization: userAuthorization, userManager: userManager)
+  }
 }
