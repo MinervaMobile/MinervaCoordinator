@@ -9,22 +9,22 @@ import UIKit.UIImage
 
 public enum Asset: String {
 
-	case Add = "add"
-	case Disclosure = "disclosure"
-	case Filter = "filter"
-	case Logo = "logo"
-	case Workouts = "workouts"
-	case Settings = "settings"
-	case Users = "users"
+  case Add = "add"
+  case Disclosure = "disclosure"
+  case Filter = "filter"
+  case Logo = "logo"
+  case Workouts = "workouts"
+  case Settings = "settings"
+  case Users = "users"
 
-	var image: UIImage {
-		let bundle = Bundle(for: ImageBundleToken.self)
-		guard let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil) else {
-			assertionFailure("Missing image for \(self.rawValue)")
-			return UIImage()
-		}
-		return image
-	}
+  var image: UIImage {
+    let bundle = Bundle(for: ImageBundleToken.self)
+    guard let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil) else {
+      assertionFailure("Missing image for \(self.rawValue)")
+      return UIImage()
+    }
+    return image
+  }
 }
 
 fileprivate final class ImageBundleToken { }

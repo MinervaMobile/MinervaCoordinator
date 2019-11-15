@@ -10,20 +10,20 @@ import XCTest
 
 public final class MinervaTests: XCTestCase {
 
-	private var listController: ListController!
+  private var listController: ListController!
 
-	override public func setUp() {
-		super.setUp()
-		listController = LegacyListController()
-	}
+  override public func setUp() {
+    super.setUp()
+    listController = LegacyListController()
+  }
 
-	override public func tearDown() {
-		listController = nil
-		super.tearDown()
-	}
+  override public func tearDown() {
+    listController = nil
+    super.tearDown()
+  }
 
-	public func testCreation() {
-		XCTAssertNotNil(listController)
-	}
+  public func testCreation() {
+    XCTAssertNotNil(listController)
+  }
 
 }

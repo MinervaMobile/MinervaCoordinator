@@ -7,5 +7,5 @@ import RxSwift
 import UIKit
 
 public protocol Presenter {
-	var sections: Observable<[ListSection]> { get }
+  var sections: Observable<[ListSection]> { get }
 }
