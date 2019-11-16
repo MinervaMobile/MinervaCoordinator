@@ -21,7 +21,7 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   private let cellIdentifier: String
 
   public var iconColor: UIColor?
-  public var iconImageWidthHeight: CGFloat = 14.0
+  public var iconImageWidthHeight: CGFloat = 0
   public var iconCornerRadius: CGFloat = 0
   public var iconImageContentMode: UIView.ContentMode = .scaleAspectFit
   public var detailsTextResistCompression = true
@@ -160,15 +160,12 @@ public class LabelAccessoryCell: BaseListCell {
       accessoryImageLeadingConstraint?.constant = 0
     }
     iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
+    if model.iconImageWidthHeight > 0 {
+      iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
+      iconImageTrailingConstraint?.constant = LabelAccessoryCellModel.iconTrailingLength
+    }
     model.iconImage.subscribe(onNext: { [weak self] image in
       self?.iconImageView.image = image
-      if image != nil {
-        self?.iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
-        self?.iconImageTrailingConstraint?.constant = LabelAccessoryCellModel.iconTrailingLength
-      } else {
-        self?.iconImageWidthHeightConstraint?.constant = 0
-        self?.iconImageTrailingConstraint?.constant = 0
-      }
     }).disposed(by: disposeBag)
   }
 
