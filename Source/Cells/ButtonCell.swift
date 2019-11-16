@@ -170,6 +170,4 @@ extension ButtonCell {
     button.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
-
-
 }

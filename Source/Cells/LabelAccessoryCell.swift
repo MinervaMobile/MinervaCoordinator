@@ -149,7 +149,7 @@ public class LabelAccessoryCell: BaseListCell {
 
   private func remakeConstraints() {
     guard let model = self.model else { return }
-    if let accessory = model.accessoryImage {
+    if model.accessoryImage != nil {
       accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
       accessoryImageLeadingConstraint?.constant = LabelAccessoryCellModel.accessoryImageMargin
     } else {
