@@ -18,6 +18,8 @@ public final class PickerLabelCellModel: BaseListCellModel {
   private let cellIdentifier: String
 
   public var backgroundColor: UIColor?
+  public var staticHeight: CGFloat?
+
   public var cellAlignment = CellAlignment.center
   fileprivate let helper: PickerLabelCellModelHelper
 
@@ -42,6 +44,15 @@ public final class PickerLabelCellModel: BaseListCellModel {
     return helper.pickerData == model.helper.pickerData
       && cellAlignment == model.cellAlignment
       && backgroundColor == model.backgroundColor
+      && staticHeight == model.staticHeight
+  }
+
+  override public func size(
+    constrainedTo containerSize: CGSize,
+    with templateProvider: () -> ListCollectionViewCell
+  ) -> ListCellSize {
+    guard let height = staticHeight else { return .autolayout }
+    return .explicit(size: CGSize(width: containerSize.width, height: height))
   }
 }
 

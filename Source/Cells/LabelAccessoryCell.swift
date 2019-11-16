@@ -21,7 +21,7 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   private let cellIdentifier: String
 
   public var iconColor: UIColor?
-  public var iconImageWidthHeight: CGFloat = 14.0
+  public var iconImageWidthHeight: CGFloat = 0
   public var iconCornerRadius: CGFloat = 0
   public var iconImageContentMode: UIView.ContentMode = .scaleAspectFit
   public var detailsTextResistCompression = true
@@ -149,27 +149,20 @@ public class LabelAccessoryCell: BaseListCell {
 
   private func remakeConstraints() {
     guard let model = self.model else { return }
-    accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
     if let accessory = model.accessoryImage {
-      accessoryImageView.image = accessory
       accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
       accessoryImageLeadingConstraint?.constant = LabelAccessoryCellModel.accessoryImageMargin
     } else {
-      accessoryImageView.image = nil
       accessoryImageWidthHeightConstraint?.constant = 0
       accessoryImageLeadingConstraint?.constant = 0
     }
-    iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
-    model.iconImage.subscribe(onNext: { [weak self] image in
-      self?.iconImageView.image = image
-      if image != nil {
-        self?.iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
-        self?.iconImageTrailingConstraint?.constant = LabelAccessoryCellModel.iconTrailingLength
-      } else {
-        self?.iconImageWidthHeightConstraint?.constant = 0
-        self?.iconImageTrailingConstraint?.constant = 0
-      }
-    }).disposed(by: disposeBag)
+    if model.iconImageWidthHeight > 0 {
+      iconImageWidthHeightConstraint?.constant = model.iconImageWidthHeight
+      iconImageTrailingConstraint?.constant = LabelAccessoryCellModel.iconTrailingLength
+    } else {
+      iconImageWidthHeightConstraint?.constant = 0
+      iconImageTrailingConstraint?.constant = 0
+    }
   }
 
   @objc
@@ -213,6 +206,10 @@ public class LabelAccessoryCell: BaseListCell {
 
     backgroundView?.backgroundColor = model.backgroundColor
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    model.iconImage.subscribe(onNext: { [weak self] image in
+      self?.iconImageView.image = image
+    }).disposed(by: disposeBag)
 
     setNeedsUpdateConstraints()
   }

@@ -23,7 +23,6 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
   public var textAlignment: NSTextAlignment = .center
   public var cellFillsWidth = false
   public var titleEdgeInsets: UIEdgeInsets = .zero
-  public var followsLayoutGuideMargins = true
 
   public var buttonColor: UIColor?
   public var selectedButtonColor: UIColor?
@@ -99,11 +98,6 @@ public class ButtonCell: BaseListCell {
   public var model: ButtonCellModel? { cellModel as? ButtonCellModel }
   public var disposeBag = DisposeBag()
 
-  private weak var leadingConstraint: NSLayoutConstraint?
-  private weak var trailingConstraint: NSLayoutConstraint?
-  private weak var topConstraint: NSLayoutConstraint?
-  private weak var bottomConstraint: NSLayoutConstraint?
-
   private let button: UIButton = {
     let button = UIButton()
     button.titleLabel?.adjustsFontForContentSizeCategory = true
@@ -125,11 +119,6 @@ public class ButtonCell: BaseListCell {
   override public func prepareForReuse() {
     super.prepareForReuse()
     disposeBag = DisposeBag()
-  }
-
-  override public func updateConstraints() {
-    remakeConstraints(followsLayoutGuideMargins: model?.followsLayoutGuideMargins ?? true)
-    super.updateConstraints()
   }
 
   @objc
@@ -172,42 +161,15 @@ public class ButtonCell: BaseListCell {
     button.layer.cornerRadius = model.borderRadius
     backgroundView?.backgroundColor = model.backgroundColor
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
-    setNeedsUpdateConstraints()
   }
 }
 
 // MARK: - Constraints
 extension ButtonCell {
   private func setupConstraints() {
-    remakeConstraints()
+    button.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
 
-  private func remakeConstraints(followsLayoutGuideMargins: Bool = true) {
-    let layoutGuide = contentView.layoutMarginsGuide
 
-    leadingConstraint?.isActive = false
-    leadingConstraint = button.leadingAnchor.constraint(
-      equalTo: followsLayoutGuideMargins ? layoutGuide.leadingAnchor : contentView.leadingAnchor
-    )
-    leadingConstraint?.isActive = true
-
-    trailingConstraint?.isActive = false
-    trailingConstraint = button.trailingAnchor.constraint(
-      equalTo: followsLayoutGuideMargins ? layoutGuide.trailingAnchor : contentView.trailingAnchor
-    )
-    trailingConstraint?.isActive = true
-
-    topConstraint?.isActive = false
-    topConstraint = button.topAnchor.constraint(
-      equalTo: followsLayoutGuideMargins ? layoutGuide.topAnchor : contentView.topAnchor
-    )
-    topConstraint?.isActive = true
-
-    bottomConstraint?.isActive = false
-    bottomConstraint = button.bottomAnchor.constraint(
-      equalTo: followsLayoutGuideMargins ? layoutGuide.bottomAnchor : contentView.bottomAnchor
-    )
-    bottomConstraint?.isActive = true
-  }
 }
