@@ -54,9 +54,7 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? IconTextCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return labelLeadingMargin == model.labelLeadingMargin
       && imageColor == model.imageColor
       && imageContentMode == model.imageContentMode
@@ -79,9 +77,7 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
   public var willBindAction: BindAction?
 }
 
-public final class IconTextCell: BaseListCell {
-  public var model: IconTextCellModel? { cellModel as? IconTextCellModel }
-  public var disposeBag = DisposeBag()
+public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 
   private let buttonView = UIView()
   private let imageView: UIImageView = {
@@ -95,16 +91,14 @@ public final class IconTextCell: BaseListCell {
     label.adjustsFontForContentSizeCategory = true
     return label
   }()
-  private let imageWidthConstraint: NSLayoutConstraint
-  private let imageHeightConstraint: NSLayoutConstraint
+  private var imageWidthConstraint: NSLayoutConstraint?
+  private var imageHeightConstraint: NSLayoutConstraint?
 
   private var buttonLeadingConstraint: NSLayoutConstraint?
   private var buttonCenterConstraint: NSLayoutConstraint?
   private var buttonTrailingConstraint: NSLayoutConstraint?
 
   override public init(frame: CGRect) {
-    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-    imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: frame)
     contentView.addSubview(buttonView)
     buttonView.addSubview(imageView)
@@ -118,18 +112,11 @@ public final class IconTextCell: BaseListCell {
     imageView.image = nil
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else {
-      return
-    }
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
-    imageWidthConstraint.constant = model.imageWidth
-    imageWidthConstraint.isActive = true
-    imageHeightConstraint.constant = model.imageHeight
-    imageHeightConstraint.isActive = true
-    imageView.contentMode = model.imageContentMode
-    self.imageView.tintColor = model.imageColor
+  override public func bind(model: IconTextCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
+    imageWidthConstraint?.constant = model.imageWidth
+    imageHeightConstraint?.constant = model.imageHeight
 
     self.label.numberOfLines = model.numberOfLines
     if let attributedText = model.attributedText {
@@ -137,26 +124,44 @@ public final class IconTextCell: BaseListCell {
     } else {
       self.label.text = model.text
       self.label.font = model.font
-      self.label.textColor = model.textColor
     }
 
     labelLeadingConstraint?.constant = model.labelLeadingMargin
 
-    buttonLeadingConstraint?.isActive = false
-    buttonCenterConstraint?.isActive = false
-    buttonTrailingConstraint?.isActive = false
-
     switch model.textAlignment {
-    case .natural, .justified, .center: buttonCenterConstraint?.isActive = true
-    case .left: buttonLeadingConstraint?.isActive = true
-    case .right: buttonTrailingConstraint?.isActive = true
+    case .natural, .justified, .center:
+      buttonLeadingConstraint?.isActive = false
+      buttonCenterConstraint?.isActive = true
+      buttonTrailingConstraint?.isActive = false
+    case .left:
+      buttonLeadingConstraint?.isActive = true
+      buttonCenterConstraint?.isActive = false
+      buttonTrailingConstraint?.isActive = false
+    case .right:
+      buttonLeadingConstraint?.isActive = false
+      buttonCenterConstraint?.isActive = false
+      buttonTrailingConstraint?.isActive = true
     @unknown default:
       assertionFailure("Unknown text alignment \(model.textAlignment)")
+      buttonLeadingConstraint?.isActive = false
+      buttonCenterConstraint?.isActive = false
+      buttonTrailingConstraint?.isActive = false
     }
 
-    self.label.textAlignment = model.textAlignment
+    label.textAlignment = model.textAlignment
+
+    guard !sizing else { return }
+
+    imageView.contentMode = model.imageContentMode
+    imageView.tintColor = model.imageColor
+
+    if model.attributedText == nil {
+      label.textColor = model.textColor
+    }
 
     self.backgroundView?.backgroundColor = model.backgroundColor
+
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
   }
 }
 
@@ -180,6 +185,11 @@ extension IconTextCell {
     labelLeadingConstraint?.isActive = true
     label.anchor(toLeading: nil, top: buttonView.topAnchor, trailing: nil, bottom: buttonView.bottomAnchor)
     label.trailingAnchor.constraint(equalTo: buttonView.trailingAnchor).isActive = true
+
+    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    imageWidthConstraint?.isActive = true
+    imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
+    imageHeightConstraint?.isActive = true
 
     buttonView.shouldTranslateAutoresizingMaskIntoConstraints(false)
 

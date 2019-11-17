@@ -49,12 +49,10 @@ public final class TextInputCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
+  override public var identifier: String { cellIdentifier }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? TextInputCellModel, super.identical(to: model) else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font
       && placeholder == model.placeholder
@@ -71,9 +69,7 @@ public final class TextInputCellModel: BaseListCellModel {
   }
 }
 
-public final class TextInputCell: BaseListCell {
-  public var model: TextInputCellModel? { cellModel as? TextInputCellModel }
-  public var disposeBag = DisposeBag()
+public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
   private let textField: UITextField = {
     let textField = UITextField(frame: .zero)
     textField.borderStyle = .none
@@ -89,17 +85,12 @@ public final class TextInputCell: BaseListCell {
     super.init(frame: frame)
     contentView.addSubview(textField)
     contentView.addSubview(bottomBorder)
+    setupConstraints()
     textField.addTarget(
       self,
       action: #selector(textFieldDidChange(_:)),
       for: .editingChanged
     )
-    setupConstraints()
-  }
-
-  override public func prepareForReuse() {
-    super.prepareForReuse()
-    disposeBag = DisposeBag()
   }
 
   @objc
@@ -109,21 +100,25 @@ public final class TextInputCell: BaseListCell {
     model.delegate?.textInputCellModel(model, textChangedTo: textField.text)
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else { return }
-    textField.autocapitalizationType = model.autocapitalizationType
-    textField.autocorrectionType = model.autocorrectionType
-    textField.tintColor = model.cursorColor
+  override public func bind(model: TextInputCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
     textField.attributedPlaceholder = model.attributedPlaceholder
-    textField.keyboardType = model.keyboardType
+
     if let initialText = model.text, (textField.text == nil || textField.text?.isEmpty == true) {
       textField.text = initialText
     }
-    textField.isSecureTextEntry = model.isSecureTextEntry
-    textField.textColor = model.inputTextColor
-    textField.textContentType = model.textContentType
     textField.font = model.font
+
+    guard !sizing else { return }
+
+    textField.textColor = model.inputTextColor
+    textField.autocapitalizationType = model.autocapitalizationType
+    textField.autocorrectionType = model.autocorrectionType
+    textField.tintColor = model.cursorColor
+    textField.keyboardType = model.keyboardType
+    textField.isSecureTextEntry = model.isSecureTextEntry
+    textField.textContentType = model.textContentType
 
     model.bottomBorderColor.subscribe(onNext: { [weak self] bottomBorderColor -> Void in
       self?.bottomBorder.backgroundColor = bottomBorderColor

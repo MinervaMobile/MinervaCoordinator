@@ -7,7 +7,7 @@ import SwiftUI
 import UIKit
 
 @available(iOS 13.0, tvOS 13.0, *)
-public protocol SwiftUICell: AnyObject, ListCellHelper {
+public protocol SwiftUICell: AnyObject, ListTypedCell {
   associatedtype Content: View
 
   var hostingController: UIHostingController<Content>? { get set }

@@ -63,9 +63,7 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? LabelCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font
       && attributedText == model.attributedText
@@ -80,8 +78,7 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
   }
 }
 
-public class LabelCell: BaseListCell {
-  public var model: LabelCellModel? { cellModel as? LabelCellModel }
+public final class LabelCell: BaseListCell<LabelCellModel> {
 
   private let labelBackgroundView = UIView()
   private let label: UILabel = {
@@ -97,27 +94,30 @@ public class LabelCell: BaseListCell {
     super.init(frame: frame)
     contentView.addSubview(labelBackgroundView)
     contentView.addSubview(label)
-    let recognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(tappedLabel)
-    )
+    backgroundView = UIView()
+    let recognizer = UITapGestureRecognizer(target: self, action: #selector(tappedLabel))
     label.addGestureRecognizer(recognizer)
     setupConstraints()
-    contentView.clipsToBounds = true
-    backgroundView = UIView()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else {
-      return
-    }
-    label.numberOfLines = model.numberOfLines
+  override public func bind(model: LabelCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
     if let attributedText = model.attributedText {
       label.attributedText = attributedText
     } else {
       label.text = model.text
       label.font = model.font
+    }
+
+    label.numberOfLines = model.numberOfLines
+    label.textAlignment = model.textAlignment
+
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    guard !sizing else { return }
+
+    if model.attributedText == nil {
       label.textColor = model.textColor
     }
 
@@ -130,9 +130,6 @@ public class LabelCell: BaseListCell {
     labelBackgroundView.layer.borderColor = model.backgroundColor?.cgColor
 
     label.isUserInteractionEnabled = model.labelAction != nil
-    label.textAlignment = model.textAlignment
-
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     backgroundView?.backgroundColor = model.backgroundColor
   }
 

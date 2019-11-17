@@ -66,7 +66,7 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, Li
   override public var identifier: String { return title }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SwiftUITextCellModel else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return title == model.title
       && subtitle == model.subtitle
       && hasChevron == model.hasChevron

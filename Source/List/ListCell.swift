@@ -25,7 +25,7 @@ public protocol ListDisplayableCell: ListCell {
 }
 
 /// A convenience protocol that adds typed model information to the class.
-public protocol ListCellHelper: ListCell {
+public protocol ListTypedCell: ListCell {
   associatedtype ModelType: ListCellModel
 
   /// Called when a CellModel is bound to the Cell.
@@ -34,7 +34,7 @@ public protocol ListCellHelper: ListCell {
   func bind(model: ModelType, sizing: Bool)
 }
 
-extension ListCellHelper {
+extension ListTypedCell {
   /// Implements the untyped ListCell bind method and calls the ListHelpers
   /// - Parameter cellModel: The model to bind to this cell.
   /// - Parameter sizing: True if the cell is being used for autolayout sizing, not actual display, false otherwise.

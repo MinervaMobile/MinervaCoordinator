@@ -64,7 +64,7 @@ public final class SeparatorCellModel: BaseListCellModel {
   override public var identifier: String { cellID }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SeparatorCellModel else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return color == model.color
       && height == model.height
       && followsLeadingMargin == model.followsLeadingMargin
@@ -75,23 +75,12 @@ public final class SeparatorCellModel: BaseListCellModel {
   }
 }
 
-public final class SeparatorCell: BaseListCell {
+public final class SeparatorCell: BaseListCell<SeparatorCellModel> {
 
   private let separator = UIView()
-  private weak var heightConstraint: NSLayoutConstraint?
-  private weak var leadingConstraint: NSLayoutConstraint?
-  private weak var trailingConstraint: NSLayoutConstraint?
-
-  override public func updateConstraints() {
-    guard let model = self.cellModel as? SeparatorCellModel else { return }
-    remakeConstraints(
-      height: model.height,
-      followsLayoutGuideLeadingMargin: model.followsLeadingMargin,
-      followsLayoutGuideTrailingMargin: model.followsTrailingMargin
-    )
-
-    super.updateConstraints()
-  }
+  private var heightConstraint: NSLayoutConstraint?
+  private var leadingConstraint: NSLayoutConstraint?
+  private var trailingConstraint: NSLayoutConstraint?
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -102,42 +91,57 @@ public final class SeparatorCell: BaseListCell {
       trailing: nil,
       bottom: contentView.layoutMarginsGuide.bottomAnchor
     )
-    remakeConstraints()
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     backgroundView = UIView()
-
+    setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.cellModel as? SeparatorCellModel else { return }
+  override public func bind(model: SeparatorCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    remakeConstraints(with: model)
+
+    guard !sizing else { return }
+
     separator.backgroundColor = model.color
     backgroundView?.backgroundColor = model.backgroundColor
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
-    setNeedsUpdateConstraints()
   }
+}
 
-  private func remakeConstraints(
-    height: CGFloat = 1,
-    followsLayoutGuideLeadingMargin: Bool = false,
-    followsLayoutGuideTrailingMargin: Bool = false
-  ) {
+// MARK: - Constraints
+extension SeparatorCell {
+  private func remakeConstraints(with model: SeparatorCellModel) {
     let layoutGuide = contentView.layoutMarginsGuide
 
-    leadingConstraint?.isActive = false
+    if let leadingConstraint = leadingConstraint {
+      leadingConstraint.isActive = false
+      separator.removeConstraint(leadingConstraint)
+    }
     leadingConstraint = separator.leadingAnchor.constraint(
-      equalTo: followsLayoutGuideLeadingMargin ? layoutGuide.leadingAnchor : contentView.leadingAnchor
+      equalTo: model.followsLeadingMargin ? layoutGuide.leadingAnchor : contentView.leadingAnchor
     )
     leadingConstraint?.isActive = true
 
-    trailingConstraint?.isActive = false
+    if let trailingConstraint = trailingConstraint {
+      trailingConstraint.isActive = false
+      separator.removeConstraint(trailingConstraint)
+    }
     trailingConstraint = separator.trailingAnchor.constraint(
-      equalTo: followsLayoutGuideTrailingMargin ? layoutGuide.trailingAnchor : contentView.trailingAnchor
+      equalTo: model.followsTrailingMargin ? layoutGuide.trailingAnchor : contentView.trailingAnchor
     )
     trailingConstraint?.isActive = true
+    heightConstraint?.constant = model.height
+  }
 
-    heightConstraint?.isActive = false
-    heightConstraint = separator.heightAnchor.constraint(equalToConstant: height)
+  private func setupConstraints() {
+    leadingConstraint = separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+    leadingConstraint?.isActive = true
+
+    trailingConstraint = separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+    trailingConstraint?.isActive = true
+
+    heightConstraint = separator.heightAnchor.constraint(equalToConstant: 1)
     heightConstraint?.isActive = true
   }
 }

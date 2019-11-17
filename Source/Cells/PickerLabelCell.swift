@@ -40,7 +40,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? PickerLabelCellModel, super.identical(to: model) else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return helper.pickerData == model.helper.pickerData
       && cellAlignment == model.cellAlignment
       && backgroundColor == model.backgroundColor
@@ -56,8 +56,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
   }
 }
 
-public final class PickerLabelCell: BaseListCell {
-  public var model: PickerLabelCellModel? { cellModel as? PickerLabelCellModel }
+public final class PickerLabelCell: BaseListCell<PickerLabelCellModel> {
 
   private weak var labelLeadingConstraint: NSLayoutConstraint?
   private weak var labelWidthConstraint: NSLayoutConstraint?
@@ -67,31 +66,26 @@ public final class PickerLabelCell: BaseListCell {
   private var trailingConstraint: NSLayoutConstraint?
 
   private let containerView = UIView()
-  private let pickerView: UIPickerView
-  private let label: UILabel
+  private let pickerView = UIPickerView(frame: .zero)
+  private let label: UILabel = {
+    let label = UILabel()
+    label.textAlignment = .center
+    label.adjustsFontForContentSizeCategory = true
+    return label
+  }()
 
   override public init(frame: CGRect) {
-    pickerView = UIPickerView(frame: .zero)
-    label = UILabel()
-    label.textAlignment = .center
     super.init(frame: frame)
     contentView.addSubview(containerView)
     containerView.addSubview(pickerView)
     containerView.addSubview(label)
-    setupConstraints()
     backgroundView = UIView()
+    setupConstraints()
   }
 
-  override public func updateConstraints() {
-    remakeConstraints()
-    super.updateConstraints()
-  }
+  override public func bind(model: PickerLabelCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else { return }
-
-    label.adjustsFontForContentSizeCategory = true
     pickerView.delegate = model.helper
     pickerView.dataSource = model.helper
 
@@ -99,46 +93,21 @@ public final class PickerLabelCell: BaseListCell {
     if let options = data.options {
       label.attributedText = options.label
       labelLeadingConstraint?.constant = options.labelMargin
-      if !data.data.isEmpty {
-        let row = min(max(0, options.startingRow), data.data.count - 1)
-        pickerView.selectRow(row, inComponent: 0, animated: false)
-      }
+    }
+
+    remakeConstraints(with: model)
+
+    guard !sizing else { return }
+
+    if let options = data.options, !data.data.isEmpty {
+      let row = min(max(0, options.startingRow), data.data.count - 1)
+      pickerView.selectRow(row, inComponent: 0, animated: false)
     }
 
     for component in 0..<pickerView.numberOfComponents {
       model.helper.changedValue?(pickerView, pickerView.selectedRow(inComponent: component), component)
     }
     backgroundView?.backgroundColor = model.backgroundColor
-
-    setNeedsUpdateConstraints()
-  }
-
-  private func remakeConstraints() {
-    guard let model = model else { return }
-
-    let data = model.helper.pickerData
-    centerXConstraint?.isActive = false
-    trailingConstraint?.isActive = false
-    leadingConstraint?.isActive = false
-
-    switch model.cellAlignment {
-    case .center:
-      centerXConstraint?.isActive = true
-    case .left(let leftMargin):
-      leadingConstraint?.constant = leftMargin
-      leadingConstraint?.isActive = true
-    case .right(let rightMargin):
-      trailingConstraint?.constant = -rightMargin
-      trailingConstraint?.isActive = true
-    }
-
-    let pickerWidth = model.helper.pickerData.data.reduce(
-      0) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
-      + (data.options?.rowMargin ?? 8)
-    let labelWidth = data.options?.label?.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude) ?? 0
-
-    labelWidthConstraint?.constant = labelWidth
-    pickerWidthConstraint?.constant = pickerWidth
   }
 }
 
@@ -194,8 +163,35 @@ extension PickerLabelCellModelHelper: UIPickerViewDelegate {
   }
 }
 
-// MARK: - UI
+// MARK: - Constraints
 extension PickerLabelCell {
+
+  private func remakeConstraints(with model: PickerLabelCellModel) {
+    let data = model.helper.pickerData
+    centerXConstraint?.isActive = false
+    trailingConstraint?.isActive = false
+    leadingConstraint?.isActive = false
+
+    switch model.cellAlignment {
+    case .center:
+      centerXConstraint?.isActive = true
+    case .left(let leftMargin):
+      leadingConstraint?.constant = leftMargin
+      leadingConstraint?.isActive = true
+    case .right(let rightMargin):
+      trailingConstraint?.constant = -rightMargin
+      trailingConstraint?.isActive = true
+    }
+
+    let pickerWidth = model.helper.pickerData.data.reduce(
+      0) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
+      + (data.options?.rowMargin ?? 8)
+    let labelWidth = data.options?.label?.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude) ?? 0
+
+    labelWidthConstraint?.constant = labelWidth
+    pickerWidthConstraint?.constant = pickerWidth
+  }
+
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
 

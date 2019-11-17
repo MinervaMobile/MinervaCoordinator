@@ -45,7 +45,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? HorizontalCollectionCellModel, super.identical(to: model) else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return model.section == section
       && followsInsets == model.followsInsets
       && isScrollEnabled == model.isScrollEnabled
@@ -73,14 +73,13 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
 
   // MARK: - Private
 
-  fileprivate func update(collectionView: UICollectionView) {
+  fileprivate func update(collectionView: UICollectionView, animated: Bool) {
     listController.collectionView = collectionView
-    listController.update(with: [section], animated: true, completion: nil)
+    listController.update(with: [section], animated: animated, completion: nil)
   }
 }
 
-public final class HorizontalCollectionCell: BaseListCell {
-  public var model: HorizontalCollectionCellModel? { cellModel as? HorizontalCollectionCellModel }
+public final class HorizontalCollectionCell: BaseListCell<HorizontalCollectionCellModel> {
 
   private let collectionView: UICollectionView = {
     var layout = ListViewLayout(
@@ -104,22 +103,28 @@ public final class HorizontalCollectionCell: BaseListCell {
     backgroundView = UIView()
   }
 
+  override public func prepareForReuse() {
+    super.prepareForReuse()
+    collectionView.dataSource = self
+    collectionView.reloadData()
+  }
+
   override public func layoutSubviews() {
     super.layoutSubviews()
     collectionView.collectionViewLayout.invalidateLayout()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: HorizontalCollectionCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
     collectionView.contentInset.left = contentView.layoutMargins.left
     collectionView.contentInset.right = contentView.layoutMargins.right
-    collectionView.isScrollEnabled = model.isScrollEnabled
 
-    model.update(collectionView: collectionView)
+    model.update(collectionView: collectionView, animated: !sizing)
+
+    guard !sizing else { return }
+
+    collectionView.isScrollEnabled = model.isScrollEnabled
     backgroundView?.backgroundColor = model.backgroundColor
   }
 }
@@ -134,5 +139,19 @@ extension HorizontalCollectionCell {
       bottom: contentView.bottomAnchor
     )
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
+  }
+}
+
+extension HorizontalCollectionCell: UICollectionViewDataSource {
+
+  public func numberOfSections(in collectionView: UICollectionView) -> Int { 0 }
+
+  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 0 }
+
+  public func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    UICollectionViewCell()
   }
 }

@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 /// Specifies how the cell will size itself.
-public enum ListCellSize {
+public enum ListCellSize: Equatable {
   /// Bind the model to a template view and have the system determine the size.
   case autolayout
   /// Provides the exact size the cell should occupy.
@@ -118,7 +118,7 @@ public protocol ListBindableCellModelWrapper {
 }
 
 /// If a model needs to trigger fetching of thumbnails or other heavy data before binding to a
-/// cell, it should do that here.
+/// cell, it should do that here. |willBindAction| is not called during sizing.
 public protocol ListBindableCellModel: ListBindableCellModelWrapper {
   associatedtype BindableModelType: ListCellModel
   typealias BindAction = (_ cellModel: BindableModelType) -> Void
@@ -138,7 +138,7 @@ extension ListBindableCellModel {
 }
 
 /// Adds type information to the cell model with convenient type safe functions.
-public protocol TypedListCellModel: ListCellModel {
+public protocol ListTypedCellModel: ListCellModel {
   associatedtype CellType: ListCollectionViewCell
 
   /// Determines if two models with the same identifier are equal. If they are not, then the cell is reloaded and bound to the new model.
@@ -151,11 +151,9 @@ public protocol TypedListCellModel: ListCellModel {
   func size(constrainedTo containerSize: CGSize, with templateProvider: () -> CellType) -> ListCellSize
 }
 
-extension TypedListCellModel {
+extension ListTypedCellModel {
 
-  public var cellType: ListCollectionViewCell.Type {
-    return CellType.self
-  }
+  public var cellType: ListCollectionViewCell.Type { return CellType.self }
 
   public func identical(to other: ListCellModel) -> Bool {
     guard let model = other as? Self else { return false }
@@ -176,7 +174,7 @@ extension TypedListCellModel {
   }
 }
 
-extension TypedListCellModel where Self: Equatable {
+extension ListTypedCellModel where Self: Equatable {
   public func identical(to model: Self) -> Bool {
     return self == model
   }

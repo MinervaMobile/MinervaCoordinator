@@ -67,9 +67,7 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ButtonCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
       && numberOfLines == model.numberOfLines
       && textVerticalMargin == model.textVerticalMargin
@@ -94,9 +92,7 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
   public var willBindAction: BindAction?
 }
 
-public class ButtonCell: BaseListCell {
-  public var model: ButtonCellModel? { cellModel as? ButtonCellModel }
-  public var disposeBag = DisposeBag()
+public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
 
   private let button: UIButton = {
     let button = UIButton()
@@ -111,33 +107,23 @@ public class ButtonCell: BaseListCell {
   override public init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(button)
+    backgroundView = UIView()
     setupConstraints()
     button.addTarget(self, action: #selector(pressedButton(_:)), for: .touchUpInside)
-    backgroundView = UIView()
   }
 
   override public func prepareForReuse() {
     super.prepareForReuse()
-    disposeBag = DisposeBag()
+    button.setBackgroundImage(nil, for: .normal)
+    button.setBackgroundImage(nil, for: .highlighted)
+    button.setBackgroundImage(nil, for: .selected)
   }
 
-  @objc
-  private func pressedButton(_ sender: UIButton) {
-    guard let model = model else { return }
-    model.selectionAction?(model, sender)
-  }
-
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: ButtonCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
     button.titleLabel?.textAlignment = model.textAlignment
     button.titleLabel?.numberOfLines = model.numberOfLines
-    button.setBackgroundImage(model.buttonColor?.image(), for: .normal)
-    button.setBackgroundImage(model.buttonColor?.withAlphaComponent(0.8).image(), for: .highlighted)
-    button.setBackgroundImage(model.selectedBorderColor?.image(), for: .selected)
     button.titleEdgeInsets = model.titleEdgeInsets
 
     button.contentEdgeInsets = UIEdgeInsets(
@@ -149,6 +135,18 @@ public class ButtonCell: BaseListCell {
 
     button.setAttributedTitle(model.attributedText, for: .normal)
     button.setAttributedTitle(model.selectedAttributedText, for: .selected)
+
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    guard !sizing else { return }
+
+    button.setBackgroundImage(model.buttonColor?.image(), for: .normal)
+    button.setBackgroundImage(model.buttonColor?.withAlphaComponent(0.8).image(), for: .highlighted)
+    button.setBackgroundImage(model.selectedBorderColor?.image(), for: .selected)
+
+    backgroundView?.backgroundColor = model.backgroundColor
+    button.layer.borderWidth = model.borderWidth
+    button.layer.cornerRadius = model.borderRadius
     button.isUserInteractionEnabled = model.selectionAction != nil
 
     model.isSelected.subscribe(onNext: { [weak self, weak model] isSelected -> Void in
@@ -156,11 +154,12 @@ public class ButtonCell: BaseListCell {
       let borderColor = isSelected ? model?.selectedBorderColor?.cgColor : model?.borderColor?.cgColor
       self?.button.layer.borderColor = borderColor
     }).disposed(by: disposeBag)
+  }
 
-    button.layer.borderWidth = model.borderWidth
-    button.layer.cornerRadius = model.borderRadius
-    backgroundView?.backgroundColor = model.backgroundColor
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+  @objc
+  private func pressedButton(_ sender: UIButton) {
+    guard let model = model else { return }
+    model.selectionAction?(model, sender)
   }
 }
 

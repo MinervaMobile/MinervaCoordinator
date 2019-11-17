@@ -23,14 +23,10 @@ open class SegmentedControlCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override open var identifier: String {
-    return "SegmentedControlCellModel"
-  }
+  override open var identifier: String { "SegmentedControlCellModel" }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SegmentedControlCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return segmentTitles == model.segmentTitles
       && titleFont == model.titleFont
       && tintColor == model.tintColor
@@ -39,18 +35,16 @@ open class SegmentedControlCellModel: BaseListCellModel {
   }
 }
 
-public final class SegmentedControlCell: BaseListCell {
-  public var model: SegmentedControlCellModel? { cellModel as? SegmentedControlCellModel }
+public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel> {
+
+  private let segmentedControl = UISegmentedControl(frame: .zero)
 
   override public init(frame: CGRect) {
-    self.segmentedControl = UISegmentedControl(frame: .zero)
     super.init(frame: frame)
     contentView.addSubview(segmentedControl)
-    setupConstraints()
     backgroundView = UIView()
+    setupConstraints()
   }
-
-  private let segmentedControl: UISegmentedControl
 
   @objc
   private func pressedSegmentedControl(_ sender: UISegmentedControl) {
@@ -63,19 +57,18 @@ public final class SegmentedControlCell: BaseListCell {
 
   // MARK: - BaseListCell
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    segmentedControl.tintColor = model.tintColor
+  override public func bind(model: SegmentedControlCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
-    if self.segmentedControl.numberOfSegments == 0 {
-      for (index, title) in model.segmentTitles.enumerated() {
-        segmentedControl.insertSegment(withTitle: title, at: index, animated: false)
-      }
-      segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: model.titleFont], for: .normal)
+    segmentedControl.removeAllSegments()
+    for (index, title) in model.segmentTitles.enumerated() {
+      segmentedControl.insertSegment(withTitle: title, at: index, animated: false)
     }
+    segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: model.titleFont], for: .normal)
+
+    guard !sizing else { return }
+
+    segmentedControl.tintColor = model.tintColor
     segmentedControl.selectedSegmentIndex = model.selectedSegment
     backgroundView?.backgroundColor = model.backgroundColor
   }

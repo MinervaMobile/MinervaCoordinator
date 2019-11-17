@@ -45,53 +45,46 @@ public final class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
   private let cellIdentifier: String
 
   public var backgroundColor: UIColor?
-  private let type: SizeType
+  private let cellSize: ListCellSize
 
-  public init(location: Location, type: SizeType = .dynamic) {
+  public init(location: Location, cellSize: ListCellSize = .relative) {
     self.cellIdentifier = location.cellIdentifier
-    self.type = type
+    self.cellSize = cellSize
     super.init()
   }
 
   public convenience init(identifier: String, height: CGFloat) {
-    self.init(location: .other(identifier: identifier), type: .fixed(height: height))
+    self.init(
+      location: .other(identifier: identifier),
+      cellSize: .explicit(size: CGSize(width: 0, height: height))
+    )
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return self.cellIdentifier
-  }
+  override public var identifier: String { cellIdentifier }
 
   override public func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
-    switch type {
-    case .dynamic:
-      return .relative
-    case .fixed(let height):
-      return .explicit(size: CGSize(width: containerSize.width, height: height))
-    }
+    cellSize
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? MarginCellModel else {
-      return false
-    }
-    return backgroundColor == model.backgroundColor && type.isEqual(to: model.type)
+    guard let model = model as? Self, super.identical(to: model) else { return false }
+    return backgroundColor == model.backgroundColor
+      && cellSize == model.cellSize
   }
 }
 
-public final class MarginCell: BaseListCell {
+public final class MarginCell: BaseListCell<MarginCellModel> {
 
-  public var model: MarginCellModel? { cellModel as? MarginCellModel }
+  override public func bind(model: MarginCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+    guard !sizing else { return }
+
     self.contentView.backgroundColor = model.backgroundColor
   }
 }

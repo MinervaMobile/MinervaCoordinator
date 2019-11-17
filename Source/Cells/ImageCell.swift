@@ -36,9 +36,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return image == model.image
       && width == model.width
       && height == model.height
@@ -57,8 +55,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   }
 }
 
-public final class ImageCell: BaseListCell {
-  public var model: ImageCellModel? { cellModel as? ImageCellModel }
+public final class ImageCell: BaseListCell<ImageCellModel> {
 
   private let imageView: UIImageView = {
     let imageView = UIImageView()
@@ -78,21 +75,21 @@ public final class ImageCell: BaseListCell {
     imageView.image = nil
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: ImageCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     imageWidthConstraint.constant = model.width
-    imageWidthConstraint.isActive = true
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    guard !sizing else { return }
+
     imageView.contentMode = model.contentMode
+
     if let imageColor = model.imageColor {
       imageView.image = model.image.withRenderingMode(.alwaysTemplate)
       imageView.tintColor = imageColor
     } else {
       imageView.image = model.image
     }
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
   }
 }
 
@@ -102,6 +99,8 @@ extension ImageCell {
     let layoutGuide = contentView.layoutMarginsGuide
     imageView.anchor(toLeading: nil, top: layoutGuide.topAnchor, trailing: nil, bottom: layoutGuide.bottomAnchor)
     imageView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
+
+    imageWidthConstraint.isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

@@ -30,23 +30,21 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
 
   fileprivate let text: String
   fileprivate let font: UIFont
-  fileprivate let imageWidth: CGFloat
-  fileprivate let imageHeight: CGFloat
+  fileprivate let imageSize: CGSize
 
   private let cellIdentifier: String
 
-  public init(identifier: String, imageWidth: CGFloat, imageHeight: CGFloat, text: String, font: UIFont) {
+  public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
     self.cellIdentifier = identifier
-    self.imageWidth = imageWidth
-    self.imageHeight = imageHeight
+    self.imageSize = imageSize
     self.text = text
     self.font = font
     self.allButtonsText = [text]
     super.init()
   }
 
-  public convenience init(imageWidth: CGFloat, imageHeight: CGFloat, text: String, font: UIFont) {
-    self.init(identifier: text, imageWidth: imageWidth, imageHeight: imageHeight, text: text, font: font)
+  public convenience init(imageSize: CGSize, text: String, font: UIFont) {
+    self.init(identifier: text, imageSize: imageSize, text: text, font: font)
   }
 
   // MARK: - BaseListCellModel
@@ -56,7 +54,7 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ButtonImageCellModel, super.identical(to: model) else { return false }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return numberOfLines == model.numberOfLines
       && textAlignment == model.textAlignment
       && buttonColor == model.buttonColor
@@ -69,8 +67,7 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
       && borderColor == model.borderColor
       && text == model.text
       && font == model.font
-      && imageWidth == model.imageWidth
-      && imageHeight == model.imageHeight
+      && imageSize == model.imageSize
       && backgroundColor == model.backgroundColor
   }
 
@@ -80,7 +77,8 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
   ) -> ListCellSize {
     let margins = templateProvider().layoutMargins
     let rowWidth = containerSize.width
-    let textWidth = rowWidth - margins.left - margins.right - imageWidth - ButtonImageCellModel.horizontalMargin * 4
+    let textWidth =
+      rowWidth - margins.left - margins.right - imageSize.width - ButtonImageCellModel.horizontalMargin * 4
 
     let textHeight = allButtonsText.reduce(0) {
       max($0, $1.height(constraintedToWidth: textWidth, font: font))
@@ -101,10 +99,7 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
   public var willBindAction: BindAction?
 }
 
-public final class ButtonImageCell: BaseListCell {
-  public var model: ButtonImageCellModel? { cellModel as? ButtonImageCellModel }
-  public var disposeBag = DisposeBag()
-
+public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -132,33 +127,29 @@ public final class ButtonImageCell: BaseListCell {
     contentView.addSubview(marginContainer)
     marginContainer.addSubview(imageView)
     marginContainer.addSubview(label)
-
-    setupConstraints()
     backgroundView = UIView()
+    setupConstraints()
   }
+
   override public func prepareForReuse() {
     super.prepareForReuse()
     imageView.image = nil
   }
 
-  override public func updateConstraints() {
-    guard let model = model else { return }
-    imageWidthConstraint?.constant = model.imageWidth
-    imageHeightConstraint?.constant = model.imageHeight
-    super.updateConstraints()
-  }
-
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else { return }
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
-    imageView.contentMode = model.imageContentMode
-    imageView.tintColor = model.imageColor
+  override public func bind(model: ButtonImageCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     label.text = model.text
     label.font = model.font
-    label.textColor = model.textColor
     label.textAlignment = model.textAlignment
     label.numberOfLines = model.numberOfLines
+
+    remakeConstraints(with: model)
+
+    guard !sizing else { return }
+
+    imageView.contentMode = model.imageContentMode
+    imageView.tintColor = model.imageColor
+    label.textColor = model.textColor
 
     buttonBackgroundView.layer.borderWidth = model.borderWidth
     buttonBackgroundView.layer.borderColor = model.borderColor?.cgColor
@@ -166,12 +157,18 @@ public final class ButtonImageCell: BaseListCell {
     buttonBackgroundView.backgroundColor = model.buttonColor
     backgroundView?.backgroundColor = model.backgroundColor
 
-    setNeedsUpdateConstraints()
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
   }
 }
 
 // MARK: - Constraints
 extension ButtonImageCell {
+
+  private func remakeConstraints(with model: ButtonImageCellModel) {
+    imageWidthConstraint?.constant = model.imageSize.width
+    imageHeightConstraint?.constant = model.imageSize.height
+  }
+
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
 

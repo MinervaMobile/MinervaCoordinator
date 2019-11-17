@@ -60,9 +60,7 @@ open class ImageButtonCardCellModel: BaseListCellModel {
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageButtonCardCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return numberOfLines == model.numberOfLines
       && attributedText == model.attributedText
       && selectedAttributedText == model.selectedAttributedText
@@ -83,8 +81,7 @@ open class ImageButtonCardCellModel: BaseListCellModel {
   }
 }
 
-public final class ImageButtonCardCell: BaseListCell {
-  public var model: ImageButtonCardCellModel? { cellModel as? ImageButtonCardCellModel }
+public final class ImageButtonCardCell: BaseListCell<ImageButtonCardCellModel> {
 
   private let buttonContainerView = UIView()
 
@@ -108,39 +105,42 @@ public final class ImageButtonCardCell: BaseListCell {
     contentView.addSubview(buttonContainerView)
     buttonContainerView.addSubview(label)
     buttonContainerView.addSubview(imageView)
-    label.adjustsFontForContentSizeCategory = true
     setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func prepareForReuse() {
+    super.prepareForReuse()
+    imageView.image = nil
+  }
+
+  override public func bind(model: ImageButtonCardCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
+    label.numberOfLines = model.numberOfLines
+    label.attributedText = model.isSelected ? model.selectedAttributedText : model.attributedText
+
+    imageWidthConstraint.constant = model.imageWidth
+    imageHeightConstraint.constant = model.imageHeight
+
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    guard !sizing else { return }
+
     buttonContainerView.layer.borderWidth = model.borderWidth
     buttonContainerView.layer.cornerRadius = model.borderRadius
     buttonContainerView.layer.borderColor = model.borderColor?.cgColor
 
-    label.numberOfLines = model.numberOfLines
-    label.attributedText = model.isSelected ? model.selectedAttributedText : model.attributedText
+    imageView.contentMode = model.contentMode
     imageView.tintColor = model.isSelected ? model.selectedImageColor : model.imageColor
     imageView.image = model.image.withRenderingMode(.alwaysTemplate)
+
     buttonContainerView.backgroundColor = model.isSelected ? model.selectedBackgroundColor : nil
-
-    imageWidthConstraint.constant = model.imageWidth
-    imageWidthConstraint.isActive = true
-    imageHeightConstraint.constant = model.imageHeight
-    imageHeightConstraint.isActive = true
-    imageView.contentMode = model.contentMode
-
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
   }
 }
 
 // MARK: - Constraints
 extension ImageButtonCardCell {
   private func setupConstraints() {
-
     buttonContainerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
 
     imageView.bottomAnchor.constraint(
@@ -169,6 +169,9 @@ extension ImageButtonCardCell {
       equalTo: buttonContainerView.bottomAnchor,
       constant: -ImageButtonCardCellModel.labelMargin
     ).isActive = true
+
+    imageWidthConstraint.isActive = true
+    imageHeightConstraint.isActive = true
 
     buttonContainerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)

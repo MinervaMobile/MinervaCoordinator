@@ -53,9 +53,7 @@ public final class TextViewCellModel: BaseListCellModel {
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? TextViewCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return height == model.height
       && cursorColor == model.cursorColor
       && placeholderText == model.placeholderText
@@ -76,8 +74,7 @@ public final class TextViewCellModel: BaseListCellModel {
   }
 }
 
-public final class TextViewCell: BaseListCell {
-  public var model: TextViewCellModel? { cellModel as? TextViewCellModel }
+public final class TextViewCell: BaseListCell<TextViewCellModel> {
 
   private let textView: UITextView = {
     let textView = UITextView()
@@ -90,25 +87,28 @@ public final class TextViewCell: BaseListCell {
   override public init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(textView)
-    setupConstraints()
     backgroundView = UIView()
+    setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    textView.tintColor = model.cursorColor
-    textView.textColor = model.textColor
+  override public func bind(model: TextViewCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     textView.font = model.font
-    textView.text = model.text
 
     if let text = model.text {
       textView.text = text
-      textView.textColor = model.textColor
     } else {
       textView.text = model.placeholderText
+    }
+
+    guard !sizing else { return }
+
+    textView.tintColor = model.cursorColor
+    textView.textColor = model.textColor
+
+    if model.text != nil {
+      textView.textColor = model.textColor
+    } else {
       textView.textColor = model.placeholderTextColor
     }
 
