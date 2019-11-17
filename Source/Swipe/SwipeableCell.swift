@@ -17,9 +17,7 @@ open class SwipeableCellModel: BaseListCellModel {
   public var separatorLeadingInset = false
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SwipeableCellModel else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return separatorColor == model.separatorColor
       && separatorLeadingInset == model.separatorLeadingInset
       && backgroundColor == model.backgroundColor
@@ -27,10 +25,10 @@ open class SwipeableCellModel: BaseListCellModel {
   }
 }
 
-open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
+open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell, ListBindable {
   public var disposeBag = DisposeBag()
 
-  open private(set) var cellModel: ListCellModel?
+  open private(set) var model: ListCellModel?
 
   private var insetLeadingSeparatorConstraint: NSLayoutConstraint?
   private var leadingSeparatorConstraint: NSLayoutConstraint?
@@ -46,47 +44,44 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
   }
 
   @available(*, unavailable)
-  public required init?(coder aDecoder: NSCoder) {
+  public required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
-    if let attributes = layoutAttributes as? ListViewLayoutAttributes,
-      let animation = attributes.animationGroup {
+    guard let attributes = layoutAttributes as? ListViewLayoutAttributes else {
+      return
+    }
+    if let animation = attributes.animationGroup {
       self.layer.add(animation, forKey: nil)
     }
   }
 
   override open func prepareForReuse() {
     super.prepareForReuse()
-    cellModel = nil
+    model = nil
     disposeBag = DisposeBag()
-    didUpdateCellModel()
   }
 
-  override open func updateConstraints() {
-    remakeConstraints()
-    super.updateConstraints()
-  }
+  open func bind(model: CellModelType, sizing: Bool) {
+    if !sizing {
+      // Run the willBind function before reading any data from the model
+      if let model = model as? ListBindableCellModelWrapper {
+        model.willBind()
+      }
+      self.model = model
+    }
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+    remakeConstraints(with: model)
 
-  open func didUpdateCellModel() {
-    guard let model = self.cellModel as? SwipeableCellModel else { return }
+    guard !sizing else { return }
+
     contentView.backgroundColor = model.backgroundColor
     bottomSeparatorView.backgroundColor = model.separatorColor
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
-    setNeedsUpdateConstraints()
   }
 
-  public final func bind(cellModel: ListCellModel, sizing: Bool) {
-    if let model = cellModel as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
-    self.cellModel = cellModel
-    didUpdateCellModel()
-  }
-
-  // MARK: - ListBindable
+  // MARK: - ListCell
 
   public final func bindViewModel(_ viewModel: Any) {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
@@ -95,16 +90,25 @@ open class SwipeableCell: SwipeCollectionViewCell, ListCell, ListBindable {
     }
     bind(cellModel: wrapper.model, sizing: false)
   }
+
+  public final func bind(cellModel: ListCellModel, sizing: Bool) {
+    guard let model = cellModel as? CellModelType else {
+      assertionFailure("Unknown cell model type \(CellModelType.self) for \(cellModel)")
+      self.model = nil
+      return
+    }
+    bind(model: model, sizing: sizing)
+  }
 }
 
 // MARK: - Constraints
 extension SwipeableCell {
 
-  private func remakeConstraints() {
-    guard let model = self.cellModel as? SwipeableCellModel else { return }
+  private func remakeConstraints(with model: SwipeableCellModel) {
     leadingSeparatorConstraint?.isActive = !model.separatorLeadingInset
     insetLeadingSeparatorConstraint?.isActive = model.separatorLeadingInset
   }
+
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
     containerView.anchorTo(layoutGuide: layoutGuide)

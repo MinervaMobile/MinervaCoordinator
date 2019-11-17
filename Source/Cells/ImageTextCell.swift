@@ -12,8 +12,7 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
   public let image = BehaviorSubject<UIImage?>(value: nil)
 
   fileprivate let attributedText: NSAttributedString
-  public var imageWidth: CGFloat = 0
-  public var imageHeight: CGFloat = 0
+  public var imageSize: CGSize = .zero
   public var imageViewCornerRadius: CGFloat = 0
 
   private let cellIdentifier: String
@@ -31,12 +30,9 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageTextCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
-      && imageWidth == model.imageWidth
-      && imageHeight == model.imageHeight
+      && imageSize == model.imageSize
       && imageViewCornerRadius == model.imageViewCornerRadius
   }
 
@@ -49,9 +45,7 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
   public var willBindAction: BindAction?
 }
 
-public class ImageTextCell: BaseListCell {
-  public var model: ImageTextCellModel? { cellModel as? ImageTextCellModel }
-  public var disposeBag = DisposeBag()
+public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -79,23 +73,22 @@ public class ImageTextCell: BaseListCell {
 
   override public func prepareForReuse() {
     super.prepareForReuse()
-    disposeBag = DisposeBag()
     imageView.image = nil
     label.attributedText = nil
     label.text = nil
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else {
-      return
-    }
+  override public func bind(model: ImageTextCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
     label.attributedText = model.attributedText
-    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
-    imageViewWidthConstraint?.constant = model.imageWidth
-    imageViewHeightConstraint?.constant = model.imageHeight
+    imageViewWidthConstraint?.constant = model.imageSize.width
+    imageViewHeightConstraint?.constant = model.imageSize.height
+
+    guard !sizing else { return }
+
     imageView.layer.cornerRadius = model.imageViewCornerRadius
+    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
   }
 }
 

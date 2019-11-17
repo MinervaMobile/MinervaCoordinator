@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import RxSwift
 import UIKit
 
 open class BaseListCellModel: ListCellModel {
@@ -10,16 +11,10 @@ open class BaseListCellModel: ListCellModel {
   public init() { }
 
   // MARK: - ListCellModel
-  open var identifier: String {
-    return typeIdentifier
-  }
-  open var cellType: ListCollectionViewCell.Type {
-    return cellTypeFromModelName
-  }
+  open var identifier: String { typeIdentifier }
+  open var cellType: ListCollectionViewCell.Type { cellTypeFromModelName }
 
-  open func identical(to model: ListCellModel) -> Bool {
-    return identifier == model.identifier
-  }
+  open func identical(to model: ListCellModel) -> Bool { true }
   open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
@@ -28,9 +23,9 @@ open class BaseListCellModel: ListCellModel {
   }
 }
 
-open class BaseListCell: ListCollectionViewCell {
+open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
 
-  open private(set) var cellModel: ListCellModel?
+  open private(set) var model: CellModelType?
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -43,30 +38,28 @@ open class BaseListCell: ListCollectionViewCell {
 
   override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
     super.apply(layoutAttributes)
-    if let attributes = layoutAttributes as? ListViewLayoutAttributes,
-      let animation = attributes.animationGroup {
+    guard let attributes = layoutAttributes as? ListViewLayoutAttributes else {
+      return
+    }
+    if let animation = attributes.animationGroup {
       self.layer.add(animation, forKey: nil)
     }
   }
 
   override open func prepareForReuse() {
     super.prepareForReuse()
-    cellModel = nil
-    didUpdateCellModel()
+    model = nil
   }
 
-  open func didUpdateCellModel() {
-  }
-
-  public final func bind(cellModel: ListCellModel, sizing: Bool) {
-    if let model = cellModel as? ListBindableCellModelWrapper {
+  open func bind(model: CellModelType, sizing: Bool) {
+    guard !sizing else { return }
+    if let model = model as? ListBindableCellModelWrapper {
       model.willBind()
     }
-    self.cellModel = cellModel
-    didUpdateCellModel()
+    self.model = model
   }
 
-  // MARK: - ListBindable
+  // MARK: - ListCell
 
   public final func bindViewModel(_ viewModel: Any) {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
@@ -74,5 +67,23 @@ open class BaseListCell: ListCollectionViewCell {
       return
     }
     bind(cellModel: wrapper.model, sizing: false)
+  }
+
+  public final func bind(cellModel: ListCellModel, sizing: Bool) {
+    guard let model = cellModel as? CellModelType else {
+      assertionFailure("Unknown cell model type \(CellModelType.self) for \(cellModel)")
+      self.model = nil
+      return
+    }
+    bind(model: model, sizing: sizing)
+  }
+}
+
+open class BaseReactiveListCell<CellModelType: ListCellModel>: BaseListCell<CellModelType> {
+  public private(set) var disposeBag = DisposeBag()
+
+  override open func prepareForReuse() {
+    super.prepareForReuse()
+    disposeBag = DisposeBag()
   }
 }

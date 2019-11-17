@@ -49,9 +49,7 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? LabelAccessoryCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
       && descriptionText == model.descriptionText
       && textAlignment == model.textAlignment
@@ -75,9 +73,7 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   public var willBindAction: BindAction?
 }
 
-public class LabelAccessoryCell: BaseListCell {
-  public var model: LabelAccessoryCellModel? { cellModel as? LabelAccessoryCellModel }
-  public var disposeBag = DisposeBag()
+public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -121,34 +117,74 @@ public class LabelAccessoryCell: BaseListCell {
     contentView.addSubview(accessoryImageView)
     contentView.addSubview(iconImageView)
     contentView.addSubview(iconTapView)
+
+    backgroundView = UIView()
+
     setupConstraints()
     let iconGesture = UITapGestureRecognizer(target: self, action: #selector(iconPressed))
     iconTapView.addGestureRecognizer(iconGesture)
 
     let accessoryGesture = UITapGestureRecognizer(target: self, action: #selector(accessoryPressed))
     accessoryImageView.addGestureRecognizer(accessoryGesture)
-
-    backgroundView = UIView()
   }
 
   override public func prepareForReuse() {
     super.prepareForReuse()
-    disposeBag = DisposeBag()
-    accessoryImageWidthHeightConstraint?.constant = 0
-    accessoryImageLeadingConstraint?.constant = 0
     accessoryImageView.image = nil
-    iconImageWidthHeightConstraint?.constant = 0
-    iconImageTrailingConstraint?.constant = 0
     iconImageView.image = nil
   }
 
-  override public func updateConstraints() {
-    remakeConstraints()
-    super.updateConstraints()
+  @objc
+  private func iconPressed(_ sender: UITapGestureRecognizer) {
+    guard let model = model else { return }
+    model.iconSelectionAction?(model)
   }
 
-  private func remakeConstraints() {
-    guard let model = self.model else { return }
+  @objc
+  private func accessoryPressed(_ sender: UITapGestureRecognizer) {
+    guard let model = model else { return }
+    model.accessorySelectionAction?(model)
+  }
+
+  override public func bind(model: LabelAccessoryCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
+    label.textAlignment = model.textAlignment
+    label.attributedText = model.attributedText
+
+    detailsLabel.attributedText = model.descriptionText
+    let detailsPriority: UILayoutPriority = model.detailsTextResistCompression ? .required : .defaultHigh
+    detailsLabel.setContentCompressionResistancePriority(detailsPriority, for: .horizontal)
+
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    remakeConstraints(with: model)
+
+    guard !sizing else { return }
+
+    accessoryImageView.image = model.accessoryImage
+    accessoryImageView.tintColor = model.accessoryColor
+    accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
+    accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
+
+    iconImageView.tintColor = model.iconColor
+    iconImageView.layer.cornerRadius = model.iconCornerRadius
+    iconImageView.contentMode = model.iconImageContentMode
+    iconImageView.isUserInteractionEnabled = model.iconSelectionAction != nil
+    iconTapView.isUserInteractionEnabled = model.iconSelectionAction != nil
+
+    backgroundView?.backgroundColor = model.backgroundColor
+
+    model.iconImage.subscribe(onNext: { [weak self] image in
+      self?.iconImageView.image = image
+    }).disposed(by: disposeBag)
+  }
+}
+
+// MARK: - Constraints
+extension LabelAccessoryCell {
+
+  private func remakeConstraints(with model: LabelAccessoryCellModel) {
     if model.accessoryImage != nil {
       accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight
       accessoryImageLeadingConstraint?.constant = LabelAccessoryCellModel.accessoryImageMargin
@@ -165,58 +201,6 @@ public class LabelAccessoryCell: BaseListCell {
     }
   }
 
-  @objc
-  private func iconPressed(_ sender: UITapGestureRecognizer) {
-    guard let model = model else { return }
-    model.iconSelectionAction?(model)
-  }
-
-  @objc
-  private func accessoryPressed(_ sender: UITapGestureRecognizer) {
-    guard let model = model else { return }
-    model.accessorySelectionAction?(model)
-  }
-
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    iconTapView.isUserInteractionEnabled = model.iconSelectionAction != nil
-    accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
-
-    label.textAlignment = model.textAlignment
-    label.attributedText = model.attributedText
-
-    detailsLabel.attributedText = model.descriptionText
-    let detailsPriority: UILayoutPriority = model.detailsTextResistCompression ? .required : .defaultHigh
-    detailsLabel.setContentCompressionResistancePriority(detailsPriority, for: .horizontal)
-
-    accessoryImageView.image = model.accessoryImage
-    accessoryImageView.tintColor = model.accessoryColor
-
-    iconImageView.tintColor = model.iconColor
-
-    iconImageView.tintColor = model.iconColor
-    iconImageView.layer.cornerRadius = model.iconCornerRadius
-    iconImageView.contentMode = model.iconImageContentMode
-
-    iconImageView.isUserInteractionEnabled = model.iconSelectionAction != nil
-    accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
-
-    backgroundView?.backgroundColor = model.backgroundColor
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
-
-    model.iconImage.subscribe(onNext: { [weak self] image in
-      self?.iconImageView.image = image
-    }).disposed(by: disposeBag)
-
-    setNeedsUpdateConstraints()
-  }
-}
-
-// MARK: - Constraints
-extension LabelAccessoryCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
 

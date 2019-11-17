@@ -64,9 +64,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageLabelBorderCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font
       && textAlignment == model.textAlignment
@@ -95,9 +93,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   public var willBindAction: BindAction?
 }
 
-public final class ImageLabelBorderCell: BaseListCell {
-  public var model: ImageLabelBorderCellModel? { cellModel as? ImageLabelBorderCellModel }
-  public var disposeBag = DisposeBag()
+public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -121,34 +117,33 @@ public final class ImageLabelBorderCell: BaseListCell {
     contentView.addSubview(buttonContainerView)
     buttonContainerView.addSubview(label)
     buttonContainerView.addSubview(imageView)
-    label.adjustsFontForContentSizeCategory = true
     setupConstraints()
   }
 
   override public func prepareForReuse() {
     super.prepareForReuse()
-    disposeBag = DisposeBag()
+    imageView.image = nil
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    buttonContainerView.layer.borderWidth = model.borderWidth
-    buttonContainerView.layer.cornerRadius = model.borderRadius
-    buttonContainerView.layer.borderColor = model.borderColor?.cgColor
+  override public func bind(model: ImageLabelBorderCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
     label.numberOfLines = model.numberOfLines
     label.text = model.text
     label.font = model.font
-    label.textColor = model.textColor
     label.textAlignment = model.textAlignment
 
     imageWidthConstraint.constant = model.imageWidth
-    imageWidthConstraint.isActive = true
     imageHeightConstraint.constant = model.imageHeight
-    imageHeightConstraint.isActive = true
+
+    guard !sizing else { return }
+
+    buttonContainerView.layer.borderWidth = model.borderWidth
+    buttonContainerView.layer.cornerRadius = model.borderRadius
+    buttonContainerView.layer.borderColor = model.borderColor?.cgColor
+
+    label.textColor = model.textColor
+
     imageView.contentMode = model.contentMode
     if let imageColor = model.imageColor {
       imageView.image = model.image.withRenderingMode(.alwaysTemplate)
@@ -197,6 +192,9 @@ extension ImageLabelBorderCell {
       equalTo: buttonContainerView.bottomAnchor,
       constant: -ImageLabelBorderCellModel.labelMargin
     ).isActive = true
+
+    imageWidthConstraint.isActive = true
+    imageHeightConstraint.isActive = true
 
     buttonContainerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)

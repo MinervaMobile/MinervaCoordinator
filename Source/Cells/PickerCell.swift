@@ -33,20 +33,16 @@ open class PickerCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override open var identifier: String {
-    return cellIdentifier
-  }
+  override open var identifier: String { cellIdentifier }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? PickerCellModel, super.identical(to: model) else {
-      return false
-    }
-    return helper.pickerDataComponents == model.helper.pickerDataComponents && backgroundColor == model.backgroundColor
+    guard let model = model as? Self, super.identical(to: model) else { return false }
+    return helper.pickerDataComponents == model.helper.pickerDataComponents
+      && backgroundColor == model.backgroundColor
   }
 }
 
-public class PickerCell: BaseListCell {
-  public var model: PickerCellModel? { cellModel as? PickerCellModel }
+public final class PickerCell: BaseListCell<PickerCellModel> {
 
   private let pickerView: UIPickerView
 
@@ -59,16 +55,17 @@ public class PickerCell: BaseListCell {
     backgroundView = UIView()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = model else {
-      return
-    }
+  override public func bind(model: PickerCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     pickerView.delegate = model.helper
     pickerView.dataSource = model.helper
+
+    guard !sizing else { return }
+
     for (component, componentData) in model.helper.pickerDataComponents.enumerated() {
       pickerView.selectRow(componentData.startingRow, inComponent: component, animated: false)
     }
+
     backgroundView?.backgroundColor = model.backgroundColor
   }
 }

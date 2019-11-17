@@ -77,7 +77,7 @@ public final class UserListPresenter: Presenter {
   private func createUserCellModel(for user: User) -> SwipeableLabelCellModel {
     let cellModel = SwipeableLabelCellModel(
       identifier: user.description,
-      attributedText: NSAttributedString(string: "\(user.email)\n\(user.dailyCalories)")
+      attributedText: NSAttributedString(string: "\(user.email)\n\(user.dailyCalories)", font: .body, fontColor: .label)
     )
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }

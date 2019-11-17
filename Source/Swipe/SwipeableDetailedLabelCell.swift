@@ -34,9 +34,7 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SwipeableDetailedLabelCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
       && detailsText == model.detailsText
       && deleteColor == model.deleteColor
@@ -48,8 +46,7 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
   public var selectionAction: SelectionAction?
 }
 
-public final class SwipeableDetailedLabelCell: SwipeableCell {
-  public var model: SwipeableDetailedLabelCellModel? { cellModel as? SwipeableDetailedLabelCellModel }
+public final class SwipeableDetailedLabelCell: SwipeableCell<SwipeableDetailedLabelCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -72,15 +69,13 @@ public final class SwipeableDetailedLabelCell: SwipeableCell {
     setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-
-    self.delegate = model
+  override public func bind(model: SwipeableDetailedLabelCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     label.attributedText = model.attributedText
     detailedLabel.attributedText = model.detailsText
+
+    guard !sizing else { return }
+    self.delegate = model
   }
 }
 

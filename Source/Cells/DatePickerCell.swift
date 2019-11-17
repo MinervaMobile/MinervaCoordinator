@@ -31,9 +31,7 @@ public final class DatePickerCellModel: BaseListCellModel {
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? DatePickerCellModel else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return startDate == model.startDate
       && maxControlWidth == model.maxControlWidth
       && minimumDate == model.minimumDate
@@ -42,9 +40,10 @@ public final class DatePickerCellModel: BaseListCellModel {
   }
 }
 
-public final class DatePickerCell: BaseListCell {
+public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
 
-  public var model: DatePickerCellModel? { cellModel as? DatePickerCellModel }
+  private var highPriorityWidthAnchor: NSLayoutConstraint?
+  private var lowPriorityWidthAnchor: NSLayoutConstraint?
 
   private let datePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
@@ -74,31 +73,17 @@ public final class DatePickerCell: BaseListCell {
     model.changedDate?(model, datePicker.date)
   }
 
-  private var highPriorityWidthAnchor: NSLayoutConstraint?
-  private var lowPriorityWidthAnchor: NSLayoutConstraint?
+  override public func bind(model: DatePickerCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
-    self.backgroundView?.backgroundColor = model.backgroundColor
-    if let highPriorityWidthAnchor = self.highPriorityWidthAnchor {
-      highPriorityWidthAnchor.constant = model.maxControlWidth
-    } else {
-      highPriorityWidthAnchor = datePicker.widthAnchor.constraint(lessThanOrEqualToConstant: model.maxControlWidth)
-      highPriorityWidthAnchor?.isActive = true
-    }
-
-    if let lowPriorityWidthAnchor = self.lowPriorityWidthAnchor {
-      lowPriorityWidthAnchor.constant = model.maxControlWidth
-    } else {
-      lowPriorityWidthAnchor = datePicker.widthAnchor.constraint(equalToConstant: model.maxControlWidth)
-      lowPriorityWidthAnchor?.priority = .defaultLow
-      lowPriorityWidthAnchor?.isActive = true
-    }
     datePicker.maximumDate = model.maximumDate
     datePicker.minimumDate = model.minimumDate
+
+    updateConstraints(with: model)
+
+    guard !sizing else { return }
+
+    self.backgroundView?.backgroundColor = model.backgroundColor
     datePicker.setDate(model.startDate, animated: false)
     datePicker.datePickerMode = model.mode
   }
@@ -106,12 +91,24 @@ public final class DatePickerCell: BaseListCell {
 
 // MARK: - Constraints
 extension DatePickerCell {
+  private func updateConstraints(with model: DatePickerCellModel) {
+    highPriorityWidthAnchor?.constant = model.maxControlWidth
+    lowPriorityWidthAnchor?.constant = model.maxControlWidth
+  }
+
   private func setupConstraints() {
     datePicker.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor).isActive = true
     datePicker.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor).isActive = true
     datePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     datePicker.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+
+    highPriorityWidthAnchor = datePicker.widthAnchor.constraint(lessThanOrEqualToConstant: 0)
+    highPriorityWidthAnchor?.isActive = true
+
+    lowPriorityWidthAnchor = datePicker.widthAnchor.constraint(equalToConstant: 0)
+    lowPriorityWidthAnchor?.priority = .defaultLow
+    lowPriorityWidthAnchor?.isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

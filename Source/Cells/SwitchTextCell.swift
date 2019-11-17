@@ -43,14 +43,10 @@ open class SwitchTextCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override open var identifier: String {
-    return self.cellIdentifier
-  }
+  override open var identifier: String { self.cellIdentifier }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? SwitchTextCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && isOn == model.isOn
       && font == model.font
@@ -61,8 +57,7 @@ open class SwitchTextCellModel: BaseListCellModel {
   }
 }
 
-public final class SwitchTextCell: BaseListCell {
-  public var model: SwitchTextCellModel? { cellModel as? SwitchTextCellModel }
+public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -82,23 +77,24 @@ public final class SwitchTextCell: BaseListCell {
     super.init(frame: frame)
     contentView.addSubview(label)
     contentView.addSubview(switchButton)
-    switchButton.addTarget(self, action: #selector(self.toggleSwitch), for: .valueChanged)
-    setupConstraints()
     backgroundView = UIView()
+    setupConstraints()
+    switchButton.addTarget(self, action: #selector(self.toggleSwitch), for: .valueChanged)
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: SwitchTextCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
 
-    label.textColor = model.textColor
     label.text = model.text
     label.font = model.font
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
+    guard !sizing else { return }
+
+    label.textColor = model.textColor
     switchButton.onTintColor = model.switchColor
     switchButton.isOn = model.isOn
-    contentView.directionalLayoutMargins = model.directionalLayoutMargins
+
     backgroundView?.backgroundColor = model.backgroundColor
   }
   @objc

@@ -28,14 +28,10 @@ public final class TextSeparatorCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
+  override public var identifier: String { cellIdentifier }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? TextSeparatorCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font
       && textColor == model.textColor
@@ -43,8 +39,7 @@ public final class TextSeparatorCellModel: BaseListCellModel {
   }
 }
 
-public final class TextSeparatorCell: BaseListCell {
-  public var model: TextSeparatorCellModel? { cellModel as? TextSeparatorCellModel }
+public final class TextSeparatorCell: BaseListCell<TextSeparatorCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -62,14 +57,15 @@ public final class TextSeparatorCell: BaseListCell {
     setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: TextSeparatorCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     label.text = model.text
     label.font = model.font
+
+    guard !sizing else { return }
+
     label.textColor = model.textColor
+
     leftLineView.backgroundColor = model.lineColor
     rightLineView.backgroundColor = model.lineColor
   }

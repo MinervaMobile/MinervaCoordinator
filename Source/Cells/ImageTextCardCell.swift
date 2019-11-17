@@ -43,9 +43,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   }
 
   override public func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? ImageTextCardCellModel else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
       && height == model.height
       && width == model.width
@@ -73,8 +71,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   public var willBindAction: BindAction?
 }
 
-public final class ImageTextCardCell: BaseListCell {
-  public var model: ImageTextCardCellModel? { cellModel as? ImageTextCardCellModel }
+public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellModel> {
 
   public var imageHeightConstraint: NSLayoutConstraint?
   private let imageView: UIImageView = {
@@ -94,7 +91,6 @@ public final class ImageTextCardCell: BaseListCell {
     label.textAlignment = .left
     return label
   }()
-  private var disposeBag = DisposeBag()
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -106,28 +102,27 @@ public final class ImageTextCardCell: BaseListCell {
   override public func prepareForReuse() {
     super.prepareForReuse()
     imageView.image = nil
-    disposeBag = DisposeBag()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: ImageTextCardCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
+
+    imageHeightConstraint?.constant = model.imageHeight
+    label.attributedText = model.attributedText
+
+    guard !sizing else { return }
+
     if let imageColor = model.imageColor {
       imageView.tintColor = imageColor
     }
-    imageView.backgroundColor = model.imageBackgroundColor
 
-    imageHeightConstraint?.constant = model.imageHeight
+    contentView.backgroundColor = model.backgroundColor
+    imageView.backgroundColor = model.imageBackgroundColor
 
     imageView.contentMode = model.imageContentMode
     imageView.layer.cornerRadius = model.imageCornerRadius
 
-    label.attributedText = model.attributedText
     model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
-
-    contentView.backgroundColor = model.backgroundColor
   }
 }
 

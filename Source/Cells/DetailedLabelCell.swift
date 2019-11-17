@@ -36,9 +36,7 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
   }
 
   override open func identical(to model: ListCellModel) -> Bool {
-    guard let model = model as? DetailedLabelCellModel, super.identical(to: model) else {
-      return false
-    }
+    guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedTitle == model.attributedTitle
       && attributedDetails == model.attributedDetails
       && numberOfLines == model.numberOfLines
@@ -50,8 +48,7 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
   public var selectionAction: SelectionAction?
 }
 
-public class DetailedLabelCell: BaseListCell {
-  public var model: DetailedLabelCellModel? { cellModel as? DetailedLabelCellModel }
+public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
 
   private let label: UILabel = {
     let label = UILabel()
@@ -73,13 +70,13 @@ public class DetailedLabelCell: BaseListCell {
     setupConstraints()
   }
 
-  override public func didUpdateCellModel() {
-    super.didUpdateCellModel()
-    guard let model = self.model else {
-      return
-    }
+  override public func bind(model: DetailedLabelCellModel, sizing: Bool) {
+    super.bind(model: model, sizing: sizing)
     label.attributedText = model.attributedTitle
     detailedLabel.attributedText = model.attributedDetails
+
+    guard !sizing else { return }
+
     contentView.backgroundColor = model.backgroundColor
     label.backgroundColor = model.backgroundColor
     detailedLabel.backgroundColor = model.backgroundColor
