@@ -1,38 +1,101 @@
 //
-//  MinervaTests.swift
-//  MinervaTests
-//
 //  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
 //
 
 import Minerva
+import RxSwift
 import XCTest
 
 public final class IntegrationTests: XCTestCase {
 
-  private var listController: ListController!
-  private var collectionVC: UICollectionViewController!
+  private var coordinator: BaseCoordinator<FakePresenter, CollectionViewController>!
 
   override public func setUp() {
     super.setUp()
-    collectionVC = UICollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
-    collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
-    listController = LegacyListController()
+    let layout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
+    let collectionVC = CollectionViewController(layout: layout)
+    collectionVC.backgroundImage = UIImage()
+    let listController = LegacyListController()
     listController.viewController = collectionVC
     listController.collectionView = collectionVC.collectionView
+    let navigator = BasicNavigator()
+    let presenter = FakePresenter()
+    coordinator = BaseCoordinator(
+      navigator: navigator,
+      viewController: collectionVC,
+      presenter: presenter,
+      listController: listController)
+    collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
   }
 
   override public func tearDown() {
-    collectionVC = nil
-    listController = nil
+    coordinator = nil
     super.tearDown()
   }
 
-  public func testCreation() {
-    XCTAssertNotNil(listController)
+  public func testUpdate() {
+    let updateExpectation = expectation(description: "Update Expectation")
+    let disposable = coordinator.presenter.sections
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onNext: { sections in
+          XCTAssertEqual(sections.count, 2)
+          // Force the listcontroller to update so we dont need to wait for the animations to finish
+          self.coordinator.listController.update(with: sections, animated: false) { finished in
+            XCTAssert(finished)
+            updateExpectation.fulfill()
+          }
+        }
+      )
+    wait(for: [updateExpectation], timeout: 1)
+    disposable.dispose()
+
+    assertCellTypesMatch(coordinator.presenter.listSections)
   }
 
-  public func testUpdate() {
+  public func testReloadAfterReorder() {
+    var sections = coordinator.presenter.listSections
+    let updateExpectation1 = expectation(description: "1st Update Expectation")
+    self.coordinator.listController.update(with: sections, animated: false) { finished in
+      XCTAssert(finished)
+      updateExpectation1.fulfill()
+    }
+    wait(for: [updateExpectation1], timeout: 1)
+
+    sections = sections.map { section -> ListSection in
+      var section = section
+      section.cellModels.reverse()
+      return section
+    }
+
+    let updateExpectation2 = expectation(description: "2nd Update Expectation")
+    self.coordinator.listController.update(with: sections, animated: false) { finished in
+      XCTAssert(finished)
+      updateExpectation2.fulfill()
+    }
+    wait(for: [updateExpectation2], timeout: 1)
+
+    assertCellTypesMatch(sections)
+  }
+
+  // MARK: - Private
+  private func assertCellTypesMatch(_ sections: [ListSection]) {
+    for (sectionIndex, section) in sections.enumerated() {
+      for (index, model) in section.cellModels.enumerated() {
+        let cell = coordinator.viewController.collectionView.cellForItem(
+          at: IndexPath(row: index, section: sectionIndex)
+        )!
+        let modelCellType = model.cellType
+        let actualCellType = type(of: cell)
+        XCTAssert(modelCellType === actualCellType)
+      }
+    }
+  }
+}
+
+// MARK: - FakePresenter
+fileprivate final class FakePresenter: Presenter {
+  fileprivate let cellModels: [ListCellModel] = {
     let font = UIFont.preferredFont(forTextStyle: .body)
     let color = UIColor.label
     let size = CGSize(width: 24, height: 24)
@@ -40,6 +103,7 @@ public final class IntegrationTests: XCTestCase {
     let attrText = NSAttributedString(string: text)
     let image = UIImage()
     let cellModels = [
+      // Cells
       ButtonCellModel(text: "ButtonCellModel", font: font, textColor: color),
       ButtonImageCellModel(imageSize: size, text: "ButtonImageCellModel", font: font),
       DatePickerCellModel(identifier: "DatePickerCellModel", startDate: Date()),
@@ -48,12 +112,6 @@ public final class IntegrationTests: XCTestCase {
         attributedTitle: attrText,
         attributedDetails: attrText
       ),
-      HorizontalCollectionCellModel(
-        identifier: "HorizontalCollectionCellModel",
-        cellModels: [MarginCellModel(location: .top)],
-        distribution: .entireRow,
-        listController: LegacyListController()
-      )!,
       IconTextCellModel(imageSize: size, text: "IconTextCellModel", font: font),
       ImageButtonCardCellModel(
         identifier: "ImageButtonCardCellModel",
@@ -81,22 +139,35 @@ public final class IntegrationTests: XCTestCase {
       SwitchTextCellModel(text: "SwitchTextCellModel", font: font, textColor: color, switchColor: color, isOn: true),
       TextInputCellModel(identifier: "TextInputCellModel", placeholder: text, font: font),
       TextSeparatorCellModel(text: "TextSeparatorCellModel"),
-      TextViewCellModel(identifier: "TextViewCellModel", text: nil, font: font, changedValue: { _, _ in })
+      TextViewCellModel(identifier: "TextViewCellModel", text: nil, font: font, changedValue: { _, _ in }),
+      // Swipe Cells
+      SwipeableDetailedLabelCellModel(
+        identifier: "SwipeableDetailedLabelCellModel",
+        attributedText: attrText,
+        detailsText: attrText
+      ),
+      SwipeableLabelCellModel(identifier: "SwipeableLabelCellModel", attributedText: attrText)
     ]
-    let section = ListSection(cellModels: cellModels, identifier: "Section")
-    let sections = [section]
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: sections, animated: false) { finished in
-      XCTAssert(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 1)
+    return cellModels
+  }()
 
-    for (index, model) in cellModels.enumerated() {
-      let cell = collectionVC.collectionView.cellForItem(at: IndexPath(row: index, section: 0))!
-      let modelCellType = model.cellType
-      let actualCellType = type(of: cell)
-      XCTAssert(modelCellType === actualCellType)
-    }
+  fileprivate let listSections: [ListSection]
+
+  fileprivate init() {
+    let mainSection = ListSection(cellModels: cellModels, identifier: "Section")
+
+    let horizontalCellModel = HorizontalCollectionCellModel(
+      identifier: "HorizontalCollectionCellModel",
+      cellModels: [ImageCellModel(image: UIImage(), imageSize: CGSize(width: 24, height: 24))],
+      distribution: .entireRow,
+      listController: LegacyListController()
+    )!
+    var horizontalSection = ListSection(cellModels: [horizontalCellModel], identifier: "HorizontalSection")
+    horizontalSection.constraints.scrollDirection = .horizontal
+    listSections = [mainSection, horizontalSection]
+  }
+
+  fileprivate var sections: Observable<[ListSection]> {
+    return .just(listSections)
   }
 }

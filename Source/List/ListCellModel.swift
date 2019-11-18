@@ -61,6 +61,10 @@ extension ListCellModel where Self: AnyObject {
     if let cellType = NSClassFromString(className) as? ListCollectionViewCell.Type {
       return cellType
     }
+    let minervaClassName = "Minerva.\(className)"
+    if let cellType = NSClassFromString(minervaClassName) as? ListCollectionViewCell.Type {
+      return cellType
+    }
     let bundle = Bundle(for: modelType)
     let bundleName = bundle.infoDictionary?["CFBundleName"] as? String ?? ""
     let fullClassName = "\(bundleName).\(className)"
