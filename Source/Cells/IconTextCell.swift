@@ -10,6 +10,8 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var labelLeadingMargin: CGFloat = 4
   public var backgroundColor: UIColor?
 
@@ -66,6 +68,7 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
       && imageHeight == model.imageHeight
       && text == model.text
       && font == model.font
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   // MARK: - ListSelectableCellModel
@@ -149,6 +152,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     }
 
     label.textAlignment = model.textAlignment
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
 
     guard !sizing else { return }
 

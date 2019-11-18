@@ -11,6 +11,8 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
 
   public let image = BehaviorSubject<UIImage?>(value: nil)
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   fileprivate let attributedText: NSAttributedString
   public var imageSize: CGSize = .zero
   public var imageViewCornerRadius: CGFloat = 0
@@ -34,6 +36,7 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
     return attributedText == model.attributedText
       && imageSize == model.imageSize
       && imageViewCornerRadius == model.imageViewCornerRadius
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   // MARK: - ListSelectableCellModel
@@ -80,7 +83,7 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
 
   override public func bind(model: ImageTextCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     label.attributedText = model.attributedText
     imageViewWidthConstraint?.constant = model.imageSize.width
     imageViewHeightConstraint?.constant = model.imageSize.height

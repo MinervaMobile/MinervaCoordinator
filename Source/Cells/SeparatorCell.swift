@@ -34,7 +34,7 @@ public final class SeparatorCellModel: BaseListCellModel {
     }
   }
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
   public var backgroundColor: UIColor?
 
   fileprivate let color: UIColor

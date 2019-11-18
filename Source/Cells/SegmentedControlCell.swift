@@ -7,6 +7,8 @@ import UIKit
 open class SegmentedControlCellModel: BaseListCellModel {
   public typealias Action = (SegmentedControlCellModel, UISegmentedControl) -> Void
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var backgroundColor: UIColor?
   public var switchedSegmentAction: Action?
   public var titleFont = UIFont.preferredFont(forTextStyle: .subheadline)
@@ -32,6 +34,7 @@ open class SegmentedControlCellModel: BaseListCellModel {
       && tintColor == model.tintColor
       && selectedSegment == model.selectedSegment
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
@@ -65,7 +68,7 @@ public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel>
       segmentedControl.insertSegment(withTitle: title, at: index, animated: false)
     }
     segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: model.titleFont], for: .normal)
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     segmentedControl.tintColor = model.tintColor

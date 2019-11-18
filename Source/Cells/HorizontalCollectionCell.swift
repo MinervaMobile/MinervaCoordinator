@@ -8,7 +8,8 @@ import UIKit
 
 public final class HorizontalCollectionCellModel: BaseListCellModel {
 
-  public var followsInsets = false
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var isScrollEnabled = true
   public var itemSpacing: CGFloat = 0 {
     didSet {
@@ -47,12 +48,12 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return model.section == section
-      && followsInsets == model.followsInsets
       && isScrollEnabled == model.isScrollEnabled
       && itemSpacing == model.itemSpacing
       && listController === model.listController
       && numberOfRows == model.numberOfRows
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   override public func size(
@@ -116,7 +117,7 @@ public final class HorizontalCollectionCell: BaseListCell<HorizontalCollectionCe
 
   override public func bind(model: HorizontalCollectionCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     collectionView.contentInset.left = contentView.layoutMargins.left
     collectionView.contentInset.right = contentView.layoutMargins.right
 

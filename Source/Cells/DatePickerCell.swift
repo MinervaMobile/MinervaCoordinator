@@ -11,6 +11,8 @@ public final class DatePickerCellModel: BaseListCellModel {
 
   private let cellIdentifier: String
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   fileprivate let startDate: Date
   public var maxControlWidth: CGFloat = 340
   public var maximumDate: Date?
@@ -37,6 +39,7 @@ public final class DatePickerCellModel: BaseListCellModel {
       && minimumDate == model.minimumDate
       && maximumDate == model.maximumDate
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
@@ -78,7 +81,7 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
 
     datePicker.maximumDate = model.maximumDate
     datePicker.minimumDate = model.minimumDate
-
+    contentView.directionalLayoutMargins = directionalLayoutMargins
     updateConstraints(with: model)
 
     guard !sizing else { return }
