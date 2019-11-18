@@ -28,7 +28,7 @@ open class SwipeableCellModel: BaseListCellModel {
 open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell, ListBindable {
   public var disposeBag = DisposeBag()
 
-  open private(set) var model: ListCellModel?
+  open private(set) var model: CellModelType?
 
   private var insetLeadingSeparatorConstraint: NSLayoutConstraint?
   private var leadingSeparatorConstraint: NSLayoutConstraint?
