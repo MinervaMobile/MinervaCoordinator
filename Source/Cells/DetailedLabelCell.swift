@@ -8,6 +8,8 @@ import UIKit
 open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
   fileprivate static let labelMargin: CGFloat = 16
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var numberOfLines = 0
   public var backgroundColor: UIColor?
 
@@ -41,6 +43,7 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
       && attributedDetails == model.attributedDetails
       && numberOfLines == model.numberOfLines
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   // MARK: - ListSelectableCellModel
@@ -74,7 +77,7 @@ public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
     super.bind(model: model, sizing: sizing)
     label.attributedText = model.attributedTitle
     detailedLabel.attributedText = model.attributedDetails
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     contentView.backgroundColor = model.backgroundColor

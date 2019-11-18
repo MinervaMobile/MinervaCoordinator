@@ -14,6 +14,8 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var numberOfLines = 0
   public var textAlignment: NSTextAlignment = .center
   public var buttonColor: UIColor?
@@ -69,6 +71,7 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
       && font == model.font
       && imageSize == model.imageSize
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   override public func size(
@@ -142,7 +145,7 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
     label.font = model.font
     label.textAlignment = model.textAlignment
     label.numberOfLines = model.numberOfLines
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     remakeConstraints(with: model)
 
     guard !sizing else { return }

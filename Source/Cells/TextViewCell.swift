@@ -21,6 +21,8 @@ public final class TextViewCellModel: BaseListCellModel {
     set { helper.textColor = newValue }
   }
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var backgroundColor: UIColor?
 
   private let cellIdentifier: String
@@ -63,6 +65,7 @@ public final class TextViewCellModel: BaseListCellModel {
       && text == model.text
       && becomesFirstResponder == model.becomesFirstResponder
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   override public func size(
@@ -100,7 +103,7 @@ public final class TextViewCell: BaseListCell<TextViewCellModel> {
     } else {
       textView.text = model.placeholderText
     }
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     textView.tintColor = model.cursorColor

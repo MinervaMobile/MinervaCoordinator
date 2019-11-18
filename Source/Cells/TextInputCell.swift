@@ -13,6 +13,8 @@ public protocol TextInputCellModelDelegate: AnyObject {
 public final class TextInputCellModel: BaseListCellModel {
   public weak var delegate: TextInputCellModelDelegate?
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   fileprivate static let bottomBorderHeight: CGFloat = 1.0
   fileprivate static let textBottomMargin: CGFloat = 8.0
   fileprivate static let textInputIndent: CGFloat = 10.0
@@ -66,6 +68,7 @@ public final class TextInputCellModel: BaseListCellModel {
       && inputTextColor == model.inputTextColor
       && placeholderTextColor == model.placeholderTextColor
       && maxControlWidth == model.maxControlWidth
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
@@ -109,7 +112,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
       textField.text = initialText
     }
     textField.font = model.font
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     textField.textColor = model.inputTextColor

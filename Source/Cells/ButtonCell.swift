@@ -15,7 +15,7 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
 
   private let cellIdentifier: String
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var numberOfLines = 0
   public var textVerticalMargin: CGFloat = 15.0
   public var textHorizontalMargin: CGFloat = 15.0

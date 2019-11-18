@@ -16,7 +16,7 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   public var accessorySelectionAction: Action?
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
 
   private let cellIdentifier: String
 

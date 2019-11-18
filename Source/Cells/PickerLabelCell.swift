@@ -17,6 +17,8 @@ public final class PickerLabelCellModel: BaseListCellModel {
 
   private let cellIdentifier: String
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var backgroundColor: UIColor?
   public var staticHeight: CGFloat?
 
@@ -45,6 +47,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
       && cellAlignment == model.cellAlignment
       && backgroundColor == model.backgroundColor
       && staticHeight == model.staticHeight
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   override public func size(
@@ -94,7 +97,7 @@ public final class PickerLabelCell: BaseListCell<PickerLabelCellModel> {
       label.attributedText = options.label
       labelLeadingConstraint?.constant = options.labelMargin
     }
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     remakeConstraints(with: model)
 
     guard !sizing else { return }

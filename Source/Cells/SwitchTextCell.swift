@@ -16,7 +16,7 @@ open class SwitchTextCellModel: BaseListCellModel {
 
   public var didSwitchAction: SwitchAction?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var backgroundColor: UIColor?
 
   private let cellIdentifier: String

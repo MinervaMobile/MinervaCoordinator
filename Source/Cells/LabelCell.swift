@@ -18,7 +18,7 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
 
   public var labelAction: LabelAction?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var textAlignment: NSTextAlignment = .left
   public var numberOfLines = 0
   public var textColor: UIColor?

@@ -15,6 +15,8 @@ open class PickerCellModel: BaseListCellModel {
 
   fileprivate static let cellMargin: CGFloat = 15.0
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public var backgroundColor: UIColor?
   private let cellIdentifier: String
 
@@ -39,6 +41,7 @@ open class PickerCellModel: BaseListCellModel {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return helper.pickerDataComponents == model.helper.pickerDataComponents
       && backgroundColor == model.backgroundColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
@@ -59,7 +62,7 @@ public final class PickerCell: BaseListCell<PickerCellModel> {
     super.bind(model: model, sizing: sizing)
     pickerView.delegate = model.helper
     pickerView.dataSource = model.helper
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     for (component, componentData) in model.helper.pickerDataComponents.enumerated() {

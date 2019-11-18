@@ -11,7 +11,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   private let cellIdentifier: String
   public var imageColor: UIColor?
   public var contentMode: UIView.ContentMode = .scaleAspectFit
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
 
   public let image: UIImage
   public let width: CGFloat

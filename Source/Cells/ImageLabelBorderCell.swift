@@ -15,6 +15,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   fileprivate let text: String
   fileprivate let font: UIFont
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var textAlignment: NSTextAlignment = .center
   public var numberOfLines = 0
 
@@ -82,6 +83,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
       && borderRadius == model.borderRadius
       && borderColor == model.borderColor
       && maxTextWidth == model.maxTextWidth
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
   // MARK: - ListSelectableCellModel

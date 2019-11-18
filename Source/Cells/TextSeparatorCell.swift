@@ -14,6 +14,8 @@ public final class TextSeparatorCellModel: BaseListCellModel {
   public var textColor: UIColor?
   public var lineColor: UIColor?
 
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
   public let text: String
 
   public init(identifier: String, text: String) {
@@ -36,6 +38,7 @@ public final class TextSeparatorCellModel: BaseListCellModel {
       && font == model.font
       && textColor == model.textColor
       && lineColor == model.lineColor
+      && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
@@ -61,7 +64,7 @@ public final class TextSeparatorCell: BaseListCell<TextSeparatorCellModel> {
     super.bind(model: model, sizing: sizing)
     label.text = model.text
     label.font = model.font
-
+    contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
     label.textColor = model.textColor

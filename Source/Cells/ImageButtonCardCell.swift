@@ -14,7 +14,7 @@ open class ImageButtonCardCellModel: BaseListCellModel {
   public var selectedImageColor: UIColor?
   public var selectedBackgroundColor: UIColor?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var contentMode: UIView.ContentMode = .scaleAspectFit
   public var imageColor: UIColor?
 
