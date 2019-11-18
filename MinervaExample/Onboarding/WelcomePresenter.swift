@@ -33,7 +33,7 @@ public final class WelcomePresenter: Presenter {
   private func createSection() -> ListSection {
     let topDynamicMarginModel = MarginCellModel(location: .top)
 
-    let logoModel = ImageCellModel(image: Asset.Logo.image, width: 120.0, height: 120.0)
+    let logoModel = ImageCellModel(image: Asset.Logo.image, imageSize: CGSize(width: 120.0, height: 120.0))
     logoModel.imageColor = .black
     logoModel.contentMode = .scaleAspectFit
 

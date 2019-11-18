@@ -22,36 +22,32 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
 
   fileprivate var attributedText: NSAttributedString?
 
-  fileprivate let imageWidth: CGFloat
-  fileprivate let imageHeight: CGFloat
+  fileprivate let imageSize: CGSize
   fileprivate let text: String
   fileprivate let font: UIFont
 
   private let cellIdentifier: String
 
-  public init(cellIdentifier: String, imageWidth: CGFloat, imageHeight: CGFloat, text: String, font: UIFont) {
+  public init(cellIdentifier: String, imageSize: CGSize, text: String, font: UIFont) {
     self.cellIdentifier = text
-    self.imageWidth = imageWidth
-    self.imageHeight = imageHeight
+    self.imageSize = imageSize
     self.text = text
     self.font = font
     super.init()
   }
 
-  public convenience init(imageWidth: CGFloat, imageHeight: CGFloat, text: String, font: UIFont) {
-    self.init(cellIdentifier: text, imageWidth: imageWidth, imageHeight: imageHeight, text: text, font: font)
+  public convenience init(imageSize: CGSize, text: String, font: UIFont) {
+    self.init(cellIdentifier: text, imageSize: imageSize, text: text, font: font)
   }
 
-  public convenience init(imageWidth: CGFloat, imageHeight: CGFloat, attributedText: NSAttributedString, font: UIFont) {
-    self.init(imageWidth: imageWidth, imageHeight: imageHeight, text: attributedText.string, font: font)
+  public convenience init(imageSize: CGSize, attributedText: NSAttributedString, font: UIFont) {
+    self.init(imageSize: imageSize, text: attributedText.string, font: font)
     self.attributedText = attributedText
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
+  override public var identifier: String { cellIdentifier }
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
@@ -62,8 +58,7 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
       && numberOfLines == model.numberOfLines
       && textColor == model.textColor
       && attributedText == model.attributedText
-      && imageWidth == model.imageWidth
-      && imageHeight == model.imageHeight
+      && imageSize == model.imageSize
       && text == model.text
       && font == model.font
   }
@@ -115,8 +110,8 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
   override public func bind(model: IconTextCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
 
-    imageWidthConstraint?.constant = model.imageWidth
-    imageHeightConstraint?.constant = model.imageHeight
+    imageWidthConstraint?.constant = model.imageSize.width
+    imageHeightConstraint?.constant = model.imageSize.height
 
     self.label.numberOfLines = model.numberOfLines
     if let attributedText = model.attributedText {

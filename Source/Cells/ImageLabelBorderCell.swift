@@ -26,8 +26,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   public var contentMode: UIView.ContentMode = .scaleAspectFit
   public var imageColor: UIColor?
   public let image: UIImage
-  public let imageWidth: CGFloat
-  public let imageHeight: CGFloat
+  public let imageSize: CGSize
 
   public var borderWidth: CGFloat = 1.0
   public var borderRadius: CGFloat = 8.0
@@ -41,20 +40,18 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
     text: String,
     font: UIFont,
     image: UIImage,
-    imageWidth: CGFloat,
-    imageHeight: CGFloat
+    imageSize: CGSize
   ) {
     self.cellIdentifier = identifier
     self.text = text
     self.font = font
     self.image = image
-    self.imageWidth = imageWidth
-    self.imageHeight = imageHeight
+    self.imageSize = imageSize
     super.init()
   }
 
-  public convenience init(text: String, font: UIFont, image: UIImage, imageWidth: CGFloat, imageHeight: CGFloat) {
-    self.init(identifier: text, text: text, font: font, image: image, imageWidth: imageWidth, imageHeight: imageHeight)
+  public convenience init(text: String, font: UIFont, image: UIImage, imageSize: CGSize) {
+    self.init(identifier: text, text: text, font: font, image: image, imageSize: imageSize)
   }
 
   // MARK: - BaseListCellModel
@@ -76,8 +73,7 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
       && contentMode == model.contentMode
       && imageColor == model.imageColor
       && image == model.image
-      && imageWidth == model.imageWidth
-      && imageHeight == model.imageHeight
+      && imageSize == model.imageSize
       && borderWidth == model.borderWidth
       && borderRadius == model.borderRadius
       && borderColor == model.borderColor
@@ -133,8 +129,8 @@ public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCe
     label.font = model.font
     label.textAlignment = model.textAlignment
 
-    imageWidthConstraint.constant = model.imageWidth
-    imageHeightConstraint.constant = model.imageHeight
+    imageWidthConstraint.constant = model.imageSize.width
+    imageHeightConstraint.constant = model.imageSize.height
 
     guard !sizing else { return }
 

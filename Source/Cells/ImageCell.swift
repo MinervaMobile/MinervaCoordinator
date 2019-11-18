@@ -14,17 +14,15 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
 
   public let image: UIImage
-  public let width: CGFloat
-  public let height: CGFloat
+  public let imageSize: CGSize
 
-  public convenience init(image: UIImage, width: CGFloat, height: CGFloat) {
-    self.init(identifier: "ImageCellModel", image: image, width: width, height: height)
+  public convenience init(image: UIImage, imageSize: CGSize) {
+    self.init(identifier: "ImageCellModel", image: image, imageSize: imageSize)
   }
 
-  public init(identifier: String, image: UIImage, width: CGFloat, height: CGFloat) {
+  public init(identifier: String, image: UIImage, imageSize: CGSize) {
     self.image = image
-    self.width = width
-    self.height = height
+    self.imageSize = imageSize
     self.cellIdentifier = identifier
     super.init()
   }
@@ -38,8 +36,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return image == model.image
-      && width == model.width
-      && height == model.height
+      && imageSize == model.imageSize
       && contentMode == model.contentMode
       && imageColor == model.imageColor
   }
@@ -50,7 +47,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   ) -> ListCellSize {
     let width = containerSize.width
     let cell = templateProvider()
-    let cellHeight = height + cell.layoutMargins.top + cell.layoutMargins.bottom
+    let cellHeight = imageSize.height + cell.layoutMargins.top + cell.layoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))
   }
 }
@@ -77,7 +74,7 @@ public final class ImageCell: BaseListCell<ImageCellModel> {
 
   override public func bind(model: ImageCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
-    imageWidthConstraint.constant = model.width
+    imageWidthConstraint.constant = model.imageSize.width
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
 
     guard !sizing else { return }

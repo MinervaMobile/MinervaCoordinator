@@ -23,8 +23,7 @@ open class ImageButtonCardCellModel: BaseListCellModel {
   public let attributedText: NSAttributedString
   public let selectedAttributedText: NSAttributedString
   public let image: UIImage
-  public let imageWidth: CGFloat
-  public let imageHeight: CGFloat
+  public let imageSize: CGSize
   public let isSelected: Bool
 
   public var borderWidth: CGFloat = 1.0
@@ -39,16 +38,14 @@ open class ImageButtonCardCellModel: BaseListCellModel {
     attributedText: NSAttributedString,
     selectedAttributedText: NSAttributedString,
     image: UIImage,
-    imageWidth: CGFloat,
-    imageHeight: CGFloat,
+    imageSize: CGSize,
     isSelected: Bool
   ) {
     self.cellIdentifier = identifier
     self.attributedText = attributedText
     self.selectedAttributedText = selectedAttributedText
     self.image = image
-    self.imageWidth = imageWidth
-    self.imageHeight = imageHeight
+    self.imageSize = imageSize
     self.isSelected = isSelected
     super.init()
   }
@@ -69,8 +66,7 @@ open class ImageButtonCardCellModel: BaseListCellModel {
       && contentMode == model.contentMode
       && imageColor == model.imageColor
       && image == model.image
-      && imageWidth == model.imageWidth
-      && imageHeight == model.imageHeight
+      && imageSize == model.imageSize
       && borderWidth == model.borderWidth
       && borderRadius == model.borderRadius
       && borderColor == model.borderColor
@@ -119,8 +115,8 @@ public final class ImageButtonCardCell: BaseListCell<ImageButtonCardCellModel> {
     label.numberOfLines = model.numberOfLines
     label.attributedText = model.isSelected ? model.selectedAttributedText : model.attributedText
 
-    imageWidthConstraint.constant = model.imageWidth
-    imageHeightConstraint.constant = model.imageHeight
+    imageWidthConstraint.constant = model.imageSize.width
+    imageHeightConstraint.constant = model.imageSize.height
 
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
 
