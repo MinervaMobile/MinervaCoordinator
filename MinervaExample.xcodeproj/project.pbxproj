@@ -16,7 +16,7 @@
 		F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F899233C05E500012C5E /* UserListCoordinator.swift */; };
 		F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
 		F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89D233C0E5900012C5E /* FilterCoordinator.swift */; };
-		F53EAF04237B01A200CB7FFA /* MinervaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53EAF03237B01A200CB7FFA /* MinervaTests.swift */; };
+		F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */; };
 		F53EAF06237B01A200CB7FFA /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
 		F5587D1A22502B11004223E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5587D1922502B11004223E5 /* Assets.xcassets */; };
@@ -189,7 +189,7 @@
 		F501F89D233C0E5900012C5E /* FilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCoordinator.swift; sourceTree = "<group>"; };
 		F53D0B6A2378F0780051A063 /* MinervaExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MinervaExample.entitlements; sourceTree = "<group>"; };
 		F53EAF01237B01A200CB7FFA /* MinervaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinervaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F53EAF03237B01A200CB7FFA /* MinervaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinervaTests.swift; sourceTree = "<group>"; };
+		F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		F53EAF05237B01A200CB7FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5587D0F22502B10004223E5 /* MinervaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5587D1222502B10004223E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -375,7 +375,7 @@
 		F53EAF02237B01A200CB7FFA /* MinervaTests */ = {
 			isa = PBXGroup;
 			children = (
-				F53EAF03237B01A200CB7FFA /* MinervaTests.swift */,
+				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
 				F53EAF05237B01A200CB7FFA /* Info.plist */,
 			);
 			path = MinervaTests;
@@ -987,7 +987,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F53EAF04237B01A200CB7FFA /* MinervaTests.swift in Sources */,
+				F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

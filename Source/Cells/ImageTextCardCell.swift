@@ -12,10 +12,8 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   fileprivate let image = BehaviorSubject<UIImage?>(value: nil)
 
   public let attributedText: NSAttributedString
-
-  public var height: CGFloat = 170
-  public var width: CGFloat = 140
-  public var imageHeight: CGFloat = 140
+  public var cellSize = CGSize(width: 140, height: 170)
+  public var imageSize: CGSize
   public var imageBackgroundColor: UIColor?
 
   public var imageContentMode = UIView.ContentMode.scaleAspectFill
@@ -29,6 +27,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   public init(identifier: String, attributedText: NSAttributedString) {
     self.attributedText = attributedText
     self.cellIdentifier = identifier
+    self.imageSize = CGSize(width: cellSize.width, height: cellSize.height)
     super.init()
   }
 
@@ -45,9 +44,8 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
-      && height == model.height
-      && width == model.width
-      && imageHeight == model.imageHeight
+      && cellSize == model.cellSize
+      && imageSize == model.imageSize
       && imageContentMode == model.imageContentMode
       && imageCornerRadius == model.imageCornerRadius
       && imageBackgroundColor == model.imageBackgroundColor
@@ -59,7 +57,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
-    return .explicit(size: CGSize(width: width, height: height))
+    return .explicit(size: cellSize)
   }
 
   // MARK: - ListSelectableCellModel
@@ -74,6 +72,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
 public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellModel> {
 
   public var imageHeightConstraint: NSLayoutConstraint?
+  public var imageWidthConstraint: NSLayoutConstraint?
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFit
@@ -107,7 +106,8 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
   override public func bind(model: ImageTextCardCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
 
-    imageHeightConstraint?.constant = model.imageHeight
+    imageHeightConstraint?.constant = model.imageSize.height
+    imageWidthConstraint?.constant = model.imageSize.width
     label.attributedText = model.attributedText
 
     guard !sizing else { return }
@@ -132,12 +132,14 @@ extension ImageTextCardCell {
     imageView.anchor(
       toLeading: contentView.leadingAnchor,
       top: contentView.topAnchor,
-      trailing: contentView.trailingAnchor,
+      trailing: nil,
       bottom: nil
     )
 
     imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
     imageHeightConstraint?.isActive = true
+    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    imageWidthConstraint?.isActive = true
     label.anchor(
       toLeading: contentView.leadingAnchor,
       top: nil,
