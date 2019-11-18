@@ -83,9 +83,8 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
     let textWidth =
       rowWidth - margins.left - margins.right - imageSize.width - ButtonImageCellModel.horizontalMargin * 4
 
-    let textHeight = allButtonsText.reduce(0) {
-      max($0, $1.height(constraintedToWidth: textWidth, font: font))
-    }
+    let textHeight = allButtonsText.map { $0.height(constraintedToWidth: textWidth, font: font) }.max() ?? 0
+
     let height = textHeight
       + ButtonImageCellModel.verticalMargin * 2
       + margins.top

@@ -14,14 +14,14 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
 
   fileprivate let attributedText: NSAttributedString
-  public var imageSize: CGSize = .zero
+  public var imageSize = CGSize(width: 75, height: 75)
   public var imageViewCornerRadius: CGFloat = 0
 
   private let cellIdentifier: String
 
-  public init(attributedText: NSAttributedString, identifier: String) {
-    self.attributedText = attributedText
+  public init(identifier: String, attributedText: NSAttributedString) {
     self.cellIdentifier = identifier
+    self.attributedText = attributedText
     super.init()
   }
 
@@ -77,8 +77,6 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
   override public func prepareForReuse() {
     super.prepareForReuse()
     imageView.image = nil
-    label.attributedText = nil
-    label.text = nil
   }
 
   override public func bind(model: ImageTextCellModel, sizing: Bool) {

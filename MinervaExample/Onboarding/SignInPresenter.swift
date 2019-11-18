@@ -58,8 +58,8 @@ public final class SignInPresenter: Presenter {
     let logoModel = ImageCellModel(
       identifier: "logoCellModel",
       image: Asset.Logo.image,
-      width: 100.0,
-      height: 80.0)
+      imageSize: CGSize(width: 100.0, height: 80.0)
+    )
     logoModel.directionalLayoutMargins.bottom = 60
 
     let emailModel = createEmailCellModel()
