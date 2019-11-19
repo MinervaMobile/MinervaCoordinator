@@ -133,8 +133,8 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
     let imageView = UIImageView(image: imageData.image)
     imageView.contentMode = .scaleAspectFit
     imageView.tintColor = imageData.imageColor
-    imageView.anchorWidth(to: imageData.imageWidth)
-    imageView.anchorHeight(to: imageData.imageHeight)
+    imageView.anchorWidth(to: imageData.imageSize.width)
+    imageView.anchorHeight(to: imageData.imageSize.height)
     containerView.addSubview(imageView)
 
     imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
@@ -152,7 +152,7 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
 
     let containerWidth: CGFloat = componentData.data.reduce(0) { maxWidth, rowData in
       let textWidth = rowData.text.width(constraintedToHeight: pickerView.bounds.height)
-      let width = textWidth + (rowData.imageData?.imageMargin ?? 0) + (rowData.imageData?.imageWidth ?? 0)
+      let width = textWidth + (rowData.imageData?.imageMargin ?? 0) + (rowData.imageData?.imageSize.width ?? 0)
       return max(maxWidth, width)
     }
 
@@ -170,7 +170,7 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
     }
     let maxTextHeight
       = componentData.data.reduce(0) { max($0, $1.text.height(constraintedToWidth: pickerView.frame.width)) }
-    let maxImageHeight = componentData.data.reduce(0) { max($0, ($1.imageData?.imageHeight ?? 0)) }
+    let maxImageHeight = componentData.data.reduce(0) { max($0, ($1.imageData?.imageSize.height ?? 0)) }
 
     return max(maxTextHeight, maxImageHeight) + componentData.verticalMargin * 2
   }
@@ -183,15 +183,13 @@ public struct PickerImageData: Equatable {
   public let image: UIImage
   public let imageColor: UIColor
   public let imageMargin: CGFloat
-  public let imageHeight: CGFloat
-  public let imageWidth: CGFloat
+  public let imageSize: CGSize
 
-  public init(image: UIImage, imageColor: UIColor, imageMargin: CGFloat, imageHeight: CGFloat, imageWidth: CGFloat) {
+  public init(image: UIImage, imageColor: UIColor, imageMargin: CGFloat, imageSize: CGSize) {
     self.image = image
     self.imageColor = imageColor
     self.imageMargin = imageMargin
-    self.imageHeight = imageHeight
-    self.imageWidth = imageWidth
+    self.imageSize = imageSize
   }
 }
 
