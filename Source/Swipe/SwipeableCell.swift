@@ -10,7 +10,7 @@ import UIKit
 
 open class SwipeableCellModel: BaseListCellModel {
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var backgroundColor: UIColor?
 
   public var separatorColor: UIColor?
