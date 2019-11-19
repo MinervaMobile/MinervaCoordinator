@@ -35,14 +35,21 @@ public final class BasicNavigator: NSObject {
 // MARK: - NavigatorType
 extension BasicNavigator: Navigator {
 
-  public func present(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
-    if let completion = completion {
-      completions[viewController] = completion
-    }
-    navigationController.present(viewController, animated: animated, completion: nil)
+  public func present(
+    _ viewController: UIViewController,
+    animated: Bool,
+    removalCompletion: RemovalCompletion?,
+    animationCompletion: AnimationCompletion?
+  ) {
+    completions[viewController] = removalCompletion
+    navigationController.present(viewController, animated: animated, completion: animationCompletion)
   }
 
-  public func dismiss(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
+  public func dismiss(
+    _ viewController: UIViewController,
+    animated: Bool,
+    animationCompletion: AnimationCompletion?
+  ) {
     var viewControllers = [UIViewController]()
     func calculateDismissingViewControllers(from viewController: UIViewController?) {
       guard let viewController = viewController else { return }
@@ -61,6 +68,7 @@ extension BasicNavigator: Navigator {
 
     viewController.dismiss(animated: animated) {
       viewControllers.forEach { self.runCompletion(for: $0) }
+      animationCompletion?()
     }
   }
 

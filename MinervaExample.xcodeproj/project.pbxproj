@@ -116,6 +116,7 @@
 		F5DA2BA2226D367600BA461A /* ListSizeConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */; };
 		F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB49DA2383958A0029BAAD /* FakePresenter.swift */; };
 		F5EB49DD238395920029BAAD /* FakeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB49DC238395920029BAAD /* FakeCoordinator.swift */; };
+		F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */; };
 		F5EF2DB02344FBE300A0073E /* ListExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */; };
 		F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F880233BE18800012C5E /* BaseCoordinator.swift */; };
 		F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F886233BE23700012C5E /* BaseViewController.swift */; };
@@ -300,6 +301,7 @@
 		F5DA2B95226D367500BA461A /* ListSizeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSizeConstraints.swift; sourceTree = "<group>"; };
 		F5EB49DA2383958A0029BAAD /* FakePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePresenter.swift; sourceTree = "<group>"; };
 		F5EB49DC238395920029BAAD /* FakeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCoordinator.swift; sourceTree = "<group>"; };
+		F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinationTests.swift; sourceTree = "<group>"; };
 		F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExtensions.swift; sourceTree = "<group>"; };
 		F5F08AF323192C4900C249E9 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F5F08AF523192C9B00C249E9 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		F53EAF02237B01A200CB7FFA /* MinervaTests */ = {
 			isa = PBXGroup;
 			children = (
+				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
 				F5EB49DC238395920029BAAD /* FakeCoordinator.swift */,
 				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
 				F53EAF05237B01A200CB7FFA /* Info.plist */,
@@ -995,6 +998,7 @@
 			files = (
 				F5EB49DD238395920029BAAD /* FakeCoordinator.swift in Sources */,
 				F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */,
+				F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */,
 				F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

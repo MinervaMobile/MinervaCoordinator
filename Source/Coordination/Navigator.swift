@@ -11,18 +11,26 @@ import UIKit
 public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigationControllerDelegate {
   /// The block to use when a view controller is removed from the navigation controller.
   typealias RemovalCompletion = (UIViewController) -> Void
+  /// The block to execute after the presentation finishes.
+  typealias AnimationCompletion = () -> Void
 
   /// Displays a view controller modally.
   /// - Parameter viewController: The view controller to display.
   /// - Parameter animated: Whether or not to animate the transition.
-  /// - Parameter completion: The completion to be called when the view controller is no longer on the view stack.
-  func present(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
+  /// - Parameter removalCompletion: The completion to be called when the view controller is no longer on the view stack.
+  /// - Parameter animationCompletion: The block to execute after the presentation finishes.
+  func present(
+    _ viewController: UIViewController,
+    animated: Bool,
+    removalCompletion: RemovalCompletion?,
+    animationCompletion: AnimationCompletion?
+  )
 
   /// Removes a modally presented view controller from the view stack.
   /// - Parameter viewController: The view controller to remove.
   /// - Parameter animated: Whether or not to animate the transition.
-  /// - Parameter completion: The completion to be called when the view controller is no longer on the view stack.
-  func dismiss(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?)
+  /// - Parameter animationCompletion: The block to execute after the dismissal finishes.
+  func dismiss(_ viewController: UIViewController, animated: Bool, animationCompletion: AnimationCompletion?)
 
   /// Displays a view controller in the navigators navigation controller.
   /// - Parameter viewController: The view controller to display.
@@ -59,14 +67,26 @@ extension Navigator {
   /// - Parameter viewController: The view controller to display.
   /// - Parameter animated: Whether or not to animate the transition.
   public func present(_ viewController: UIViewController, animated: Bool) {
-    present(viewController, animated: animated, completion: nil)
+    present(viewController, animated: animated, removalCompletion: nil, animationCompletion: nil)
+  }
+
+  /// Displays a view controller modally.
+  /// - Parameter viewController: The view controller to display.
+  /// - Parameter animated: Whether or not to animate the transition.
+  /// - Parameter removalCompletion: The completion to be called when the view controller is no longer on the view stack.
+  public func present(
+    _ viewController: UIViewController,
+    animated: Bool,
+    removalCompletion: RemovalCompletion?
+  ) {
+    present(viewController, animated: animated, removalCompletion: removalCompletion, animationCompletion: nil)
   }
 
   /// Removes a modally presented view controller from the view stack.
   /// - Parameter viewController: The view controller to remove.
   /// - Parameter animated: Whether or not to animate the transition.
   public func dismiss(_ viewController: UIViewController, animated: Bool) {
-    dismiss(viewController, animated: animated, completion: nil)
+    dismiss(viewController, animated: animated, animationCompletion: nil)
   }
 
   /// Displays a view controller in the navigators navigation controller.

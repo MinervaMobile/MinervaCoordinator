@@ -16,14 +16,14 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
   public var viewDidDisappear = false
   public var traitCollectionDidChange = false
 
-  public init() {
+  public init(navigator: Navigator? = nil) {
     let layout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
     let collectionVC = CollectionViewController(layout: layout)
     collectionVC.backgroundImage = UIImage()
     let listController = LegacyListController()
     listController.viewController = collectionVC
     listController.collectionView = collectionVC.collectionView
-    let navigator = BasicNavigator()
+    let navigator = navigator ?? BasicNavigator()
     let presenter = FakePresenter()
     super.init(
       navigator: navigator,

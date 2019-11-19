@@ -45,7 +45,7 @@ public final class CreateUserCoordinator: MainCoordinator<CreateUserPresenter, C
         onSuccess: { [weak self] () -> Void in
           guard let strongSelf = self else { return }
           LoadingHUD.hide(from: strongSelf.viewController.view)
-          strongSelf.navigator.dismiss(strongSelf.viewController, animated: true, completion: nil)
+          strongSelf.navigator.dismiss(strongSelf.viewController, animated: true)
         },
         onError: { [weak self] error -> Void in
           guard let strongSelf = self else { return }

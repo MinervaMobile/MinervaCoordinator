@@ -49,7 +49,7 @@ public final class IntegrationTests: XCTestCase {
           }
         }
       )
-    wait(for: [updateExpectation], timeout: 1)
+    wait(for: [updateExpectation], timeout: 5)
     disposable.dispose()
 
     assertCellTypesMatch(coordinator.presenter.listSections)
@@ -62,7 +62,7 @@ public final class IntegrationTests: XCTestCase {
       XCTAssert(finished)
       updateExpectation1.fulfill()
     }
-    wait(for: [updateExpectation1], timeout: 1)
+    wait(for: [updateExpectation1], timeout: 5)
 
     sections = sections.map { section -> ListSection in
       var section = section
@@ -75,7 +75,7 @@ public final class IntegrationTests: XCTestCase {
       XCTAssert(finished)
       updateExpectation2.fulfill()
     }
-    wait(for: [updateExpectation2], timeout: 1)
+    wait(for: [updateExpectation2], timeout: 5)
 
     assertCellTypesMatch(sections)
   }

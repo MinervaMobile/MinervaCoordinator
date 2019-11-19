@@ -50,53 +50,65 @@ public protocol CoordinatorNavigator: Coordinator {
 }
 
 extension CoordinatorNavigator {
+  /// The block to execute after the presentation finishes.
+  public typealias AnimationCompletion = () -> Void
 
   /// Presents a coordinator modally.
   /// - Parameter coordinator: The coordinator to display.
   /// - Parameter navigator: The navigator to use for the presented view controller.
   /// - Parameter modalPresentationStyle: The style used to present the coordinators view controller.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
+  /// - Parameter animationCompletion: The completion to call when the presentation completes. 
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     from navigator: Navigator,
     modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
-    animated: Bool = true
+    animated: Bool = true,
+    animationCompletion: AnimationCompletion? = nil
   ) {
     navigator.setViewControllers([coordinator.baseViewController], animated: false)
-    present(coordinator, modalPresentationStyle: modalPresentationStyle, animated: animated)
+    present(
+      coordinator,
+      modalPresentationStyle: modalPresentationStyle,
+      animated: animated,
+      animationCompletion: animationCompletion
+    )
   }
 
   /// Presents a coordinator modally.
   /// - Parameter coordinator: The coordinator to display.
   /// - Parameter modalPresentationStyle: The style used to present the coordinators view controller.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
+  /// - Parameter animationCompletion: The completion to call when the presentation completes.
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
-    animated: Bool = true
+    animated: Bool = true,
+    animationCompletion: AnimationCompletion? = nil
   ) {
     addChild(coordinator)
 
     let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
     viewController.modalPresentationStyle = modalPresentationStyle
-    navigator.present(viewController, animated: animated) { [weak self] _ in
-      self?.removeChild(coordinator)
-    }
+    navigator.present(
+      viewController,
+      animated: animated,
+      removalCompletion: { [weak self] _ in self?.removeChild(coordinator) },
+      animationCompletion: animationCompletion
+    )
   }
 
   /// Removes the coordinator from the view heiarchy if it was presented modally.
   /// - Parameter coordinator: The coordinator to remove.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
-  /// - Parameter completion: The completion to call when the coordinator is no longer on the screen
+  /// - Parameter animationCompletion: The completion to call when the coordinator is no longer on the screen
   public func dismiss(
     _ coordinator: BaseCoordinatorPresentable,
     animated: Bool = true,
-    completion: (() -> Void)? = nil
+    animationCompletion: AnimationCompletion? = nil
   ) {
     let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
-    navigator.dismiss(viewController, animated: animated) { _ in
-      completion?()
-    }
+    navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
   }
 
   /// Pushes a coordinator onto the navigators navigation controller.
