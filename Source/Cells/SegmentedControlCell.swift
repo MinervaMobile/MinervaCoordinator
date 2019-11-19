@@ -1,5 +1,7 @@
 //
-//  Copyright © 2019 Optimize Fitness, Inc. All rights reserved.
+// Copyright © 2019 Optimize Fitness Inc.
+// Licensed under the MIT license
+// https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
 
 import UIKit
