@@ -23,26 +23,6 @@ public final class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
     }
   }
 
-  public enum SizeType {
-    case dynamic
-    case fixed(height: CGFloat)
-
-    public func isEqual(to type: SizeType) -> Bool {
-      switch self {
-      case .dynamic:
-        guard case SizeType.dynamic = type else {
-          return false
-        }
-        return true
-      case .fixed(let height):
-        guard case let SizeType.fixed(other) = type else {
-          return false
-        }
-        return height == other
-      }
-    }
-  }
-
   public var selectionAction: ((_ cellModel: MarginCellModel, _ indexPath: IndexPath) -> Void)?
   private let cellIdentifier: String
 
