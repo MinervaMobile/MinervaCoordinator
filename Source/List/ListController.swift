@@ -24,7 +24,7 @@ public protocol ListController: AnyObject {
   func reloadData(completion: Completion?)
   func reload(_ cellModels: [ListCellModel])
   func update(with listSections: [ListSection], animated: Bool, completion: Completion?)
-  func removeCellModel(at indexPath: IndexPath, completion: Completion?)
+  func removeCellModel(at indexPath: IndexPath, animated: Bool, completion: Completion?)
 
   func willDisplay()
   func didEndDisplaying()
@@ -53,8 +53,8 @@ extension ListController {
   public func update(with listSections: [ListSection], animated: Bool) {
     update(with: listSections, animated: animated, completion: nil)
   }
-  public func removeCellModel(at indexPath: IndexPath) {
-    removeCellModel(at: indexPath, completion: nil)
+  public func removeCellModel(at indexPath: IndexPath, animated: Bool) {
+    removeCellModel(at: indexPath, animated: animated, completion: nil)
   }
   public func size(of listSection: ListSection) -> CGSize? {
     return size(of: listSection, with: nil)

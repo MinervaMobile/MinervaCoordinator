@@ -64,16 +64,7 @@ public struct ListSection {
 // MARK: - CustomStringConvertible
 extension ListSection: CustomStringConvertible {
   public var description: String {
-    return """
-      [
-      \(type(of: self))
-      identifier=\(identifier)
-      constraints=\(constraints)
-      headerModel=\(headerModel.debugDescription)
-      footerModel=\(footerModel.debugDescription)
-      cellModels=\(cellModels)
-      ]
-    """
+    return "[\(type(of: self)) identifier=\(identifier) constraints=\(constraints) header=\(headerModel.debugDescription) footer=\(footerModel.debugDescription) models=\(cellModels)]"
   }
 }
 

@@ -30,9 +30,7 @@ public final class LegacyListController: NSObject, ListController {
     set { self.adapter.collectionView = newValue }
   }
 
-  public var listSections: [ListSection] {
-    return listSectionWrappers.map { $0.section }
-  }
+  public var listSections: [ListSection] { listSectionWrappers.map { $0.section } }
 
   private let adapter: ListAdapter
   private var noLongerDisplayingCells = false
@@ -51,7 +49,7 @@ public final class LegacyListController: NSObject, ListController {
 
   // MARK: - Public
 
-  public func reloadData(completion: Completion? = nil) {
+  public func reloadData(completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
     adapter.reloadData(completion: completion)
   }
@@ -129,30 +127,23 @@ public final class LegacyListController: NSObject, ListController {
 
   public func cellModel(at indexPath: IndexPath) -> ListCellModel? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else {
-      return nil
-    }
+    guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else { return nil }
     return model
   }
 
   public func cell(at indexPath: IndexPath) -> UICollectionViewCell? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let cell = adapter.collectionView?.cellForItem(at: indexPath) else {
-      return nil
-    }
+    guard let cell = adapter.collectionView?.cellForItem(at: indexPath) else { return nil }
     return cell
   }
 
   public func cell(for cellModel: ListCellModel) -> UICollectionViewCell? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let indexPath = indexPath(for: cellModel),
-      let cell = adapter.collectionView?.cellForItem(at: indexPath) else {
-        return nil
-    }
+    guard let indexPath = indexPath(for: cellModel), let cell = cell(at: indexPath) else { return nil }
     return cell
   }
 
-  public func removeCellModel(at indexPath: IndexPath, completion: Completion?) {
+  public func removeCellModel(at indexPath: IndexPath, animated: Bool, completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
     guard listSections.at(indexPath.section)?.cellModels.at(indexPath.item) != nil else {
       assertionFailure("Could not find model at indexPath")
@@ -169,7 +160,7 @@ public final class LegacyListController: NSObject, ListController {
       section.cellModels = cellModels
       listSections[indexPath.section] = section
     }
-    update(with: listSections, animated: true, completion: completion)
+    update(with: listSections, animated: animated, completion: completion)
   }
 
   public func scrollTo(

@@ -58,7 +58,7 @@ extension CoordinatorNavigator {
   /// - Parameter navigator: The navigator to use for the presented view controller.
   /// - Parameter modalPresentationStyle: The style used to present the coordinators view controller.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
-  /// - Parameter animationCompletion: The completion to call when the presentation completes. 
+  /// - Parameter animationCompletion: The completion to call when the presentation completes.
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     from navigator: Navigator,

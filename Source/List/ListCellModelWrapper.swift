@@ -17,9 +17,7 @@ public final class ListCellModelWrapper: NSObject {
     self.model = model
   }
 
-  override public var description: String {
-    return model.typeDescription
-  }
+  override public var description: String { model.typeDescription }
 }
 
 extension ListCellModelWrapper: ListDiffable {

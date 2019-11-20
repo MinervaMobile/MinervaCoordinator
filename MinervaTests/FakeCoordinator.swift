@@ -21,8 +21,6 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     let collectionVC = CollectionViewController(layout: layout)
     collectionVC.backgroundImage = UIImage()
     let listController = LegacyListController()
-    listController.viewController = collectionVC
-    listController.collectionView = collectionVC.collectionView
     let navigator = navigator ?? BasicNavigator()
     let presenter = FakePresenter()
     super.init(
@@ -31,6 +29,17 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
       presenter: presenter,
       listController: listController)
     collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
+  }
+
+  // MARK: - ListControllerSizeDelegate
+
+  override public func listController(
+    _ listController: ListController,
+    sizeFor model: ListCellModel,
+    at indexPath: IndexPath,
+    constrainedTo sizeConstraints: ListSizeConstraints
+  ) -> CGSize? {
+    return CGSize(width: sizeConstraints.adjustedContainerSize.width, height: 24)
   }
 
   // MARK: - ViewControllerDelegate
