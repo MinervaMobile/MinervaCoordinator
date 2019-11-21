@@ -1,7 +1,7 @@
 PODS:
-  - IGListDiffKit (3.4.0)
-  - IGListKit (3.4.0):
-    - IGListDiffKit (= 3.4.0)
+  - IGListDiffKit (4.0.0)
+  - IGListKit (4.0.0):
+    - IGListDiffKit (= 4.0.0)
   - IQKeyboardManagerSwift (6.5.4)
   - MBProgressHUD (1.1.0)
   - RxSwift (5.0.1)
@@ -36,15 +36,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   IGListDiffKit:
-    :commit: f367b455a66079f7c719bacfa4493766aa3868aa
+    :commit: 0ccf7fef5d7b6629afbd463a71ade278af954588
     :git: https://github.com/Instagram/IGListKit
   IGListKit:
-    :commit: f367b455a66079f7c719bacfa4493766aa3868aa
+    :commit: 0ccf7fef5d7b6629afbd463a71ade278af954588
     :git: https://github.com/Instagram/IGListKit
 
 SPEC CHECKSUMS:
-  IGListDiffKit: c780d5f336d276224575e231a982bcc04044b442
-  IGListKit: 50f04303ebab85f6103763c6d4e32e7205e11281
+  IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
+  IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
