@@ -387,13 +387,9 @@
 		F53EAF02237B01A200CB7FFA /* MinervaTests */ = {
 			isa = PBXGroup;
 			children = (
-				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
-				F5EB49E22385AA5E0029BAAD /* FakeCell.swift */,
-				F5EB49DC238395920029BAAD /* FakeCoordinator.swift */,
-				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
-				F53EAF05237B01A200CB7FFA /* Info.plist */,
-				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
-				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
+				F5EB49E72386C6EF0029BAAD /* Fakes */,
+				F5EB49E82386C7000029BAAD /* Resources */,
+				F5EB49E62386C6DE0029BAAD /* Tests */,
 			);
 			path = MinervaTests;
 			sourceTree = "<group>";
@@ -710,6 +706,34 @@
 				F5DA2B8F226D367500BA461A /* ListViewLayoutAttributes.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		F5EB49E62386C6DE0029BAAD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
+				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
+				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		F5EB49E72386C6EF0029BAAD /* Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				F5EB49E22385AA5E0029BAAD /* FakeCell.swift */,
+				F5EB49DC238395920029BAAD /* FakeCoordinator.swift */,
+				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
+			);
+			path = Fakes;
+			sourceTree = "<group>";
+		};
+		F5EB49E82386C7000029BAAD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F53EAF05237B01A200CB7FFA /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F5EF2D932344FA0000A0073E /* Convenience */ = {
@@ -1172,7 +1196,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaTests/Info.plist;
+				INFOPLIST_FILE = MinervaTests/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1193,7 +1217,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
-				INFOPLIST_FILE = MinervaTests/Info.plist;
+				INFOPLIST_FILE = MinervaTests/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
