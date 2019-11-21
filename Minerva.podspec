@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
-  s.version = "2.12.2"
+  s.version = "2.12.3"
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"
@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
 
     ss.dependency 'Minerva/List'
 
-    ss.dependency 'IGListKit', '~> 4.0.0'
-    ss.dependency 'RxSwift', '~> 5.0.0'
+    ss.dependency 'IGListKit'
+    ss.dependency 'RxSwift'
 
     ss.ios.deployment_target = '11.0'
     ss.ios.frameworks = 'Foundation', 'UIKit'
@@ -35,8 +35,8 @@ Pod::Spec.new do |s|
     ss.dependency 'Minerva/Coordination'
     ss.dependency 'Minerva/List'
 
-    ss.dependency 'IGListKit', '~> 4.0.0'
-    ss.dependency 'RxSwift', '~> 5.0.0'
+    ss.dependency 'IGListKit'
+    ss.dependency 'RxSwift'
 
     ss.ios.deployment_target = '11.0'
     ss.ios.frameworks = 'Foundation', 'UIKit'
@@ -58,7 +58,7 @@ Pod::Spec.new do |s|
   s.subspec 'List' do |ss|
     ss.source_files = 'Source/List/**/*.swift'
 
-    ss.dependency 'IGListKit', '~> 4.0.0'
+    ss.dependency 'IGListKit'
 
     ss.ios.deployment_target = '11.0'
     ss.ios.frameworks = 'Foundation', 'UIKit'
@@ -73,9 +73,9 @@ Pod::Spec.new do |s|
     ss.dependency 'Minerva/Cells'
     ss.dependency 'Minerva/List'
 
-    ss.dependency 'IGListKit', '~> 4.0.0'
-    ss.dependency 'RxSwift', '~> 5.0.0'
-    ss.dependency 'SwipeCellKit', '~> 2.7.0'
+    ss.dependency 'IGListKit'
+    ss.dependency 'RxSwift'
+    ss.dependency 'SwipeCellKit'
 
     ss.ios.deployment_target = '11.0'
     ss.ios.frameworks = 'Foundation', 'UIKit'
