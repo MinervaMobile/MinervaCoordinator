@@ -56,6 +56,34 @@ public final class ListTests: XCTestCase {
     wait(for: [updateExpectation], timeout: 5)
   }
 
+  public func testCenterCellModel() {
+    let cellModels = createCellModels(count: 9)
+    let section = ListSection(cellModels: cellModels, identifier: "Section")
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    let updateExpectation2 = expectation(description: "Update Expectation2")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation2.fulfill()
+    }
+    wait(for: [updateExpectation2], timeout: 5)
+    XCTAssertTrue(listController.centerCellModel!.identical(to: cellModels[4]))
+  }
+
+  public func testConstraints() {
+    var section1 = ListSection(cellModels: createCellModels(count: 9), identifier: "Section1")
+    section1.constraints.distribution = .equally(cellsInRow: 3)
+    var section2 = ListSection(cellModels: createCellModels(count: 9), identifier: "Section2")
+    section2.constraints.distribution = .equally(cellsInRow: 3)
+    XCTAssertEqual(section1.constraints.hashValue, section2.constraints.hashValue)
+  }
+
   public func testProportionalDistribution() {
     let cellModels = createCellModels(count: 9)
     var section = ListSection(cellModels: cellModels, identifier: "Section")
@@ -103,7 +131,7 @@ public final class ListTests: XCTestCase {
     wait(for: [updateExpectation], timeout: 5)
     collectionVC.collectionView.delegate?.collectionView?(
       collectionVC.collectionView,
-      didSelectItemAt: IndexPath(row: 0, section: 0))
+      didSelectItemAt: IndexPath(item: 0, section: 0))
     XCTAssertTrue(selected)
   }
 
@@ -142,7 +170,7 @@ public final class ListTests: XCTestCase {
     XCTAssertEqual(collectionVC.collectionView.numberOfItems(inSection: 0), 1)
 
     let removeExpectation = expectation(description: "Remove Expectation")
-    listController.removeCellModel(at: IndexPath(row: 0, section: 0), animated: false) { finished in
+    listController.removeCellModel(at: IndexPath(item: 0, section: 0), animated: false) { finished in
       XCTAssertTrue(finished)
       removeExpectation.fulfill()
     }
@@ -174,11 +202,74 @@ public final class ListTests: XCTestCase {
     XCTAssertEqual(collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(), cellModels.count - 1)
   }
 
+  public func testSectionSizing_verticalScrolling() {
+    let cellModels = createCellModels(count: 19)
+    let section = ListSection(cellModels: cellModels, identifier: "Section")
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    let size = listController.size(of: section)
+    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_900))
+  }
+
+  public func testSectionSizing_verticalScrolling_equalDistribution() {
+    let cellModels = createCellModels(count: 19)
+    var section = ListSection(cellModels: cellModels, identifier: "Section")
+    section.constraints.distribution = .equally(cellsInRow: 3)
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    let size = listController.size(of: section)
+    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 700))
+  }
+
+  public func testSectionSizing_verticalScrolling_proportionalDistribution() {
+    let cellModels = createCellModels(count: 19)
+    var section = ListSection(cellModels: cellModels, identifier: "Section")
+    section.constraints.distribution = .proportionally
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    let size = listController.size(of: section)
+    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_000))
+  }
+
+  public func testSectionSizing_horizontalScrolling() {
+    let cellModels = createCellModels(count: 19)
+    var section = ListSection(cellModels: cellModels, identifier: "Section")
+    section.constraints.scrollDirection = .horizontal
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    let size = listController.size(of: section)
+    XCTAssertEqual(size, CGSize(width: 1_425, height: 500))
+  }
+
   // MARK: - Private
 
   private func createCellModels(count: Int) -> [FakeCellModel] {
     return (1...count).map {
-      FakeCellModel(identifier: "FakeCellModel\($0)", size: .explicit(size: CGSize(width: 100, height: 100)))
+      FakeCellModel(identifier: "FakeCellModel\($0)", size: .explicit(size: CGSize(width: 75, height: 100)))
     }
   }
 }

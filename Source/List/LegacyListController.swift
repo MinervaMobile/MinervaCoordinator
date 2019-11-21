@@ -35,14 +35,17 @@ public final class LegacyListController: NSObject, ListController {
   private let adapter: ListAdapter
   private var noLongerDisplayingCells = false
   private var listSectionWrappers: [ListSectionWrapper]
+  private var sizeController: ListCellSizeController
 
   // MARK: - Initializers
 
   override public init() {
+    self.sizeController = ListCellSizeController()
     self.listSectionWrappers = []
     let updater = ListAdapterUpdater()
     self.adapter = ListAdapter(updater: updater, viewController: nil, workingRangeSize: 2)
     super.init()
+    self.sizeController.delegate = self
     self.adapter.dataSource = self
     self.adapter.moveDelegate = self
   }
@@ -100,27 +103,25 @@ public final class LegacyListController: NSObject, ListController {
 
   public func invalidateLayout() {
     dispatchPrecondition(condition: .onQueue(.main))
-    // TODO: Clear the autolayout size cache.
+    sizeController.clearCache()
   }
 
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let section = listSections.firstIndex(where: {
-      $0.cellModels.contains(where: { cellModel.identical(to: $0) })
-    }) else {
-      return nil
+    for (sectionIndex, section) in listSections.enumerated() {
+      for (rowIndex, model) in section.cellModels.enumerated() {
+        if cellModel.identical(to: model) {
+          return IndexPath(item: rowIndex, section: sectionIndex)
+        }
+      }
     }
-    guard let item = listSections.at(section)?.cellModels.firstIndex(where: { cellModel.identical(to: $0) }) else {
-      return nil
-    }
-    return IndexPath(item: item, section: section)
+    return nil
   }
 
   public var centerCellModel: ListCellModel? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let indexPath = adapter.collectionView?.centerCellIndexPath,
-      let cellModel = cellModel(at: indexPath) else {
-        return nil
+    guard let indexPath = adapter.collectionView?.centerCellIndexPath, let cellModel = cellModel(at: indexPath) else {
+      return nil
     }
     return cellModel
   }
@@ -217,7 +218,6 @@ public final class LegacyListController: NSObject, ListController {
     }
 
     guard let cellModel = model else { return }
-
     scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
@@ -226,9 +226,7 @@ public final class LegacyListController: NSObject, ListController {
     return size(
       using: constraints,
       sectionPicker: { $0.section.identifier == listSection.identifier },
-      executionBlock: { sectionController, sizeConstraints -> CGSize? in
-        sectionController.size(of: listSection, with: sizeConstraints)
-      }
+      executionBlock: { sizeController.size(of: listSection, with: $0) }
     )
   }
 
@@ -236,12 +234,8 @@ public final class LegacyListController: NSObject, ListController {
     dispatchPrecondition(condition: .onQueue(.main))
     return size(
       using: constraints,
-      sectionPicker: { wrapper -> Bool in
-        wrapper.section.cellModels.contains { $0.identifier == cellModel.identifier }
-      },
-      executionBlock: { sectionController, sizeConstraints -> CGSize? in
-        sectionController.size(for: cellModel, with: sizeConstraints)
-      }
+      sectionPicker: { $0.section.cellModels.contains { $0.identifier == cellModel.identifier } },
+      executionBlock: { sizeController.size(for: cellModel, with: $0) }
     )
   }
 
@@ -250,28 +244,24 @@ public final class LegacyListController: NSObject, ListController {
   private func size(
     using constraints: ListSizeConstraints?,
     sectionPicker: (ListSectionWrapper) -> Bool,
-    executionBlock: (ListModelSectionController, ListSizeConstraints) -> CGSize?
+    executionBlock: (ListSizeConstraints) -> CGSize?
   ) -> CGSize? {
     let sectionWrapper = listSectionWrappers.first(where: sectionPicker)
 
-    let sectionController: ListModelSectionController
     let sizeConstraints: ListSizeConstraints
-
     // If this function is called before the adapter is showing the cellModel we still want to return the correct size.
     // Reuse the existing ListModelSectionController if it is available in order to support caching of size information.
     if let listSectionWrapper = sectionWrapper,
       let controller = adapter.sectionController(for: listSectionWrapper) as? ListModelSectionController,
       let constraints = controller.sizeConstraints {
-      sectionController = controller
       sizeConstraints = constraints
     } else if let constraints = constraints {
-      sectionController = ListModelSectionController()
       sizeConstraints = constraints
     } else {
       assertionFailure("Need a section to properly size the cell")
       return nil
     }
-    return executionBlock(sectionController, sizeConstraints)
+    return executionBlock(sizeConstraints)
   }
 }
 
@@ -285,14 +275,12 @@ extension LegacyListController: ListAdapterDataSource {
     _ listAdapter: ListAdapter,
     sectionControllerFor object: Any
   ) -> ListSectionController {
-    let sectionController = ListModelSectionController()
+    let sectionController = ListModelSectionController(sizeController: sizeController)
     sectionController.delegate = self
     return sectionController
   }
 
-  public func emptyView(for listAdapter: ListAdapter) -> UIView? {
-    return nil
-  }
+  public func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
 }
 
 // MARK: - ListAdapterMoveDelegate
@@ -311,21 +299,20 @@ extension LegacyListController: ListAdapterMoveDelegate {
   }
 }
 
-// MARK: - ListModelSectionControllerDelegate
-extension LegacyListController: ListModelSectionControllerDelegate {
-  internal func sectionController(
-    _ sectionController: ListModelSectionController,
+// MARK: - ListCellSizeControllerDelegate
+extension LegacyListController: ListCellSizeControllerDelegate {
+  internal func sizeController(
+    _ sizeController: ListCellSizeController,
     sizeFor model: ListCellModel,
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    return sizeDelegate?.listController(
-      self,
-      sizeFor: model,
-      at: indexPath,
-      constrainedTo: sizeConstraints
-    )
+    return sizeDelegate?.listController(self, sizeFor: model, at: indexPath, constrainedTo: sizeConstraints)
   }
+}
+
+// MARK: - ListModelSectionControllerDelegate
+extension LegacyListController: ListModelSectionControllerDelegate {
 
   internal func sectionControllerCompletedMove(
     _ sectionController: ListModelSectionController,

@@ -86,7 +86,7 @@ public final class IntegrationTests: XCTestCase {
     for (sectionIndex, section) in sections.enumerated() {
       for (index, model) in section.cellModels.enumerated() {
         let cell = coordinator.viewController.collectionView.cellForItem(
-          at: IndexPath(row: index, section: sectionIndex)
+          at: IndexPath(item: index, section: sectionIndex)
         )!
         let modelCellType = model.cellType
         let actualCellType = type(of: cell)

@@ -11,9 +11,7 @@ internal enum ListExtensions { }
 
 extension Array {
   internal func at(_ index: Int) -> Element? {
-    guard index >= 0, index < count else {
-      return nil
-    }
+    guard index >= 0, index < count else { return nil }
     return self[index]
   }
 }
@@ -32,12 +30,12 @@ extension CGSize {
   internal func adjust(for insets: UIEdgeInsets) -> CGSize {
     return CGSize(
       width: width - insets.left - insets.right,
-      height: height - insets.top - insets.bottom)
+      height: height - insets.top - insets.bottom
+    )
   }
 }
 
 extension CGSize: Hashable {
-
   public func hash(into hasher: inout Hasher) {
     hasher.combine(width)
     hasher.combine(height)
@@ -56,15 +54,9 @@ extension Sequence {
 }
 
 extension UICollectionView {
-  internal var centerPoint: CGPoint {
-    return CGPoint(
-      x: center.x + contentOffset.x,
-      y: center.y + contentOffset.y)
-  }
+  internal var centerPoint: CGPoint { CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y) }
 
-  internal var centerCellIndexPath: IndexPath? {
-    return indexPathForItem(at: centerPoint)
-  }
+  internal var centerCellIndexPath: IndexPath? { indexPathForItem(at: centerPoint) }
 
   internal func isIndexPathAvailable(_ indexPath: IndexPath) -> Bool {
     guard dataSource != nil,
@@ -79,7 +71,6 @@ extension UICollectionView {
 extension UICollectionView.ScrollDirection: Hashable { }
 
 extension UIEdgeInsets: Hashable {
-
   public func hash(into hasher: inout Hasher) {
     hasher.combine(top)
     hasher.combine(left)
