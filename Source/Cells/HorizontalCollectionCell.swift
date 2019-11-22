@@ -68,7 +68,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
       sectionConstraints: section.constraints)
 
     let height = section.cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
-      max(maxHeight, listController.size(of: cellModel, with: constraints)?.height ?? 0)
+      max(maxHeight, listController.size(of: cellModel, with: constraints).height)
     }
     let totalHeight = height + margins.top + margins.bottom
     return .explicit(size: CGSize(width: containerSize.width, height: totalHeight))

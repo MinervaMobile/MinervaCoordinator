@@ -221,47 +221,15 @@ public final class LegacyListController: NSObject, ListController {
     scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
   }
 
-  public func size(of listSection: ListSection, with constraints: ListSizeConstraints? = nil) -> CGSize? {
+  public func size(of listSection: ListSection, containerSize: CGSize) -> CGSize {
     dispatchPrecondition(condition: .onQueue(.main))
-    return size(
-      using: constraints,
-      sectionPicker: { $0.section.identifier == listSection.identifier },
-      executionBlock: { sizeController.size(of: listSection, with: $0) }
-    )
+    let sizeConstraints = ListSizeConstraints(containerSize: containerSize, sectionConstraints: listSection.constraints)
+    return sizeController.size(of: listSection, with: sizeConstraints)
   }
 
-  public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints? = nil) -> CGSize? {
+  public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints) -> CGSize {
     dispatchPrecondition(condition: .onQueue(.main))
-    return size(
-      using: constraints,
-      sectionPicker: { $0.section.cellModels.contains { $0.identifier == cellModel.identifier } },
-      executionBlock: { sizeController.size(for: cellModel, with: $0) }
-    )
-  }
-
-  // MARK: - Private
-
-  private func size(
-    using constraints: ListSizeConstraints?,
-    sectionPicker: (ListSectionWrapper) -> Bool,
-    executionBlock: (ListSizeConstraints) -> CGSize?
-  ) -> CGSize? {
-    let sectionWrapper = listSectionWrappers.first(where: sectionPicker)
-
-    let sizeConstraints: ListSizeConstraints
-    // If this function is called before the adapter is showing the cellModel we still want to return the correct size.
-    // Reuse the existing ListModelSectionController if it is available in order to support caching of size information.
-    if let listSectionWrapper = sectionWrapper,
-      let controller = adapter.sectionController(for: listSectionWrapper) as? ListModelSectionController,
-      let constraints = controller.sizeConstraints {
-      sizeConstraints = constraints
-    } else if let constraints = constraints {
-      sizeConstraints = constraints
-    } else {
-      assertionFailure("Need a section to properly size the cell")
-      return nil
-    }
-    return executionBlock(sizeConstraints)
+    return sizeController.size(for: cellModel, with: constraints)
   }
 }
 

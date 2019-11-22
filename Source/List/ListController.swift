@@ -42,8 +42,8 @@ public protocol ListController: AnyObject {
   )
   func scroll(to scrollPosition: UICollectionView.ScrollPosition, animated: Bool)
 
-  func size(of listSection: ListSection, with constraints: ListSizeConstraints?) -> CGSize?
-  func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints?) -> CGSize?
+  func size(of listSection: ListSection, containerSize: CGSize) -> CGSize
+  func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints) -> CGSize
 }
 
 extension ListController {
@@ -55,12 +55,6 @@ extension ListController {
   }
   public func removeCellModel(at indexPath: IndexPath, animated: Bool) {
     removeCellModel(at: indexPath, animated: animated, completion: nil)
-  }
-  public func size(of listSection: ListSection) -> CGSize? {
-    return size(of: listSection, with: nil)
-  }
-  public func size(of cellModel: ListCellModel) -> CGSize? {
-    return size(of: cellModel, with: nil)
   }
 }
 

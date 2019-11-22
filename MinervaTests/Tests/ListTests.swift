@@ -213,7 +213,8 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let size = listController.size(of: section)
+    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_900))
   }
 
@@ -229,7 +230,8 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let size = listController.size(of: section)
+    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 700))
   }
 
@@ -245,7 +247,8 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let size = listController.size(of: section)
+    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_000))
   }
 
@@ -261,7 +264,8 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let size = listController.size(of: section)
+    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: 1_425, height: 500))
   }
 

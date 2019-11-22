@@ -20,9 +20,10 @@ internal protocol ListCellSizeControllerDelegate: AnyObject {
 }
 
 internal final class ListCellSizeController {
+  private typealias CellType = String
   internal weak var delegate: ListCellSizeControllerDelegate?
 
-  private var cachedCells = [String: ListCollectionViewCell]()
+  private var cachedCells = [CellType: ListCollectionViewCell]()
 
   internal init() {
   }
@@ -71,7 +72,7 @@ internal final class ListCellSizeController {
     }
   }
 
-  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize? {
+  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize {
     let size = listCellSize(for: model, with: sizeConstraints)
     switch size {
     case .autolayout:
@@ -79,26 +80,27 @@ internal final class ListCellSizeController {
     case .explicit(let size):
       return size
     case .relative:
-      return nil
+      return .zero
     }
   }
 
-  internal func size(of listSection: ListSection, with constraints: ListSizeConstraints) -> CGSize? {
+  internal func size(of listSection: ListSection, with constraints: ListSizeConstraints) -> CGSize {
     let isVertical = constraints.scrollDirection == .vertical
     let adjustedContainerSize = constraints.containerSize.adjust(for: listSection.constraints.inset)
     var height: CGFloat = listSection.constraints.inset.top + listSection.constraints.inset.bottom
+    var width: CGFloat = listSection.constraints.inset.left + listSection.constraints.inset.right
 
     switch listSection.constraints.distribution {
     case .entireRow:
       if isVertical {
         height += listSection.cellModels.reduce(0, { sum, model -> CGFloat in
-          let length = size(for: model, with: constraints)?.height ?? 0
+          let length = size(for: model, with: constraints).height
           return sum + length + constraints.minimumLineSpacing
         })
         return CGSize(width: adjustedContainerSize.width, height: height)
       } else {
-        let width = listSection.cellModels.reduce(0, { sum, model -> CGFloat in
-          let length = size(for: model, with: constraints)?.width ?? 0
+        width += listSection.cellModels.reduce(0, { sum, model -> CGFloat in
+          let length = size(for: model, with: constraints).width
           return sum + length + constraints.minimumLineSpacing
         })
         return CGSize(width: width, height: adjustedContainerSize.height)
@@ -111,7 +113,7 @@ internal final class ListCellSizeController {
           height += (rowHeight + constraints.minimumLineSpacing)
           rowHeight = 0
         }
-        let modelHeight = size(for: model, with: constraints)?.height ?? 0
+        let modelHeight = size(for: model, with: constraints).height
         rowHeight = max(rowHeight, modelHeight)
       }
       height += (rowHeight + constraints.minimumLineSpacing)
@@ -121,9 +123,7 @@ internal final class ListCellSizeController {
       var maxCellHeightInRow: CGFloat = 0
       var currentRowWidth: CGFloat = 0
       for model in listSection.cellModels {
-        guard let modelSize = size(for: model, with: constraints) else {
-          continue
-        }
+        let modelSize = size(for: model, with: constraints)
         let modelHeight = modelSize.height + constraints.minimumLineSpacing
         let modelWidth = modelSize.width + constraints.minimumInteritemSpacing
         maxCellHeightInRow = max(maxCellHeightInRow, modelHeight)

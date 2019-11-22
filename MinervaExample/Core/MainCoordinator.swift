@@ -41,13 +41,12 @@ public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
     guard model is MarginCellModel else { return nil }
-    let cellModels = listController.cellModels
     let collectionViewBounds = sizeConstraints.containerSize
     let minHeight: CGFloat = 20
-    let dynamicHeight = cellModels.reduce(collectionViewBounds.height) { sum, model -> CGFloat in
-      sum - (listController.size(of: model)?.height ?? 0)
+    let dynamicHeight = listController.listSections.reduce(collectionViewBounds.height) { sum, section -> CGFloat in
+      sum - listController.size(of: section, containerSize: collectionViewBounds).height
     }
-    let marginCellCount = cellModels.filter { $0 is MarginCellModel }.count
+    let marginCellCount = listController.cellModels.filter { $0 is MarginCellModel }.count
     let height = max(minHeight, dynamicHeight / CGFloat(marginCellCount))
     let width = sizeConstraints.adjustedContainerSize.width
     return CGSize(width: width, height: height)
