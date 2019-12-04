@@ -72,28 +72,16 @@ extension ListSection: CustomStringConvertible {
 extension ListSection: Equatable {
 
   private static func areEqual(_ leftModel: ListCellModel?, _ rightModel: ListCellModel?) -> Bool {
-    guard let left = leftModel else {
-      return rightModel == nil
-    }
-    guard let right = rightModel else {
-      return false
-    }
+    guard let left = leftModel else { return rightModel == nil }
+    guard let right = rightModel else { return false }
     return left.identifier == right.identifier
   }
 
   public static func == (lhs: ListSection, rhs: ListSection) -> Bool {
-    guard lhs.identifier == rhs.identifier else {
-      return false
-    }
-    guard lhs.constraints == rhs.constraints else {
-      return false
-    }
-    guard areEqual(lhs.headerModel, rhs.headerModel) else {
-      return false
-    }
-    guard areEqual(lhs.footerModel, rhs.footerModel) else {
-      return false
-    }
+    guard lhs.identifier == rhs.identifier else { return false }
+    guard lhs.constraints == rhs.constraints else { return false }
+    guard areEqual(lhs.headerModel, rhs.headerModel) else { return false }
+    guard areEqual(lhs.footerModel, rhs.footerModel) else { return false }
     return true
   }
 }

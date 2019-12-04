@@ -31,7 +31,7 @@ public final class ListTests: XCTestCase {
   public func testDynamicSizing() {
     let sizeManager = SizeManager()
     listController.sizeDelegate = sizeManager
-    let marginCellModel = MarginCellModel(location: .bottom)
+    let marginCellModel = MarginCellModel()
     let section = ListSection(cellModels: [marginCellModel], identifier: "Section")
 
     let updateExpectation = expectation(description: "Update Expectation")
