@@ -19,15 +19,17 @@ open class SegmentedControlCellModel: BaseListCellModel {
   fileprivate var selectedSegment: Int
   fileprivate let segmentTitles: [String]
 
-  public init(selectedSegment: Int, segmentTitles: [String]) {
+  public init(identifier: String, selectedSegment: Int, segmentTitles: [String]) {
     self.segmentTitles = segmentTitles
     self.selectedSegment = selectedSegment
-    super.init()
+    super.init(identifier: identifier)
+  }
+
+  public convenience init(selectedSegment: Int, segmentTitles: [String]) {
+    self.init(identifier: "SegmentedControlCellModel", selectedSegment: selectedSegment, segmentTitles: segmentTitles)
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String { "SegmentedControlCellModel" }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

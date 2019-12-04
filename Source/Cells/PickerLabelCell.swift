@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-public final class PickerLabelCellModel: BaseListCellModel {
+open class PickerLabelCellModel: BaseListCellModel {
   public typealias Action = (
     _ cellModel: PickerLabelCellModel,
     _ pickerView: UIPickerView,
@@ -16,8 +16,6 @@ public final class PickerLabelCellModel: BaseListCellModel {
   ) -> Void
 
   fileprivate static let cellMargin: CGFloat = 15.0
-
-  private let cellIdentifier: String
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
 
@@ -29,8 +27,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
 
   public init(identifier: String, pickerData: PickerData, changedValue: Action?) {
     self.helper = PickerLabelCellModelHelper(pickerData: pickerData)
-    self.cellIdentifier = identifier
-    super.init()
+    super.init(identifier: identifier)
     self.helper.changedValue = { [weak self] pickerView, row, component in
       guard let strongSelf = self else { return }
       changedValue?(strongSelf, pickerView, row, component)
@@ -39,11 +36,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return self.cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return helper.pickerData == model.helper.pickerData
       && cellAlignment == model.cellAlignment
@@ -52,7 +45,7 @@ public final class PickerLabelCellModel: BaseListCellModel {
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
-  override public func size(
+  override open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {

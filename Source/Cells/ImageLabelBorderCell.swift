@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
   fileprivate static let labelMargin: CGFloat = 15
 
@@ -36,8 +36,6 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   public var borderColor: UIColor?
   public var maxTextWidth: CGFloat = 600
 
-  private let cellIdentifier: String
-
   public init(
     identifier: String,
     text: String,
@@ -45,12 +43,11 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
     image: UIImage,
     imageSize: CGSize
   ) {
-    self.cellIdentifier = identifier
     self.text = text
     self.font = font
     self.image = image
     self.imageSize = imageSize
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(text: String, font: UIFont, image: UIImage, imageSize: CGSize) {
@@ -58,10 +55,6 @@ public final class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableC
   }
 
   // MARK: - BaseListCellModel
-
-  override public var identifier: String {
-    return cellIdentifier
-  }
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

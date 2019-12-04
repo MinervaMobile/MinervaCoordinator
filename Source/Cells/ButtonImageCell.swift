@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
   fileprivate static let imageMargin: CGFloat = 4.0
 
@@ -33,14 +33,11 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
   fileprivate let font: UIFont
   fileprivate let imageSize: CGSize
 
-  private let cellIdentifier: String
-
   public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
-    self.cellIdentifier = identifier
     self.imageSize = imageSize
     self.text = text
     self.font = font
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(imageSize: CGSize, text: String, font: UIFont) {
@@ -49,11 +46,7 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return self.cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return numberOfLines == model.numberOfLines
       && textAlignment == model.textAlignment

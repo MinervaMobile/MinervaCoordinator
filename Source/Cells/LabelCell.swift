@@ -32,14 +32,12 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
   fileprivate let attributedText: NSAttributedString?
   fileprivate let text: String
   fileprivate let font: UIFont
-  private let cellIdentifier: String
 
   public init(identifier: String, text: String, font: UIFont, attributedText: NSAttributedString? = nil) {
-    self.cellIdentifier = identifier
     self.text = text
     self.font = font
     self.attributedText = attributedText
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(text: String, font: UIFont) {
@@ -59,10 +57,6 @@ open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBinda
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

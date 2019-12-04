@@ -7,11 +7,9 @@
 import Foundation
 import UIKit
 
-public final class DatePickerCellModel: BaseListCellModel {
+open class DatePickerCellModel: BaseListCellModel {
   public typealias Action = (_ cellModel: DatePickerCellModel, _ date: Date) -> Void
   public var changedDate: Action?
-
-  private let cellIdentifier: String
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
 
@@ -23,18 +21,13 @@ public final class DatePickerCellModel: BaseListCellModel {
   public var mode: UIDatePicker.Mode = .date
 
   public init(identifier: String, startDate: Date) {
-    self.cellIdentifier = identifier
     self.startDate = startDate
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return startDate == model.startDate
       && maxControlWidth == model.maxControlWidth

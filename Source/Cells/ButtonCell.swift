@@ -15,8 +15,6 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
 
   public var isSelected = BehaviorSubject<Bool>(value: false)
 
-  private let cellIdentifier: String
-
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var numberOfLines = 0
   public var textVerticalMargin: CGFloat = 15.0
@@ -40,9 +38,8 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
   fileprivate let attributedText: NSAttributedString
 
   public init(identifier: String, attributedText: NSAttributedString) {
-    self.cellIdentifier = identifier
     self.attributedText = attributedText
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(attributedText: NSAttributedString) {
@@ -63,10 +60,6 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

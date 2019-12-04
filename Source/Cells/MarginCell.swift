@@ -7,50 +7,46 @@
 import Foundation
 import UIKit
 
-public final class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
+open class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
 
   public var selectionAction: ((_ cellModel: MarginCellModel, _ indexPath: IndexPath) -> Void)?
-  private let cellIdentifier: String
 
   public var backgroundColor: UIColor?
   public let cellSize: ListCellSize
 
-  public init(identifer: String, cellSize: ListCellSize = .relative) {
-    self.cellIdentifier = identifer
+  public init(identifier: String, cellSize: ListCellSize = .relative) {
     self.cellSize = cellSize
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(cellSize: ListCellSize = .relative) {
-    self.init(identifer: UUID().uuidString, cellSize: cellSize)
+    self.init(identifier: UUID().uuidString, cellSize: cellSize)
   }
 
   public convenience init(identifier: String, height: CGFloat) {
     self.init(
-      identifer: identifier,
+      identifier: identifier,
       cellSize: .explicit(size: CGSize(width: 0, height: height))
     )
   }
 
   public convenience init(identifier: String, width: CGFloat) {
     self.init(
-      identifer: identifier,
+      identifier: identifier,
       cellSize: .explicit(size: CGSize(width: width, height: 0))
     )
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String { cellIdentifier }
-
-  override public func size(
+  override open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
     cellSize
   }
 
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return backgroundColor == model.backgroundColor
       && cellSize == model.cellSize

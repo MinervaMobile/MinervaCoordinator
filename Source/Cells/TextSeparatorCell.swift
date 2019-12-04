@@ -7,11 +7,10 @@
 import Foundation
 import UIKit
 
-public final class TextSeparatorCellModel: BaseListCellModel {
+open class TextSeparatorCellModel: BaseListCellModel {
   public static let separatorHeight: CGFloat = 1
   public static let textMargin: CGFloat = 8
 
-  private let cellIdentifier: String
   public var font = UIFont.preferredFont(forTextStyle: .footnote)
   public var textColor: UIColor?
   public var lineColor: UIColor?
@@ -21,9 +20,8 @@ public final class TextSeparatorCellModel: BaseListCellModel {
   public let text: String
 
   public init(identifier: String, text: String) {
-    self.cellIdentifier = identifier
     self.text = text
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(text: String) {
@@ -32,9 +30,7 @@ public final class TextSeparatorCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String { cellIdentifier }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font

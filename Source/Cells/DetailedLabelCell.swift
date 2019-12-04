@@ -17,13 +17,11 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
 
   fileprivate let attributedTitle: NSAttributedString
   fileprivate let attributedDetails: NSAttributedString
-  private let cellIdentifier: String
 
   public init(identifier: String, attributedTitle: NSAttributedString, attributedDetails: NSAttributedString) {
-    self.cellIdentifier = identifier
     self.attributedTitle = attributedTitle
     self.attributedDetails = attributedDetails
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(attributedTitle: NSAttributedString, attributedDetails: NSAttributedString) {
@@ -34,10 +32,6 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return self.cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
