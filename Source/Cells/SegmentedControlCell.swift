@@ -53,9 +53,7 @@ public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel>
 
   @objc
   private func pressedSegmentedControl(_ sender: UISegmentedControl) {
-    guard let model = self.model else {
-      return
-    }
+    guard let model = self.model else { return }
     model.selectedSegment = sender.selectedSegmentIndex
     model.switchedSegmentAction?(model, sender)
   }

@@ -30,7 +30,7 @@ public final class WelcomePresenter: Presenter {
   // MARK: - Private
 
   private func createSection() -> ListSection {
-    let topDynamicMarginModel = MarginCellModel(location: .top)
+    let topDynamicMarginModel = MarginCellModel()
 
     let logoModel = ImageCellModel(image: Asset.Logo.image, imageSize: CGSize(width: 120.0, height: 120.0))
     logoModel.imageColor = .black
@@ -77,7 +77,7 @@ public final class WelcomePresenter: Presenter {
     existingAccountModel.textColor = .selectable
     existingAccountModel.directionalLayoutMargins.top = 30
 
-    let bottomDynamicMarginModel = MarginCellModel(location: .bottom)
+    let bottomDynamicMarginModel = MarginCellModel()
 
     let cellModels: [ListCellModel] = [
       topDynamicMarginModel,

@@ -52,7 +52,7 @@ public final class SignInPresenter: Presenter {
   // MARK: - Private
 
   private func createSection() -> ListSection {
-    let topDynamicMarginModel = MarginCellModel(location: .top)
+    let topDynamicMarginModel = MarginCellModel()
 
     let logoModel = ImageCellModel(
       identifier: "logoCellModel",
@@ -78,7 +78,7 @@ public final class SignInPresenter: Presenter {
       self?.handleContinueButtonPress()
     }
 
-    let bottomDynamicMarginModel = MarginCellModel(location: .bottom)
+    let bottomDynamicMarginModel = MarginCellModel()
 
     let cellModels = [
       topDynamicMarginModel,

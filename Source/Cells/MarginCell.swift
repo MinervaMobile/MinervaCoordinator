@@ -9,36 +9,33 @@ import UIKit
 
 public final class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
 
-  public enum Location {
-    case top
-    case bottom
-    case other(identifier: String)
-
-    public var cellIdentifier: String {
-      switch self {
-      case .top: return "topDynamicMarginModelIdentifier"
-      case .bottom: return "bottomDynamicMarginModelIdentifier"
-      case .other(let identifier): return identifier
-      }
-    }
-  }
-
   public var selectionAction: ((_ cellModel: MarginCellModel, _ indexPath: IndexPath) -> Void)?
   private let cellIdentifier: String
 
   public var backgroundColor: UIColor?
-  private let cellSize: ListCellSize
+  public let cellSize: ListCellSize
 
-  public init(location: Location, cellSize: ListCellSize = .relative) {
-    self.cellIdentifier = location.cellIdentifier
+  public init(identifer: String, cellSize: ListCellSize = .relative) {
+    self.cellIdentifier = identifer
     self.cellSize = cellSize
     super.init()
   }
 
+  public convenience init(cellSize: ListCellSize = .relative) {
+    self.init(identifer: UUID().uuidString, cellSize: cellSize)
+  }
+
   public convenience init(identifier: String, height: CGFloat) {
     self.init(
-      location: .other(identifier: identifier),
+      identifer: identifier,
       cellSize: .explicit(size: CGSize(width: 0, height: height))
+    )
+  }
+
+  public convenience init(identifier: String, width: CGFloat) {
+    self.init(
+      identifer: identifier,
+      cellSize: .explicit(size: CGSize(width: width, height: 0))
     )
   }
 

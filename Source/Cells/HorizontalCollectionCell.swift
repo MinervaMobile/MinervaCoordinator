@@ -43,26 +43,31 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
+  override public var identifier: String { cellIdentifier }
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
-    return model.section == section
+    guard section == model.section
       && isScrollEnabled == model.isScrollEnabled
       && itemSpacing == model.itemSpacing
       && listController === model.listController
       && numberOfRows == model.numberOfRows
       && backgroundColor == model.backgroundColor
-      && directionalLayoutMargins == model.directionalLayoutMargins
+      && directionalLayoutMargins == model.directionalLayoutMargins else {
+        return false
+    }
+
+    guard section.cellModels.count == model.section.cellModels.count else { return false }
+    for (index, cellModel) in section.cellModels.enumerated() {
+      guard cellModel.identical(to: model.section.cellModels[index]) else { return false }
+    }
+    return true
   }
 
   override public func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
-    let margins = templateProvider().layoutMargins
     let constraints = ListSizeConstraints(
       containerSize: containerSize,
       sectionConstraints: section.constraints)
@@ -70,7 +75,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     let height = section.cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
       max(maxHeight, listController.size(of: cellModel, with: constraints).height)
     }
-    let totalHeight = height + margins.top + margins.bottom
+    let totalHeight = height + directionalLayoutMargins.top + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: containerSize.width, height: totalHeight))
   }
 

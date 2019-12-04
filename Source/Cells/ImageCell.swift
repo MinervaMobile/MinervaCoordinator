@@ -48,8 +48,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
     let width = containerSize.width
-    let cell = templateProvider()
-    let cellHeight = imageSize.height + cell.layoutMargins.top + cell.layoutMargins.bottom
+    let cellHeight = imageSize.height + directionalLayoutMargins.top + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))
   }
 }

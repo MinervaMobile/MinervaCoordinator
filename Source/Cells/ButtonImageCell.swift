@@ -10,8 +10,6 @@ import UIKit
 
 public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
-  fileprivate static let verticalMargin: CGFloat = 10
-  fileprivate static let horizontalMargin: CGFloat = 4.0
   fileprivate static let imageMargin: CGFloat = 4.0
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
@@ -24,7 +22,6 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
   public var textColor: UIColor?
   public var backgroundColor: UIColor?
 
-  public var allButtonsText: [String]
   public var imageContentMode: UIView.ContentMode = .scaleAspectFit
   public var imageColor: UIColor?
 
@@ -43,7 +40,6 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
     self.imageSize = imageSize
     self.text = text
     self.font = font
-    self.allButtonsText = [text]
     super.init()
   }
 
@@ -63,7 +59,6 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
       && textAlignment == model.textAlignment
       && buttonColor == model.buttonColor
       && textColor == model.textColor
-      && allButtonsText == model.allButtonsText
       && imageContentMode == model.imageContentMode
       && imageColor == model.imageColor
       && borderWidth == model.borderWidth
@@ -74,24 +69,6 @@ public final class ButtonImageCellModel: BaseListCellModel, ListSelectableCellMo
       && imageSize == model.imageSize
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
-  }
-
-  override public func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
-    let margins = templateProvider().layoutMargins
-    let rowWidth = containerSize.width
-    let textWidth =
-      rowWidth - margins.left - margins.right - imageSize.width - ButtonImageCellModel.horizontalMargin * 4
-
-    let textHeight = allButtonsText.map { $0.height(constraintedToWidth: textWidth, font: font) }.max() ?? 0
-
-    let height = textHeight
-      + ButtonImageCellModel.verticalMargin * 2
-      + margins.top
-      + margins.bottom
-    return .explicit(size: CGSize(width: rowWidth, height: height))
   }
 
   // MARK: - ListSelectableCellModel
