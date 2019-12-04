@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-public final class TextViewCellModel: BaseListCellModel {
+open class TextViewCellModel: BaseListCellModel {
   public typealias Action = (_ cellModel: TextViewCellModel, _ text: String?) -> Void
 
   public var placeholderText: String? {
@@ -27,8 +27,6 @@ public final class TextViewCellModel: BaseListCellModel {
 
   public var backgroundColor: UIColor?
 
-  private let cellIdentifier: String
-
   public var becomesFirstResponder = false
   public var height: CGFloat = 200
 
@@ -39,11 +37,10 @@ public final class TextViewCellModel: BaseListCellModel {
   fileprivate let helper: TextViewCellModelHelper
 
   public init(identifier: String, text: String?, font: UIFont, changedValue: Action?) {
-    self.cellIdentifier = identifier
     self.text = text
     self.font = font
     self.helper = TextViewCellModelHelper()
-    super.init()
+    super.init(identifier: identifier)
     self.helper.changedTextAction = { [weak self] text -> Void in
       guard let strongSelf = self else { return }
       changedValue?(strongSelf, text)
@@ -52,11 +49,7 @@ public final class TextViewCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return self.cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return height == model.height
       && cursorColor == model.cursorColor
@@ -70,7 +63,7 @@ public final class TextViewCellModel: BaseListCellModel {
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
-  override public func size(
+  override open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {

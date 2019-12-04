@@ -24,7 +24,6 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
 
   private let listController: ListController
   private var section: ListSection
-  private let cellIdentifier: String
 
   public init?(
     identifier: String,
@@ -33,17 +32,14 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     listController: ListController
   ) {
     guard !cellModels.isEmpty else { return nil }
-    self.cellIdentifier = identifier
     self.listController = listController
     self.section = ListSection(cellModels: cellModels, identifier: "\(identifier)-section")
-    super.init()
+    super.init(identifier: identifier)
     self.section.constraints.distribution = distribution
     self.section.constraints.scrollDirection = .horizontal
   }
 
   // MARK: - BaseListCellModel
-
-  override public var identifier: String { cellIdentifier }
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

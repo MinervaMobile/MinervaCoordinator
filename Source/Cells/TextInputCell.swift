@@ -12,7 +12,7 @@ public protocol TextInputCellModelDelegate: AnyObject {
   func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?)
 }
 
-public final class TextInputCellModel: BaseListCellModel {
+open class TextInputCellModel: BaseListCellModel {
   public weak var delegate: TextInputCellModelDelegate?
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
@@ -42,20 +42,15 @@ public final class TextInputCellModel: BaseListCellModel {
   public var placeholderTextColor: UIColor = .white
   public var maxControlWidth: CGFloat = 340
 
-  private let cellIdentifier: String
-
   public init(identifier: String, placeholder: String, font: UIFont) {
-    self.cellIdentifier = identifier
     self.placeholder = placeholder
     self.font = font
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String { cellIdentifier }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return text == model.text
       && font == model.font

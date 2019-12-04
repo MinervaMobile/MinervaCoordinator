@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-public final class SeparatorCellModel: BaseListCellModel {
+open class SeparatorCellModel: BaseListCellModel {
   public static func id(for location: Location) -> String {
     switch location {
     case .bottom(let cellModelID):
@@ -44,7 +44,6 @@ public final class SeparatorCellModel: BaseListCellModel {
   fileprivate let location: Location
   fileprivate let followsLeadingMargin: Bool
   fileprivate let followsTrailingMargin: Bool
-  private let cellID: String
 
   public init(
     location: Location,
@@ -53,19 +52,17 @@ public final class SeparatorCellModel: BaseListCellModel {
     followsLeadingMargin: Bool = false,
     followsTrailingMargin: Bool = false
   ) {
-    self.cellID = Self.id(for: location)
     self.location = location
     self.color = color
     self.height = height
     self.followsLeadingMargin = followsLeadingMargin
     self.followsTrailingMargin = followsTrailingMargin
+    super.init(identifier: Self.id(for: location))
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String { cellID }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return color == model.color
       && height == model.height

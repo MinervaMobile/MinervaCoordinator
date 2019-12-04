@@ -19,21 +19,15 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
 
   fileprivate let attributedText: NSAttributedString
   fileprivate let detailsText: NSAttributedString
-  private let cellIdentifier: String
 
   public init(identifier: String, attributedText: NSAttributedString, detailsText: NSAttributedString) {
     self.attributedText = attributedText
     self.detailsText = detailsText
-    self.cellIdentifier = identifier
-    super.init()
+    super.init(identifier: identifier)
 
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

@@ -33,8 +33,6 @@ open class ImageButtonCardCellModel: BaseListCellModel {
   public var borderColor: UIColor?
   public var maxTextWidth: CGFloat = 600
 
-  private let cellIdentifier: String
-
   public init(
     identifier: String,
     attributedText: NSAttributedString,
@@ -43,20 +41,15 @@ open class ImageButtonCardCellModel: BaseListCellModel {
     imageSize: CGSize,
     isSelected: Bool
   ) {
-    self.cellIdentifier = identifier
     self.attributedText = attributedText
     self.selectedAttributedText = selectedAttributedText
     self.image = image
     self.imageSize = imageSize
     self.isSelected = isSelected
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

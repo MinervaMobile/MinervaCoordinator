@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
   fileprivate static let textMargin: CGFloat = 8
 
   fileprivate let image = BehaviorSubject<UIImage?>(value: nil)
@@ -24,13 +24,10 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
   public var imageColor: UIColor?
   public var backgroundColor: UIColor?
 
-  private let cellIdentifier: String
-
   public init(identifier: String, attributedText: NSAttributedString) {
     self.attributedText = attributedText
-    self.cellIdentifier = identifier
     self.imageSize = CGSize(width: cellSize.width, height: cellSize.height)
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(attributedText: NSAttributedString) {
@@ -39,11 +36,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return self.cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return attributedText == model.attributedText
       && cellSize == model.cellSize
@@ -55,7 +48,7 @@ public final class ImageTextCardCellModel: BaseListCellModel, ListSelectableCell
       && backgroundColor == model.backgroundColor
   }
 
-  override public func size(
+  override open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {

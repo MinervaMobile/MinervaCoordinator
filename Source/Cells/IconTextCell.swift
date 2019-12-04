@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class IconTextCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
@@ -30,18 +30,15 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
   fileprivate let text: String
   fileprivate let font: UIFont
 
-  private let cellIdentifier: String
-
-  public init(cellIdentifier: String, imageSize: CGSize, text: String, font: UIFont) {
-    self.cellIdentifier = text
+  public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
     self.imageSize = imageSize
     self.text = text
     self.font = font
-    super.init()
+    super.init(identifier: identifier)
   }
 
   public convenience init(imageSize: CGSize, text: String, font: UIFont) {
-    self.init(cellIdentifier: text, imageSize: imageSize, text: text, font: font)
+    self.init(identifier: text, imageSize: imageSize, text: text, font: font)
   }
 
   public convenience init(imageSize: CGSize, attributedText: NSAttributedString, font: UIFont) {
@@ -51,9 +48,7 @@ public final class IconTextCellModel: BaseListCellModel, ListSelectableCellModel
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String { cellIdentifier }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return labelLeadingMargin == model.labelLeadingMargin
       && imageColor == model.imageColor

@@ -20,8 +20,6 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
 
-  private let cellIdentifier: String
-
   public var iconColor: UIColor?
   public var iconImageWidthHeight: CGFloat = 0
   public var iconCornerRadius: CGFloat = 0
@@ -39,16 +37,11 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
   public let attributedText: NSAttributedString
 
   public init(identifier: String, attributedText: NSAttributedString) {
-    self.cellIdentifier = identifier
     self.attributedText = attributedText
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

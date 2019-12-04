@@ -10,10 +10,14 @@ import UIKit
 
 open class BaseListCellModel: ListCellModel {
 
-  public init() { }
+  private let cellIdentifier: String?
+
+  public init(identifier: String? = nil) {
+    self.cellIdentifier = identifier
+  }
 
   // MARK: - ListCellModel
-  open var identifier: String { typeIdentifier }
+  open var identifier: String { cellIdentifier ?? typeIdentifier }
   open var cellType: ListCollectionViewCell.Type { cellTypeFromModelName }
 
   open func identical(to model: ListCellModel) -> Bool { true }

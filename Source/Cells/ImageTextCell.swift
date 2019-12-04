@@ -19,19 +19,12 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
   public var imageSize = CGSize(width: 75, height: 75)
   public var imageViewCornerRadius: CGFloat = 0
 
-  private let cellIdentifier: String
-
   public init(identifier: String, attributedText: NSAttributedString) {
-    self.cellIdentifier = identifier
     self.attributedText = attributedText
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String {
-    return self.cellIdentifier
-  }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

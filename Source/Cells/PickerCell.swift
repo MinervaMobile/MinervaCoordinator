@@ -20,15 +20,13 @@ open class PickerCellModel: BaseListCellModel {
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
 
   public var backgroundColor: UIColor?
-  private let cellIdentifier: String
 
   fileprivate let helper: PickerCellModelHelper
 
   public
   init(identifier: String, pickerDataComponents: [PickerDataComponent], changedValue: @escaping Action) {
-    self.cellIdentifier = identifier
     self.helper = PickerCellModelHelper(pickerDataComponents: pickerDataComponents)
-    super.init()
+    super.init(identifier: identifier)
     self.helper.changedValue = { [weak self] pickerView, row, component in
       guard let strongSelf = self else { return }
       changedValue(strongSelf, pickerView, row, component)
@@ -36,8 +34,6 @@ open class PickerCellModel: BaseListCellModel {
   }
 
   // MARK: - BaseListCellModel
-
-  override open var identifier: String { cellIdentifier }
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }

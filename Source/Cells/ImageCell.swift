@@ -7,10 +7,9 @@
 import Foundation
 import UIKit
 
-public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
+open class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
 
   public var selectionAction: ((_ cellModel: ImageCellModel, _ indexPath: IndexPath) -> Void)?
-  private let cellIdentifier: String
   public var imageColor: UIColor?
   public var contentMode: UIView.ContentMode = .scaleAspectFit
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
@@ -25,17 +24,12 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
   public init(identifier: String, image: UIImage, imageSize: CGSize) {
     self.image = image
     self.imageSize = imageSize
-    self.cellIdentifier = identifier
-    super.init()
+    super.init(identifier: identifier)
   }
 
   // MARK: - BaseListCellModel
 
-  override public var identifier: String {
-    return cellIdentifier
-  }
-
-  override public func identical(to model: ListCellModel) -> Bool {
+  override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     return image == model.image
       && imageSize == model.imageSize
@@ -43,7 +37,7 @@ public final class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
       && imageColor == model.imageColor
   }
 
-  override public func size(
+  override open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
