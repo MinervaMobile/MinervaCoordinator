@@ -10,7 +10,7 @@ import UIKit
 
 open class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
 
-  fileprivate static let imageMargin: CGFloat = 4.0
+  public static let imageMargin: CGFloat = 4.0
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
@@ -29,9 +29,9 @@ open class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, Lis
   public var borderRadius: CGFloat = 4
   public var borderColor: UIColor?
 
-  fileprivate let text: String
-  fileprivate let font: UIFont
-  fileprivate let imageSize: CGSize
+  public let text: String
+  public let font: UIFont
+  public let imageSize: CGSize
 
   public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
     self.imageSize = imageSize
