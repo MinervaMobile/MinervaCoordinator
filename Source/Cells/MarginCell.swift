@@ -14,13 +14,9 @@ open class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
   public var backgroundColor: UIColor?
   public let cellSize: ListCellSize
 
-  public init(identifier: String, cellSize: ListCellSize = .relative) {
+  public init(identifier: String = UUID().uuidString, cellSize: ListCellSize = .relative) {
     self.cellSize = cellSize
     super.init(identifier: identifier)
-  }
-
-  public convenience init(cellSize: ListCellSize = .relative) {
-    self.init(identifier: UUID().uuidString, cellSize: cellSize)
   }
 
   public convenience init(identifier: String, height: CGFloat) {

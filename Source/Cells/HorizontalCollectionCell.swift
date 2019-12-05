@@ -53,11 +53,8 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
         return false
     }
 
-    guard section.cellModels.count == model.section.cellModels.count else { return false }
-    for (index, cellModel) in section.cellModels.enumerated() {
-      guard cellModel.identical(to: model.section.cellModels[index]) else { return false }
-    }
-    return true
+    guard section.cellModels.count == model.section.cellModels.count else { return false }    
+    return section.cellModels.elementsEqual(model.section.cellModels, by: { $0.identical(to: $1) })
   }
 
   override public func size(
