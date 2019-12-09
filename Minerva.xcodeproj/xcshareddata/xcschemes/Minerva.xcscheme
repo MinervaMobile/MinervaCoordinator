@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1110"
+   LastUpgradeVersion = "1120"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F5587D0E22502B10004223E5"
-               BuildableName = "MinervaExample.app"
-               BlueprintName = "MinervaExample"
-               ReferencedContainer = "container:MinervaExample.xcodeproj">
+               BlueprintIdentifier = "F5587D4422502BF2004223E5"
+               BuildableName = "Minerva.framework"
+               BlueprintName = "Minerva"
+               ReferencedContainer = "container:Minerva.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,17 +27,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F5587D4422502BF2004223E5"
-            BuildableName = "Minerva.framework"
-            BlueprintName = "Minerva"
-            ReferencedContainer = "container:MinervaExample.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -47,7 +37,7 @@
                BlueprintIdentifier = "F53EAF00237B01A200CB7FFA"
                BuildableName = "MinervaTests.xctest"
                BlueprintName = "MinervaTests"
-               ReferencedContainer = "container:MinervaExample.xcodeproj">
+               ReferencedContainer = "container:Minerva.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -62,16 +52,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F5587D0E22502B10004223E5"
-            BuildableName = "MinervaExample.app"
-            BlueprintName = "MinervaExample"
-            ReferencedContainer = "container:MinervaExample.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -79,16 +59,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F5587D0E22502B10004223E5"
-            BuildableName = "MinervaExample.app"
-            BlueprintName = "MinervaExample"
-            ReferencedContainer = "container:MinervaExample.xcodeproj">
+            BlueprintIdentifier = "F5587D4422502BF2004223E5"
+            BuildableName = "Minerva.framework"
+            BlueprintName = "Minerva"
+            ReferencedContainer = "container:Minerva.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

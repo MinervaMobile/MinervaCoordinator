@@ -53,7 +53,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
         return false
     }
 
-    guard section.cellModels.count == model.section.cellModels.count else { return false }    
+    guard section.cellModels.count == model.section.cellModels.count else { return false }
     return section.cellModels.elementsEqual(model.section.cellModels, by: { $0.identical(to: $1) })
   }
 

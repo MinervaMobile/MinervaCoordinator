@@ -53,7 +53,11 @@ public final class FakePresenter: Presenter {
       LabelAccessoryCellModel(identifier: "LabelAccessoryCellModel", attributedText: attrText),
       LabelCellModel(identifier: "LabelCellModel", attributedText: attrText),
       MarginCellModel(identifier: "MarginCellModel", height: size.height),
-      PickerCellModel(identifier: "PickerCellModel", pickerDataComponents: [], changedValue: { _, _, _, _ in }),
+      PickerCellModel(
+        identifier: "PickerCellModel",
+        pickerDataComponents: [component],
+        changedValue: { _, _, _, _ in }
+      ),
       PickerLabelCellModel(identifier: "PickerLabelCellModel", pickerData: pickerData, changedValue: { _, _, _, _ in }),
       SegmentedControlCellModel(selectedSegment: 0, segmentTitles: [text]),
       SeparatorCellModel(location: .bottom(cellModelID: "SeparatorCellModel"), color: color),

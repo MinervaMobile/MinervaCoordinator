@@ -17,6 +17,6 @@ jobs:
         - gem install slather
       script:
         - pod lib lint
-        - set -o pipefail && xcodebuild -workspace MinervaExample.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.2.2' build test | xcpretty
+        - set -o pipefail && xcodebuild -workspace Minerva.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.2.2' build test | xcpretty
         - slather
         - bash <(curl -s https://codecov.io/bash)
