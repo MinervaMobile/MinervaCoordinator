@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26CD12BC8E33D2B3DB8C382D /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */; };
-		9EE20A0D99E625453BA67CEC /* Pods_MinervaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4093657907121EEEED2E0000 /* Pods_MinervaTests.framework */; };
-		B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */; };
+		4DE327850FF49AFEC16C175D /* Pods_MinervaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D864358B969EBA9A2A5B2C /* Pods_MinervaTests.framework */; };
+		758EB48139BCB1C2342F5259 /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F894AA3B8FF05450A2493EC /* Pods_Minerva.framework */; };
+		BCF4BF4F0A65F698E0A36C37 /* Pods_MinervaCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8A5CBCB0E7FD0A7C24C6DC /* Pods_MinervaCatalog.framework */; };
+		F14DDADCF72D3144019FAEE1 /* Pods_MinervaExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B808D4A4F47A139C51149BEA /* Pods_MinervaExample.framework */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
 		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
 		F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F897233C016F00012C5E /* SettingsCoordinator.swift */; };
 		F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F899233C05E500012C5E /* UserListCoordinator.swift */; };
 		F501F89C233C0A7C00012C5E /* WorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */; };
 		F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F89D233C0E5900012C5E /* FilterCoordinator.swift */; };
+		F53A9F7A239E874C0004C462 /* CatalogAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A9F79239E874C0004C462 /* CatalogAppDelegate.swift */; };
+		F53A9F7E239E874C0004C462 /* CatalogCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A9F7D239E874C0004C462 /* CatalogCoordinator.swift */; };
+		F53A9F83239E874D0004C462 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F53A9F82239E874D0004C462 /* Assets.xcassets */; };
+		F53A9F86239E874D0004C462 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F53A9F84239E874D0004C462 /* LaunchScreen.storyboard */; };
+		F53A9F8C239E87880004C462 /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
+		F53A9F8D239E87880004C462 /* Minerva.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F53A9F94239E8B300004C462 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A9F93239E8B300004C462 /* CatalogPresenter.swift */; };
 		F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */; };
 		F53EAF06237B01A200CB7FFA /* Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5587D4522502BF2004223E5 /* Minerva.framework */; };
 		F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5587D1222502B10004223E5 /* AppDelegate.swift */; };
@@ -131,6 +139,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F53A9F8E239E87880004C462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5587D0722502B10004223E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5587D4422502BF2004223E5;
+			remoteInfo = Minerva;
+		};
 		F53EAF07237B01A200CB7FFA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5587D0722502B10004223E5 /* Project object */;
@@ -155,6 +170,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		F53A9F90239E87880004C462 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F53A9F8D239E87880004C462 /* Minerva.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5587D5122502BF3004223E5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,20 +195,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		028490B65F4CF7741CF4C814 /* Pods_MinervaExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FC688EE31DEC0334FCE22E6 /* Pods-MinervaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaTests/Pods-MinervaTests.debug.xcconfig"; sourceTree = "<group>"; };
-		298C26427E5428AB634D99F9 /* Pods-Minerva.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minerva.release.xcconfig"; path = "Target Support Files/Pods-Minerva/Pods-Minerva.release.xcconfig"; sourceTree = "<group>"; };
-		315E398B8E773FD39750CB3C /* Pods_MinervaExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AA05F127BF57B2F04B31D5A /* Pods-Minerva.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minerva.debug.xcconfig"; path = "Target Support Files/Pods-Minerva/Pods-Minerva.debug.xcconfig"; sourceTree = "<group>"; };
-		3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4093657907121EEEED2E0000 /* Pods_MinervaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CD832F1A0AB69B3BAB146B5 /* Pods-MinervaExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		642F154AAFFFCF52EA421705 /* Pods-MinervaExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExample.release.xcconfig"; path = "Target Support Files/Pods-MinervaExample/Pods-MinervaExample.release.xcconfig"; sourceTree = "<group>"; };
-		794B30D337D008D16C59665A /* Pods-MinervaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaTests/Pods-MinervaTests.release.xcconfig"; sourceTree = "<group>"; };
-		7F7CEFBA4112F57545A1B92D /* Pods-MinervaExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-MinervaExampleUITests/Pods-MinervaExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExample.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExample/Pods-MinervaExample.debug.xcconfig"; sourceTree = "<group>"; };
-		F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		19B1A49626EBC6688C5D0182 /* Pods-MinervaExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExample.release.xcconfig"; path = "Target Support Files/Pods-MinervaExample/Pods-MinervaExample.release.xcconfig"; sourceTree = "<group>"; };
+		30574CD790300DDF62183CA3 /* Pods-MinervaCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.release.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.release.xcconfig"; sourceTree = "<group>"; };
+		46D864358B969EBA9A2A5B2C /* Pods_MinervaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F26C9C6123F223D8D2A7D24 /* Pods-MinervaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaTests/Pods-MinervaTests.release.xcconfig"; sourceTree = "<group>"; };
+		7A804BA3DA6397E846539756 /* Pods-MinervaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaTests/Pods-MinervaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8EEC9CB0A5029ABAEF6EB976 /* Pods-MinervaExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExample.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExample/Pods-MinervaExample.debug.xcconfig"; sourceTree = "<group>"; };
+		8F894AA3B8FF05450A2493EC /* Pods_Minerva.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Minerva.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1D36A2B95CCD2FE96DED734 /* Pods-Minerva.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minerva.release.xcconfig"; path = "Target Support Files/Pods-Minerva/Pods-Minerva.release.xcconfig"; sourceTree = "<group>"; };
+		B808D4A4F47A139C51149BEA /* Pods_MinervaExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD8A5CBCB0E7FD0A7C24C6DC /* Pods_MinervaCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD7E08DF307AD86731A09D21 /* Pods-MinervaCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.debug.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.debug.xcconfig"; sourceTree = "<group>"; };
+		DF9D897033AFB93F19B781AB /* Pods-Minerva.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Minerva.debug.xcconfig"; path = "Target Support Files/Pods-Minerva/Pods-Minerva.debug.xcconfig"; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		F501F882233BE1BC00012C5E /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		F501F886233BE23700012C5E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +217,14 @@
 		F501F899233C05E500012C5E /* UserListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoordinator.swift; sourceTree = "<group>"; };
 		F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCoordinator.swift; sourceTree = "<group>"; };
 		F501F89D233C0E5900012C5E /* FilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCoordinator.swift; sourceTree = "<group>"; };
+		F53A9F77239E874C0004C462 /* MinervaCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinervaCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F53A9F79239E874C0004C462 /* CatalogAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogAppDelegate.swift; sourceTree = "<group>"; };
+		F53A9F7D239E874C0004C462 /* CatalogCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCoordinator.swift; sourceTree = "<group>"; };
+		F53A9F82239E874D0004C462 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F53A9F85239E874D0004C462 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F53A9F87239E874D0004C462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F53A9F8B239E87660004C462 /* MinervaCatalog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MinervaCatalog.entitlements; sourceTree = "<group>"; };
+		F53A9F93239E8B300004C462 /* CatalogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPresenter.swift; sourceTree = "<group>"; };
 		F53D0B6A2378F0780051A063 /* MinervaExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MinervaExample.entitlements; sourceTree = "<group>"; };
 		F53EAF01237B01A200CB7FFA /* MinervaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinervaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
@@ -311,16 +343,24 @@
 		F5EF2DAF2344FBE300A0073E /* ListExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExtensions.swift; sourceTree = "<group>"; };
 		F5F08AF323192C4900C249E9 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F5F08AF523192C9B00C249E9 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
-		FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MinervaExampleTests/Pods-MinervaExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F53A9F74239E874C0004C462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F53A9F8C239E87880004C462 /* Minerva.framework in Frameworks */,
+				BCF4BF4F0A65F698E0A36C37 /* Pods_MinervaCatalog.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F53EAEFE237B01A200CB7FFA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F53EAF06237B01A200CB7FFA /* Minerva.framework in Frameworks */,
-				9EE20A0D99E625453BA67CEC /* Pods_MinervaTests.framework in Frameworks */,
+				4DE327850FF49AFEC16C175D /* Pods_MinervaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5587D4C22502BF3004223E5 /* Minerva.framework in Frameworks */,
-				B67FB22A5C1E01E16CAF5177 /* Pods_MinervaExample.framework in Frameworks */,
+				F14DDADCF72D3144019FAEE1 /* Pods_MinervaExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +377,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26CD12BC8E33D2B3DB8C382D /* Pods_Minerva.framework in Frameworks */,
+				758EB48139BCB1C2342F5259 /* Pods_Minerva.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,28 +387,25 @@
 		3F41C872B74F50848A9979C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3AA05F127BF57B2F04B31D5A /* Pods-Minerva.debug.xcconfig */,
-				298C26427E5428AB634D99F9 /* Pods-Minerva.release.xcconfig */,
-				A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */,
-				642F154AAFFFCF52EA421705 /* Pods-MinervaExample.release.xcconfig */,
-				FA706EAEC64A19405A8C33E9 /* Pods-MinervaExampleTests.debug.xcconfig */,
-				F174FBE1611FD1B7E507B4C7 /* Pods-MinervaExampleTests.release.xcconfig */,
-				5CD832F1A0AB69B3BAB146B5 /* Pods-MinervaExampleUITests.debug.xcconfig */,
-				7F7CEFBA4112F57545A1B92D /* Pods-MinervaExampleUITests.release.xcconfig */,
-				0FC688EE31DEC0334FCE22E6 /* Pods-MinervaTests.debug.xcconfig */,
-				794B30D337D008D16C59665A /* Pods-MinervaTests.release.xcconfig */,
+				DF9D897033AFB93F19B781AB /* Pods-Minerva.debug.xcconfig */,
+				B1D36A2B95CCD2FE96DED734 /* Pods-Minerva.release.xcconfig */,
+				DD7E08DF307AD86731A09D21 /* Pods-MinervaCatalog.debug.xcconfig */,
+				30574CD790300DDF62183CA3 /* Pods-MinervaCatalog.release.xcconfig */,
+				8EEC9CB0A5029ABAEF6EB976 /* Pods-MinervaExample.debug.xcconfig */,
+				19B1A49626EBC6688C5D0182 /* Pods-MinervaExample.release.xcconfig */,
+				7A804BA3DA6397E846539756 /* Pods-MinervaTests.debug.xcconfig */,
+				6F26C9C6123F223D8D2A7D24 /* Pods-MinervaTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		87CC4AA52907F8EF741EBF3A /* Frameworks */ = {
+		E546ACF37FA073F81313CF7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A3E7A0D7D8BD685AA3FB9AA6 /* Pods_Minerva.framework */,
-				3C591C1D4DF0E450A95A3F3F /* Pods_MinervaExample.framework */,
-				315E398B8E773FD39750CB3C /* Pods_MinervaExampleTests.framework */,
-				028490B65F4CF7741CF4C814 /* Pods_MinervaExampleUITests.framework */,
-				4093657907121EEEED2E0000 /* Pods_MinervaTests.framework */,
+				8F894AA3B8FF05450A2493EC /* Pods_Minerva.framework */,
+				CD8A5CBCB0E7FD0A7C24C6DC /* Pods_MinervaCatalog.framework */,
+				B808D4A4F47A139C51149BEA /* Pods_MinervaExample.framework */,
+				46D864358B969EBA9A2A5B2C /* Pods_MinervaTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -384,6 +421,36 @@
 			path = UserList;
 			sourceTree = "<group>";
 		};
+		F53A9F78239E874C0004C462 /* MinervaCatalog */ = {
+			isa = PBXGroup;
+			children = (
+				F53A9F92239E87D50004C462 /* Core */,
+				F53A9F91239E87CA0004C462 /* Resources */,
+			);
+			path = MinervaCatalog;
+			sourceTree = "<group>";
+		};
+		F53A9F91239E87CA0004C462 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F53A9F8B239E87660004C462 /* MinervaCatalog.entitlements */,
+				F53A9F82239E874D0004C462 /* Assets.xcassets */,
+				F53A9F84239E874D0004C462 /* LaunchScreen.storyboard */,
+				F53A9F87239E874D0004C462 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F53A9F92239E87D50004C462 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F53A9F79239E874C0004C462 /* CatalogAppDelegate.swift */,
+				F53A9F7D239E874C0004C462 /* CatalogCoordinator.swift */,
+				F53A9F93239E8B300004C462 /* CatalogPresenter.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		F53EAF02237B01A200CB7FFA /* MinervaTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,12 +464,13 @@
 		F5587D0622502B10004223E5 = {
 			isa = PBXGroup;
 			children = (
-				F5587D1122502B10004223E5 /* MinervaExample */,
 				F5587D4622502BF3004223E5 /* Minerva */,
+				F53A9F78239E874C0004C462 /* MinervaCatalog */,
+				F5587D1122502B10004223E5 /* MinervaExample */,
 				F53EAF02237B01A200CB7FFA /* MinervaTests */,
-				F5587D1022502B10004223E5 /* Products */,
 				3F41C872B74F50848A9979C1 /* Pods */,
-				87CC4AA52907F8EF741EBF3A /* Frameworks */,
+				F5587D1022502B10004223E5 /* Products */,
+				E546ACF37FA073F81313CF7D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -412,6 +480,7 @@
 				F5587D0F22502B10004223E5 /* MinervaExample.app */,
 				F5587D4522502BF2004223E5 /* Minerva.framework */,
 				F53EAF01237B01A200CB7FFA /* MinervaTests.xctest */,
+				F53A9F77239E874C0004C462 /* MinervaCatalog.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -772,15 +841,36 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F53A9F76239E874C0004C462 /* MinervaCatalog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F53A9F8A239E874D0004C462 /* Build configuration list for PBXNativeTarget "MinervaCatalog" */;
+			buildPhases = (
+				76B0CFBD466BEB6E7BFCAB2C /* [CP] Check Pods Manifest.lock */,
+				F53A9F73239E874C0004C462 /* Sources */,
+				F53A9F74239E874C0004C462 /* Frameworks */,
+				F53A9F75239E874C0004C462 /* Resources */,
+				F53A9F90239E87880004C462 /* Embed Frameworks */,
+				80D5C2F854D77E826AC97075 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F53A9F8F239E87880004C462 /* PBXTargetDependency */,
+			);
+			name = MinervaCatalog;
+			productName = MinervaCatalog;
+			productReference = F53A9F77239E874C0004C462 /* MinervaCatalog.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F53EAF00237B01A200CB7FFA /* MinervaTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F53EAF09237B01A200CB7FFA /* Build configuration list for PBXNativeTarget "MinervaTests" */;
 			buildPhases = (
-				A2298392C91630B04977F69F /* [CP] Check Pods Manifest.lock */,
+				8A3A8C066FF44732EC39D582 /* [CP] Check Pods Manifest.lock */,
 				F53EAEFD237B01A200CB7FFA /* Sources */,
 				F53EAEFE237B01A200CB7FFA /* Frameworks */,
 				F53EAEFF237B01A200CB7FFA /* Resources */,
-				D2B7E93D06EAB4F65EB5468C /* [CP] Embed Pods Frameworks */,
+				66DB51C3DB05B56CA595EDF4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -797,13 +887,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5587D3722502B12004223E5 /* Build configuration list for PBXNativeTarget "MinervaExample" */;
 			buildPhases = (
-				822BF3B8EDB96AD43E2A1037 /* [CP] Check Pods Manifest.lock */,
+				914D1051B16F0F39D6F7766B /* [CP] Check Pods Manifest.lock */,
 				F53EAEFC237B007100CB7FFA /* Run SwiftLint */,
 				F5587D0B22502B10004223E5 /* Sources */,
 				F5587D0C22502B10004223E5 /* Frameworks */,
 				F5587D0D22502B10004223E5 /* Resources */,
 				F5587D5122502BF3004223E5 /* Embed Frameworks */,
-				9505A389FA374AC94D341B39 /* [CP] Embed Pods Frameworks */,
+				729B913FBA05423EE8B8147A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -819,7 +909,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5587D5022502BF3004223E5 /* Build configuration list for PBXNativeTarget "Minerva" */;
 			buildPhases = (
-				43887F677E9226AFE80D642C /* [CP] Check Pods Manifest.lock */,
+				E8B5D2EF1203233C6DDCCA60 /* [CP] Check Pods Manifest.lock */,
 				F5587D4022502BF2004223E5 /* Headers */,
 				F5587D4122502BF2004223E5 /* Sources */,
 				F5587D4222502BF2004223E5 /* Frameworks */,
@@ -844,6 +934,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Optimize Fitness, Inc.";
 				TargetAttributes = {
+					F53A9F76239E874C0004C462 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
 					F53EAF00237B01A200CB7FFA = {
 						CreatedOnToolsVersion = 11.2.1;
 						TestTargetID = F5587D0E22502B10004223E5;
@@ -857,7 +950,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F5587D0A22502B10004223E5 /* Build configuration list for PBXProject "MinervaExample" */;
+			buildConfigurationList = F5587D0A22502B10004223E5 /* Build configuration list for PBXProject "Minerva" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -870,6 +963,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				F53A9F76239E874C0004C462 /* MinervaCatalog */,
 				F5587D0E22502B10004223E5 /* MinervaExample */,
 				F5587D4422502BF2004223E5 /* Minerva */,
 				F53EAF00237B01A200CB7FFA /* MinervaTests */,
@@ -878,6 +972,15 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F53A9F75239E874C0004C462 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F53A9F86239E874D0004C462 /* LaunchScreen.storyboard in Resources */,
+				F53A9F83239E874D0004C462 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F53EAEFF237B01A200CB7FFA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -904,51 +1007,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		43887F677E9226AFE80D642C /* [CP] Check Pods Manifest.lock */ = {
+		66DB51C3DB05B56CA595EDF4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Minerva-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		822BF3B8EDB96AD43E2A1037 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MinervaExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9505A389FA374AC94D341B39 /* [CP] Embed Pods Frameworks */ = {
+		729B913FBA05423EE8B8147A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -965,7 +1041,46 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaExample/Pods-MinervaExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A2298392C91630B04977F69F /* [CP] Check Pods Manifest.lock */ = {
+		76B0CFBD466BEB6E7BFCAB2C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MinervaCatalog-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80D5C2F854D77E826AC97075 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A3A8C066FF44732EC39D582 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -987,21 +1102,48 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D2B7E93D06EAB4F65EB5468C /* [CP] Embed Pods Frameworks */ = {
+		914D1051B16F0F39D6F7766B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MinervaExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinervaTests/Pods-MinervaTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8B5D2EF1203233C6DDCCA60 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Minerva-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F53EAEFC237B007100CB7FFA /* Run SwiftLint */ = {
@@ -1025,6 +1167,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F53A9F73239E874C0004C462 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F53A9F7E239E874C0004C462 /* CatalogCoordinator.swift in Sources */,
+				F53A9F7A239E874C0004C462 /* CatalogAppDelegate.swift in Sources */,
+				F53A9F94239E8B300004C462 /* CatalogPresenter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F53EAEFD237B01A200CB7FFA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1161,6 +1313,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F53A9F8F239E87880004C462 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5587D4422502BF2004223E5 /* Minerva */;
+			targetProxy = F53A9F8E239E87880004C462 /* PBXContainerItemProxy */;
+		};
 		F53EAF08237B01A200CB7FFA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F5587D4422502BF2004223E5 /* Minerva */;
@@ -1179,6 +1336,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		F53A9F84239E874D0004C462 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F53A9F85239E874D0004C462 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		F5587D1B22502B11004223E5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1190,9 +1355,55 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F53A9F88239E874D0004C462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD7E08DF307AD86731A09D21 /* Pods-MinervaCatalog.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MinervaCatalog/Resources/MinervaCatalog.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = 4VDN74SBH7;
+				INFOPLIST_FILE = MinervaCatalog/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaCatalog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F53A9F89239E874D0004C462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30574CD790300DDF62183CA3 /* Pods-MinervaCatalog.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MinervaCatalog/Resources/MinervaCatalog.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = 4VDN74SBH7;
+				INFOPLIST_FILE = MinervaCatalog/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.MinervaCatalog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F53EAF0A237B01A200CB7FFA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FC688EE31DEC0334FCE22E6 /* Pods-MinervaTests.debug.xcconfig */;
+			baseConfigurationReference = 7A804BA3DA6397E846539756 /* Pods-MinervaTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -1213,7 +1424,7 @@
 		};
 		F53EAF0B237B01A200CB7FFA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 794B30D337D008D16C59665A /* Pods-MinervaTests.release.xcconfig */;
+			baseConfigurationReference = 6F26C9C6123F223D8D2A7D24 /* Pods-MinervaTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
@@ -1350,7 +1561,7 @@
 		};
 		F5587D3822502B12004223E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5E48AD9006E2F3EB5BB6DC9 /* Pods-MinervaExample.debug.xcconfig */;
+			baseConfigurationReference = 8EEC9CB0A5029ABAEF6EB976 /* Pods-MinervaExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MinervaExample/Resources/MinervaExample.entitlements;
@@ -1373,7 +1584,7 @@
 		};
 		F5587D3922502B12004223E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 642F154AAFFFCF52EA421705 /* Pods-MinervaExample.release.xcconfig */;
+			baseConfigurationReference = 19B1A49626EBC6688C5D0182 /* Pods-MinervaExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MinervaExample/Resources/MinervaExample.entitlements;
@@ -1396,13 +1607,14 @@
 		};
 		F5587D4E22502BF3004223E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AA05F127BF57B2F04B31D5A /* Pods-Minerva.debug.xcconfig */;
+			baseConfigurationReference = DF9D897033AFB93F19B781AB /* Pods-Minerva.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1418,6 +1630,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.Minerva;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1428,13 +1641,14 @@
 		};
 		F5587D4F22502BF3004223E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 298C26427E5428AB634D99F9 /* Pods-Minerva.release.xcconfig */;
+			baseConfigurationReference = B1D36A2B95CCD2FE96DED734 /* Pods-Minerva.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = 4VDN74SBH7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1450,6 +1664,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fitness.optimize.Minerva;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1460,6 +1675,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F53A9F8A239E874D0004C462 /* Build configuration list for PBXNativeTarget "MinervaCatalog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F53A9F88239E874D0004C462 /* Debug */,
+				F53A9F89239E874D0004C462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F53EAF09237B01A200CB7FFA /* Build configuration list for PBXNativeTarget "MinervaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1469,7 +1693,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5587D0A22502B10004223E5 /* Build configuration list for PBXProject "MinervaExample" */ = {
+		F5587D0A22502B10004223E5 /* Build configuration list for PBXProject "Minerva" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5587D3522502B12004223E5 /* Debug */,

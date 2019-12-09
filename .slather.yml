@@ -1,10 +1,11 @@
 # .slather.yml
 
 coverage_service: cobertura_xml
-xcodeproj: MinervaExample.xcodeproj
-workspace: MinervaExample.xcworkspace
+xcodeproj: Minerva.xcodeproj
+workspace: Minerva.xcworkspace
 scheme: Minerva
 ignore:
+  - MinervaCatalog/*
   - MinervaExample/*
   - MinervaTests/*
   - Pods/*
