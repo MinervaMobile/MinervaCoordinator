@@ -64,6 +64,7 @@ public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
+    backgroundView = UIView()
     contentView.addSubview(label)
     contentView.addSubview(detailedLabel)
     setupConstraints()
@@ -76,9 +77,7 @@ public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
-    contentView.backgroundColor = model.backgroundColor
-    label.backgroundColor = model.backgroundColor
-    detailedLabel.backgroundColor = model.backgroundColor
+    backgroundView?.backgroundColor = model.backgroundColor
   }
 }
 

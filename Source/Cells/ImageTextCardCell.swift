@@ -11,7 +11,7 @@ import UIKit
 open class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
   fileprivate static let textMargin: CGFloat = 8
 
-  fileprivate let image = BehaviorSubject<UIImage?>(value: nil)
+  public let image = BehaviorSubject<UIImage?>(value: nil)
 
   public let attributedText: NSAttributedString
   public var cellSize = CGSize(width: 140, height: 170)
@@ -52,7 +52,7 @@ open class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, L
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell
   ) -> ListCellSize {
-    return .explicit(size: cellSize)
+    return .autolayout
   }
 
   // MARK: - ListSelectableCellModel
@@ -78,8 +78,6 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
-    label.adjustsFontSizeToFitWidth = true
-    label.minimumScaleFactor = 0.5
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
     label.textAlignment = .left
@@ -124,9 +122,10 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
 // MARK: - Constraints
 extension ImageTextCardCell {
   private func setupConstraints() {
+    let layoutGuide = contentView.layoutMarginsGuide
     imageView.anchor(
-      toLeading: contentView.leadingAnchor,
-      top: contentView.topAnchor,
+      toLeading: layoutGuide.leadingAnchor,
+      top: layoutGuide.topAnchor,
       trailing: nil,
       bottom: nil
     )
@@ -136,16 +135,16 @@ extension ImageTextCardCell {
     imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
     imageWidthConstraint?.isActive = true
     label.anchor(
-      toLeading: contentView.leadingAnchor,
+      toLeading: layoutGuide.leadingAnchor,
       top: nil,
-      trailing: contentView.trailingAnchor,
+      trailing: layoutGuide.trailingAnchor,
       bottom: nil
     )
     label.topAnchor.constraint(
       equalTo: imageView.bottomAnchor,
       constant: ImageTextCardCellModel.textMargin
     ).isActive = true
-    label.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor).isActive = true
+    label.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor).isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
