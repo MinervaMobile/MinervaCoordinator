@@ -36,7 +36,13 @@ open class TextViewCellModel: BaseListCellModel {
   fileprivate var text: String?
   fileprivate let helper: TextViewCellModelHelper
 
-  public init(identifier: String, text: String?, font: UIFont, changedValue: Action?) {
+  public init(
+    identifier: String,
+    text: String?,
+    font: UIFont,
+    changedValue: Action? = nil,
+    finishEditingTextAction: Action? = nil
+  ) {
     self.text = text
     self.font = font
     self.helper = TextViewCellModelHelper()
@@ -44,6 +50,10 @@ open class TextViewCellModel: BaseListCellModel {
     self.helper.changedTextAction = { [weak self] text -> Void in
       guard let strongSelf = self else { return }
       changedValue?(strongSelf, text)
+    }
+    self.helper.finishEditingTextAction = { [weak self] text -> Void in
+      guard let strongSelf = self else { return }
+      finishEditingTextAction?(strongSelf, text)
     }
   }
 
@@ -93,7 +103,7 @@ public final class TextViewCell: BaseListCell<TextViewCellModel> {
     super.bind(model: model, sizing: sizing)
     textView.font = model.font
 
-    if let text = model.text {
+    if let text = model.text, !text.isEmpty {
       textView.text = text
     } else {
       textView.text = model.placeholderText
@@ -104,7 +114,7 @@ public final class TextViewCell: BaseListCell<TextViewCellModel> {
     textView.tintColor = model.cursorColor
     textView.textColor = model.textColor
 
-    if model.text != nil {
+    if let text = model.text, !text.isEmpty {
       textView.textColor = model.textColor
     } else {
       textView.textColor = model.placeholderTextColor
@@ -123,6 +133,7 @@ private class TextViewCellModelHelper: NSObject {
   fileprivate typealias Action = (_ text: String?) -> Void
 
   fileprivate var changedTextAction: Action?
+  fileprivate var finishEditingTextAction: Action?
   fileprivate var placeholderText: String?
   fileprivate var placeholderTextColor: UIColor?
   fileprivate var textColor: UIColor?
@@ -148,6 +159,7 @@ extension TextViewCellModelHelper: UITextViewDelegate {
   }
 
   public func textViewDidEndEditing(_ textView: UITextView) {
+    finishEditingTextAction?(textView.text)
     guard textView.text.isEmpty else {
       return
     }
