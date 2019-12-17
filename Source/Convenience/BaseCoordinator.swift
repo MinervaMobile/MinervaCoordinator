@@ -58,17 +58,16 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
   open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
     listController.willDisplay()
     presentationDisposable?.dispose()
-    presentationDisposable = nil
     presentationDisposable = presenter.sections
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
   }
   open func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool) {
-    presentationDisposable?.dispose()
-    presentationDisposable = nil
   }
   open func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool) {
     listController.didEndDisplaying()
+    presentationDisposable?.dispose()
+    presentationDisposable = nil
   }
   open func viewController(
     _ viewController: ViewController,
