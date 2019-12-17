@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ImageTextCardCellModel: BaseListCellModel {
   fileprivate static let textMargin: CGFloat = 8
 
   public let image = BehaviorSubject<UIImage?>(value: nil)
@@ -54,14 +54,6 @@ open class ImageTextCardCellModel: BaseListCellModel, ListSelectableCellModel, L
   ) -> ListCellSize {
     return .autolayout
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = ImageTextCardCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = ImageTextCardCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellModel> {

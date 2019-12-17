@@ -44,7 +44,7 @@ public final class CreateUserPresenter: Presenter {
   }
 
   private func loadCellModels() -> [ListCellModel] {
-    let doneModel = LabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
+    let doneModel = SelectableLabelCellModel(identifier: "doneModel", text: "Save", font: .title1)
     doneModel.directionalLayoutMargins.leading = 0
     doneModel.directionalLayoutMargins.trailing = 0
     doneModel.textAlignment = .center

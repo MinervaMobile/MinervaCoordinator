@@ -147,6 +147,19 @@ extension CoordinatorNavigator {
       self?.removeChild(coordinator)
     }
   }
+
+  /// Pops a coordinator from the navigators navigation controller.
+  /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
+  public func pop(animated: Bool = true) {
+    _ = navigator.popViewController(animated: animated)
+  }
+
+  /// Pops to a coordinator on the navigators navigation controller.
+  /// - Parameter coordinator: The coordinator to pop the navigation stack to.
+  /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
+  public func popToCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
+    _ = navigator.popToViewController(coordinator.baseViewController, animated: animated)
+  }
 }
 
 extension UIModalPresentationStyle {

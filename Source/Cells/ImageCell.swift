@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-open class ImageCellModel: BaseListCellModel, ListSelectableCellModel {
+open class ImageCellModel: BaseListCellModel {
 
   public var selectionAction: ((_ cellModel: ImageCellModel, _ indexPath: IndexPath) -> Void)?
   public var imageColor: UIColor?

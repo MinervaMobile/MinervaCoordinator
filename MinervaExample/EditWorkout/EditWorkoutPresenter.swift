@@ -52,7 +52,7 @@ public final class EditWorkoutPresenter: Presenter {
   }
 
   private func loadCellModels(with workout: WorkoutProto) -> [ListCellModel] {
-    let doneModel = LabelCellModel(
+    let doneModel = SelectableLabelCellModel(
       identifier: "doneModel",
       text: "Save",
       font: .title1)

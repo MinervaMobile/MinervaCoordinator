@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class IconTextCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class IconTextCellModel: BaseListCellModel {
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
@@ -62,14 +62,6 @@ open class IconTextCellModel: BaseListCellModel, ListSelectableCellModel, ListBi
       && font == model.font
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = IconTextCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = IconTextCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {

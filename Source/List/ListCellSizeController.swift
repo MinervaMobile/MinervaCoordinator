@@ -89,6 +89,17 @@ internal final class ListCellSizeController {
     let adjustedContainerSize = constraints.containerSize.adjust(for: listSection.constraints.inset)
     var height: CGFloat = listSection.constraints.inset.top + listSection.constraints.inset.bottom
     var width: CGFloat = listSection.constraints.inset.left + listSection.constraints.inset.right
+    func adjustDimensions(for model: ListCellModel?) {
+      guard let model = model else { return }
+      let cellSize = size(for: model, with: constraints)
+      if isVertical {
+        height += cellSize.height
+      } else {
+        width += cellSize.width
+      }
+    }
+    adjustDimensions(for: listSection.headerModel)
+    adjustDimensions(for: listSection.footerModel)
 
     switch listSection.constraints.distribution {
     case .entireRow:

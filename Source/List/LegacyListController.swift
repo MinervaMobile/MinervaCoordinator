@@ -106,16 +106,17 @@ public final class LegacyListController: NSObject, ListController {
     sizeController.clearCache()
   }
 
-  public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
+  public func indexPaths(for cellModel: ListCellModel) -> [IndexPath] {
     dispatchPrecondition(condition: .onQueue(.main))
+    var indexPaths = [IndexPath]()
     for (sectionIndex, section) in listSections.enumerated() {
       for (rowIndex, model) in section.cellModels.enumerated() {
-        if cellModel.identical(to: model) {
-          return IndexPath(item: rowIndex, section: sectionIndex)
+        if cellModel.identifier == model.identifier && cellModel.identical(to: model) {
+          indexPaths.append(IndexPath(item: rowIndex, section: sectionIndex))
         }
       }
     }
-    return nil
+    return indexPaths
   }
 
   public var centerCellModel: ListCellModel? {
@@ -130,18 +131,6 @@ public final class LegacyListController: NSObject, ListController {
     dispatchPrecondition(condition: .onQueue(.main))
     guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else { return nil }
     return model
-  }
-
-  public func cell(at indexPath: IndexPath) -> UICollectionViewCell? {
-    dispatchPrecondition(condition: .onQueue(.main))
-    guard let cell = adapter.collectionView?.cellForItem(at: indexPath) else { return nil }
-    return cell
-  }
-
-  public func cell(for cellModel: ListCellModel) -> UICollectionViewCell? {
-    dispatchPrecondition(condition: .onQueue(.main))
-    guard let indexPath = indexPath(for: cellModel), let cell = cell(at: indexPath) else { return nil }
-    return cell
   }
 
   public func removeCellModel(at indexPath: IndexPath, animated: Bool, completion: Completion?) {

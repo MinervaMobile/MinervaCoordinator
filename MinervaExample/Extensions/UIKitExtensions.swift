@@ -68,30 +68,6 @@ extension CoordinatorNavigator {
   }
 }
 
-extension LabelAccessoryCellModel {
-  public static func createSettingsCellModel(
-    identifier: String? = nil,
-    title: String = "",
-    details: String? = nil,
-    hasChevron: Bool = false
-  ) -> LabelAccessoryCellModel {
-    let text = NSAttributedString(string: title, font: .subheadline, fontColor: .black)
-    let id = identifier ?? "\(title)-\(details ?? "")"
-    let cellModel = LabelAccessoryCellModel(identifier: id, attributedText: text)
-    cellModel.accessoryImage = Asset.Disclosure.image.withRenderingMode(.alwaysTemplate)
-    cellModel.accessoryColor = .darkGray
-    cellModel.directionalLayoutMargins.top = 15
-    cellModel.directionalLayoutMargins.bottom = 15
-    if !hasChevron {
-      cellModel.accessoryImageWidthHeight = 0
-    }
-    if let details = details {
-      cellModel.descriptionText = NSAttributedString(string: details, font: .subheadline, fontColor: .darkGray)
-    }
-    return cellModel
-  }
-}
-
 extension LabelCellModel {
   public static func createSectionHeaderModel(title: String) -> LabelCellModel {
     let cellModel = LabelCellModel(text: title, font: .footnote)

@@ -20,7 +20,9 @@ open class BaseListCellModel: ListCellModel {
   open var identifier: String { cellIdentifier ?? typeIdentifier }
   open var cellType: ListCollectionViewCell.Type { cellTypeFromModelName }
 
-  open func identical(to model: ListCellModel) -> Bool { true }
+  open func identical(to model: ListCellModel) -> Bool {
+    identifier == model.identifier
+  }
   open func size(
     constrainedTo containerSize: CGSize,
     with templateProvider: () -> ListCollectionViewCell

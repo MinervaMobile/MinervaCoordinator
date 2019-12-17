@@ -112,6 +112,8 @@
 		F5C9082B2343C6B20038BD89 /* UpdateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */; };
 		F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
 		F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */; };
+		F5C9F39F23A97A9D009C6B85 /* FilterCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F39E23A97A9D009C6B85 /* FilterCellModel.swift */; };
+		F5C9F3A123A97BB6009C6B85 /* SelectableLabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C5233E561C00983F72 /* UserListRepository.swift */; };
 		F5DA2B98226D367600BA461A /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8B226D367500BA461A /* ListController.swift */; };
@@ -324,6 +326,8 @@
 		F5C9082A2343C6B20038BD89 /* UpdateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserCoordinator.swift; sourceTree = "<group>"; };
 		F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutCoordinator.swift; sourceTree = "<group>"; };
 		F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRepository.swift; sourceTree = "<group>"; };
+		F5C9F39E23A97A9D009C6B85 /* FilterCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellModel.swift; sourceTree = "<group>"; };
+		F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableLabelCellModel.swift; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
 		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
 		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
@@ -622,6 +626,7 @@
 		F576F902226E165E0015D14E /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				F5C9F39E23A97A9D009C6B85 /* FilterCellModel.swift */,
 				F501F89D233C0E5900012C5E /* FilterCoordinator.swift */,
 				F576F903226E165E0015D14E /* FilterPresenter.swift */,
 				F5C908282343C6960038BD89 /* UpdateFilterCoordinator.swift */,
@@ -654,6 +659,7 @@
 			isa = PBXGroup;
 			children = (
 				F562CF382354894D00402122 /* SwiftUITextCell.swift */,
+				F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1209,6 +1215,7 @@
 				F576F92A226E16820015D14E /* EditWorkoutPresenter.swift in Sources */,
 				F576F8CD226DF0050015D14E /* FoundationExtensions.swift in Sources */,
 				F576F89D226DF0050015D14E /* UserCredentials.pb.swift in Sources */,
+				F5C9F39F23A97A9D009C6B85 /* FilterCellModel.swift in Sources */,
 				F576F878226DEFA90015D14E /* TestDataManagerFactory.swift in Sources */,
 				F576F87B226DEFA90015D14E /* TestData.swift in Sources */,
 				F576F8EA226DF04F0015D14E /* DataManagerFactory.swift in Sources */,
@@ -1243,6 +1250,7 @@
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterPresenter.swift in Sources */,
+				F5C9F3A123A97BB6009C6B85 /* SelectableLabelCellModel.swift in Sources */,
 				F562CF392354894D00402122 /* SwiftUITextCell.swift in Sources */,
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
