@@ -30,10 +30,8 @@ public protocol ListController: AnyObject {
   func didEndDisplaying()
   func invalidateLayout()
 
-  func indexPath(for cellModel: ListCellModel) -> IndexPath?
+  func indexPaths(for cellModel: ListCellModel) -> [IndexPath]
   func cellModel(at indexPath: IndexPath) -> ListCellModel?
-  func cell(at indexPath: IndexPath) -> UICollectionViewCell?
-  func cell(for cellModel: ListCellModel) -> UICollectionViewCell?
 
   func scrollTo(
     cellModel: ListCellModel,

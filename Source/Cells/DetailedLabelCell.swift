@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
+open class DetailedLabelCellModel: BaseListCellModel {
   fileprivate static let labelMargin: CGFloat = 16
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
@@ -41,10 +41,6 @@ open class DetailedLabelCellModel: BaseListCellModel, ListSelectableCellModel {
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = DetailedLabelCellModel
-  public var selectionAction: SelectionAction?
 }
 
 public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {

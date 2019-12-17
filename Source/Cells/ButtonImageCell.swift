@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ButtonImageCellModel: BaseListCellModel {
 
   public static let imageMargin: CGFloat = 4.0
 
@@ -63,14 +63,6 @@ open class ButtonImageCellModel: BaseListCellModel, ListSelectableCellModel, Lis
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = ButtonImageCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = ButtonImageCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {

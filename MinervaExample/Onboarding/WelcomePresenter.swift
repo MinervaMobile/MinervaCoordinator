@@ -63,12 +63,12 @@ public final class WelcomePresenter: Presenter {
     let newAccountModel = ButtonCellModel(text: "SETUP NEW ACCOUNT", font: .subheadline, textColor: .white)
     newAccountModel.textAlignment = .center
     newAccountModel.buttonColor = .selectable
-    newAccountModel.selectionAction = { [weak self] _, _ in
+    newAccountModel.buttonAction = { [weak self] _, _ in
       guard let strongSelf = self else { return }
       strongSelf.actionsSubject.onNext(.createAccount)
     }
 
-    let existingAccountModel = LabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
+    let existingAccountModel = SelectableLabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
     existingAccountModel.textAlignment = .center
     existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }

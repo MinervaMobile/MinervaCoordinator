@@ -53,7 +53,7 @@ public final class UpdateFilterPresenter: Presenter {
 
   private func loadCellModels() -> [ListCellModel] {
 
-    let cancelModel = LabelCellModel(identifier: "cancelModel", text: "Remove", font: .title1)
+    let cancelModel = SelectableLabelCellModel(identifier: "cancelModel", text: "Remove", font: .title1)
     cancelModel.directionalLayoutMargins.leading = 0
     cancelModel.directionalLayoutMargins.trailing = 0
     cancelModel.textAlignment = .center
@@ -73,7 +73,7 @@ public final class UpdateFilterPresenter: Presenter {
       strongSelf.actionsSubject.onNext(.update(filter: strongSelf.filter))
     }
 
-    let doneModel = LabelCellModel(identifier: "doneModel", text: "Update", font: .title1)
+    let doneModel = SelectableLabelCellModel(identifier: "doneModel", text: "Update", font: .title1)
     doneModel.directionalLayoutMargins.leading = 0
     doneModel.directionalLayoutMargins.trailing = 0
     doneModel.textAlignment = .center

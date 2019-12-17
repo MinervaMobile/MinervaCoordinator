@@ -8,11 +8,10 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
-  public typealias SelectionAction = (_ model: ButtonCellModel, _ button: UIButton) -> Void
+open class ButtonCellModel: BaseListCellModel {
+  public typealias ButtonAction = (_ model: ButtonCellModel, _ button: UIButton) -> Void
 
-  public var selectionAction: SelectionAction?
-
+  public var buttonAction: ButtonAction?
   public var isSelected = BehaviorSubject<Bool>(value: false)
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
@@ -81,10 +80,6 @@ open class ButtonCellModel: BaseListCellModel, ListBindableCellModel {
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = ButtonCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
@@ -142,7 +137,7 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     backgroundView?.backgroundColor = model.backgroundColor
     button.layer.borderWidth = model.borderWidth
     button.layer.cornerRadius = model.borderRadius
-    button.isUserInteractionEnabled = model.selectionAction != nil
+    button.isUserInteractionEnabled = model.buttonAction != nil
 
     model.isSelected.subscribe(onNext: { [weak self, weak model] isSelected -> Void in
       self?.button.isSelected = isSelected
@@ -154,7 +149,7 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
   @objc
   private func pressedButton(_ sender: UIButton) {
     guard let model = model else { return }
-    model.selectionAction?(model, sender)
+    model.buttonAction?(model, sender)
   }
 }
 

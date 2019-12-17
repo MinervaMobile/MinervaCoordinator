@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ImageLabelBorderCellModel: BaseListCellModel {
 
   fileprivate static let labelMargin: CGFloat = 15
 
@@ -76,14 +76,6 @@ open class ImageLabelBorderCellModel: BaseListCellModel, ListSelectableCellModel
       && maxTextWidth == model.maxTextWidth
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = ImageLabelBorderCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = ImageLabelBorderCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCellModel> {

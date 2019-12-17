@@ -74,7 +74,7 @@ public final class SignInPresenter: Presenter {
     signInButtonModel.textAlignment = .center
     signInButtonModel.buttonColor = .selectable
     signInButtonModel.directionalLayoutMargins.bottom = 40
-    signInButtonModel.selectionAction = { [weak self] _, _ -> Void in
+    signInButtonModel.buttonAction = { [weak self] _, _ -> Void in
       self?.handleContinueButtonPress()
     }
 

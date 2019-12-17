@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class ImageTextCellModel: BaseListCellModel {
   fileprivate static let imageMargin: CGFloat = 10
 
   public let image = BehaviorSubject<UIImage?>(value: nil)
@@ -33,14 +33,6 @@ open class ImageTextCellModel: BaseListCellModel, ListSelectableCellModel, ListB
       && imageViewCornerRadius == model.imageViewCornerRadius
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = ImageTextCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = ImageTextCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {

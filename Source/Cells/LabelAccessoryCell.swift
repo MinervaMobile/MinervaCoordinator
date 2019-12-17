@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class LabelAccessoryCellModel: BaseListCellModel {
   public typealias Action = (_ model: LabelAccessoryCellModel) -> Void
 
   public static let iconTrailingLength: CGFloat = 10
@@ -58,14 +58,6 @@ open class LabelAccessoryCellModel: BaseListCellModel, ListSelectableCellModel, 
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = LabelAccessoryCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = LabelAccessoryCellModel
-  public var willBindAction: BindAction?
 }
 
 public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellModel> {

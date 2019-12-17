@@ -20,6 +20,7 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
   public let presenter: T
   public let navigator: Navigator
   public let disposeBag = DisposeBag()
+  private var presentationDisposable: Disposable?
 
   public init(
     navigator: Navigator,
@@ -53,16 +54,18 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
 
   // MARK: - ViewControllerDelegate
   open func viewControllerViewDidLoad(_ viewController: ViewController) {
-    presenter.sections
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
-      .disposed(by: disposeBag)
   }
   open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
     listController.willDisplay()
+    presentationDisposable?.dispose()
+    presentationDisposable = nil
+    presentationDisposable = presenter.sections
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
   }
   open func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool) {
-
+    presentationDisposable?.dispose()
+    presentationDisposable = nil
   }
   open func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool) {
     listController.didEndDisplaying()

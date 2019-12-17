@@ -39,7 +39,7 @@ public final class FilterPresenter: Presenter {
 
     for type in FilterType.allCases {
       let details = filter.details(for: type) ?? "---"
-      let nameCellModel = LabelAccessoryCellModel.createSettingsCellModel(
+      let nameCellModel = FilterCellModel(
         identifier: "\(filter)-\(type)-\(details)",
         title: type.description,
         details: details,

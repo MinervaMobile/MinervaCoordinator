@@ -145,9 +145,10 @@ public final class ListTests: XCTestCase {
       updateExpectation.fulfill()
     }
     wait(for: [updateExpectation], timeout: 5)
-    guard let cell = listController.cell(for: cellModel) as? FakeCell else {
-      XCTFail("Missing the cell")
-      return
+    guard let indexPath = listController.indexPaths(for: cellModel).first,
+      let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeCell else {
+        XCTFail("Missing the cell")
+        return
     }
     XCTAssertTrue(cell.displaying)
     listController.didEndDisplaying()

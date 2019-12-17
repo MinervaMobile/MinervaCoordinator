@@ -7,16 +7,8 @@
 import Foundation
 import UIKit
 
-open class LabelCellModel: BaseListCellModel, ListSelectableCellModel, ListBindableCellModel {
+open class LabelCellModel: BaseListCellModel {
   public typealias LabelAction = (_ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel) -> Void
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = LabelCellModel
-  public var selectionAction: SelectionAction?
-
-  // MARK: - ListBindableCellModel
-  public typealias BindableModelType = LabelCellModel
-  public var willBindAction: BindAction?
 
   public var labelAction: LabelAction?
 

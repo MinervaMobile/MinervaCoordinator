@@ -7,9 +7,7 @@
 import Foundation
 import UIKit
 
-open class MarginCellModel: BaseListCellModel, ListSelectableCellModel {
-
-  public var selectionAction: ((_ cellModel: MarginCellModel, _ indexPath: IndexPath) -> Void)?
+open class MarginCellModel: BaseListCellModel {
 
   public var backgroundColor: UIColor?
   public let cellSize: ListCellSize
