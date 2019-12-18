@@ -9,6 +9,7 @@ def minerva_pods
   pod 'IQKeyboardManagerSwift'
   pod 'MBProgressHUD'
   pod 'RxSwift'
+  pod 'RxRelay'
   pod 'SwiftLint'
   pod 'SwiftProtobuf'
   pod 'SwipeCellKit'

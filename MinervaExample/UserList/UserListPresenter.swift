@@ -78,6 +78,7 @@ public final class UserListPresenter: Presenter {
       identifier: user.description,
       attributedText: NSAttributedString(string: "\(user.email)\n\(user.dailyCalories)", font: .body, fontColor: .label)
     )
+    cellModel.backgroundColor = .systemBackground
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.actionsSubject.onNext(.delete(user: user))
