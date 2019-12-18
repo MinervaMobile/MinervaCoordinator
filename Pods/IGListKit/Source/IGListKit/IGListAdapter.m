@@ -10,7 +10,6 @@
 #import <IGListDiffKit/IGListAssert.h>
 #import <IGListKit/IGListAdapterUpdater.h>
 #import <IGListKit/IGListSupplementaryViewSource.h>
-#import <IGListKit/IGSystemVersion.h>
 
 #import "IGListArrayUtilsInternal.h"
 #import "IGListDebugger.h"
@@ -26,13 +25,6 @@
 }
 
 - (void)dealloc {
-    // on iOS 9 setting the dataSource has side effects that can invalidate the layout and seg fault
-    if (!IGSystemVersionIsIOS9OrNewer()) {
-        // properties are assign for <iOS 9
-        _collectionView.dataSource = nil;
-        _collectionView.delegate = nil;
-    }
-
     [self.sectionMap reset];
 }
 
@@ -668,12 +660,7 @@
         [[map sectionControllerForObject:object] didUpdateToObject:object];
     }
 
-    NSInteger itemCount = 0;
-    for (IGListSectionController *sectionController in sectionControllers) {
-        itemCount += [sectionController numberOfItems];
-    }
-
-    [self _updateBackgroundViewShouldHide:itemCount > 0];
+    [self _updateBackgroundViewShouldHide:![self _itemCountIsZero]];
 }
 
 - (void)_updateBackgroundViewShouldHide:(BOOL)shouldHide {

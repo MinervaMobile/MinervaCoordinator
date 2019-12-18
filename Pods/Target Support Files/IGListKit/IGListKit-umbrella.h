@@ -23,6 +23,7 @@
 #import "IGListBindingSectionController.h"
 #import "IGListBindingSectionControllerDataSource.h"
 #import "IGListBindingSectionControllerSelectionDelegate.h"
+#import "IGListBindingSingleSectionController.h"
 #import "IGListCollectionContext.h"
 #import "IGListCollectionScrollingTraits.h"
 #import "IGListCollectionView.h"
