@@ -118,7 +118,7 @@ extension ListSelectableCellModel {
   }
 }
 
-/// This should not be used directly, conform to ListHighlightableCellModel instead.
+/// A protocol that models can conform to for cell highlighting.
 public protocol ListHighlightableCellModel {
   /// If true, highlighting will be enabled and the highlight/unhighlight methods will be called.
   var highlightEnabled: Bool { get }
