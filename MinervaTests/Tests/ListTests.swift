@@ -135,6 +135,33 @@ public final class ListTests: XCTestCase {
     XCTAssertTrue(selected)
   }
 
+  public func testHighlighting() {
+    var cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    var highlighted = false
+    cellModel.highlightAction = {
+      highlighted = true
+    }
+    cellModel.unHighlightAction = {
+      highlighted = false
+    }
+
+    cellModel.highlightEnabled = true
+    let section = ListSection(cellModels: [cellModel], identifier: "Section")
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+    collectionVC.collectionView.delegate?.collectionView?(collectionVC.collectionView,
+                                                          didHighlightItemAt: IndexPath(item: 0, section: 0))
+    XCTAssertTrue(highlighted)
+    collectionVC.collectionView.delegate?.collectionView?(collectionVC.collectionView,
+                                                          didUnhighlightItemAt: IndexPath(item: 0, section: 0))
+    XCTAssertFalse(highlighted)
+  }
+
   public func testDisplay() {
     let cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
     let section = ListSection(cellModels: [cellModel], identifier: "Section")

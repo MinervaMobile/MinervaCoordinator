@@ -7,8 +7,7 @@
 import Foundation
 import Minerva
 
-public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel {
-
+public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel, ListHighlightableCellModel {
   public typealias SelectableModelType = Self
   public var selectionAction: SelectionAction?
 
@@ -17,6 +16,19 @@ public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBi
 
   public var identifier: String
   public var size: ListCellSize
+
+  public var highlightEnabled: Bool = false
+  public var highlightColor: UIColor?
+
+  public var highlightAction: (() -> Void)?
+  public var unHighlightAction: (() -> Void)?
+
+  public func highlighted(at indexPath: IndexPath) {
+    highlightAction?()
+  }
+  public func unhighlighted(at indexPath: IndexPath) {
+    unHighlightAction?()
+  }
 
   public func identical(to model: FakeCellModel) -> Bool {
     return size == model.size
