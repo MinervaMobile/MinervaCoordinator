@@ -33,7 +33,8 @@ public final class CatalogPresenter: Presenter {
       createTextSeparatorCellModelSection(),
       createTextViewCellModelSection(),
       createSwipeableDetailedLabelCellModelSection(),
-      createSwipeableLabelCellModelSection()
+      createSwipeableLabelCellModelSection(),
+      createHighlightableCellModelSection()
     ]
   )
 
@@ -112,6 +113,27 @@ public final class CatalogPresenter: Presenter {
     cellModels.append(model2)
 
     return createSection(for: cellModels, name: "DetailedLabelCellModel")
+  }
+
+  private func createHighlightableCellModelSection() -> ListSection {
+    let model1 = LabelCellModel(identifier: "HighlightableCellModel",
+                                text: "LabelCellModel",
+                                font: UIFont.preferredFont(forTextStyle: .subheadline))
+    model1.highlightEnabled = true
+    model1.highlightColor = UIColor(white: 0.75, alpha: 1.0)
+
+    let font = UIFont.preferredFont(forTextStyle: .body)
+    let image = UIImage(systemName: "trash")!
+
+    let model2 = IconTextCellModel(
+      imageSize: CGSize(width: 32, height: 32),
+      text: "IconTextCellModel",
+      font: font)
+    model2.iconImage.onNext(image)
+    model2.highlightEnabled = true
+    model2.highlightColor = model1.highlightColor
+
+    return createSection(for: [model1, model2], name: "Highlightable Cells")
   }
 
   private func createIconTextCellModelSection() -> ListSection {
