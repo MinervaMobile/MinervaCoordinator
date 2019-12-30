@@ -22,7 +22,6 @@ open class DetailedLabelCellModel: BaseListCellModel {
     self.attributedTitle = attributedTitle
     self.attributedDetails = attributedDetails
     super.init(identifier: identifier)
-    highlightEnabled = true
   }
 
   public convenience init(attributedTitle: NSAttributedString, attributedDetails: NSAttributedString) {

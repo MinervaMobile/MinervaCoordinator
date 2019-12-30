@@ -31,7 +31,7 @@ open class BaseListCellModel: ListCellModel, ListHighlightableCellModel {
 
   /// MARK: - ListHighlightableCellModel
   public var highlightEnabled: Bool = false
-  public var highlightColor: UIColor? = UIColor(white: 0.9, alpha: 1.0)
+  public var highlightColor: UIColor?
   public func highlighted(at indexPath: IndexPath) {
     /* NO-OP */
   }

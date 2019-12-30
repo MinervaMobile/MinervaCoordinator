@@ -34,7 +34,6 @@ open class IconTextCellModel: BaseListCellModel {
     self.text = text
     self.font = font
     super.init(identifier: identifier)
-    highlightEnabled = true
   }
 
   public convenience init(imageSize: CGSize, text: String, font: UIFont) {

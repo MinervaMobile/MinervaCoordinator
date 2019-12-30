@@ -30,7 +30,6 @@ open class LabelCellModel: BaseListCellModel {
     self.font = font
     self.attributedText = attributedText
     super.init(identifier: identifier)
-    highlightEnabled = true
   }
 
   public convenience init(text: String, font: UIFont) {
