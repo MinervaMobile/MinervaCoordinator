@@ -69,19 +69,11 @@ internal class MissingListCell: ListCollectionViewCell {
 }
 
 // MARK: - Highlighting
-public protocol ListHighlightableCell: ListHighlightableDelegate {
+public protocol ListHighlightableCell {
   var highlightView: UIView { get }
 }
 
 extension ListHighlightableCell  {
-  public func highlighted() {
-    highlightView.isHidden = false
-  }
-
-  public func unhighlighted() {
-    highlightView.isHidden = true
-  }
-
   public func setupHighlightView(in view: UIView) {
     view.addSubview(highlightView)
     highlightView.isHidden = true

@@ -118,12 +118,6 @@ extension ListSelectableCellModel {
   }
 }
 
-/// Adopted by cells to adapt to highlight events.
-public protocol ListHighlightableDelegate: class {
-  func highlighted()
-  func unhighlighted()
-}
-
 /// This should not be used directly, conform to ListHighlightableCellModel instead.
 public protocol ListHighlightableCellModel {
   /// If true, highlighting will be enabled and the highlight/unhighlight methods will be called.
