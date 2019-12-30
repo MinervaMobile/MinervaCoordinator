@@ -8,8 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class BaseListCellModel: ListCellModel {
-
+open class BaseListCellModel: ListCellModel, ListHighlightableCellModel {
   private let cellIdentifier: String?
 
   public init(identifier: String? = nil) {
@@ -29,14 +28,38 @@ open class BaseListCellModel: ListCellModel {
   ) -> ListCellSize {
     return .autolayout
   }
+
+  /// MARK: - ListHighlightableCellModel
+  public var highlightEnabled: Bool = false
+  public var highlightColor: UIColor? = UIColor(white: 0.9, alpha: 1.0)
+  public func highlighted(at indexPath: IndexPath) {
+    /* NO-OP */
+  }
+
+  public func unhighlighted(at indexPath: IndexPath) {
+    /* NO-OP */
+  }
 }
 
-open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
-
+open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell, ListHighlightableCell {
   open private(set) var model: CellModelType?
+  open private(set) var highlightView: UIView = UIView()
+
+  open override var isHighlighted: Bool {
+    didSet {
+      guard let highlightModel = model as? ListHighlightableCellModel,
+          highlightModel.highlightEnabled else {
+        self.highlightView.isHidden = true
+        return
+      }
+
+      self.highlightView.isHidden = !self.isHighlighted
+    }
+  }
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
+    setupHighlightView(in: contentView)
   }
 
   @available(*, unavailable)
@@ -74,6 +97,7 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
       assertionFailure("Invalid view model \(viewModel)")
       return
     }
+
     bind(cellModel: wrapper.model, sizing: false)
   }
 
@@ -82,6 +106,12 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
       assertionFailure("Unknown cell model type \(CellModelType.self) for \(cellModel)")
       self.model = nil
       return
+    }
+    if !sizing {
+      if let highlightableViewModel = cellModel as? ListHighlightableCellModel,
+        highlightableViewModel.highlightEnabled {
+        highlightView.backgroundColor = highlightableViewModel.highlightColor
+      }
     }
     bind(model: model, sizing: sizing)
   }

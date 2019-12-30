@@ -9,7 +9,6 @@ import RxSwift
 import UIKit
 
 open class IconTextCellModel: BaseListCellModel {
-
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
@@ -35,6 +34,7 @@ open class IconTextCellModel: BaseListCellModel {
     self.text = text
     self.font = font
     super.init(identifier: identifier)
+    highlightEnabled = true
   }
 
   public convenience init(imageSize: CGSize, text: String, font: UIFont) {
@@ -65,7 +65,6 @@ open class IconTextCellModel: BaseListCellModel {
 }
 
 public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
-
   private let buttonView = UIView()
   private let imageView: UIImageView = {
     let imageView = UIImageView()
@@ -87,11 +86,13 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
+    setupHighlightView(in: contentView)
     contentView.addSubview(buttonView)
     buttonView.addSubview(imageView)
     buttonView.addSubview(label)
     setupConstraints()
     backgroundView = UIView()
+    selectedBackgroundView = UIView()
   }
 
   override public func prepareForReuse() {
@@ -148,6 +149,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     }
 
     self.backgroundView?.backgroundColor = model.backgroundColor
+    highlightView.backgroundColor = model.highlightColor
 
     model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
   }

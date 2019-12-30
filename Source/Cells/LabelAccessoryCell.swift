@@ -39,6 +39,7 @@ open class LabelAccessoryCellModel: BaseListCellModel {
   public init(identifier: String, attributedText: NSAttributedString) {
     self.attributedText = attributedText
     super.init(identifier: identifier)
+    highlightEnabled = true
   }
 
   // MARK: - BaseListCellModel

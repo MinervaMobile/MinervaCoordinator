@@ -118,6 +118,24 @@ extension ListSelectableCellModel {
   }
 }
 
+/// Adopted by cells to adapt to highlight events.
+public protocol ListHighlightableDelegate: class {
+  func highlighted()
+  func unhighlighted()
+}
+
+/// This should not be used directly, conform to ListHighlightableCellModel instead.
+public protocol ListHighlightableCellModel {
+  /// If true, highlighting will be enabled and the highlight/unhighlight methods will be called.
+  var highlightEnabled: Bool { get }
+  /// The color that will be shown on the cell when highlighted.
+  var highlightColor: UIColor? { get set }
+  /// Called when the cell is highlighted.
+  func highlighted(at indexPath: IndexPath)
+  /// Called when the cell is unhighlighted.
+  func unhighlighted(at indexPath: IndexPath)
+}
+
 /// This should not be used directly, conform to ListBindableCellModel instead.
 public protocol ListBindableCellModelWrapper {
   func willBind()

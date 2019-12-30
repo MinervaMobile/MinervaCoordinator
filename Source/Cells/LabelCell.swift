@@ -11,7 +11,7 @@ open class LabelCellModel: BaseListCellModel {
   public typealias LabelAction = (_ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel) -> Void
 
   public var labelAction: LabelAction?
-
+  
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var textAlignment: NSTextAlignment = .left
   public var numberOfLines = 0
@@ -30,6 +30,7 @@ open class LabelCellModel: BaseListCellModel {
     self.font = font
     self.attributedText = attributedText
     super.init(identifier: identifier)
+    highlightEnabled = true
   }
 
   public convenience init(text: String, font: UIFont) {
@@ -67,7 +68,6 @@ open class LabelCellModel: BaseListCellModel {
 }
 
 public final class LabelCell: BaseListCell<LabelCellModel> {
-
   private let labelBackgroundView = UIView()
   private let label: UILabel = {
     let label = UILabel()
