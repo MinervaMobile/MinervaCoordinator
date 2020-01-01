@@ -6,7 +6,7 @@
 
 import Foundation
 
-public enum FoundationExtensions { }
+private enum FoundationExtensions { }
 
 extension Array {
   public var isNotEmpty: Bool {

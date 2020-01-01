@@ -11,7 +11,7 @@ open class LabelCellModel: BaseListCellModel {
   public typealias LabelAction = (_ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel) -> Void
 
   public var labelAction: LabelAction?
-  
+
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var textAlignment: NSTextAlignment = .left
   public var numberOfLines = 0

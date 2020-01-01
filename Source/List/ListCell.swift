@@ -67,16 +67,3 @@ internal class MissingListCell: ListCollectionViewCell {
   internal func bind(cellModel: ListCellModel, sizing: Bool) { }
   internal func bindViewModel(_ viewModel: Any) { }
 }
-
-// MARK: - Highlighting
-public protocol ListHighlightableCell {
-  var highlightView: UIView { get }
-}
-
-extension ListHighlightableCell  {
-  public func setupHighlightView(in view: UIView) {
-    view.addSubview(highlightView)
-    highlightView.isHidden = true
-    highlightView.anchor(to: view)
-  }
-}

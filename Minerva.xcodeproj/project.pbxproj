@@ -104,6 +104,7 @@
 		F595F475237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F472237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift */; };
 		F595F476237DCE8900A424E2 /* SwipeableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F473237DCE8900A424E2 /* SwipeableLabelCell.swift */; };
 		F595F478237DE2CD00A424E2 /* CellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595F477237DE2CD00A424E2 /* CellExtensions.swift */; };
+		F5A44B7D23BC3F5900B4AE9C /* ConvenienceCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F3A023A97BB6009C6B85 /* ConvenienceCellModels.swift */; };
 		F5AF642F235DE7980042F342 /* DataManager+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF642E235DE7980042F342 /* DataManager+Combine.swift */; };
 		F5AF6431235E414A0042F342 /* BasicNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AF6430235E414A0042F342 /* BasicNavigator.swift */; };
 		F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C908242343C5CD0038BD89 /* CreateUserCoordinator.swift */; };
@@ -112,7 +113,7 @@
 		F5C9082D2343C6DA0038BD89 /* EditWorkoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */; };
 		F5C9083E2343E9A00038BD89 /* WorkoutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */; };
 		F5C9F39F23A97A9D009C6B85 /* FilterCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F39E23A97A9D009C6B85 /* FilterCellModel.swift */; };
-		F5C9F3A123A97BB6009C6B85 /* SelectableLabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */; };
+		F5C9F3A123A97BB6009C6B85 /* ConvenienceCellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C9F3A023A97BB6009C6B85 /* ConvenienceCellModels.swift */; };
 		F5CE47BD233E402400983F72 /* DataManager+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */; };
 		F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CE47C5233E561C00983F72 /* UserListRepository.swift */; };
 		F5DA2B98226D367600BA461A /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA2B8B226D367500BA461A /* ListController.swift */; };
@@ -327,7 +328,7 @@
 		F5C9082C2343C6DA0038BD89 /* EditWorkoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutCoordinator.swift; sourceTree = "<group>"; };
 		F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRepository.swift; sourceTree = "<group>"; };
 		F5C9F39E23A97A9D009C6B85 /* FilterCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellModel.swift; sourceTree = "<group>"; };
-		F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableLabelCellModel.swift; sourceTree = "<group>"; };
+		F5C9F3A023A97BB6009C6B85 /* ConvenienceCellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvenienceCellModels.swift; sourceTree = "<group>"; };
 		F5CE47BC233E402400983F72 /* DataManager+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RxSwift.swift"; sourceTree = "<group>"; };
 		F5CE47C5233E561C00983F72 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
 		F5DA2B8B226D367500BA461A /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
@@ -658,8 +659,8 @@
 		F576F933226E16960015D14E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F5C9F3A023A97BB6009C6B85 /* ConvenienceCellModels.swift */,
 				F562CF382354894D00402122 /* SwiftUITextCell.swift */,
-				F5C9F3A023A97BB6009C6B85 /* SelectableLabelCellModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1180,6 +1181,7 @@
 				F53A9F7E239E874C0004C462 /* CatalogCoordinator.swift in Sources */,
 				F53A9F7A239E874C0004C462 /* CatalogAppDelegate.swift in Sources */,
 				F53A9F94239E8B300004C462 /* CatalogPresenter.swift in Sources */,
+				F5A44B7D23BC3F5900B4AE9C /* ConvenienceCellModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1250,7 +1252,7 @@
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterPresenter.swift in Sources */,
-				F5C9F3A123A97BB6009C6B85 /* SelectableLabelCellModel.swift in Sources */,
+				F5C9F3A123A97BB6009C6B85 /* ConvenienceCellModels.swift in Sources */,
 				F562CF392354894D00402122 /* SwiftUITextCell.swift in Sources */,
 				F576F980226E16970015D14E /* LoadingHUD.swift in Sources */,
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,

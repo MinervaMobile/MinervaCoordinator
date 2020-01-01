@@ -15,6 +15,7 @@ public final class CatalogPresenter: Presenter {
       createButtonImageCellModelSection(),
       createDatePickerCellModelSection(),
       createDetailedLabelCellModelSection(),
+      createHighlightableCellModelSection(),
       createIconTextCellModelSection(),
       createImageButtonCardCellModelSection(),
       createImageCellModelSection(),
@@ -33,8 +34,7 @@ public final class CatalogPresenter: Presenter {
       createTextSeparatorCellModelSection(),
       createTextViewCellModelSection(),
       createSwipeableDetailedLabelCellModelSection(),
-      createSwipeableLabelCellModelSection(),
-      createHighlightableCellModelSection()
+      createSwipeableLabelCellModelSection()
     ]
   )
 
@@ -116,16 +116,17 @@ public final class CatalogPresenter: Presenter {
   }
 
   private func createHighlightableCellModelSection() -> ListSection {
-    let model1 = LabelCellModel(identifier: "HighlightableCellModel",
-                                text: "LabelCellModel",
-                                font: UIFont.preferredFont(forTextStyle: .subheadline))
+    let model1 = HighlightableLabelCellModel(
+      identifier: "HighlightableCellModel",
+      text: "HighlightableCellModel",
+      font: UIFont.preferredFont(forTextStyle: .subheadline))
     model1.highlightEnabled = true
-    model1.highlightColor = UIColor(white: 0.75, alpha: 1.0)
+    model1.highlightColor = UIColor.systemPurple.withAlphaComponent(0.75)
 
     let font = UIFont.preferredFont(forTextStyle: .body)
     let image = UIImage(systemName: "trash")!
 
-    let model2 = IconTextCellModel(
+    let model2 = HighlightableIconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
       text: "IconTextCellModel",
       font: font)

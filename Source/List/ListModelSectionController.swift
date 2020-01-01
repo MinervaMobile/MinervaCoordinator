@@ -231,7 +231,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       return
     }
     let indexPath = IndexPath(item: index, section: self.section)
-    if let model = wrapper.model as? ListHighlightableCellModel {
+    if let model = wrapper.model as? ListHighlightableCellModelWrapper {
       model.highlighted(at: indexPath)
     }
   }
@@ -245,7 +245,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       return
     }
     let indexPath = IndexPath(item: index, section: self.section)
-    if let model = wrapper.model as? ListHighlightableCellModel {
+    if let model = wrapper.model as? ListHighlightableCellModelWrapper {
       model.unhighlighted(at: indexPath)
     }
   }
