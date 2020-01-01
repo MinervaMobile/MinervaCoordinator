@@ -85,7 +85,6 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
-    setupHighlightView(in: contentView)
     contentView.addSubview(buttonView)
     buttonView.addSubview(imageView)
     buttonView.addSubview(label)
@@ -148,7 +147,6 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     }
 
     self.backgroundView?.backgroundColor = model.backgroundColor
-    highlightView.backgroundColor = model.highlightColor
 
     model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
   }

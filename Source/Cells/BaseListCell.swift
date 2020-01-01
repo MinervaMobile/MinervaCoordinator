@@ -8,7 +8,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-open class BaseListCellModel: ListCellModel, ListHighlightableCellModel {
+open class BaseListCellModel: ListCellModel {
   private let cellIdentifier: String?
 
   public init(identifier: String? = nil) {
@@ -28,29 +28,18 @@ open class BaseListCellModel: ListCellModel, ListHighlightableCellModel {
   ) -> ListCellSize {
     return .autolayout
   }
-
-  /// MARK: - ListHighlightableCellModel
-  public var highlightEnabled: Bool = false
-  public var highlightColor: UIColor?
-  public func highlighted(at indexPath: IndexPath) {
-    /* NO-OP */
-  }
-
-  public func unhighlighted(at indexPath: IndexPath) {
-    /* NO-OP */
-  }
 }
 
-open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell, ListHighlightableCell {
+open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
   open private(set) var model: CellModelType?
-  open private(set) var highlightView: UIView = UIView()
+  open private(set) var highlightView = UIView()
 
-  open override var isHighlighted: Bool {
+  override open var isHighlighted: Bool {
     didSet {
-      guard let highlightModel = model as? ListHighlightableCellModel,
-          highlightModel.highlightEnabled else {
-        self.highlightView.isHidden = true
-        return
+      guard let highlightModel = model as? ListHighlightableCellModelWrapper,
+        highlightModel.highlightEnabled else {
+          self.highlightView.isHidden = true
+          return
       }
 
       self.highlightView.isHidden = !self.isHighlighted
@@ -59,7 +48,9 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell, L
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
-    setupHighlightView(in: contentView)
+    contentView.addSubview(highlightView)
+    highlightView.isHidden = true
+    highlightView.anchor(to: contentView)
   }
 
   @available(*, unavailable)
@@ -108,7 +99,7 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell, L
       return
     }
     if !sizing {
-      if let highlightableViewModel = cellModel as? ListHighlightableCellModel,
+      if let highlightableViewModel = cellModel as? ListHighlightableCellModelWrapper,
         highlightableViewModel.highlightEnabled {
         highlightView.backgroundColor = highlightableViewModel.highlightColor
       }
@@ -123,5 +114,9 @@ open class BaseReactiveListCell<CellModelType: ListCellModel>: BaseListCell<Cell
   override open func prepareForReuse() {
     super.prepareForReuse()
     disposeBag = DisposeBag()
+  }
+  override open func bind(model: CellModelType, sizing: Bool) {
+    disposeBag = DisposeBag()
+    super.bind(model: model, sizing: sizing)
   }
 }

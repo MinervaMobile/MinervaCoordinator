@@ -138,10 +138,10 @@ public final class ListTests: XCTestCase {
   public func testHighlighting() {
     var cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
     var highlighted = false
-    cellModel.highlightAction = {
+    cellModel.highlightedAction = { _, _ in
       highlighted = true
     }
-    cellModel.unHighlightAction = {
+    cellModel.unhighlightedAction = { _, _ in
       highlighted = false
     }
 
