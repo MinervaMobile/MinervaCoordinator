@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -14,11 +15,10 @@ public final class FilterPresenter: Presenter {
     case edit(filter: WorkoutFilter, type: FilterType)
   }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -26,7 +26,7 @@ public final class FilterPresenter: Presenter {
 
   public init(filter: Observable<WorkoutFilter>) {
     filter.map({ [weak self] in self?.createSection(with: $0) ?? [] })
-      .subscribe(sectionsSubject)
+      .bind(to: sections)
       .disposed(by: disposeBag)
   }
 
@@ -46,7 +46,7 @@ public final class FilterPresenter: Presenter {
         hasChevron: true)
       nameCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.actionsSubject.onNext(.edit(filter: filter, type: type))
+        strongSelf.actionsRelay.accept(.edit(filter: filter, type: type))
       }
       cellModels.append(nameCellModel)
     }

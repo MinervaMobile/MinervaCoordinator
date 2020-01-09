@@ -5,12 +5,13 @@
 //
 
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
 public final class CatalogPresenter: Presenter {
-  public lazy var sections: Observable<[ListSection]> = Observable.just(
-    [
+  public lazy var sections: BehaviorRelay<[ListSection]> = BehaviorRelay(
+    value: [
       createButtonCellModelSection(),
       createButtonImageCellModelSection(),
       createDatePickerCellModelSection(),

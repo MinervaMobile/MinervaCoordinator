@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -15,16 +16,15 @@ public final class WelcomePresenter: Presenter {
     case login
   }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
   public init() {
-    sectionsSubject.onNext([createSection()])
+    sections.accept([createSection()])
   }
 
   // MARK: - Private
@@ -65,14 +65,14 @@ public final class WelcomePresenter: Presenter {
     newAccountModel.buttonColor = .selectable
     newAccountModel.buttonAction = { [weak self] _, _ in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.createAccount)
+      strongSelf.actionsRelay.accept(.createAccount)
     }
 
     let existingAccountModel = SelectableLabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
     existingAccountModel.textAlignment = .center
     existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.login)
+      strongSelf.actionsRelay.accept(.login)
     }
     existingAccountModel.textColor = .selectable
     existingAccountModel.directionalLayoutMargins.top = 30

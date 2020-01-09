@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -16,10 +17,10 @@ public final class UserListVC: BaseViewController {
   }
 
   public var actions: Observable<Action> {
-    actionsSubject.asObservable()
+    actionsRelay.asObservable()
   }
 
-  private let actionsSubject: PublishSubject<Action>
+  private let actionsRelay: PublishRelay<Action>
   private let listController = LegacyListController()
 
   private let addButton: UIButton = {
@@ -33,7 +34,7 @@ public final class UserListVC: BaseViewController {
   // MARK: - Lifecycle
 
   public required init() {
-    self.actionsSubject = PublishSubject()
+    self.actionsRelay = PublishRelay()
     super.init()
 
     collectionView.contentInsetAdjustmentBehavior = .never
@@ -72,6 +73,6 @@ public final class UserListVC: BaseViewController {
 
   @objc
   private func addButtonPressed() {
-    actionsSubject.on(.next(.createUser))
+    actionsRelay.accept(.createUser)
   }
 }

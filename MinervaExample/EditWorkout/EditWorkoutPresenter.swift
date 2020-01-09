@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -18,11 +19,10 @@ public final class EditWorkoutPresenter: Presenter {
   private static let caloriesCellModelIdentifier = "CaloriesCellModel"
   private static let textCellModelIdentifier = "TextCellModel"
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -39,7 +39,7 @@ public final class EditWorkoutPresenter: Presenter {
     self.workout = workout.proto
     self.workoutSubject = BehaviorSubject<WorkoutProto>(value: self.workout)
     workoutSubject.map({ [weak self] workout -> [ListSection] in self?.createSection(with: workout) ?? [] })
-      .subscribe(sectionsSubject)
+      .bind(to: sections)
       .disposed(by: disposeBag)
   }
 
@@ -62,7 +62,7 @@ public final class EditWorkoutPresenter: Presenter {
     doneModel.textColor = .selectable
     doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.save(workout: strongSelf.workout))
+      strongSelf.actionsRelay.accept(.save(workout: strongSelf.workout))
     }
 
     return [

@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -17,11 +18,10 @@ public final class UpdateUserPresenter: Presenter {
   private static let emailCellModelIdentifier = "EmailCellModel"
   private static let caloriesCellModelIdentifier = "CaloriesCellModel"
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -38,7 +38,7 @@ public final class UpdateUserPresenter: Presenter {
     self.user = user.proto
     self.userSubject = BehaviorSubject(value: self.user)
     userSubject.map({ [weak self] _ -> [ListSection] in self?.createSections() ?? [] })
-      .subscribe(sectionsSubject)
+      .bind(to: sections)
       .disposed(by: disposeBag)
   }
 
@@ -58,7 +58,7 @@ public final class UpdateUserPresenter: Presenter {
     doneModel.textColor = .selectable
     doneModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.save(user: strongSelf.user))
+      strongSelf.actionsRelay.accept(.save(user: strongSelf.user))
     }
 
     return [

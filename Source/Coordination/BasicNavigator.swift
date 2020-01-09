@@ -10,6 +10,7 @@ import UIKit
 /// A simple implementation of a navigator that manages the RemovalCompletions when view controllers are no longer displayed.
 public final class BasicNavigator: NSObject {
 
+  private let parent: Navigator?
   public let navigationController: UINavigationController
   private var completions = [UIViewController: RemovalCompletion]()
 
@@ -17,6 +18,7 @@ public final class BasicNavigator: NSObject {
     navigationController: UINavigationController = UINavigationController(),
     parent: Navigator? = nil
   ) {
+    self.parent = parent
     self.navigationController = navigationController
     super.init()
     navigationController.delegate = self
@@ -51,24 +53,32 @@ extension BasicNavigator: Navigator {
     animationCompletion: AnimationCompletion?
   ) {
     var viewControllers = [UIViewController]()
+    // Modal dismissal on iOS removes all modals from the current view controller down the stack.
+    // This captures all view controllers that will be removed so their runCompletion blocks can be called.
     func calculateDismissingViewControllers(from viewController: UIViewController?) {
       guard let viewController = viewController else { return }
-
       viewControllers.append(viewController)
       if let navigationController = viewController as? UINavigationController {
         viewControllers.append(contentsOf: navigationController.viewControllers)
       }
-      return calculateDismissingViewControllers(from: viewController.presentedViewController)
-    }
-    if viewController.presentingViewController == nil {
+      if let navigationController = viewController.navigationController {
+        viewControllers.append(navigationController)
+        calculateDismissingViewControllers(from: navigationController.presentedViewController)
+      }
       calculateDismissingViewControllers(from: viewController.presentedViewController)
-    } else {
-      calculateDismissingViewControllers(from: viewController)
     }
+
+    calculateDismissingViewControllers(from: viewController)
 
     viewController.dismiss(animated: animated) {
       viewControllers.forEach { self.runCompletion(for: $0) }
       animationCompletion?()
+      // We need to ensure the runCompletion block is called from the correct navigator, this tells the parent
+      // to dismiss the navigator in case a coordinator was presented with a new navigator.
+      if let parent = self.parent {
+        parent.dismiss(viewController, animated: false, animationCompletion: animationCompletion)
+        return
+      }
     }
   }
 

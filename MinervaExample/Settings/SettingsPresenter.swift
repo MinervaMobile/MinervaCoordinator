@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -16,11 +17,9 @@ public final class SettingsPresenter: Presenter {
     case update(user: User)
   }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
-
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -33,11 +32,11 @@ public final class SettingsPresenter: Presenter {
     dataManager.user(withID: dataManager.userAuthorization.userID).subscribe(
       onSuccess: { [weak self] (user: User?) -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.sectionsSubject.onNext(strongSelf.createSections(with: user))
+        strongSelf.sections.accept(strongSelf.createSections(with: user))
       },
       onError: { [weak self] _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.sectionsSubject.onNext(strongSelf.createSections(with: nil))
+        strongSelf.sections.accept(strongSelf.createSections(with: nil))
       }
     ).disposed(by: disposeBag)
   }
@@ -53,14 +52,14 @@ public final class SettingsPresenter: Presenter {
       let nameCellModel = SwiftUITextCellModel(title: "Name", subtitle: user.email)
       nameCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.actionsSubject.onNext(.update(user: user))
+        strongSelf.actionsRelay.accept(.update(user: user))
       }
       cellModels.append(nameCellModel)
 
       let caloriesCellModel = SwiftUITextCellModel(title: "Daily Calories", subtitle: String(user.dailyCalories))
       caloriesCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.actionsSubject.onNext(.update(user: user))
+        strongSelf.actionsRelay.accept(.update(user: user))
       }
       cellModels.append(caloriesCellModel)
 
@@ -85,7 +84,7 @@ public final class SettingsPresenter: Presenter {
     let logoutCellModel = SwiftUITextCellModel(title: "Logout")
     logoutCellModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.logout)
+      strongSelf.actionsRelay.accept(.logout)
     }
     cellModels.append(logoutCellModel)
 
@@ -96,7 +95,7 @@ public final class SettingsPresenter: Presenter {
     }
     deleteCellModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.deleteAccount)
+      strongSelf.actionsRelay.accept(.deleteAccount)
     }
     cellModels.append(deleteCellModel)
 

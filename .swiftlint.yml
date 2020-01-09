@@ -132,9 +132,11 @@ whitelist_rules:
   - opening_brace
   - operator_usage_whitespace
   - operator_whitespace
+  - optional_enum_case_matching
   - overridden_super_call
   - override_in_extension
   - pattern_matching_keywords
+  - prefer_self_type_over_type_of_self
   - private_action
   - private_outlet
   - private_over_fileprivate
