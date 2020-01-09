@@ -6,12 +6,13 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
 public final class UserListPresenter: Presenter {
   // TODO: Update the old presenter to use the new persistent / transient state model
-  public var sections: Observable<[ListSection]> = .just([])
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   public enum Action {
     case delete(user: User)
@@ -26,17 +27,17 @@ public final class UserListPresenter: Presenter {
 
   public private(set) var state: Observable<State>
   public var actions: Observable<Action> {
-    actionsSubject.asObservable()
+    actionsRelay.asObservable()
   }
 
-  private let actionsSubject: PublishSubject<Action>
+  private let actionsRelay: PublishRelay<Action>
   private let repository: UserListRepository
 
   // MARK: - Lifecycle
 
   public init(repository: UserListRepository) {
     self.repository = repository
-    self.actionsSubject = PublishSubject()
+    self.actionsRelay = PublishRelay()
     self.state = Observable.just(.loading)
     self.state = self.state.concat(repository.users.map { [weak self] usersResult -> State in
       guard let strongSelf = self else {
@@ -63,7 +64,7 @@ public final class UserListPresenter: Presenter {
       if allowSelection {
         userCellModel.selectionAction = { [weak self] _, _ -> Void in
           guard let strongSelf = self else { return }
-          strongSelf.actionsSubject.onNext(.view(user: user))
+          strongSelf.actionsRelay.accept(.view(user: user))
         }
       }
       cellModels.append(userCellModel)
@@ -81,7 +82,7 @@ public final class UserListPresenter: Presenter {
     cellModel.backgroundColor = .systemBackground
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
-      strongSelf.actionsSubject.onNext(.delete(user: user))
+      strongSelf.actionsRelay.accept(.delete(user: user))
     }
     return cellModel
   }

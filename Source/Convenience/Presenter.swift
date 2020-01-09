@@ -5,9 +5,9 @@
 //
 
 import Foundation
-import RxSwift
+import RxRelay
 import UIKit
 
 public protocol Presenter {
-  var sections: Observable<[ListSection]> { get }
+  var sections: BehaviorRelay<[ListSection]> { get }
 }

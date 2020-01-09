@@ -154,11 +154,15 @@ public final class ListTests: XCTestCase {
       updateExpectation.fulfill()
     }
     wait(for: [updateExpectation], timeout: 5)
-    collectionVC.collectionView.delegate?.collectionView?(collectionVC.collectionView,
-                                                          didHighlightItemAt: IndexPath(item: 0, section: 0))
+    collectionVC.collectionView.delegate?.collectionView?(
+      collectionVC.collectionView,
+      didHighlightItemAt: IndexPath(item: 0, section: 0)
+    )
     XCTAssertTrue(highlighted)
-    collectionVC.collectionView.delegate?.collectionView?(collectionVC.collectionView,
-                                                          didUnhighlightItemAt: IndexPath(item: 0, section: 0))
+    collectionVC.collectionView.delegate?.collectionView?(
+      collectionVC.collectionView,
+      didUnhighlightItemAt: IndexPath(item: 0, section: 0)
+    )
     XCTAssertFalse(highlighted)
   }
 

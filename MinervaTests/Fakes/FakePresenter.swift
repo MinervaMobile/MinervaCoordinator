@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 
 public final class FakePresenter: Presenter {
@@ -77,6 +78,7 @@ public final class FakePresenter: Presenter {
   }()
 
   public let listSections: [ListSection]
+  public let sections: BehaviorRelay<[ListSection]>
 
   public init() {
     let mainSection = ListSection(cellModels: cellModels, identifier: "Section")
@@ -90,9 +92,6 @@ public final class FakePresenter: Presenter {
     var horizontalSection = ListSection(cellModels: [horizontalCellModel], identifier: "HorizontalSection")
     horizontalSection.constraints.scrollDirection = .horizontal
     listSections = [mainSection, horizontalSection]
-  }
-
-  public var sections: Observable<[ListSection]> {
-    return .just(listSections)
+    sections = BehaviorRelay<[ListSection]>(value: listSections)
   }
 }

@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -18,11 +19,10 @@ public final class CreateUserPresenter: Presenter {
   private static let passwordCellModelIdentifier = "passwordCellModelIdentifier"
   private static let caloriesCellModelIdentifier = "caloriesCellModelIdentifier"
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -32,7 +32,7 @@ public final class CreateUserPresenter: Presenter {
   private var role: UserRole = .user
 
   public init() {
-    sectionsSubject.onNext([createSection()])
+    sections.accept([createSection()])
   }
 
   // MARK: - Private
@@ -56,7 +56,7 @@ public final class CreateUserPresenter: Presenter {
         password: strongSelf.password,
         dailyCalories: strongSelf.dailyCalories,
         role: strongSelf.role)
-      strongSelf.actionsSubject.onNext(action)
+      strongSelf.actionsRelay.accept(action)
     }
 
     return [

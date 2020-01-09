@@ -8,6 +8,7 @@ import Foundation
 import IGListKit
 import UIKit
 
+/// Manages the collection view state and updating the collection view to the provided ListSection's.
 public protocol ListController: AnyObject {
 
   typealias Completion = (Bool) -> Void
@@ -16,6 +17,7 @@ public protocol ListController: AnyObject {
   var reorderDelegate: ListControllerReorderDelegate? { get set }
   var sizeDelegate: ListControllerSizeDelegate? { get set }
   var scrollViewDelegate: UIScrollViewDelegate? { get set }
+
   var viewController: UIViewController? { get set }
   var collectionView: UICollectionView? { get set }
   var listSections: [ListSection] { get }

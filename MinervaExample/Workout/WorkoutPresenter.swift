@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -27,11 +28,10 @@ public final class WorkoutPresenter: Presenter {
     public var loading: Bool = false
   }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let persistentStateSubject = BehaviorSubject(value: PersistentState())
   public var persistentState: Observable<PersistentState> { persistentStateSubject.asObservable() }
@@ -84,15 +84,15 @@ public final class WorkoutPresenter: Presenter {
   }
 
   public func editFilter() {
-    actionsSubject.onNext(.editFilter)
+    actionsRelay.accept(.editFilter)
   }
 
   public func createWorkout() {
-    actionsSubject.onNext(.createWorkout(userID: repository.userID))
+    actionsRelay.accept(.createWorkout(userID: repository.userID))
   }
 
   public func edit(workout: Workout) {
-    actionsSubject.onNext(.editWorkout(workout))
+    actionsRelay.accept(.editWorkout(workout))
   }
 
   public func delete(workout: Workout) {
@@ -139,7 +139,7 @@ public final class WorkoutPresenter: Presenter {
       workouts: workouts,
       user: user
     )
-    sectionsSubject.onNext(sections)
+    self.sections.accept(sections)
 
     let persistentState = PersistentState(title: user.email, filter: filter)
     persistentStateSubject.onNext(persistentState)

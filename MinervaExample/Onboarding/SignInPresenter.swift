@@ -5,6 +5,7 @@
 //
 
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
@@ -29,11 +30,10 @@ public final class SignInPresenter: Presenter {
     }
   }
 
-  private let actionsSubject = PublishSubject<Action>()
-  public var actions: Observable<Action> { actionsSubject.asObservable() }
+  private let actionsRelay = PublishRelay<Action>()
+  public var actions: Observable<Action> { actionsRelay.asObservable() }
 
-  private let sectionsSubject = BehaviorSubject<[ListSection]>(value: [])
-  public var sections: Observable<[ListSection]> { sectionsSubject.asObservable() }
+  public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
 
@@ -46,7 +46,7 @@ public final class SignInPresenter: Presenter {
 
   public init(mode: Mode) {
     self.mode = mode
-    sectionsSubject.onNext([createSection()])
+    sections.accept([createSection()])
   }
 
   // MARK: - Private
@@ -96,9 +96,9 @@ public final class SignInPresenter: Presenter {
 
   private func handleContinueButtonPress() {
     if let email = self.email, let password = self.password {
-      actionsSubject.onNext(.signIn(email: email, password: password, mode: self.mode))
+      actionsRelay.accept(.signIn(email: email, password: password, mode: self.mode))
     } else {
-      actionsSubject.onNext(.invalidInput)
+      actionsRelay.accept(.invalidInput)
     }
   }
 

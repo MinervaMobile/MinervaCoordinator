@@ -67,6 +67,27 @@ public final class CoordinationTests: XCTestCase {
     XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
   }
 
+  public func testDismissalFromNavigator() {
+    XCTAssertNotNil(rootCoordinator.viewController.view)
+    let childCoordinator = FakeCoordinator()
+    let navigator = BasicNavigator(parent: rootCoordinator.navigator)
+    let presentationExpectation = expectation(description: "Presentation")
+    rootCoordinator.present(childCoordinator, from: navigator, animated: false) {
+      presentationExpectation.fulfill()
+    }
+    wait(for: [presentationExpectation], timeout: 5)
+
+    XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
+
+    let dismissalExpectation = expectation(description: "Dismissal")
+    dismissalExpectation.assertForOverFulfill = false
+    navigator.dismiss(childCoordinator.viewController, animated: false) {
+      dismissalExpectation.fulfill()
+    }
+    wait(for: [dismissalExpectation], timeout: 5)
+    XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
+  }
+
   public func testPushAndPop() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
