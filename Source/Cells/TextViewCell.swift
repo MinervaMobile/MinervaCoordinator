@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import RxRelay
 import UIKit
 
 open class TextViewCellModel: BaseListCellModel {
@@ -27,7 +28,8 @@ open class TextViewCellModel: BaseListCellModel {
 
   public var backgroundColor: UIColor?
 
-  public var becomesFirstResponder = false
+  public var becomesFirstResponder = BehaviorRelay<Bool>(value: false)
+
   public var height: CGFloat = 200
 
   public var cursorColor: UIColor?
@@ -68,7 +70,6 @@ open class TextViewCellModel: BaseListCellModel {
       && textColor == model.textColor
       && font == model.font
       && text == model.text
-      && becomesFirstResponder == model.becomesFirstResponder
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
@@ -82,7 +83,7 @@ open class TextViewCellModel: BaseListCellModel {
   }
 }
 
-public final class TextViewCell: BaseListCell<TextViewCellModel> {
+public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
 
   private let textView: UITextView = {
     let textView = UITextView()
@@ -120,9 +121,13 @@ public final class TextViewCell: BaseListCell<TextViewCellModel> {
       textView.textColor = model.placeholderTextColor
     }
 
-    if model.becomesFirstResponder {
-      textView.becomeFirstResponder()
-    }
+    model.becomesFirstResponder.subscribe(onNext: { [weak self] isFirstResponder in
+      if isFirstResponder {
+        self?.textView.becomeFirstResponder()
+      } else {
+        self?.textView.resignFirstResponder()
+      }
+    }).disposed(by: disposeBag)
 
     backgroundView?.backgroundColor = model.backgroundColor
     textView.delegate = model.helper

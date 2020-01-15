@@ -76,7 +76,7 @@ extension BasicNavigator: Navigator {
       // We need to ensure the runCompletion block is called from the correct navigator, this tells the parent
       // to dismiss the navigator in case a coordinator was presented with a new navigator.
       if let parent = self.parent {
-        parent.dismiss(viewController, animated: false, animationCompletion: animationCompletion)
+        parent.dismiss(viewController, animated: false, animationCompletion: nil)
         return
       }
     }
