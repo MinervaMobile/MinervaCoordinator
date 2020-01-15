@@ -1,14 +1,11 @@
 osx_image: xcode11.2
 language: swift
-cache:
-  bundler: true
-before_install:
-  - brew update
 
 jobs:
   include:
     - stage: Lint Pod, Test, Generate Coverage
       install:
+        - brew update
         - brew outdated cocoapods || brew upgrade cocoapods
         - brew install xcodegen
         - gem install slather
