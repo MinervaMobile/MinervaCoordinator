@@ -16,7 +16,7 @@ public final class CoordinationTests: XCTestCase {
 
   override public func setUp() {
     super.setUp()
-    navigator = BasicNavigator()
+    navigator = BasicNavigator(parent: nil)
     rootCoordinator = FakeCoordinator(navigator: navigator)
     navigator.setViewControllers([rootCoordinator.viewController], animated: false, completion: nil)
     UIApplication.shared.windows.first?.rootViewController = navigator.navigationController
@@ -49,7 +49,7 @@ public final class CoordinationTests: XCTestCase {
 
   public func testPresentationFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let navigator = BasicNavigator()
+    let navigator = BasicNavigator(parent: nil)
     let childCoordinator = FakeCoordinator()
     let presentationExpectation = expectation(description: "Presentation")
     rootCoordinator.present(childCoordinator, from: navigator, animated: false) {

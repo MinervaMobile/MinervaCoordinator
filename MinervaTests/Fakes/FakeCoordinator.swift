@@ -21,7 +21,7 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     let collectionVC = CollectionViewController(layout: layout)
     collectionVC.backgroundImage = UIImage()
     let listController = LegacyListController()
-    let navigator = navigator ?? BasicNavigator()
+    let navigator = navigator ?? BasicNavigator(parent: nil)
     let presenter = FakePresenter()
     super.init(
       navigator: navigator,

@@ -32,7 +32,12 @@ open class BaseListCellModel: ListCellModel {
 
 open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
   open private(set) var model: CellModelType?
-  open private(set) var highlightView = UIView()
+  open private(set) var highlightView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isHidden = true
+    return view
+  }()
 
   override open var isHighlighted: Bool {
     didSet {
@@ -49,7 +54,6 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
   override public init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(highlightView)
-    highlightView.isHidden = true
     highlightView.anchor(to: contentView)
   }
 

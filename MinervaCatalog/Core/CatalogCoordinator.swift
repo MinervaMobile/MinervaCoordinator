@@ -10,7 +10,7 @@ import UIKit
 
 public final class CatalogCoordinator: BaseCoordinator<CatalogPresenter, CollectionViewController> {
   public init() {
-    let navigator = BasicNavigator()
+    let navigator = BasicNavigator(parent: nil)
     let viewController = CollectionViewController()
     viewController.backgroundColor = .systemBackground
     let presenter = CatalogPresenter()

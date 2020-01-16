@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
-  s.version = "2.15.0"
+  s.version = "2.16.0"
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"

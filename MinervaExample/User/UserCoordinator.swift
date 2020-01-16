@@ -35,7 +35,7 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
   public init(userManager: UserManager, dataManager: DataManager) {
     self.userManager = userManager
     self.dataManager = dataManager
-    let navigator = BasicNavigator()
+    let navigator = BasicNavigator(parent: nil)
     self.navigator = navigator
     self.userVC = UserVC(
       userAuthorization: dataManager.userAuthorization,

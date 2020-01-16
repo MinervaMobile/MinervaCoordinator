@@ -15,14 +15,14 @@ public final class BasicNavigator: NSObject {
   private var completions = [UIViewController: RemovalCompletion]()
 
   public init(
-    navigationController: UINavigationController = UINavigationController(),
-    parent: Navigator? = nil
+    parent: Navigator?,
+    navigationController: UINavigationController = UINavigationController()
   ) {
     self.parent = parent
     self.navigationController = navigationController
     super.init()
     navigationController.delegate = self
-    navigationController.presentationController?.delegate = parent
+    navigationController.presentationController?.delegate = parent ?? self
   }
 
   // MARK: - Private

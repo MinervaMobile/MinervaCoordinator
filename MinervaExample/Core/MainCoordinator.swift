@@ -8,7 +8,7 @@ import Foundation
 import Minerva
 import UIKit
 
-public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T, U>, UIViewControllerTransitioningDelegate {
+public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T, U> {
 
   public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
 
@@ -34,6 +34,7 @@ public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T
   }
 
   // MARK: - ListControllerSizeDelegate
+
   override public func listController(
     _ listController: ListController,
     sizeFor model: ListCellModel,
@@ -42,17 +43,15 @@ public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T
   ) -> CGSize? {
     guard model is MarginCellModel else { return nil }
     let collectionViewBounds = sizeConstraints.containerSize
-    let minHeight: CGFloat = 20
+    let minHeight: CGFloat = 1
     let dynamicHeight = listController.listSections.reduce(collectionViewBounds.height) { sum, section -> CGFloat in
       sum - listController.size(of: section, containerSize: collectionViewBounds).height
     }
-    let marginCellCount = listController.cellModels
-      .compactMap { $0 as? MarginCellModel }
-      .filter {
-        guard case .relative = $0.cellSize else { return false }
-        return true
-      }
-      .count
+    let marginCellCount = listController.cellModels.reduce(0) { count, model -> Int in
+      guard let marginModel = model as? MarginCellModel else { return count }
+      guard case .relative = marginModel.cellSize else { return count }
+      return count + 1
+    }
     let width = sizeConstraints.adjustedContainerSize.width
     guard marginCellCount > 0 else {
       return CGSize(width: width, height: minHeight)
