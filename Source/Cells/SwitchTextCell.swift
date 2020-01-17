@@ -85,6 +85,7 @@ public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
     label.text = model.text
     label.font = model.font
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
+    switchButton.isUserInteractionEnabled = model.didSwitchAction != nil
 
     guard !sizing else { return }
 
