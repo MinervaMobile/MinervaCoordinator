@@ -25,6 +25,7 @@ open class ButtonImageCellModel: BaseListCellModel {
   public var imageContentMode: UIView.ContentMode = .scaleAspectFit
   public var imageColor: UIColor?
 
+  public var minimumContainerHeight: CGFloat = 0
   public var borderWidth: CGFloat = 0
   public var borderRadius: CGFloat = 4
   public var borderColor: UIColor?
@@ -62,6 +63,7 @@ open class ButtonImageCellModel: BaseListCellModel {
       && imageSize == model.imageSize
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && minimumContainerHeight == model.minimumContainerHeight
   }
 }
 
@@ -86,6 +88,7 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
 
   private var imageWidthConstraint: NSLayoutConstraint?
   private var imageHeightConstraint: NSLayoutConstraint?
+  private var minimumContainerHeightConstraint: NSLayoutConstraint?
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -133,6 +136,7 @@ extension ButtonImageCell {
   private func remakeConstraints(with model: ButtonImageCellModel) {
     imageWidthConstraint?.constant = model.imageSize.width
     imageHeightConstraint?.constant = model.imageSize.height
+    minimumContainerHeightConstraint?.constant = model.minimumContainerHeight
   }
 
   private func setupConstraints() {
@@ -153,6 +157,8 @@ extension ButtonImageCell {
       lessThanOrEqualTo: layoutGuide.trailingAnchor
     ).isActive = true
     marginContainer.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
+    minimumContainerHeightConstraint = marginContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    minimumContainerHeightConstraint?.isActive = true
 
     imageView.leadingAnchor.constraint(equalTo: marginContainer.leadingAnchor, constant: ButtonImageCellModel.imageMargin).isActive = true
     imageView.topAnchor.constraint(equalTo: marginContainer.topAnchor, constant: ButtonImageCellModel.imageMargin).isActive = true
