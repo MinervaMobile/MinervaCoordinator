@@ -277,7 +277,7 @@ extension LegacyListController: ListModelSectionControllerDelegate {
     fromIndex: Int,
     toIndex: Int
   ) {
-    reorderDelegate?.listControllerCompletedMove(self, for: cellModel, fromIndex: fromIndex, toIndex: toIndex)
+    reorderDelegate?.listController(self, moved: cellModel, fromIndex: fromIndex, toIndex: toIndex)
   }
 
   internal func sectionController(
