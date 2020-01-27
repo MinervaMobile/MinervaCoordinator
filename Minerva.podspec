@@ -42,9 +42,6 @@ Pod::Spec.new do |s|
 
     ss.ios.deployment_target = '11.0'
     ss.ios.frameworks = 'Foundation', 'UIKit'
-
-    ss.tvos.deployment_target = '11.0'
-    ss.tvos.frameworks = 'Foundation', 'UIKit'
   end
 
   s.subspec 'Coordination' do |ss|
