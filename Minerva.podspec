@@ -1,6 +1,10 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
+<<<<<<< HEAD
   s.version = "2.17.0"
+=======
+  s.version = "2.16.2"
+>>>>>>> User observables in place of BehaviorSubjects and add more comments
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"
