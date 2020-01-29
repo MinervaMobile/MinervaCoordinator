@@ -42,10 +42,6 @@ public protocol ListController: AnyObject {
   /// - Parameter completion: A block to execute when the reload completes.
   func reloadData(completion: Completion?)
 
-  /// Reloads the cells for the specified cell models, if they are present in the previously set [ListSection]'s
-  /// - Parameter cellModels: The cell models to reload cells for.
-  func reload(_ cellModels: [ListCellModel])
-
   /// Replaces the existing list sections with those specified. If a CellModel has the same identifier it will be updated if identical evaluates to false, otherwise
   /// The newly provided CellModel is ignored.
   /// - Parameters:

@@ -15,6 +15,7 @@ public final class LegacyListController: NSObject, ListController {
   public weak var animationDelegate: ListControllerAnimationDelegate?
   public weak var reorderDelegate: ListControllerReorderDelegate?
   public weak var sizeDelegate: ListControllerSizeDelegate?
+
   public weak var scrollViewDelegate: UIScrollViewDelegate? {
     get { self.adapter.scrollViewDelegate }
     set { self.adapter.scrollViewDelegate = newValue }
@@ -43,7 +44,7 @@ public final class LegacyListController: NSObject, ListController {
     self.sizeController = ListCellSizeController()
     self.listSectionWrappers = []
     let updater = ListAdapterUpdater()
-    self.adapter = ListAdapter(updater: updater, viewController: nil, workingRangeSize: 2)
+    self.adapter = ListAdapter(updater: updater, viewController: nil)
     super.init()
     self.sizeController.delegate = self
     self.adapter.dataSource = self
@@ -54,12 +55,12 @@ public final class LegacyListController: NSObject, ListController {
 
   public func reloadData(completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
-    adapter.reloadData(completion: completion)
-  }
-
-  public func reload(_ cellModels: [ListCellModel]) {
-    dispatchPrecondition(condition: .onQueue(.main))
-    adapter.reloadObjects(cellModels.map(ListCellModelWrapper.init))
+    adapter.reloadData { [weak self] finished in
+      if let strongSelf = self, strongSelf.noLongerDisplayingCells {
+        strongSelf.endDisplayingVisibleCells()
+      }
+      completion?(finished)
+    }
   }
 
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
@@ -82,7 +83,12 @@ public final class LegacyListController: NSObject, ListController {
       }
     #endif
     listSectionWrappers = listSections.map(ListSectionWrapper.init)
-    adapter.performUpdates(animated: animated, completion: completion)
+    adapter.performUpdates(animated: animated) { [weak self] finished in
+      if let strongSelf = self, strongSelf.noLongerDisplayingCells {
+        strongSelf.endDisplayingVisibleCells()
+      }
+      completion?(finished)
+    }
   }
 
   public func willDisplay() {
@@ -96,8 +102,7 @@ public final class LegacyListController: NSObject, ListController {
   public func didEndDisplaying() {
     dispatchPrecondition(condition: .onQueue(.main))
     guard !noLongerDisplayingCells else { return }
-    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.didEndDisplayingCell() }
+    endDisplayingVisibleCells()
     noLongerDisplayingCells = true
   }
 
@@ -219,6 +224,13 @@ public final class LegacyListController: NSObject, ListController {
   public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints) -> CGSize {
     dispatchPrecondition(condition: .onQueue(.main))
     return sizeController.size(for: cellModel, with: constraints)
+  }
+
+  // MARK: - Private
+
+  private func endDisplayingVisibleCells() {
+    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
+    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.didEndDisplayingCell() }
   }
 }
 

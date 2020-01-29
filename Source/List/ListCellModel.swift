@@ -98,7 +98,7 @@ public protocol ListSelectableCellModelWrapper {
 }
 
 /// If a cell is selectable it should conform to this protocol and set a block to be
-/// called when selected.
+/// called when selected. Headers and Footers can not be selected using this protocol.
 public protocol ListSelectableCellModel: ListSelectableCellModelWrapper {
 
   associatedtype SelectableModelType: ListCellModel
