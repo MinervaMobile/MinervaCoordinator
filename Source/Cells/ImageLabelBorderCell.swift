@@ -12,7 +12,7 @@ open class ImageLabelBorderCellModel: BaseListCellModel {
 
   fileprivate static let labelMargin: CGFloat = 15
 
-  public var isSelected = BehaviorSubject<Bool>(value: false)
+  public var isSelected = false
 
   fileprivate let text: String
   fileprivate let font: UIFont
@@ -75,6 +75,7 @@ open class ImageLabelBorderCellModel: BaseListCellModel {
       && borderColor == model.borderColor
       && maxTextWidth == model.maxTextWidth
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && isSelected == model.isSelected
   }
 }
 
@@ -137,11 +138,9 @@ public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCe
       imageView.image = model.image
     }
 
-    model.isSelected.subscribe(onNext: { [weak self, weak model] isSelected -> Void in
-      self?.label.textColor = isSelected ? model?.selectedTextColor : model?.textColor
-      self?.imageView.tintColor = isSelected ? model?.selectedImageColor : model?.imageColor
-      self?.buttonContainerView.backgroundColor = isSelected ? model?.selectedBackgroundColor : nil
-    }).disposed(by: disposeBag)
+    label.textColor = model.isSelected ? model.selectedTextColor : model.textColor
+    imageView.tintColor = model.isSelected ? model.selectedImageColor : model.imageColor
+    buttonContainerView.backgroundColor = model.isSelected ? model.selectedBackgroundColor : nil
   }
 }
 

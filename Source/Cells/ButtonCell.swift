@@ -5,14 +5,13 @@
 //
 
 import Foundation
-import RxSwift
 import UIKit
 
 open class ButtonCellModel: BaseListCellModel {
   public typealias ButtonAction = (_ model: ButtonCellModel, _ button: UIButton) -> Void
 
   public var buttonAction: ButtonAction?
-  public var isSelected = BehaviorSubject<Bool>(value: false)
+  public var isSelected = false
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
   public var numberOfLines = 0
@@ -79,6 +78,7 @@ open class ButtonCellModel: BaseListCellModel {
       && titleEdgeInsets == model.titleEdgeInsets
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && isSelected == model.isSelected
   }
 }
 
@@ -139,11 +139,9 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     button.layer.cornerRadius = model.borderRadius
     button.isUserInteractionEnabled = model.buttonAction != nil
 
-    model.isSelected.subscribe(onNext: { [weak self, weak model] isSelected -> Void in
-      self?.button.isSelected = isSelected
-      let borderColor = isSelected ? model?.selectedBorderColor?.cgColor : model?.borderColor?.cgColor
-      self?.button.layer.borderColor = borderColor
-    }).disposed(by: disposeBag)
+    button.isSelected = model.isSelected
+    let borderColor = model.isSelected ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
+    button.layer.borderColor = borderColor
   }
 
   @objc
