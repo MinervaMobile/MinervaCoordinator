@@ -9,31 +9,18 @@ import IGListKit
 import UIKit
 
 open class BaseViewController: UIViewController, ViewController {
-  /// Defines how the collection view should interact with keyboard.
-  public enum KeyboardBehavior {
-    /// Keep keyboard on screen until dismissed by user.
-    /// This will also adjust collection view's content inset to offset the scroll area covered by keyboard.
-    case stay
-    /// Dismisses the keyboard when a drag begins.
-    case dismissOnDrag
-  }
 
   public weak var lifecycleDelegate: ViewControllerDelegate?
+  public var enableKeyboardObserving: Bool = false
 
   public let collectionView: UICollectionView
 
   // MARK: - Lifecycle
 
   public init(
-    layout: ListViewLayout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true),
-    keyboardBehavior: KeyboardBehavior = .dismissOnDrag
+    layout: ListViewLayout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
   ) {
-    self.collectionView = {
-      let collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
-      collectionView.keyboardDismissMode = Self.keyboardDismissMode(keyboardBehavior: keyboardBehavior)
-      return collectionView
-    }()
-    self.enableKeyboardObserving = Self.shouldEnableKeyboardObserving(keyboardBehavior: keyboardBehavior)
+    self.collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -94,7 +81,6 @@ open class BaseViewController: UIViewController, ViewController {
   private var extraBottomInsetForKeyboard: CGFloat?
   private var keyboardShowObserver: Any?
   private var keyboardHideObserver: Any?
-  private let enableKeyboardObserving: Bool
 
   private func setupKeyboardObserving() {
     keyboardShowObserver = NotificationCenter.default.addObserver(
@@ -152,21 +138,4 @@ open class BaseViewController: UIViewController, ViewController {
     self.extraBottomInsetForKeyboard = nil
   }
 
-  private static func shouldEnableKeyboardObserving(keyboardBehavior: KeyboardBehavior) -> Bool {
-    switch keyboardBehavior {
-    case .dismissOnDrag:
-      return false
-    case .stay:
-      return true
-    }
-  }
-
-  private static func keyboardDismissMode(keyboardBehavior: KeyboardBehavior) -> UIScrollView.KeyboardDismissMode {
-    switch keyboardBehavior {
-    case .dismissOnDrag:
-      return .onDrag
-    case .stay:
-      return .none
-    }
-  }
 }
