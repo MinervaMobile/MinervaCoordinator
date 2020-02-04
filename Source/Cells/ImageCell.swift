@@ -37,10 +37,7 @@ open class ImageCellModel: BaseListCellModel {
       && imageColor == model.imageColor
   }
 
-  override open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
     let cellHeight = imageSize.height + directionalLayoutMargins.top + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))

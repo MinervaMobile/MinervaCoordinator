@@ -45,10 +45,7 @@ open class PickerLabelCellModel: BaseListCellModel {
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
-  override open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     guard let height = staticHeight else { return .autolayout }
     return .explicit(size: CGSize(width: containerSize.width, height: height))
   }

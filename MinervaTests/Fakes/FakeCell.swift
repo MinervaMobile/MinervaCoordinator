@@ -8,6 +8,7 @@ import Foundation
 import Minerva
 
 public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel, ListHighlightableCellModel, ListReorderableCellModel {
+  public typealias CellType = FakeCell
 
   public typealias SelectableModelType = FakeCellModel
   public var selectionAction: SelectionAction?
@@ -34,9 +35,8 @@ public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBi
       && reorderable == model.reorderable
   }
 
-  public func size(constrainedTo containerSize: CGSize, with templateProvider: () -> FakeCell) -> ListCellSize {
-    _ = templateProvider()
-    return size
+  public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    size
   }
 }
 

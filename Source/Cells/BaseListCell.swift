@@ -23,8 +23,7 @@ open class BaseListCellModel: ListCellModel {
     identifier == model.identifier
   }
   open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
+    constrainedTo containerSize: CGSize
   ) -> ListCellSize {
     return .autolayout
   }

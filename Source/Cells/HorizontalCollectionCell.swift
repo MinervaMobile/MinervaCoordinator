@@ -57,10 +57,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     return section.cellModels.elementsEqual(model.section.cellModels, by: { $0.identical(to: $1) })
   }
 
-  override public func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let constraints = ListSizeConstraints(
       containerSize: containerSize,
       sectionConstraints: section.constraints)

@@ -48,10 +48,7 @@ open class ImageTextCardCellModel: BaseListCellModel {
       && backgroundColor == model.backgroundColor
   }
 
-  override open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     return .autolayout
   }
 }

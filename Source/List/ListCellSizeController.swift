@@ -33,9 +33,7 @@ internal final class ListCellSizeController {
   }
 
   internal func supplementarySize(for cellModel: ListCellModel, sizeConstraints: ListSizeConstraints) -> CGSize {
-    let size = cellModel.size(constrainedTo: sizeConstraints.containerSize) {
-      self.cell(for: cellModel)
-    }
+    let size = cellModel.size(constrainedTo: sizeConstraints.containerSize)
     switch size {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
@@ -198,9 +196,7 @@ internal final class ListCellSizeController {
 
   private func listCellSize(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
-    let modelSize = model.size(constrainedTo: adjustedContainerSize) {
-      self.cell(for: model)
-    }
+    let modelSize = model.size(constrainedTo: adjustedContainerSize)
 
     guard case .explicit(let size) = modelSize else {
       return modelSize

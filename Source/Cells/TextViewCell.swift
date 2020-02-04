@@ -74,10 +74,7 @@ open class TextViewCellModel: BaseListCellModel {
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 
-  override open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
     return .explicit(size: CGSize(width: width, height: height))
   }

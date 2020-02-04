@@ -47,7 +47,7 @@ public class MainCoordinator<T: Presenter, U: ViewController>: BaseCoordinator<T
       sum - listController.size(of: section, containerSize: collectionViewBounds).height
     }
     let marginCellCount = listController.cellModels.reduce(0) { count, model -> Int in
-      guard case .relative = marginModel.cellSize else { return count }
+      guard case .relative = model.size(constrainedTo: .zero) else { return count }
       return count + 1
     }
     let width = sizeConstraints.adjustedContainerSize.width

@@ -33,10 +33,7 @@ open class MarginCellModel: BaseListCellModel {
 
   // MARK: - BaseListCellModel
 
-  override open func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
+  override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     cellSize
   }
 

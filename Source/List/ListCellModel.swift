@@ -33,8 +33,7 @@ public protocol ListCellModel {
 
   /// Provides the size that the models cell will need.
   /// - Parameter containerSize: The max size that the cell can occupy.
-  /// - Parameter templateProvider: Provides a template cell to size against when supplying an explicit size.
-  func size(constrainedTo containerSize: CGSize, with templateProvider: () -> ListCollectionViewCell) -> ListCellSize
+  func size(constrainedTo containerSize: CGSize) -> ListCellSize
 }
 
 extension ListCellModel {
@@ -190,11 +189,6 @@ public protocol ListTypedCellModel: ListCellModel {
   /// Determines if two models with the same identifier are equal. If they are not, then the cell is reloaded and bound to the new model.
   /// - Parameter model: The model to compare against.
   func identical(to model: Self) -> Bool
-
-  /// Provides the size that the models cell will need.
-  /// - Parameter containerSize: The max size that the cell can occupy.
-  /// - Parameter templateProvider: Provides a template cell to size against when supplying an explicit size.
-  func size(constrainedTo containerSize: CGSize, with templateProvider: () -> CellType) -> ListCellSize
 }
 
 extension ListTypedCellModel {
@@ -204,19 +198,6 @@ extension ListTypedCellModel {
   public func identical(to other: ListCellModel) -> Bool {
     guard let model = other as? Self else { return false }
     return identical(to: model)
-  }
-  public func size(
-    constrainedTo containerSize: CGSize,
-    with templateProvider: () -> ListCollectionViewCell
-  ) -> ListCellSize {
-    return size(constrainedTo: containerSize) { () -> CellType in
-      let cell = templateProvider()
-      guard let typedTemplate = cell as? CellType else {
-        assertionFailure("Invalid cell type \(cell)")
-        return CellType()
-      }
-      return typedTemplate
-    }
   }
 }
 
