@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import RxSwift
+import RxRelay
 import UIKit
 
 open class LabelAccessoryCellModel: BaseListCellModel {
@@ -17,7 +17,7 @@ open class LabelAccessoryCellModel: BaseListCellModel {
   public var iconSelectionAction: Action?
   public var accessorySelectionAction: Action?
 
-  public var iconImage: Observable<UIImage?> = .just(nil)
+  public var iconImageRelay = BehaviorRelay<UIImage?>(value: nil)
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
 
   public var iconColor: UIColor?
@@ -162,7 +162,7 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
 
     backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] image in
+    model.iconImageRelay.subscribe(onNext: { [weak self] image in
       self?.iconImageView.image = image
     }).disposed(by: disposeBag)
   }
