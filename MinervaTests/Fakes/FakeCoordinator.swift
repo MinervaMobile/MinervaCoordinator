@@ -27,7 +27,8 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
       navigator: navigator,
       viewController: collectionVC,
       presenter: presenter,
-      listController: listController)
+      listController: listController
+    )
     collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
   }
 
@@ -39,7 +40,7 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    return CGSize(width: sizeConstraints.adjustedContainerSize.width, height: 24)
+    CGSize(width: sizeConstraints.adjustedContainerSize.width, height: 24)
   }
 
   // MARK: - ViewControllerDelegate
@@ -47,15 +48,24 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     super.viewControllerViewDidLoad(viewController)
     viewDidLoad = true
   }
-  override public func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
+  override public func viewController(
+    _ viewController: ViewController,
+    viewWillAppear animated: Bool
+  ) {
     super.viewController(viewController, viewWillAppear: animated)
     viewWillAppear = true
   }
-  override public func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool) {
+  override public func viewController(
+    _ viewController: ViewController,
+    viewWillDisappear animated: Bool
+  ) {
     super.viewController(viewController, viewWillAppear: animated)
     viewWillDisappear = true
   }
-  override public func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool) {
+  override public func viewController(
+    _ viewController: ViewController,
+    viewDidDisappear animated: Bool
+  ) {
     super.viewController(viewController, viewWillDisappear: animated)
     viewDidDisappear = true
   }

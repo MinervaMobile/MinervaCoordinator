@@ -9,7 +9,10 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class EditWorkoutCoordinator: MainCoordinator<EditWorkoutPresenter, CollectionViewController> {
+public final class EditWorkoutCoordinator: MainCoordinator<
+  EditWorkoutPresenter, CollectionViewController
+>
+{
 
   private let dataManager: DataManager
 
@@ -26,7 +29,9 @@ public final class EditWorkoutCoordinator: MainCoordinator<EditWorkoutPresenter,
       presenter: presenter,
       listController: listController
     )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
+      by: disposeBag
+    )
     viewController.title = editing ? "Update Workout" : "Add Workout"
   }
 

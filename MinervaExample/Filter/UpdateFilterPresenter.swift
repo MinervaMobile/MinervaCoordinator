@@ -51,7 +51,11 @@ public final class UpdateFilterPresenter: Presenter {
 
   private func loadCellModels() -> [ListCellModel] {
 
-    let cancelModel = SelectableLabelCellModel(identifier: "cancelModel", text: "Remove", font: .title1)
+    let cancelModel = SelectableLabelCellModel(
+      identifier: "cancelModel",
+      text: "Remove",
+      font: .title1
+    )
     cancelModel.directionalLayoutMargins.leading = 0
     cancelModel.directionalLayoutMargins.trailing = 0
     cancelModel.textAlignment = .center

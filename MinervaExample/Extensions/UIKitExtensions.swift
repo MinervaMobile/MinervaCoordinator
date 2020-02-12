@@ -8,11 +8,13 @@ import Foundation
 import Minerva
 import UIKit
 
-public enum UIKitExtensions { }
+public enum UIKitExtensions {}
 
 extension Array where Element: NSAttributedString {
   public func height(constraintedToWidth width: CGFloat) -> CGFloat {
-    let mutableString = self.reduce(NSMutableAttributedString()) { mutable, attributed -> NSMutableAttributedString in
+    let mutableString = self.reduce(NSMutableAttributedString()) {
+      mutable,
+      attributed -> NSMutableAttributedString in
       let mutableString = mutable
       mutableString.append(attributed)
       return mutableString
@@ -27,19 +29,34 @@ public class BlockBarButtonItem: UIBarButtonItem {
   private var actionHandler: ActionHandler?
 
   public convenience init(image: UIImage?, style: Style, actionHandler: ActionHandler?) {
-    self.init(image: image, style: style, target: nil, action: #selector(barButtonItemPressed(sender:)))
+    self.init(
+      image: image,
+      style: style,
+      target: nil,
+      action: #selector(barButtonItemPressed(sender:))
+    )
     target = self
     self.actionHandler = actionHandler
   }
 
   public convenience init(title: String?, style: Style, actionHandler: ActionHandler?) {
-    self.init(title: title, style: style, target: nil, action: #selector(barButtonItemPressed(sender:)))
+    self.init(
+      title: title,
+      style: style,
+      target: nil,
+      action: #selector(barButtonItemPressed(sender:))
+    )
     target = self
     self.actionHandler = actionHandler
   }
 
-  public convenience init(barButtonSystemItem systemItem: SystemItem, actionHandler: ActionHandler?) {
-    self.init(barButtonSystemItem: systemItem, target: nil, action: #selector(barButtonItemPressed(sender:)))
+  public convenience init(barButtonSystemItem systemItem: SystemItem, actionHandler: ActionHandler?)
+  {
+    self.init(
+      barButtonSystemItem: systemItem,
+      target: nil,
+      action: #selector(barButtonItemPressed(sender:))
+    )
     target = self
     self.actionHandler = actionHandler
   }
@@ -64,7 +81,8 @@ extension CoordinatorNavigator {
       coordinator,
       from: coordinator.navigator,
       modalPresentationStyle: modalPresentationStyle,
-      animated: animated)
+      animated: animated
+    )
   }
 }
 
@@ -81,7 +99,7 @@ extension LabelCellModel {
 
 extension ListController {
   public var cellModels: [ListCellModel] {
-    return listSections.flatMap { $0.cellModels }
+    listSections.flatMap { $0.cellModels }
   }
 }
 
@@ -92,17 +110,26 @@ extension NSAttributedString {
       attributes: [
         NSAttributedString.Key.font: font,
         NSAttributedString.Key.foregroundColor: fontColor
-      ])
+      ]
+    )
   }
   public func height(constraintedToWidth width: CGFloat) -> CGFloat {
     let size = CGSize(width: width, height: .greatestFiniteMagnitude)
-    let rect = self.boundingRect(with: size, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
+    let rect = self.boundingRect(
+      with: size,
+      options: [.usesFontLeading, .usesLineFragmentOrigin],
+      context: nil
+    )
     let height = rect.size.height
     return ceil(height)
   }
   public func width(constraintedToHeight height: CGFloat) -> CGFloat {
     let size = CGSize(width: .greatestFiniteMagnitude, height: height)
-    let rect = self.boundingRect(with: size, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
+    let rect = self.boundingRect(
+      with: size,
+      options: [.usesFontLeading, .usesLineFragmentOrigin],
+      context: nil
+    )
 
     let width = rect.size.width
     return ceil(width)
@@ -123,7 +150,8 @@ extension String {
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       attributes: [NSAttributedString.Key.font: font],
-      context: nil)
+      context: nil
+    )
     let height = rect.size.height
     return ceil(height)
   }
@@ -134,7 +162,8 @@ extension String {
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       attributes: [NSAttributedString.Key.font: font],
-      context: nil)
+      context: nil
+    )
     let width = rect.size.width
     return ceil(width)
   }
@@ -143,19 +172,19 @@ extension String {
 extension UIColor {
 
   public static var controllers: UIColor {
-    return UIColor(red: 247, green: 247, blue: 247)
+    UIColor(red: 247, green: 247, blue: 247)
   }
 
   public static var selectable: UIColor {
-    return UIColor(red: 242, green: 114, blue: 79)
+    UIColor(red: 242, green: 114, blue: 79)
   }
 
   public static var section: UIColor {
-    return UIColor(red: 247, green: 247, blue: 247)
+    UIColor(red: 247, green: 247, blue: 247)
   }
 
   public static var separator: UIColor {
-    return UIColor(red: 226, green: 231, blue: 242)
+    UIColor(red: 226, green: 231, blue: 242)
   }
 
   public convenience init(red: Int, green: Int, blue: Int) {
@@ -163,7 +192,8 @@ extension UIColor {
       red: CGFloat(red) / 255.0,
       green: CGFloat(green) / 255.0,
       blue: CGFloat(blue) / 255.0,
-      alpha: 1.0)
+      alpha: 1.0
+    )
   }
   public convenience init(white: Int) {
     self.init(white: CGFloat(white) / 255.0, alpha: 1.0)
@@ -233,13 +263,13 @@ extension UIFont {
     guard let descriptor = fontDescriptor.withSymbolicTraits(traits) else {
       return self
     }
-    return UIFont(descriptor: descriptor, size: 0) //size 0 means keep the size as it is
+    return UIFont(descriptor: descriptor, size: 0)  //size 0 means keep the size as it is
   }
 }
 
 extension UILayoutPriority {
   public static var notRequired: UILayoutPriority {
-    return UILayoutPriority.required - 1
+    UILayoutPriority.required - 1
   }
 }
 
@@ -274,7 +304,8 @@ extension UIView {
       toLeading: layoutGuide.leadingAnchor,
       top: layoutGuide.topAnchor,
       trailing: layoutGuide.trailingAnchor,
-      bottom: layoutGuide.bottomAnchor)
+      bottom: layoutGuide.bottomAnchor
+    )
   }
 
   public func anchor(to view: UIView) {
@@ -282,7 +313,8 @@ extension UIView {
       toLeading: view.leadingAnchor,
       top: view.topAnchor,
       trailing: view.trailingAnchor,
-      bottom: view.bottomAnchor)
+      bottom: view.bottomAnchor
+    )
   }
 
   public func anchorHeight(to height: CGFloat) {
@@ -301,7 +333,8 @@ extension UIView {
       toItem: view,
       attribute: .centerX,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
   }
 
   public func equalVerticalCenter(with view: UIView) {
@@ -312,18 +345,19 @@ extension UIView {
       toItem: view,
       attribute: .centerY,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
   }
 }
 
 extension UIViewController {
 
   public var topLayoutGuideAnchor: NSLayoutYAxisAnchor {
-    return self.view.safeAreaLayoutGuide.topAnchor
+    self.view.safeAreaLayoutGuide.topAnchor
   }
 
   public var bottomLayoutGuideAnchor: NSLayoutYAxisAnchor {
-    return self.view.safeAreaLayoutGuide.bottomAnchor
+    self.view.safeAreaLayoutGuide.bottomAnchor
   }
 
   public func add(child viewController: UIViewController, to view: UIView) {
@@ -350,7 +384,8 @@ extension UIViewController {
       toLeading: self.view.leadingAnchor,
       top: self.topLayoutGuideAnchor,
       trailing: self.view.trailingAnchor,
-      bottom: self.bottomLayoutGuideAnchor)
+      bottom: self.bottomLayoutGuideAnchor
+    )
   }
 
   public func anchorViewToTopSafeAreaLayoutGuide(_ view: UIView) {
@@ -361,7 +396,8 @@ extension UIViewController {
       toLeading: self.view.leadingAnchor,
       top: layoutGuide.topAnchor,
       trailing: self.view.trailingAnchor,
-      bottom: self.view.bottomAnchor)
+      bottom: self.view.bottomAnchor
+    )
   }
 
   public func alert(_ error: Error, title: String, message: String? = nil) {

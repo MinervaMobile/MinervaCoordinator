@@ -20,7 +20,11 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
   fileprivate let attributedText: NSAttributedString
   fileprivate let detailsText: NSAttributedString
 
-  public init(identifier: String, attributedText: NSAttributedString, detailsText: NSAttributedString) {
+  public init(
+    identifier: String,
+    attributedText: NSAttributedString,
+    detailsText: NSAttributedString
+  ) {
     self.attributedText = attributedText
     self.detailsText = detailsText
     super.init(identifier: identifier)

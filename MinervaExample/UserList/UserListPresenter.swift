@@ -39,18 +39,20 @@ public final class UserListPresenter: Presenter {
     self.repository = repository
     self.actionsRelay = PublishRelay()
     self.state = Observable.just(.loading)
-    self.state = self.state.concat(repository.users.map { [weak self] usersResult -> State in
-      guard let strongSelf = self else {
-        return .failure(error: SystemError.cancelled)
+    self.state = self.state.concat(
+      repository.users.map { [weak self] usersResult -> State in
+        guard let strongSelf = self else {
+          return .failure(error: SystemError.cancelled)
+        }
+        switch usersResult {
+        case .success(let users):
+          let sections = [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
+          return .loaded(sections: sections)
+        case .failure(let error):
+          return .failure(error: error)
+        }
       }
-      switch usersResult {
-      case .success(let users):
-        let sections = [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
-        return .loaded(sections: sections)
-      case .failure(let error):
-        return .failure(error: error)
-      }
-    })
+    )
   }
 
   // MARK: - Private
@@ -77,7 +79,11 @@ public final class UserListPresenter: Presenter {
   private func createUserCellModel(for user: User) -> SwipeableLabelCellModel {
     let cellModel = SwipeableLabelCellModel(
       identifier: user.description,
-      attributedText: NSAttributedString(string: "\(user.email)\n\(user.dailyCalories)", font: .body, fontColor: .label)
+      attributedText: NSAttributedString(
+        string: "\(user.email)\n\(user.dailyCalories)",
+        font: .body,
+        fontColor: .label
+      )
     )
     cellModel.backgroundColor = .systemBackground
     cellModel.deleteAction = { [weak self] _ -> Void in

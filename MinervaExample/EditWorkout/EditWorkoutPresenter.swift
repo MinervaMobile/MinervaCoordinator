@@ -38,7 +38,9 @@ public final class EditWorkoutPresenter: Presenter {
   public init(workout: Workout) {
     self.workout = workout.proto
     self.workoutSubject = BehaviorSubject<WorkoutProto>(value: self.workout)
-    workoutSubject.map({ [weak self] workout -> [ListSection] in self?.createSection(with: workout) ?? [] })
+    workoutSubject.map({ [weak self] workout -> [ListSection] in
+      self?.createSection(with: workout) ?? []
+    })
       .bind(to: sections)
       .disposed(by: disposeBag)
   }
@@ -55,7 +57,8 @@ public final class EditWorkoutPresenter: Presenter {
     let doneModel = SelectableLabelCellModel(
       identifier: "doneModel",
       text: "Save",
-      font: .title1)
+      font: .title1
+    )
     doneModel.directionalLayoutMargins.leading = 0
     doneModel.directionalLayoutMargins.trailing = 0
     doneModel.textAlignment = .center
@@ -91,7 +94,8 @@ public final class EditWorkoutPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: EditWorkoutPresenter.textCellModelIdentifier,
       placeholder: "Description of the workout...",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = workout.text.isEmpty ? nil : workout.text
     cellModel.keyboardType = .default
     cellModel.cursorColor = .selectable
@@ -107,7 +111,8 @@ public final class EditWorkoutPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: EditWorkoutPresenter.caloriesCellModelIdentifier,
       placeholder: "Calories",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = workout.calories > 0 ? String(workout.calories) : nil
     cellModel.keyboardType = .numberPad
     cellModel.cursorColor = .selectable
@@ -122,7 +127,10 @@ public final class EditWorkoutPresenter: Presenter {
 
 // MARK: - TextInputCellModelDelegate
 extension EditWorkoutPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
+  public func textInputCellModel(
+    _ textInputCellModel: TextInputCellModel,
+    textChangedTo text: String?
+  ) {
     guard let text = text else { return }
     switch textInputCellModel.identifier {
     case EditWorkoutPresenter.textCellModelIdentifier:

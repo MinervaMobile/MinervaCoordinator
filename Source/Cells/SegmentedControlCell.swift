@@ -9,7 +9,12 @@ import UIKit
 open class SegmentedControlCellModel: BaseListCellModel {
   public typealias Action = (SegmentedControlCellModel, UISegmentedControl) -> Void
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var apportionsSegmentWidthsByContent: Bool = false
   public var backgroundColor: UIColor?
@@ -27,7 +32,11 @@ open class SegmentedControlCellModel: BaseListCellModel {
   }
 
   public convenience init(selectedSegment: Int, segmentTitles: [String]) {
-    self.init(identifier: "SegmentedControlCellModel", selectedSegment: selectedSegment, segmentTitles: segmentTitles)
+    self.init(
+      identifier: "SegmentedControlCellModel",
+      selectedSegment: selectedSegment,
+      segmentTitles: segmentTitles
+    )
   }
 
   // MARK: - BaseListCellModel

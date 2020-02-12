@@ -15,7 +15,8 @@ public protocol SettingsCoordinatorDelegate: AnyObject {
   )
 }
 
-public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, CollectionViewController> {
+public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, CollectionViewController>
+{
 
   public weak var delegate: SettingsCoordinatorDelegate?
   private let userManager: UserManager
@@ -36,7 +37,9 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
       presenter: presenter,
       listController: listController
     )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
+      by: disposeBag
+    )
     viewController.title = "Settings"
   }
 
@@ -82,7 +85,11 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
 
   private func displayUserUpdatePopup(for user: User) {
     let navigator = BasicNavigator(parent: self.navigator)
-    let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
+    let coordinator = UpdateUserCoordinator(
+      navigator: navigator,
+      dataManager: dataManager,
+      user: user
+    )
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
   private func handle(_ action: SettingsPresenter.Action) {

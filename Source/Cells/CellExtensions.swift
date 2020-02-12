@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-internal enum CellExtensions { }
+internal enum CellExtensions {}
 
 extension NSAttributedString {
   internal convenience init(string: String, font: UIFont, fontColor: UIColor) {
@@ -16,17 +16,26 @@ extension NSAttributedString {
       attributes: [
         NSAttributedString.Key.font: font,
         NSAttributedString.Key.foregroundColor: fontColor
-      ])
+      ]
+    )
   }
   internal func height(constraintedToWidth width: CGFloat) -> CGFloat {
     let size = CGSize(width: width, height: .greatestFiniteMagnitude)
-    let rect = self.boundingRect(with: size, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
+    let rect = self.boundingRect(
+      with: size,
+      options: [.usesFontLeading, .usesLineFragmentOrigin],
+      context: nil
+    )
     let height = rect.size.height
     return ceil(height)
   }
   internal func width(constraintedToHeight height: CGFloat) -> CGFloat {
     let size = CGSize(width: .greatestFiniteMagnitude, height: height)
-    let rect = self.boundingRect(with: size, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
+    let rect = self.boundingRect(
+      with: size,
+      options: [.usesFontLeading, .usesLineFragmentOrigin],
+      context: nil
+    )
 
     let width = rect.size.width
     return ceil(width)
@@ -41,7 +50,8 @@ extension String {
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       attributes: [NSAttributedString.Key.font: font],
-      context: nil)
+      context: nil
+    )
     let height = rect.size.height
     return ceil(height)
   }
@@ -52,7 +62,8 @@ extension String {
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       attributes: [NSAttributedString.Key.font: font],
-      context: nil)
+      context: nil
+    )
     let width = rect.size.width
     return ceil(width)
   }
@@ -60,7 +71,7 @@ extension String {
 
 extension UIColor {
   internal func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
-    return UIGraphicsImageRenderer(size: size).image { rendererContext in
+    UIGraphicsImageRenderer(size: size).image { rendererContext in
       self.setFill()
       rendererContext.fill(CGRect(origin: .zero, size: size))
     }
@@ -94,7 +105,8 @@ extension UIView {
       toLeading: layoutGuide.leadingAnchor,
       top: layoutGuide.topAnchor,
       trailing: layoutGuide.trailingAnchor,
-      bottom: layoutGuide.bottomAnchor)
+      bottom: layoutGuide.bottomAnchor
+    )
   }
 
   internal func anchor(to view: UIView) {
@@ -102,7 +114,8 @@ extension UIView {
       toLeading: view.leadingAnchor,
       top: view.topAnchor,
       trailing: view.trailingAnchor,
-      bottom: view.bottomAnchor)
+      bottom: view.bottomAnchor
+    )
   }
 
   internal func anchorHeight(to height: CGFloat) {

@@ -12,7 +12,12 @@ import UIKit
 
 open class SwipeableCellModel: BaseListCellModel {
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
   public var backgroundColor: UIColor?
 
   public var separatorColor: UIColor?
@@ -27,7 +32,9 @@ open class SwipeableCellModel: BaseListCellModel {
   }
 }
 
-open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell, ListBindable {
+open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell,
+  ListBindable
+{
   public var disposeBag = DisposeBag()
 
   open private(set) var model: CellModelType?
@@ -115,12 +122,17 @@ extension SwipeableCell {
     let layoutGuide = contentView.layoutMarginsGuide
     containerView.anchorTo(layoutGuide: layoutGuide)
 
-    insetLeadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor)
-    leadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+    insetLeadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(
+      equalTo: layoutGuide.leadingAnchor
+    )
+    leadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(
+      equalTo: contentView.leadingAnchor
+    )
     leadingSeparatorConstraint?.isActive = true
 
     bottomSeparatorView.anchorHeight(to: 1)
-    bottomSeparatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    bottomSeparatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive =
+      true
     bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
   }

@@ -64,6 +64,6 @@ extension ListTypedCell {
 
 /// This should not be used, it is a placeholder for failures to bridge the IGListKit obj-c to Swift gap.
 internal class MissingListCell: ListCollectionViewCell {
-  internal func bind(cellModel: ListCellModel, sizing: Bool) { }
-  internal func bindViewModel(_ viewModel: Any) { }
+  internal func bind(cellModel: ListCellModel, sizing: Bool) {}
+  internal func bindViewModel(_ viewModel: Any) {}
 }

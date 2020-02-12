@@ -44,7 +44,11 @@ extension BasicNavigator: Navigator {
     animationCompletion: AnimationCompletion?
   ) {
     completions[viewController] = removalCompletion
-    navigationController.present(viewController, animated: animated, completion: animationCompletion)
+    navigationController.present(
+      viewController,
+      animated: animated,
+      completion: animationCompletion
+    )
   }
 
   public func dismiss(
@@ -83,15 +87,23 @@ extension BasicNavigator: Navigator {
   }
 
   public func popToRootViewController(animated: Bool) -> [UIViewController]? {
-    guard let poppedControllers = navigationController.popToRootViewController(animated: animated) else {
+    guard let poppedControllers = navigationController.popToRootViewController(animated: animated)
+    else {
       return nil
     }
     poppedControllers.forEach { runCompletion(for: $0) }
     return poppedControllers
   }
 
-  public func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-    guard let poppedControllers = navigationController.popToViewController(viewController, animated: animated) else {
+  public func popToViewController(_ viewController: UIViewController, animated: Bool)
+    -> [UIViewController]?
+  {
+    guard
+      let poppedControllers = navigationController.popToViewController(
+        viewController,
+        animated: animated
+      )
+    else {
       return nil
     }
     poppedControllers.forEach { runCompletion(for: $0) }
@@ -106,7 +118,11 @@ extension BasicNavigator: Navigator {
     return poppedController
   }
 
-  public func push(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
+  public func push(
+    _ viewController: UIViewController,
+    animated: Bool,
+    completion: RemovalCompletion?
+  ) {
     if let completion = completion {
       completions[viewController] = completion
     }
@@ -143,7 +159,9 @@ extension BasicNavigator {
   }
 
   // This allows explicitly setting the modalPresentationStyle from a view controller.
-  public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+  public func adaptivePresentationStyle(for controller: UIPresentationController)
+    -> UIModalPresentationStyle
+  {
     controller.presentedViewController.modalPresentationStyle
   }
 
@@ -165,7 +183,11 @@ extension BasicNavigator {
     didShow viewController: UIViewController,
     animated: Bool
   ) {
-    guard let poppingViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
+    guard
+      let poppingViewController = navigationController.transitionCoordinator?.viewController(
+        forKey: .from
+      )
+    else {
       return
     }
     // The view controller could be .from if it is being popped, or if another VC is being pushed. Check the

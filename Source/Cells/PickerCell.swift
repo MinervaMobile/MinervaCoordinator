@@ -17,14 +17,24 @@ open class PickerCellModel: BaseListCellModel {
 
   fileprivate static let cellMargin: CGFloat = 15.0
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var backgroundColor: UIColor?
 
   fileprivate let helper: PickerCellModelHelper
 
   public
-  init(identifier: String, pickerDataComponents: [PickerDataComponent], changedValue: @escaping Action) {
+    init(
+      identifier: String,
+      pickerDataComponents: [PickerDataComponent],
+      changedValue: @escaping Action
+    )
+  {
     self.helper = PickerCellModelHelper(pickerDataComponents: pickerDataComponents)
     super.init(identifier: identifier)
     self.helper.changedValue = { [weak self] pickerView, row, component in
@@ -89,10 +99,11 @@ private class PickerCellModelHelper: NSObject {
 // MARK: - UIPickerViewDataSource
 extension PickerCellModelHelper: UIPickerViewDataSource {
   public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return pickerDataComponents.count
+    pickerDataComponents.count
   }
 
-  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+  {
     guard let rowCount = pickerDataComponents.element(at: component)?.data.count else {
       assertionFailure("Data should exist for component \(component)")
       return 0
@@ -113,9 +124,10 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
     label.adjustsFontForContentSizeCategory = true
 
     guard let componentData = pickerDataComponents.element(at: component),
-      let rowData = componentData.data.element(at: row) else {
-        assertionFailure("Data should exist for component \(component) row \(row)")
-        return label
+      let rowData = componentData.data.element(at: row)
+    else {
+      assertionFailure("Data should exist for component \(component) row \(row)")
+      return label
     }
 
     label.attributedText = rowData.text
@@ -141,36 +153,55 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
       trailing: containerView.trailingAnchor,
       bottom: containerView.bottomAnchor
     )
-    label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: imageData.imageMargin).isActive = true
+    label.leadingAnchor.constraint(
+      equalTo: imageView.trailingAnchor,
+      constant: imageData.imageMargin
+    ).isActive = true
 
     let rowView = UIView()
     rowView.addSubview(containerView)
 
     let containerWidth: CGFloat = componentData.data.reduce(0) { maxWidth, rowData in
       let textWidth = rowData.text.width(constraintedToHeight: pickerView.bounds.height)
-      let width = textWidth + (rowData.imageData?.imageMargin ?? 0) + (rowData.imageData?.imageSize.width ?? 0)
+      let width = textWidth + (rowData.imageData?.imageMargin ?? 0) + (
+        rowData.imageData?.imageSize.width ?? 0
+      )
       return max(maxWidth, width)
     }
 
     containerView.anchorWidth(to: containerWidth)
-    containerView.anchor(toLeading: nil, top: rowView.topAnchor, trailing: nil, bottom: rowView.bottomAnchor)
+    containerView.anchor(
+      toLeading: nil,
+      top: rowView.topAnchor,
+      trailing: nil,
+      bottom: rowView.bottomAnchor
+    )
     containerView.centerXAnchor.constraint(equalTo: rowView.centerXAnchor).isActive = true
     containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     rowView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     return rowView
   }
 
-  public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+  public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int)
+    -> CGFloat
+  {
     guard let componentData = pickerDataComponents.element(at: component) else {
       return 0
     }
-    let maxTextHeight
-      = componentData.data.reduce(0) { max($0, $1.text.height(constraintedToWidth: pickerView.frame.width)) }
-    let maxImageHeight = componentData.data.reduce(0) { max($0, ($1.imageData?.imageSize.height ?? 0)) }
+    let maxTextHeight = componentData.data.reduce(0) {
+      max($0, $1.text.height(constraintedToWidth: pickerView.frame.width))
+    }
+    let maxImageHeight = componentData.data.reduce(0) {
+      max($0, ($1.imageData?.imageSize.height ?? 0))
+    }
 
     return max(maxTextHeight, maxImageHeight) + componentData.verticalMargin * 2
   }
-  public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+  public func pickerView(
+    _ pickerView: UIPickerView,
+    didSelectRow row: Int,
+    inComponent component: Int
+  ) {
     changedValue?(pickerView, row, component)
   }
 }
@@ -205,7 +236,12 @@ public struct PickerDataComponent: Equatable {
   public let verticalMargin: CGFloat
   public let startingRow: Int
 
-  public init(data: [PickerDataRow], textAlignment: NSTextAlignment, verticalMargin: CGFloat, startingRow: Int) {
+  public init(
+    data: [PickerDataRow],
+    textAlignment: NSTextAlignment,
+    verticalMargin: CGFloat,
+    startingRow: Int
+  ) {
     self.data = data
     self.textAlignment = textAlignment
     self.verticalMargin = verticalMargin

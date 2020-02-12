@@ -43,7 +43,8 @@ public final class FilterPresenter: Presenter {
         identifier: "\(filter)-\(type)-\(details)",
         title: type.description,
         details: details,
-        hasChevron: true)
+        hasChevron: true
+      )
       nameCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
         strongSelf.actionsRelay.accept(.edit(filter: filter, type: type))

@@ -11,7 +11,12 @@ open class DatePickerCellModel: BaseListCellModel {
   public typealias Action = (_ cellModel: DatePickerCellModel, _ date: Date) -> Void
   public var changedDate: Action?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   fileprivate let startDate: Date
   public var maxControlWidth: CGFloat = 340
@@ -46,8 +51,14 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
   private let datePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
     datePicker.setValue(
-      UIColor(red: CGFloat(247) / 255, green: CGFloat(92) / 255, blue: CGFloat(74) / 255, alpha: 1.0),
-      forKey: "textColor")
+      UIColor(
+        red: CGFloat(247) / 255,
+        green: CGFloat(92) / 255,
+        blue: CGFloat(74) / 255,
+        alpha: 1.0
+      ),
+      forKey: "textColor"
+    )
     return datePicker
   }()
 
@@ -95,8 +106,10 @@ extension DatePickerCell {
   }
 
   private func setupConstraints() {
-    datePicker.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor).isActive = true
-    datePicker.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor).isActive = true
+    datePicker.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor).isActive =
+      true
+    datePicker.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor).isActive =
+      true
     datePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
     datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     datePicker.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true

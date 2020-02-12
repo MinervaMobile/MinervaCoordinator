@@ -15,7 +15,12 @@ open class TextSeparatorCellModel: BaseListCellModel {
   public var textColor: UIColor?
   public var lineColor: UIColor?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public let text: String
 

@@ -8,11 +8,18 @@ import Foundation
 import UIKit
 
 open class LabelCellModel: BaseListCellModel {
-  public typealias LabelAction = (_ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel) -> Void
+  public typealias LabelAction = (
+    _ model: LabelCellModel, _ gesture: UITapGestureRecognizer, _ label: UILabel
+  ) -> Void
 
   public var labelAction: LabelAction?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
   public var textAlignment: NSTextAlignment = .left
   public var numberOfLines = 0
   public var textColor: UIColor?
@@ -25,7 +32,12 @@ open class LabelCellModel: BaseListCellModel {
   fileprivate let text: String
   fileprivate let font: UIFont
 
-  public init(identifier: String, text: String, font: UIFont, attributedText: NSAttributedString? = nil) {
+  public init(
+    identifier: String,
+    text: String,
+    font: UIFont,
+    attributedText: NSAttributedString? = nil
+  ) {
     self.text = text
     self.font = font
     self.attributedText = attributedText
@@ -45,7 +57,8 @@ open class LabelCellModel: BaseListCellModel {
       identifier: identifier,
       text: attributedText.string,
       font: UIFont.preferredFont(forTextStyle: .subheadline),
-      attributedText: attributedText)
+      attributedText: attributedText
+    )
   }
 
   // MARK: - BaseListCellModel

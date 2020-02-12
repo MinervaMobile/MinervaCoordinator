@@ -15,7 +15,7 @@ import SwiftProtobuf
 // Please ensure that your are building against the same version of the API
 // that was used to generate this file.
 fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
-  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 { }
+  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
@@ -44,7 +44,7 @@ public struct UserCredentialsProto {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public init() { }
+  public init() {}
 
   fileprivate var _email: String? = nil
   fileprivate var _password: String? = nil
@@ -52,7 +52,9 @@ public struct UserCredentialsProto {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension UserCredentialsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension UserCredentialsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   public static let protoMessageName: String = "UserCredentialsProto"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "email"),

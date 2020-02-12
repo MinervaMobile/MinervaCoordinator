@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 
-internal enum ListExtensions { }
+internal enum ListExtensions {}
 
 extension Array {
   internal func at(_ index: Int) -> Element? {
@@ -28,7 +28,7 @@ extension Collection {
 
 extension CGSize {
   internal func adjust(for insets: UIEdgeInsets) -> CGSize {
-    return CGSize(
+    CGSize(
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom
     )
@@ -54,21 +54,24 @@ extension Sequence {
 }
 
 extension UICollectionView {
-  internal var centerPoint: CGPoint { CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y) }
+  internal var centerPoint: CGPoint {
+    CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y)
+  }
 
   internal var centerCellIndexPath: IndexPath? { indexPathForItem(at: centerPoint) }
 
   internal func isIndexPathAvailable(_ indexPath: IndexPath) -> Bool {
     guard dataSource != nil,
       indexPath.section < numberOfSections,
-      indexPath.item < numberOfItems(inSection: indexPath.section) else {
-        return false
+      indexPath.item < numberOfItems(inSection: indexPath.section)
+    else {
+      return false
     }
     return true
   }
 }
 
-extension UICollectionView.ScrollDirection: Hashable { }
+extension UICollectionView.ScrollDirection: Hashable {}
 
 extension UIEdgeInsets: Hashable {
   public func hash(into hasher: inout Hasher) {

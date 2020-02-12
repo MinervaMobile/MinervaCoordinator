@@ -25,7 +25,7 @@ open class BaseListCellModel: ListCellModel {
   open func size(
     constrainedTo containerSize: CGSize
   ) -> ListCellSize {
-    return .autolayout
+    .autolayout
   }
 }
 
@@ -41,9 +41,10 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
   override open var isHighlighted: Bool {
     didSet {
       guard let highlightModel = model as? ListHighlightableCellModelWrapper,
-        highlightModel.highlightEnabled else {
-          self.highlightView.isHidden = true
-          return
+        highlightModel.highlightEnabled
+      else {
+        self.highlightView.isHidden = true
+        return
       }
 
       self.highlightView.isHidden = !self.isHighlighted
@@ -103,7 +104,8 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
     }
     if !sizing {
       if let highlightableViewModel = cellModel as? ListHighlightableCellModelWrapper,
-        highlightableViewModel.highlightEnabled {
+        highlightableViewModel.highlightEnabled
+      {
         highlightView.backgroundColor = highlightableViewModel.highlightColor
       }
     }

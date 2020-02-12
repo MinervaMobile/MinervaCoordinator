@@ -49,7 +49,7 @@ open class ImageTextCardCellModel: BaseListCellModel {
   }
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
-    return .autolayout
+    .autolayout
   }
 }
 
@@ -104,7 +104,9 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
     imageView.contentMode = model.imageContentMode
     imageView.layer.cornerRadius = model.imageCornerRadius
 
-    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
+    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
+      by: disposeBag
+    )
   }
 }
 

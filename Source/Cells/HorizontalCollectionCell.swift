@@ -10,7 +10,12 @@ import UIKit
 
 public final class HorizontalCollectionCellModel: BaseListCellModel {
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var isScrollEnabled = true
   public var itemSpacing: CGFloat = 0 {
@@ -43,14 +48,16 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
-    guard section == model.section
-      && isScrollEnabled == model.isScrollEnabled
-      && itemSpacing == model.itemSpacing
-      && listController === model.listController
-      && numberOfRows == model.numberOfRows
-      && backgroundColor == model.backgroundColor
-      && directionalLayoutMargins == model.directionalLayoutMargins else {
-        return false
+    guard
+      section == model.section
+        && isScrollEnabled == model.isScrollEnabled
+        && itemSpacing == model.itemSpacing
+        && listController === model.listController
+        && numberOfRows == model.numberOfRows
+        && backgroundColor == model.backgroundColor
+        && directionalLayoutMargins == model.directionalLayoutMargins
+    else {
+      return false
     }
 
     guard section.cellModels.count == model.section.cellModels.count else { return false }
@@ -60,7 +67,8 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
   override public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let constraints = ListSizeConstraints(
       containerSize: containerSize,
-      sectionConstraints: section.constraints)
+      sectionConstraints: section.constraints
+    )
 
     let height = section.cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
       max(maxHeight, listController.size(of: cellModel, with: constraints).height)
@@ -144,7 +152,10 @@ extension HorizontalCollectionCell: UICollectionViewDataSource {
 
   public func numberOfSections(in collectionView: UICollectionView) -> Int { 0 }
 
-  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 0 }
+  public func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int { 0 }
 
   public func collectionView(
     _ collectionView: UICollectionView,

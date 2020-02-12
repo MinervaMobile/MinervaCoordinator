@@ -48,18 +48,18 @@ public struct ListSizeConstraints: Hashable {
   }
 
   public var inset: UIEdgeInsets {
-    return sectionConstraints.inset
+    sectionConstraints.inset
   }
   public var minimumLineSpacing: CGFloat {
-    return sectionConstraints.minimumLineSpacing
+    sectionConstraints.minimumLineSpacing
   }
   public var minimumInteritemSpacing: CGFloat {
-    return sectionConstraints.minimumInteritemSpacing
+    sectionConstraints.minimumInteritemSpacing
   }
   public var distribution: ListSection.Distribution {
-    return sectionConstraints.distribution
+    sectionConstraints.distribution
   }
   public var scrollDirection: UICollectionView.ScrollDirection {
-    return sectionConstraints.scrollDirection
+    sectionConstraints.scrollDirection
   }
 }

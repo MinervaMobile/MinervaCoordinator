@@ -18,7 +18,11 @@ open class BaseViewController: UIViewController, ViewController {
   // MARK: - Lifecycle
 
   public init(
-    layout: ListViewLayout = ListViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
+    layout: ListViewLayout = ListViewLayout(
+      stickyHeaders: false,
+      topContentInset: 0,
+      stretchToEdge: true
+    )
   ) {
     self.collectionView = ListCollectionView(frame: .zero, listCollectionViewLayout: layout)
     super.init(nibName: nil, bundle: nil)
@@ -61,7 +65,10 @@ open class BaseViewController: UIViewController, ViewController {
     lifecycleDelegate?.viewController(self, traitCollectionDidChangeFrom: previousTraitCollection)
   }
 
-  override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+  override open func viewWillTransition(
+    to size: CGSize,
+    with coordinator: UIViewControllerTransitionCoordinator
+  ) {
     super.viewWillTransition(to: size, with: coordinator)
     let context = collectionView.collectionViewLayout.invalidationContext(forBoundsChange: .zero)
     coordinator.animate(
@@ -110,9 +117,13 @@ open class BaseViewController: UIViewController, ViewController {
   }
 
   private func keyboardDidShow(notification: Notification) {
-    guard let window = collectionView.window, let superview = collectionView.superview else { return }
-    guard let keyboardFrame =
-      (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+    guard let window = collectionView.window, let superview = collectionView.superview else {
+      return
+    }
+    guard
+      let keyboardFrame =
+        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+    else { return }
     let keyboardFrameInViewCoordinates = window.convert(keyboardFrame, to: superview)
     let intersection = collectionView.frame.intersection(keyboardFrameInViewCoordinates)
     guard !intersection.isNull else { return }
@@ -120,7 +131,8 @@ open class BaseViewController: UIViewController, ViewController {
     let extraBottomInsetForKeyboard = intersection.height - collectionView.safeAreaInsets.bottom
     self.extraBottomInsetForKeyboard = extraBottomInsetForKeyboard
     UIView.animate(withDuration: Constants.animationDuration) {
-      self.collectionView.contentInset.bottom += extraBottomInsetForKeyboard - previousExtraBottomInset
+      self.collectionView.contentInset.bottom += extraBottomInsetForKeyboard
+        - previousExtraBottomInset
       self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
     }
   }

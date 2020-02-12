@@ -48,7 +48,8 @@ public final class WorkoutPresenter: Presenter {
   private let disposeBag = DisposeBag()
   private let queue = SerialDispatchQueueScheduler(
     queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive),
-    internalSerialQueueName: "WorkoutPresenterQueue")
+    internalSerialQueueName: "WorkoutPresenterQueue"
+  )
 
   // MARK: - Lifecycle
 
@@ -62,7 +63,7 @@ public final class WorkoutPresenter: Presenter {
     ).observeOn(
       queue
     ).subscribe(
-      onNext: process(workoutsResult: userResult: filter:)
+      onNext: process(workoutsResult:userResult:filter:)
     ).disposed(
       by: disposeBag
     )
@@ -180,7 +181,8 @@ public final class WorkoutPresenter: Presenter {
         workouts: workoutsForDate,
         user: user,
         failure: failure,
-        sectionNumber: sections.count)
+        sectionNumber: sections.count
+      )
       sections.append(section)
     }
 
@@ -211,7 +213,8 @@ public final class WorkoutPresenter: Presenter {
 
     let dateCellModel = LabelCellModel(
       text: DateFormatter.dateOnlyFormatter.string(from: date),
-      font: UIFont.headline.bold)
+      font: UIFont.headline.bold
+    )
     dateCellModel.textColor = .darkGray
     dateCellModel.textAlignment = .left
     dateCellModel.directionalLayoutMargins.top = 10

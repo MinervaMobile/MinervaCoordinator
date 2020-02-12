@@ -9,7 +9,10 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UpdateUserCoordinator: MainCoordinator<UpdateUserPresenter, CollectionViewController> {
+public final class UpdateUserCoordinator: MainCoordinator<
+  UpdateUserPresenter, CollectionViewController
+>
+{
 
   private let dataManager: DataManager
 
@@ -26,7 +29,9 @@ public final class UpdateUserCoordinator: MainCoordinator<UpdateUserPresenter, C
       presenter: presenter,
       listController: listController
     )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
+      by: disposeBag
+    )
     viewController.title = "Update User"
   }
 

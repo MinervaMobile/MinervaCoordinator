@@ -38,7 +38,11 @@ public final class LifecycleCoordinator {
   private func launchWelcomeCoordinator(animated: Bool) {
     let navigator = BasicNavigator(parent: nil)
     let onboardingCoordinator = WelcomeCoordinator(navigator: navigator, userManager: userManager)
-    navigator.setViewControllers([onboardingCoordinator.viewController], animated: animated, completion: nil)
+    navigator.setViewControllers(
+      [onboardingCoordinator.viewController],
+      animated: animated,
+      completion: nil
+    )
     onboardingCoordinator.delegate = self
     window.rootViewController = navigator.navigationController
     activeCoordinator = onboardingCoordinator

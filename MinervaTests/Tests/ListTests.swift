@@ -98,7 +98,10 @@ public final class ListTests: XCTestCase {
   }
 
   public func testBinding() {
-    var cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    var cellModel = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
     var bound = false
     cellModel.willBindAction = { _ in
       bound = true
@@ -115,7 +118,10 @@ public final class ListTests: XCTestCase {
   }
 
   public func testSelection() {
-    var cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    var cellModel = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
 
     var selected = false
     cellModel.selectionAction = { _, _ in
@@ -131,12 +137,16 @@ public final class ListTests: XCTestCase {
     wait(for: [updateExpectation], timeout: 5)
     collectionVC.collectionView.delegate?.collectionView?(
       collectionVC.collectionView,
-      didSelectItemAt: IndexPath(item: 0, section: 0))
+      didSelectItemAt: IndexPath(item: 0, section: 0)
+    )
     XCTAssertTrue(selected)
   }
 
   public func testHighlighting() {
-    var cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    var cellModel = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
     var highlighted = false
     cellModel.highlightedAction = { _, _ in
       highlighted = true
@@ -167,7 +177,10 @@ public final class ListTests: XCTestCase {
   }
 
   public func testDisplay() {
-    let cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    let cellModel = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
     let section = ListSection(cellModels: [cellModel], identifier: "Section")
 
     let updateExpectation = expectation(description: "Update Expectation")
@@ -177,9 +190,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
     guard let indexPath = listController.indexPaths(for: cellModel).first,
-      let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeCell else {
-        XCTFail("Missing the cell")
-        return
+      let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeCell
+    else {
+      XCTFail("Missing the cell")
+      return
     }
     XCTAssertTrue(cell.displaying)
     listController.didEndDisplaying()
@@ -189,7 +203,10 @@ public final class ListTests: XCTestCase {
   }
 
   public func testRemoveCellModel() {
-    let cellModel = FakeCellModel(identifier: "FakeCellModel1", size: .explicit(size: CGSize(width: 100, height: 100)))
+    let cellModel = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
     let section = ListSection(cellModels: [cellModel], identifier: "Section")
 
     let updateExpectation = expectation(description: "Update Expectation")
@@ -202,7 +219,8 @@ public final class ListTests: XCTestCase {
     XCTAssertEqual(collectionVC.collectionView.numberOfItems(inSection: 0), 1)
 
     let removeExpectation = expectation(description: "Remove Expectation")
-    listController.removeCellModel(at: IndexPath(item: 0, section: 0), animated: false) { finished in
+    listController.removeCellModel(at: IndexPath(item: 0, section: 0), animated: false) {
+      finished in
       XCTAssertTrue(finished)
       removeExpectation.fulfill()
     }
@@ -221,7 +239,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    XCTAssertNotEqual(collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(), cellModels.count - 1)
+    XCTAssertNotEqual(
+      collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(),
+      cellModels.count - 1
+    )
     listController.scroll(to: .bottom, animated: false)
 
     let updateExpectation2 = expectation(description: "Update Expectation2")
@@ -231,7 +252,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation2], timeout: 5)
 
-    XCTAssertEqual(collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(), cellModels.count - 1)
+    XCTAssertEqual(
+      collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(),
+      cellModels.count - 1
+    )
   }
 
   public func testSectionSizing_verticalScrolling() {
@@ -245,7 +269,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let containerSize = CGSize(
+      width: collectionVC.view.frame.width,
+      height: collectionVC.view.frame.height
+    )
     let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_900))
   }
@@ -262,7 +289,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let containerSize = CGSize(
+      width: collectionVC.view.frame.width,
+      height: collectionVC.view.frame.height
+    )
     let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 700))
   }
@@ -279,7 +309,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let containerSize = CGSize(
+      width: collectionVC.view.frame.width,
+      height: collectionVC.view.frame.height
+    )
     let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_000))
   }
@@ -296,7 +329,10 @@ public final class ListTests: XCTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    let containerSize = CGSize(width: collectionVC.view.frame.width, height: collectionVC.view.frame.height)
+    let containerSize = CGSize(
+      width: collectionVC.view.frame.width,
+      height: collectionVC.view.frame.height
+    )
     let size = listController.size(of: section, containerSize: containerSize)
     XCTAssertEqual(size, CGSize(width: 1_425, height: 500))
   }
@@ -304,8 +340,11 @@ public final class ListTests: XCTestCase {
   // MARK: - Private
 
   private func createCellModels(count: Int) -> [FakeCellModel] {
-    return (1...count).map {
-      FakeCellModel(identifier: "FakeCellModel\($0)", size: .explicit(size: CGSize(width: 75, height: 100)))
+    (1...count).map {
+      FakeCellModel(
+        identifier: "FakeCellModel\($0)",
+        size: .explicit(size: CGSize(width: 75, height: 100))
+      )
     }
   }
 }

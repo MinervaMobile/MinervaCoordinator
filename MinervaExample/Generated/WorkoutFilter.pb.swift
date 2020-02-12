@@ -15,7 +15,7 @@ import SwiftProtobuf
 // Please ensure that your are building against the same version of the API
 // that was used to generate this file.
 fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
-  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 { }
+  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
@@ -64,10 +64,10 @@ public struct WorkoutFilterProto {
 
   public enum FilterType: SwiftProtobuf.Enum {
     public typealias RawValue = Int
-    case startDate // = 1
-    case endDate // = 2
-    case startTime // = 3
-    case endTime // = 4
+    case startDate  // = 1
+    case endDate  // = 2
+    case startTime  // = 3
+    case endTime  // = 4
 
     public init() {
       self = .startDate
@@ -94,22 +94,24 @@ public struct WorkoutFilterProto {
 
   }
 
-  public init() { }
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 #if swift(>=4.2)
 
-  extension WorkoutFilterProto.FilterType: CaseIterable {
-    // Support synthesized by the compiler.
-  }
+extension WorkoutFilterProto.FilterType: CaseIterable {
+  // Support synthesized by the compiler.
+}
 
 #endif  // swift(>=4.2)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension WorkoutFilterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension WorkoutFilterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   public static let protoMessageName: String = "WorkoutFilterProto"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "startDateTimestamp"),
@@ -126,7 +128,7 @@ extension WorkoutFilterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
     static let defaultInstance = _StorageClass()
 
-    private init() { }
+    private init() {}
 
     init(copying source: _StorageClass) {
       _startDateTimestamp = source._startDateTimestamp
@@ -178,7 +180,8 @@ extension WorkoutFilterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   public static func == (lhs: WorkoutFilterProto, rhs: WorkoutFilterProto) -> Bool {
     if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) {
+        (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
         let rhs_storage = _args.1
         if _storage._startDateTimestamp != rhs_storage._startDateTimestamp { return false }

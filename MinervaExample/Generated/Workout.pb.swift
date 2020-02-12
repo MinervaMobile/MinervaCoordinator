@@ -15,7 +15,7 @@ import SwiftProtobuf
 // Please ensure that your are building against the same version of the API
 // that was used to generate this file.
 fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
-  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 { }
+  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
@@ -71,14 +71,16 @@ public struct WorkoutProto {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public init() { }
+  public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
+  SwiftProtobuf._ProtoNameProviding
+{
   public static let protoMessageName: String = "WorkoutProto"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "workoutID"),
@@ -97,7 +99,7 @@ extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
     static let defaultInstance = _StorageClass()
 
-    private init() { }
+    private init() {}
 
     init(copying source: _StorageClass) {
       _workoutID = source._workoutID
@@ -154,7 +156,8 @@ extension WorkoutProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
   public static func == (lhs: WorkoutProto, rhs: WorkoutProto) -> Bool {
     if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) {
+        (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
         let rhs_storage = _args.1
         if _storage._workoutID != rhs_storage._workoutID { return false }

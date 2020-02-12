@@ -17,7 +17,12 @@ open class PickerLabelCellModel: BaseListCellModel {
 
   fileprivate static let cellMargin: CGFloat = 15.0
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var backgroundColor: UIColor?
   public var staticHeight: CGFloat?
@@ -100,7 +105,11 @@ public final class PickerLabelCell: BaseListCell<PickerLabelCellModel> {
     }
 
     for component in 0..<pickerView.numberOfComponents {
-      model.helper.changedValue?(pickerView, pickerView.selectedRow(inComponent: component), component)
+      model.helper.changedValue?(
+        pickerView,
+        pickerView.selectedRow(inComponent: component),
+        component
+      )
     }
     backgroundView?.backgroundColor = model.backgroundColor
   }
@@ -123,11 +132,12 @@ private class PickerLabelCellModelHelper: NSObject {
 // MARK: - UIPickerViewDataSource
 extension PickerLabelCellModelHelper: UIPickerViewDataSource {
   public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return 1
+    1
   }
 
-  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return pickerData.data.count
+  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+  {
+    pickerData.data.count
   }
 }
 
@@ -146,13 +156,18 @@ extension PickerLabelCellModelHelper: UIPickerViewDelegate {
     return label
   }
 
-  public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+  public func pickerView(
+    _ pickerView: UIPickerView,
+    didSelectRow row: Int,
+    inComponent component: Int
+  ) {
     self.changedValue?(pickerView, row, component)
   }
 
   public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
     let width = pickerData.data.reduce(
-      0) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
+      0
+    ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
       + (pickerData.options?.rowMargin ?? 8)
     return width
   }
@@ -179,9 +194,12 @@ extension PickerLabelCell {
     }
 
     let pickerWidth = model.helper.pickerData.data.reduce(
-      0) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
+      0
+    ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
       + (data.options?.rowMargin ?? 8)
-    let labelWidth = data.options?.label?.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude) ?? 0
+    let labelWidth = data.options?.label?.width(
+      constraintedToHeight: CGFloat.greatestFiniteMagnitude
+    ) ?? 0
 
     labelWidthConstraint?.constant = labelWidth
     pickerWidthConstraint?.constant = pickerWidth
@@ -190,7 +208,12 @@ extension PickerLabelCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
 
-    containerView.anchor(toLeading: nil, top: layoutGuide.topAnchor, trailing: nil, bottom: layoutGuide.bottomAnchor)
+    containerView.anchor(
+      toLeading: nil,
+      top: layoutGuide.topAnchor,
+      trailing: nil,
+      bottom: layoutGuide.bottomAnchor
+    )
 
     pickerView.anchor(
       toLeading: containerView.leadingAnchor,
@@ -204,7 +227,10 @@ extension PickerLabelCell {
       trailing: containerView.trailingAnchor,
       bottom: containerView.bottomAnchor
     )
-    labelLeadingConstraint = label.leadingAnchor.constraint(equalTo: pickerView.trailingAnchor, constant: 0)
+    labelLeadingConstraint = label.leadingAnchor.constraint(
+      equalTo: pickerView.trailingAnchor,
+      constant: 0
+    )
     labelLeadingConstraint?.isActive = true
     labelWidthConstraint = label.widthAnchor.constraint(equalToConstant: 0)
     labelWidthConstraint?.isActive = true
@@ -216,7 +242,9 @@ extension PickerLabelCell {
     leadingConstraint?.priority = UILayoutPriority.required - 1
     leadingConstraint?.isActive = true
 
-    trailingConstraint = containerView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+    trailingConstraint = containerView.trailingAnchor.constraint(
+      equalTo: layoutGuide.trailingAnchor
+    )
     trailingConstraint?.priority = UILayoutPriority.required - 1
     trailingConstraint?.isActive = true
 

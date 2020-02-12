@@ -1,7 +1,7 @@
 import Foundation
 import Minerva
 
-private enum ConvenienceCellModels { }
+private enum ConvenienceCellModels {}
 
 public final class SelectableLabelCellModel: LabelCellModel, ListSelectableCellModel {
   public typealias SelectableModelType = SelectableLabelCellModel

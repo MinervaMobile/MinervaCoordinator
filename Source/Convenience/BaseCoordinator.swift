@@ -9,7 +9,9 @@ import RxRelay
 import RxSwift
 import UIKit
 
-open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, CoordinatorNavigator, CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate {
+open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, CoordinatorNavigator,
+  CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate
+{
 
   public typealias CoordinatorVC = U
 
@@ -51,7 +53,7 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    return nil
+    nil
   }
 
   // MARK: - ViewControllerDelegate
@@ -61,9 +63,12 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
   open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
     listController.willDisplay()
     updateDisposable?.dispose()
-    updateDisposable = updateRelay
+    updateDisposable =
+      updateRelay
       .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { [weak self] sections in self?.listController.update(with: sections, animated: true) })
+      .subscribe(onNext: { [weak self] sections in
+        self?.listController.update(with: sections, animated: true)
+      })
   }
   open func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool) {
   }

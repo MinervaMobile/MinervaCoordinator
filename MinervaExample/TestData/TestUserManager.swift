@@ -35,7 +35,11 @@ extension TestUserManager: UserManager {
     }
     let userID = UUID().uuidString
     let accessToken = UUID().uuidString
-    let authorization = UserAuthorizationProto(userID: userID, accessToken: accessToken, role: .user)
+    let authorization = UserAuthorizationProto(
+      userID: userID,
+      accessToken: accessToken,
+      role: .user
+    )
     testData.emailToAuthorizationMap[email] = authorization
     testData.emailToPasswordMap[email] = password
     testData.idToAuthorizationMap[userID] = authorization
@@ -51,8 +55,9 @@ extension TestUserManager: UserManager {
       return .error(SystemError.invalidEmail)
     }
     guard let authorization = testData.emailToAuthorizationMap[email],
-      let actualPassword = testData.emailToPasswordMap[email] else {
-        return .error(SystemError.doesNotExist)
+      let actualPassword = testData.emailToPasswordMap[email]
+    else {
+      return .error(SystemError.doesNotExist)
     }
     guard actualPassword == password else {
       return .error(SystemError.invalidEmailAndPassword)
@@ -62,7 +67,8 @@ extension TestUserManager: UserManager {
   }
 
   public func logout(userID: String) -> Single<Void> {
-    guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID else {
+    guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID
+    else {
       return .error(SystemError.unauthorized)
     }
     guard var authorization = testData.idToAuthorizationMap[userID]?.proto else {
@@ -77,7 +83,8 @@ extension TestUserManager: UserManager {
   }
 
   public func delete(userID: String) -> Single<Void> {
-    guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID else {
+    guard let currentUser = activeUser, currentUser.role.userEditor || userID == currentUser.userID
+    else {
       return .error(SystemError.unauthorized)
     }
     guard let user = testData.idToUserMap[userID] else {

@@ -13,7 +13,12 @@ open class ButtonCellModel: BaseListCellModel {
   public var buttonAction: ButtonAction?
   public var isSelected = false
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
   public var numberOfLines = 0
   public var textVerticalMargin: CGFloat = 15.0
   public var textHorizontalMargin: CGFloat = 15.0
@@ -140,7 +145,8 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     button.isUserInteractionEnabled = model.buttonAction != nil
 
     button.isSelected = model.isSelected
-    let borderColor = model.isSelected ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
+    let borderColor = model.isSelected
+      ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
     button.layer.borderColor = borderColor
   }
 

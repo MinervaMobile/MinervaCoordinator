@@ -39,7 +39,7 @@ public protocol ListCellModel {
 extension ListCellModel {
   /// A simple description of the cell model that displays the type and identifier.
   public var typeDescription: String {
-    return "[\(String(describing: type(of: self))) \(identifier)]"
+    "[\(String(describing: type(of: self))) \(identifier)]"
   }
 }
 
@@ -193,7 +193,7 @@ public protocol ListTypedCellModel: ListCellModel {
 
 extension ListTypedCellModel {
 
-  public var cellType: ListCollectionViewCell.Type { return CellType.self }
+  public var cellType: ListCollectionViewCell.Type { CellType.self }
 
   public func identical(to other: ListCellModel) -> Bool {
     guard let model = other as? Self else { return false }
@@ -203,6 +203,6 @@ extension ListTypedCellModel {
 
 extension ListTypedCellModel where Self: Equatable {
   public func identical(to model: Self) -> Bool {
-    return self == model
+    self == model
   }
 }

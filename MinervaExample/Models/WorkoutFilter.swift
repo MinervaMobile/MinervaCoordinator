@@ -32,14 +32,19 @@ public protocol WorkoutFilter: CustomStringConvertible {
 
 extension WorkoutFilter {
   public var description: String {
-    return proto.debugDescription
+    proto.debugDescription
   }
 
   public var proto: WorkoutFilterProto {
     if let proto = self as? WorkoutFilterProto {
       return proto
     } else {
-      return WorkoutFilterProto(startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime)
+      return WorkoutFilterProto(
+        startDate: startDate,
+        endDate: endDate,
+        startTime: startTime,
+        endTime: endTime
+      )
     }
   }
 
@@ -157,7 +162,7 @@ extension WorkoutFilterProto: WorkoutFilter {
   }
 
   public var startDate: Date? {
-    get { return hasStartDateTimestamp ? startDateTimestamp.date : nil }
+    get { hasStartDateTimestamp ? startDateTimestamp.date : nil }
     set {
       if let date = newValue {
         self.startDateTimestamp = Google_Protobuf_Timestamp(date: date)
@@ -168,7 +173,7 @@ extension WorkoutFilterProto: WorkoutFilter {
   }
 
   public var endDate: Date? {
-    get { return hasEndDateTimestamp ? endDateTimestamp.date : nil }
+    get { hasEndDateTimestamp ? endDateTimestamp.date : nil }
     set {
       if let date = newValue {
         self.endDateTimestamp = Google_Protobuf_Timestamp(date: date)
@@ -179,7 +184,7 @@ extension WorkoutFilterProto: WorkoutFilter {
   }
 
   public var startTime: Date? {
-    get { return hasStartTimeTimestamp ? startTimeTimestamp.date : nil }
+    get { hasStartTimeTimestamp ? startTimeTimestamp.date : nil }
     set {
       if let date = newValue {
         self.startTimeTimestamp = Google_Protobuf_Timestamp(date: date)
@@ -190,7 +195,7 @@ extension WorkoutFilterProto: WorkoutFilter {
   }
 
   public var endTime: Date? {
-    get { return hasEndTimeTimestamp ? endTimeTimestamp.date : nil }
+    get { hasEndTimeTimestamp ? endTimeTimestamp.date : nil }
     set {
       if let date = newValue {
         self.endTimeTimestamp = Google_Protobuf_Timestamp(date: date)

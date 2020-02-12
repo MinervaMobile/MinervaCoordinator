@@ -12,7 +12,12 @@ open class ImageCellModel: BaseListCellModel {
   public var selectionAction: ((_ cellModel: ImageCellModel, _ indexPath: IndexPath) -> Void)?
   public var imageColor: UIColor?
   public var contentMode: UIView.ContentMode = .scaleAspectFit
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public let image: UIImage
   public let imageSize: CGSize
@@ -39,7 +44,8 @@ open class ImageCellModel: BaseListCellModel {
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
-    let cellHeight = imageSize.height + directionalLayoutMargins.top + directionalLayoutMargins.bottom
+    let cellHeight = imageSize.height + directionalLayoutMargins.top
+      + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))
   }
 }
@@ -86,7 +92,12 @@ public final class ImageCell: BaseListCell<ImageCellModel> {
 extension ImageCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
-    imageView.anchor(toLeading: nil, top: layoutGuide.topAnchor, trailing: nil, bottom: layoutGuide.bottomAnchor)
+    imageView.anchor(
+      toLeading: nil,
+      top: layoutGuide.topAnchor,
+      trailing: nil,
+      bottom: layoutGuide.bottomAnchor
+    )
     imageView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
 
     imageWidthConstraint.isActive = true

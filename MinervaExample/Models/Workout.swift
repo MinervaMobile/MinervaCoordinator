@@ -17,7 +17,7 @@ public protocol Workout: CustomStringConvertible {
 
 extension Workout {
   public var description: String {
-    return proto.debugDescription
+    proto.debugDescription
   }
 
   public var proto: WorkoutProto {
@@ -58,7 +58,7 @@ extension WorkoutProto: Workout {
   }
 
   public var date: Date {
-    get { return dateTimestamp.date }
+    get { dateTimestamp.date }
     set { dateTimestamp = Google_Protobuf_Timestamp(date: newValue) }
   }
 }

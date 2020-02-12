@@ -16,7 +16,7 @@ internal class ListSectionWrapper: NSObject {
   }
 
   override internal var description: String {
-    return section.description
+    section.description
   }
 }
 
@@ -31,6 +31,6 @@ extension ListSectionWrapper: ListDiffable {
   }
 
   internal func diffIdentifier() -> NSObjectProtocol {
-    return section.identifier as NSString
+    section.identifier as NSString
   }
 }

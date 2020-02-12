@@ -22,12 +22,12 @@ public final class LegacyListController: NSObject, ListController {
   }
 
   public weak var viewController: UIViewController? {
-    get { return self.adapter.viewController }
+    get { self.adapter.viewController }
     set { self.adapter.viewController = newValue }
   }
 
   public var collectionView: UICollectionView? {
-    get { return self.adapter.collectionView }
+    get { self.adapter.collectionView }
     set { self.adapter.collectionView = newValue }
   }
 
@@ -66,21 +66,21 @@ public final class LegacyListController: NSObject, ListController {
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
     #if DEBUG
-      for section in listSections {
-        var identifiers = [String: ListCellModel]()
-        for cellModel in section.cellModels {
-          let identifier = cellModel.identifier
-          if identifier.isEmpty {
-            assertionFailure("Found a cell model an invalid ID \(cellModel)")
-          }
-          if let existingCellModel = identifiers[identifier] {
-            assertionFailure(
-              "Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)"
-            )
-          }
-          identifiers[identifier] = cellModel
+    for section in listSections {
+      var identifiers = [String: ListCellModel]()
+      for cellModel in section.cellModels {
+        let identifier = cellModel.identifier
+        if identifier.isEmpty {
+          assertionFailure("Found a cell model an invalid ID \(cellModel)")
         }
+        if let existingCellModel = identifiers[identifier] {
+          assertionFailure(
+            "Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)"
+          )
+        }
+        identifiers[identifier] = cellModel
       }
+    }
     #endif
     listSectionWrappers = listSections.map(ListSectionWrapper.init)
     adapter.performUpdates(animated: animated) { [weak self] finished in
@@ -126,7 +126,9 @@ public final class LegacyListController: NSObject, ListController {
 
   public var centerCellModel: ListCellModel? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let indexPath = adapter.collectionView?.centerCellIndexPath, let cellModel = cellModel(at: indexPath) else {
+    guard let indexPath = adapter.collectionView?.centerCellIndexPath,
+      let cellModel = cellModel(at: indexPath)
+    else {
       return nil
     }
     return cellModel
@@ -134,7 +136,9 @@ public final class LegacyListController: NSObject, ListController {
 
   public func cellModel(at indexPath: IndexPath) -> ListCellModel? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else { return nil }
+    guard let model = listSections.at(indexPath.section)?.cellModels.at(indexPath.item) else {
+      return nil
+    }
     return model
   }
 
@@ -165,9 +169,11 @@ public final class LegacyListController: NSObject, ListController {
   ) {
     dispatchPrecondition(condition: .onQueue(.main))
 
-    guard let sectionWrapper = listSectionWrappers.first(where: {
-      $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
-    }) else {
+    guard
+      let sectionWrapper = listSectionWrappers.first(where: {
+        $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
+      })
+    else {
       assertionFailure("Section should exist for \(cellModel)")
       return
     }
@@ -175,9 +181,11 @@ public final class LegacyListController: NSObject, ListController {
       assertionFailure("Section Controller should exist for \(sectionWrapper) and \(cellModel)")
       return
     }
-    guard let modelIndex = sectionWrapper.section.cellModels.firstIndex(where: {
-      $0.identifier == cellModel.identifier
-    }) else {
+    guard
+      let modelIndex = sectionWrapper.section.cellModels.firstIndex(where: {
+        $0.identifier == cellModel.identifier
+      })
+    else {
       assertionFailure("index should exist for \(cellModel)")
       return
     }
@@ -190,7 +198,8 @@ public final class LegacyListController: NSObject, ListController {
       to: sectionController,
       at: modelIndex,
       scrollPosition: scrollPosition,
-      animated: animated)
+      animated: animated
+    )
   }
 
   public func scroll(to scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
@@ -217,7 +226,10 @@ public final class LegacyListController: NSObject, ListController {
 
   public func size(of listSection: ListSection, containerSize: CGSize) -> CGSize {
     dispatchPrecondition(condition: .onQueue(.main))
-    let sizeConstraints = ListSizeConstraints(containerSize: containerSize, sectionConstraints: listSection.constraints)
+    let sizeConstraints = ListSizeConstraints(
+      containerSize: containerSize,
+      sectionConstraints: listSection.constraints
+    )
     return sizeController.size(of: listSection, with: sizeConstraints)
   }
 
@@ -237,7 +249,7 @@ public final class LegacyListController: NSObject, ListController {
 // MARK: - ListAdapterDataSource
 extension LegacyListController: ListAdapterDataSource {
   public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-    return listSectionWrappers
+    listSectionWrappers
   }
 
   public func listAdapter(
@@ -249,7 +261,7 @@ extension LegacyListController: ListAdapterDataSource {
     return sectionController
   }
 
-  public func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
+  public func emptyView(for listAdapter: ListAdapter) -> UIView? { nil }
 }
 
 // MARK: - ListAdapterMoveDelegate
@@ -276,7 +288,12 @@ extension LegacyListController: ListCellSizeControllerDelegate {
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    return sizeDelegate?.listController(self, sizeFor: model, at: indexPath, constrainedTo: sizeConstraints)
+    sizeDelegate?.listController(
+      self,
+      sizeFor: model,
+      at: indexPath,
+      constrainedTo: sizeConstraints
+    )
   }
 }
 
@@ -298,7 +315,12 @@ extension LegacyListController: ListModelSectionControllerDelegate {
     for section: ListSection,
     at indexPath: IndexPath
   ) -> ListViewLayoutAttributes? {
-    return animationDelegate?.listController(self, initialLayoutAttributes: attributes, for: section, at: indexPath)
+    animationDelegate?.listController(
+      self,
+      initialLayoutAttributes: attributes,
+      for: section,
+      at: indexPath
+    )
   }
 
   internal func sectionController(
@@ -307,6 +329,11 @@ extension LegacyListController: ListModelSectionControllerDelegate {
     for section: ListSection,
     at indexPath: IndexPath
   ) -> ListViewLayoutAttributes? {
-    return animationDelegate?.listController(self, finalLayoutAttributes: attributes, for: section, at: indexPath)
+    animationDelegate?.listController(
+      self,
+      finalLayoutAttributes: attributes,
+      for: section,
+      at: indexPath
+    )
   }
 }

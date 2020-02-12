@@ -13,7 +13,12 @@ open class ImageTextCellModel: BaseListCellModel {
 
   public let image = BehaviorSubject<UIImage?>(value: nil)
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   fileprivate let attributedText: NSAttributedString
   public var imageSize = CGSize(width: 75, height: 75)
@@ -76,7 +81,9 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
     guard !sizing else { return }
 
     imageView.layer.cornerRadius = model.imageViewCornerRadius
-    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
+    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
+      by: disposeBag
+    )
   }
 }
 

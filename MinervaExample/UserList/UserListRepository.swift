@@ -20,6 +20,6 @@ public class UserListRepository {
   }
 
   public var allowSelection: Bool {
-    return dataManager.userAuthorization.role == .admin
+    dataManager.userAuthorization.role == .admin
   }
 }

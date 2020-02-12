@@ -26,7 +26,8 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
       navigator: navigator,
       viewController: viewController,
       presenter: presenter,
-      listController: listController)
+      listController: listController
+    )
 
   }
 
@@ -55,14 +56,21 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
   private func displayWorkoutPopup(with workout: Workout?, forUserID userID: String) {
     let editing = workout != nil
     let workout = workout
-      ?? WorkoutProto(workoutID: UUID().uuidString, userID: userID, text: "", calories: 0, date: Date())
+      ?? WorkoutProto(
+        workoutID: UUID().uuidString,
+        userID: userID,
+        text: "",
+        calories: 0,
+        date: Date()
+      )
 
     let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = EditWorkoutCoordinator(
       navigator: navigator,
       dataManager: dataManager,
       workout: workout,
-      editing: editing)
+      editing: editing
+    )
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 
@@ -76,7 +84,10 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
 
 // MARK: - FilterCoordinatorDelegate
 extension WorkoutCoordinator: FilterCoordinatorDelegate {
-  public func filterCoordinator(_ filterCoordinator: FilterCoordinator, updatedFilter filter: WorkoutFilter) {
+  public func filterCoordinator(
+    _ filterCoordinator: FilterCoordinator,
+    updatedFilter filter: WorkoutFilter
+  ) {
     presenter.apply(filter: filter)
     dismiss(filterCoordinator, animated: true)
   }

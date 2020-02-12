@@ -37,7 +37,7 @@ public struct ListSection {
     /// use the same scrollDirection, but on iOS13+ this requirement may be dropped.
     public var scrollDirection: UICollectionView.ScrollDirection = .vertical
 
-    public init() { }
+    public init() {}
   }
 
   /// A unique identifier for the section. The identifier should be the same even if the underlying cells change,
@@ -64,7 +64,7 @@ public struct ListSection {
 // MARK: - CustomStringConvertible
 extension ListSection: CustomStringConvertible {
   public var description: String {
-    return "[\(type(of: self)) identifier=\(identifier) constraints=\(constraints) header=\(headerModel.debugDescription) footer=\(footerModel.debugDescription) models=\(cellModels)]"
+    "[\(type(of: self)) identifier=\(identifier) constraints=\(constraints) header=\(headerModel.debugDescription) footer=\(footerModel.debugDescription) models=\(cellModels)]"
   }
 }
 

@@ -76,7 +76,8 @@ public final class UpdateUserPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: UpdateUserPresenter.emailCellModelIdentifier,
       placeholder: "Email",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = user.email
     cellModel.keyboardType = .emailAddress
     cellModel.textContentType = .emailAddress
@@ -93,7 +94,8 @@ public final class UpdateUserPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: UpdateUserPresenter.caloriesCellModelIdentifier,
       placeholder: "Daily Calories",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = user.dailyCalories > 0 ? String(user.dailyCalories) : nil
     cellModel.keyboardType = .numberPad
     cellModel.cursorColor = .selectable
@@ -108,7 +110,10 @@ public final class UpdateUserPresenter: Presenter {
 
 // MARK: - TextInputCellModelDelegate
 extension UpdateUserPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
+  public func textInputCellModel(
+    _ textInputCellModel: TextInputCellModel,
+    textChangedTo text: String?
+  ) {
     guard let text = text else { return }
     switch textInputCellModel.identifier {
     case UpdateUserPresenter.emailCellModelIdentifier:

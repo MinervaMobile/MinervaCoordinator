@@ -41,7 +41,7 @@ public protocol CoordinatorPresentable: BaseCoordinatorPresentable {
 }
 
 extension CoordinatorPresentable {
-  public var baseViewController: UIViewController { return viewController }
+  public var baseViewController: UIViewController { viewController }
 }
 
 /// A coordinator that manages the presentation of other coordinators should implement this protocol.
@@ -88,7 +88,8 @@ extension CoordinatorNavigator {
   ) {
     addChild(coordinator)
 
-    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
+    let viewController = coordinator.baseViewController.navigationController
+      ?? coordinator.baseViewController
     viewController.modalPresentationStyle = modalPresentationStyle
     navigator.present(
       viewController,
@@ -107,7 +108,8 @@ extension CoordinatorNavigator {
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
-    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
+    let viewController = coordinator.baseViewController.navigationController
+      ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
   }
 
@@ -130,7 +132,9 @@ extension CoordinatorNavigator {
       coordinators.map { $0.baseViewController },
       animated: animated
     ) { [weak self] viewController in
-      guard let coordinator = coordinators.first(where: { $0.baseViewController === viewController }) else {
+      guard
+        let coordinator = coordinators.first(where: { $0.baseViewController === viewController })
+      else {
         assertionFailure("Coordinator does not exist for \(viewController)")
         return
       }
@@ -143,7 +147,8 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
   public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
-    navigator.setViewControllers([coordinator.baseViewController], animated: animated) { [weak self] _ in
+    navigator.setViewControllers([coordinator.baseViewController], animated: animated) {
+      [weak self] _ in
       self?.removeChild(coordinator)
     }
   }

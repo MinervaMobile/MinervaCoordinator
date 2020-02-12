@@ -6,11 +6,11 @@
 
 import Foundation
 
-private enum FoundationExtensions { }
+private enum FoundationExtensions {}
 
 extension Array {
   public var isNotEmpty: Bool {
-    return !self.isEmpty
+    !self.isEmpty
   }
 
   public func at(_ index: Int) -> Element? {
@@ -23,16 +23,19 @@ extension Array {
 
 extension DateComponents {
 
-  public func compareTime(with date: Date, calendar: Calendar = Calendar.current) -> ComparisonResult {
+  public func compareTime(with date: Date, calendar: Calendar = Calendar.current)
+    -> ComparisonResult
+  {
     let otherComponents = calendar.dateComponents([.hour, .minute, .second], from: date)
     guard let firstHour = hour,
       let secondHour = otherComponents.hour,
       let firstMinutes = minute,
       let secondMinutes = otherComponents.minute,
       let firstSeconds = second,
-      let secondSeconds = otherComponents.second else {
-        assertionFailure("Invalid date components.")
-        return .orderedSame
+      let secondSeconds = otherComponents.second
+    else {
+      assertionFailure("Invalid date components.")
+      return .orderedSame
     }
 
     let firstTime = firstHour * 360 + firstMinutes * 60 + firstSeconds

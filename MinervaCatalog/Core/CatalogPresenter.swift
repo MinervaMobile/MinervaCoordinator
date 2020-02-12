@@ -120,7 +120,8 @@ public final class CatalogPresenter: Presenter {
     let model1 = HighlightableLabelCellModel(
       identifier: "HighlightableCellModel",
       text: "HighlightableCellModel",
-      font: UIFont.preferredFont(forTextStyle: .subheadline))
+      font: UIFont.preferredFont(forTextStyle: .subheadline)
+    )
     model1.highlightEnabled = true
     model1.highlightColor = UIColor.systemPurple.withAlphaComponent(0.75)
 
@@ -130,7 +131,8 @@ public final class CatalogPresenter: Presenter {
     let model2 = HighlightableIconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
       text: "IconTextCellModel",
-      font: font)
+      font: font
+    )
     model2.iconImage.onNext(image)
     model2.highlightEnabled = true
     model2.highlightColor = model1.highlightColor
@@ -147,7 +149,8 @@ public final class CatalogPresenter: Presenter {
     let model1 = IconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
       text: "IconTextCellModel",
-      font: font)
+      font: font
+    )
     model1.iconImage.onNext(image)
     cellModels.append(model1)
 
@@ -192,7 +195,11 @@ public final class CatalogPresenter: Presenter {
 
     var cellModels = [ListCellModel]()
 
-    let model1 = ImageCellModel(identifier: "model1", image: image, imageSize: CGSize(width: 32, height: 32))
+    let model1 = ImageCellModel(
+      identifier: "model1",
+      image: image,
+      imageSize: CGSize(width: 32, height: 32)
+    )
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "ImageCellModel")
@@ -205,7 +212,12 @@ public final class CatalogPresenter: Presenter {
 
     var cellModels = [ListCellModel]()
 
-    let model1 = ImageLabelBorderCellModel(text: "ImageLabelBorderCellModel", font: font, image: image, imageSize: size)
+    let model1 = ImageLabelBorderCellModel(
+      text: "ImageLabelBorderCellModel",
+      font: font,
+      image: image,
+      imageSize: size
+    )
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "ImageLabelBorderCellModel")
@@ -244,7 +256,10 @@ public final class CatalogPresenter: Presenter {
 
     var cellModels = [ListCellModel]()
 
-    let model1 = ImageTextCellModel(identifier: "ImageTextCellModel", attributedText: attributedText)
+    let model1 = ImageTextCellModel(
+      identifier: "ImageTextCellModel",
+      attributedText: attributedText
+    )
     model1.image.onNext(image)
     cellModels.append(model1)
 
@@ -264,7 +279,10 @@ public final class CatalogPresenter: Presenter {
 
     var cellModels = [ListCellModel]()
 
-    let model1 = LabelAccessoryCellModel(identifier: "LabelAccessoryCellModel", attributedText: attributedText)
+    let model1 = LabelAccessoryCellModel(
+      identifier: "LabelAccessoryCellModel",
+      attributedText: attributedText
+    )
     model1.accessoryImage = image
     cellModels.append(model1)
 
@@ -317,7 +335,12 @@ public final class CatalogPresenter: Presenter {
       text: attributedText,
       imageData: PickerImageData(image: image, imageColor: .label, imageMargin: 0, imageSize: size)
     )
-    let component = PickerDataComponent(data: [row, row], textAlignment: .center, verticalMargin: 0, startingRow: 0)
+    let component = PickerDataComponent(
+      data: [row, row],
+      textAlignment: .center,
+      verticalMargin: 0,
+      startingRow: 0
+    )
 
     var cellModels = [ListCellModel]()
 
@@ -374,7 +397,10 @@ public final class CatalogPresenter: Presenter {
   private func createSegmentedControlCellModelSection() -> ListSection {
     var cellModels = [ListCellModel]()
 
-    let model1 = SegmentedControlCellModel(selectedSegment: 0, segmentTitles: ["one", "two", "three"])
+    let model1 = SegmentedControlCellModel(
+      selectedSegment: 0,
+      segmentTitles: ["one", "two", "three"]
+    )
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "SegmentedControlCellModel")
@@ -384,7 +410,11 @@ public final class CatalogPresenter: Presenter {
     var cellModels = [ListCellModel]()
 
     cellModels.append(MarginCellModel(identifier: "MarginCellModel1", height: 8))
-    let model1 = SeparatorCellModel(location: .top(cellModelID: "SeparatorCellModel1"), color: .separator, height: 8)
+    let model1 = SeparatorCellModel(
+      location: .top(cellModelID: "SeparatorCellModel1"),
+      color: .separator,
+      height: 8
+    )
     cellModels.append(model1)
 
     cellModels.append(MarginCellModel(identifier: "MarginCellModel2", height: 8))
@@ -424,7 +454,11 @@ public final class CatalogPresenter: Presenter {
     let font = UIFont.preferredFont(forTextStyle: .body)
     var cellModels = [ListCellModel]()
 
-    let model1 = TextInputCellModel(identifier: "TextInputCellModel", placeholder: "placeholder", font: font)
+    let model1 = TextInputCellModel(
+      identifier: "TextInputCellModel",
+      placeholder: "placeholder",
+      font: font
+    )
     model1.inputTextColor = .label
     model1.placeholderTextColor = .secondaryLabel
     cellModels.append(model1)
@@ -447,7 +481,12 @@ public final class CatalogPresenter: Presenter {
     let font = UIFont.preferredFont(forTextStyle: .body)
     var cellModels = [ListCellModel]()
 
-    let model1 = TextViewCellModel(identifier: "TextViewCellModel", text: nil, font: font, changedValue: { _, _ in })
+    let model1 = TextViewCellModel(
+      identifier: "TextViewCellModel",
+      text: nil,
+      font: font,
+      changedValue: { _, _ in }
+    )
     model1.textColor = .label
     model1.placeholderTextColor = .secondaryLabel
     model1.placeholderText = "placeholderText"
@@ -493,7 +532,10 @@ public final class CatalogPresenter: Presenter {
     )
     var cellModels = [ListCellModel]()
 
-    let model1 = SwipeableLabelCellModel(identifier: "SwipeableLabelCellModel", attributedText: title)
+    let model1 = SwipeableLabelCellModel(
+      identifier: "SwipeableLabelCellModel",
+      attributedText: title
+    )
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "SwipeableLabelCellModel")

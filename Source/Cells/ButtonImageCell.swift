@@ -14,7 +14,12 @@ open class ButtonImageCellModel: BaseListCellModel {
 
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var numberOfLines = 0
   public var textAlignment: NSTextAlignment = .center
@@ -126,7 +131,9 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
     buttonBackgroundView.backgroundColor = model.buttonColor
     backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
+      by: disposeBag
+    )
   }
 }
 
@@ -157,12 +164,23 @@ extension ButtonImageCell {
       lessThanOrEqualTo: layoutGuide.trailingAnchor
     ).isActive = true
     marginContainer.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
-    minimumContainerHeightConstraint = marginContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+    minimumContainerHeightConstraint = marginContainer.heightAnchor.constraint(
+      greaterThanOrEqualToConstant: 0
+    )
     minimumContainerHeightConstraint?.isActive = true
 
-    imageView.leadingAnchor.constraint(equalTo: marginContainer.leadingAnchor, constant: ButtonImageCellModel.imageMargin).isActive = true
-    imageView.topAnchor.constraint(equalTo: marginContainer.topAnchor, constant: ButtonImageCellModel.imageMargin).isActive = true
-    imageView.bottomAnchor.constraint(equalTo: marginContainer.bottomAnchor, constant: -ButtonImageCellModel.imageMargin).isActive = true
+    imageView.leadingAnchor.constraint(
+      equalTo: marginContainer.leadingAnchor,
+      constant: ButtonImageCellModel.imageMargin
+    ).isActive = true
+    imageView.topAnchor.constraint(
+      equalTo: marginContainer.topAnchor,
+      constant: ButtonImageCellModel.imageMargin
+    ).isActive = true
+    imageView.bottomAnchor.constraint(
+      equalTo: marginContainer.bottomAnchor,
+      constant: -ButtonImageCellModel.imageMargin
+    ).isActive = true
 
     imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
     imageWidthConstraint?.isActive = true
@@ -174,8 +192,14 @@ extension ButtonImageCell {
       constant: ButtonImageCellModel.imageMargin
     ).isActive = true
     label.trailingAnchor.constraint(equalTo: marginContainer.trailingAnchor).isActive = true
-    label.topAnchor.constraint(equalTo: marginContainer.topAnchor, constant: ButtonImageCellModel.imageMargin).isActive = true
-    label.bottomAnchor.constraint(equalTo: marginContainer.bottomAnchor, constant: -ButtonImageCellModel.imageMargin).isActive = true
+    label.topAnchor.constraint(
+      equalTo: marginContainer.topAnchor,
+      constant: ButtonImageCellModel.imageMargin
+    ).isActive = true
+    label.bottomAnchor.constraint(
+      equalTo: marginContainer.bottomAnchor,
+      constant: -ButtonImageCellModel.imageMargin
+    ).isActive = true
     marginContainer.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

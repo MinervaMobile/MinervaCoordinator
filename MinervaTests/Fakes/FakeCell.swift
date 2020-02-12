@@ -7,7 +7,9 @@
 import Foundation
 import Minerva
 
-public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel, ListHighlightableCellModel, ListReorderableCellModel {
+public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel,
+  ListHighlightableCellModel, ListReorderableCellModel
+{
   public typealias CellType = FakeCell
 
   public typealias SelectableModelType = FakeCellModel
@@ -29,7 +31,7 @@ public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBi
   public var size: ListCellSize
 
   public func identical(to model: FakeCellModel) -> Bool {
-    return size == model.size
+    size == model.size
       && highlightEnabled == model.highlightEnabled
       && highlightColor == model.highlightColor
       && reorderable == model.reorderable
@@ -46,7 +48,7 @@ public final class FakeCell: ListCollectionViewCell, ListTypedCell, ListDisplaya
 
   public var displaying = false
 
-  public func bind(model: FakeCellModel, sizing: Bool) { }
+  public func bind(model: FakeCellModel, sizing: Bool) {}
   public func bindViewModel(_ viewModel: Any) { bind(viewModel) }
 
   public func willDisplayCell() {

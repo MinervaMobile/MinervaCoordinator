@@ -30,14 +30,14 @@ public enum SystemError: LocalizedError {
   }
 
   public var failureReason: String? {
-    return nil
+    nil
   }
 
   public var recoverySuggestion: String? {
-    return nil
+    nil
   }
 
   public var helpAnchor: String? {
-    return nil
+    nil
   }
 }

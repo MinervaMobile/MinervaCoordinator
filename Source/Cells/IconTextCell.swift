@@ -11,7 +11,12 @@ import UIKit
 open class IconTextCellModel: BaseListCellModel {
   public let iconImage = BehaviorSubject<UIImage?>(value: nil)
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var labelLeadingMargin: CGFloat = 4
   public var backgroundColor: UIColor?
@@ -148,7 +153,9 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 
     self.backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(by: disposeBag)
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
+      by: disposeBag
+    )
   }
 }
 
@@ -157,20 +164,36 @@ extension IconTextCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
 
-    buttonView.anchor(toLeading: nil, top: layoutGuide.topAnchor, trailing: nil, bottom: layoutGuide.bottomAnchor)
-    buttonView.leadingAnchor.constraint(greaterThanOrEqualTo: layoutGuide.leadingAnchor).isActive = true
-    buttonView.trailingAnchor.constraint(lessThanOrEqualTo: layoutGuide.trailingAnchor).isActive = true
+    buttonView.anchor(
+      toLeading: nil,
+      top: layoutGuide.topAnchor,
+      trailing: nil,
+      bottom: layoutGuide.bottomAnchor
+    )
+    buttonView.leadingAnchor.constraint(greaterThanOrEqualTo: layoutGuide.leadingAnchor).isActive =
+      true
+    buttonView.trailingAnchor.constraint(lessThanOrEqualTo: layoutGuide.trailingAnchor).isActive =
+      true
 
-    buttonLeadingConstraint = buttonView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor)
+    buttonLeadingConstraint = buttonView.leadingAnchor.constraint(
+      equalTo: layoutGuide.leadingAnchor
+    )
     buttonCenterConstraint = buttonView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor)
-    buttonTrailingConstraint = buttonView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+    buttonTrailingConstraint = buttonView.trailingAnchor.constraint(
+      equalTo: layoutGuide.trailingAnchor
+    )
 
     imageView.leadingAnchor.constraint(equalTo: buttonView.leadingAnchor).isActive = true
     imageView.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor).isActive = true
 
     labelLeadingConstraint = label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor)
     labelLeadingConstraint?.isActive = true
-    label.anchor(toLeading: nil, top: buttonView.topAnchor, trailing: nil, bottom: buttonView.bottomAnchor)
+    label.anchor(
+      toLeading: nil,
+      top: buttonView.topAnchor,
+      trailing: nil,
+      bottom: buttonView.bottomAnchor
+    )
     label.trailingAnchor.constraint(equalTo: buttonView.trailingAnchor).isActive = true
 
     imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)

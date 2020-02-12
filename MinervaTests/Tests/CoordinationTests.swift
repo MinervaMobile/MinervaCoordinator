@@ -93,7 +93,11 @@ public final class CoordinationTests: XCTestCase {
     let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
     rootCoordinator.push(childCoordinator, animated: false)
     XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-    XCTAssertTrue(navigator.navigationController.viewControllers.contains { $0 === childCoordinator.viewController })
+    XCTAssertTrue(
+      navigator.navigationController.viewControllers.contains {
+        $0 === childCoordinator.viewController
+      }
+    )
     rootCoordinator.pop(animated: false)
     XCTAssertFalse(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
   }
@@ -104,7 +108,11 @@ public final class CoordinationTests: XCTestCase {
       let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
       rootCoordinator.push(childCoordinator, animated: false)
       XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(navigator.navigationController.viewControllers.contains { $0 === childCoordinator.viewController })
+      XCTAssertTrue(
+        navigator.navigationController.viewControllers.contains {
+          $0 === childCoordinator.viewController
+        }
+      )
     }
     _ = navigator.popToRootViewController(animated: false)
     XCTAssertEqual(navigator.navigationController.viewControllers.count, 1)
@@ -117,9 +125,16 @@ public final class CoordinationTests: XCTestCase {
       let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
       rootCoordinator.push(childCoordinator, animated: false)
       XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(navigator.navigationController.viewControllers.contains { $0 === childCoordinator.viewController })
+      XCTAssertTrue(
+        navigator.navigationController.viewControllers.contains {
+          $0 === childCoordinator.viewController
+        }
+      )
     }
-    rootCoordinator.popToCoordinator(rootCoordinator.childCoordinators.first! as! FakeCoordinator, animated: false)
+    rootCoordinator.popToCoordinator(
+      rootCoordinator.childCoordinators.first! as! FakeCoordinator,
+      animated: false
+    )
     XCTAssertEqual(navigator.navigationController.viewControllers.count, 2)
     XCTAssertEqual(rootCoordinator.childCoordinators.count, 1)
   }
@@ -130,7 +145,11 @@ public final class CoordinationTests: XCTestCase {
       let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
       rootCoordinator.push(childCoordinator, animated: false)
       XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(navigator.navigationController.viewControllers.contains { $0 === childCoordinator.viewController })
+      XCTAssertTrue(
+        navigator.navigationController.viewControllers.contains {
+          $0 === childCoordinator.viewController
+        }
+      )
     }
     let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
     rootCoordinator.setCoordinators([childCoordinator], animated: false)

@@ -15,15 +15,15 @@ import SwiftProtobuf
 // Please ensure that your are building against the same version of the API
 // that was used to generate this file.
 fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
-  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 { }
+  struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 public enum UserRole: SwiftProtobuf.Enum {
   public typealias RawValue = Int
-  case user // = 1
-  case userManager // = 2
-  case admin // = 3
+  case user  // = 1
+  case userManager  // = 2
+  case admin  // = 3
 
   public init() {
     self = .user
@@ -50,9 +50,9 @@ public enum UserRole: SwiftProtobuf.Enum {
 
 #if swift(>=4.2)
 
-  extension UserRole: CaseIterable {
-    // Support synthesized by the compiler.
-  }
+extension UserRole: CaseIterable {
+  // Support synthesized by the compiler.
+}
 
 #endif  // swift(>=4.2)
 

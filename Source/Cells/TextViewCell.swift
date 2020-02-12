@@ -12,19 +12,24 @@ open class TextViewCellModel: BaseListCellModel {
   public typealias Action = (_ cellModel: TextViewCellModel, _ text: String?) -> Void
 
   public var placeholderText: String? {
-    get { return helper.placeholderText }
+    get { helper.placeholderText }
     set { helper.placeholderText = newValue }
   }
   public var placeholderTextColor: UIColor? {
-    get { return helper.placeholderTextColor }
+    get { helper.placeholderTextColor }
     set { helper.placeholderTextColor = newValue }
   }
   public var textColor: UIColor? {
-    get { return helper.textColor }
+    get { helper.textColor }
     set { helper.textColor = newValue }
   }
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var backgroundColor: UIColor?
 

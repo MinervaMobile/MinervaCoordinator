@@ -19,14 +19,21 @@ public final class FakePresenter: Presenter {
     let image = UIImage()
     let row = PickerDataRow(
       text: attrText,
-      imageData: PickerImageData(image: image, imageColor: color, imageMargin: 0, imageSize: size))
-    let component = PickerDataComponent(data: [row, row], textAlignment: .center, verticalMargin: 0, startingRow: 0)
+      imageData: PickerImageData(image: image, imageColor: color, imageMargin: 0, imageSize: size)
+    )
+    let component = PickerDataComponent(
+      data: [row, row],
+      textAlignment: .center,
+      verticalMargin: 0,
+      startingRow: 0
+    )
     let options = PickerDataOptions(
       label: attrText,
       labelMargin: 0,
       rowMargin: 0,
       startingRow: 0,
-      rowTextAlignment: .center)
+      rowTextAlignment: .center
+    )
     let pickerData = PickerData(data: [attrText, attrText, attrText], options: options)
     let cellModels = [
       // Cells
@@ -48,7 +55,12 @@ public final class FakePresenter: Presenter {
         isSelected: true
       ),
       ImageCellModel(image: image, imageSize: size),
-      ImageLabelBorderCellModel(text: "ImageLabelBorderCellModel", font: font, image: image, imageSize: size),
+      ImageLabelBorderCellModel(
+        text: "ImageLabelBorderCellModel",
+        font: font,
+        image: image,
+        imageSize: size
+      ),
       ImageTextCardCellModel(attributedText: NSAttributedString(string: "ImageTextCardCellModel")),
       ImageTextCellModel(identifier: "ImageTextCellModel", attributedText: attrText),
       LabelAccessoryCellModel(identifier: "LabelAccessoryCellModel", attributedText: attrText),
@@ -59,13 +71,28 @@ public final class FakePresenter: Presenter {
         pickerDataComponents: [component],
         changedValue: { _, _, _, _ in }
       ),
-      PickerLabelCellModel(identifier: "PickerLabelCellModel", pickerData: pickerData, changedValue: { _, _, _, _ in }),
+      PickerLabelCellModel(
+        identifier: "PickerLabelCellModel",
+        pickerData: pickerData,
+        changedValue: { _, _, _, _ in }
+      ),
       SegmentedControlCellModel(selectedSegment: 0, segmentTitles: [text]),
       SeparatorCellModel(location: .bottom(cellModelID: "SeparatorCellModel"), color: color),
-      SwitchTextCellModel(text: "SwitchTextCellModel", font: font, textColor: color, switchColor: color, isOn: true),
+      SwitchTextCellModel(
+        text: "SwitchTextCellModel",
+        font: font,
+        textColor: color,
+        switchColor: color,
+        isOn: true
+      ),
       TextInputCellModel(identifier: "TextInputCellModel", placeholder: text, font: font),
       TextSeparatorCellModel(text: "TextSeparatorCellModel"),
-      TextViewCellModel(identifier: "TextViewCellModel", text: text, font: font, changedValue: { _, _ in }),
+      TextViewCellModel(
+        identifier: "TextViewCellModel",
+        text: text,
+        font: font,
+        changedValue: { _, _ in }
+      ),
       // Swipe
       SwipeableDetailedLabelCellModel(
         identifier: "SwipeableDetailedLabelCellModel",
@@ -89,7 +116,10 @@ public final class FakePresenter: Presenter {
       distribution: .entireRow,
       listController: LegacyListController()
     )!
-    var horizontalSection = ListSection(cellModels: [horizontalCellModel], identifier: "HorizontalSection")
+    var horizontalSection = ListSection(
+      cellModels: [horizontalCellModel],
+      identifier: "HorizontalSection"
+    )
     horizontalSection.constraints.scrollDirection = .horizontal
     listSections = [mainSection, horizontalSection]
     sections = BehaviorRelay<[ListSection]>(value: listSections)

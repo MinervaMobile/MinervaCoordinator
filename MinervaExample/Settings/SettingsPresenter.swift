@@ -56,7 +56,10 @@ public final class SettingsPresenter: Presenter {
       }
       cellModels.append(nameCellModel)
 
-      let caloriesCellModel = SwiftUITextCellModel(title: "Daily Calories", subtitle: String(user.dailyCalories))
+      let caloriesCellModel = SwiftUITextCellModel(
+        title: "Daily Calories",
+        subtitle: String(user.dailyCalories)
+      )
       caloriesCellModel.selectionAction = { [weak self] _, _ -> Void in
         guard let strongSelf = self else { return }
         strongSelf.actionsRelay.accept(.update(user: user))
@@ -66,10 +69,12 @@ public final class SettingsPresenter: Presenter {
       let roleCellModel = SwiftUITextCellModel(
         title: "Role",
         subtitle: dataManager.userAuthorization.role.description,
-        hasChevron: false)
+        hasChevron: false
+      )
       roleCellModel.willBindAction = { [weak self] model in
         guard let strongSelf = self else { return }
-        model.imagePublisher = strongSelf.dataManager.combineImage(forWorkoutID: "").eraseToAnyPublisher()
+        model.imagePublisher = strongSelf.dataManager.combineImage(forWorkoutID: "")
+          .eraseToAnyPublisher()
       }
       cellModels.append(roleCellModel)
 

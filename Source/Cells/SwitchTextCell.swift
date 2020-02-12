@@ -18,7 +18,12 @@ open class SwitchTextCellModel: BaseListCellModel {
 
   public var didSwitchAction: SwitchAction?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
   public var backgroundColor: UIColor?
 
   fileprivate let text: String
@@ -27,7 +32,14 @@ open class SwitchTextCellModel: BaseListCellModel {
   fileprivate let switchColor: UIColor
   public private(set) var isOn: Bool
 
-  public init(identifier: String, text: String, font: UIFont, textColor: UIColor, switchColor: UIColor, isOn: Bool) {
+  public init(
+    identifier: String,
+    text: String,
+    font: UIFont,
+    textColor: UIColor,
+    switchColor: UIColor,
+    isOn: Bool
+  ) {
     self.text = text
     self.font = font
     self.textColor = textColor
@@ -36,8 +48,21 @@ open class SwitchTextCellModel: BaseListCellModel {
     super.init(identifier: identifier)
   }
 
-  public convenience init(text: String, font: UIFont, textColor: UIColor, switchColor: UIColor, isOn: Bool) {
-    self.init(identifier: text, text: text, font: font, textColor: textColor, switchColor: switchColor, isOn: isOn)
+  public convenience init(
+    text: String,
+    font: UIFont,
+    textColor: UIColor,
+    switchColor: UIColor,
+    isOn: Bool
+  ) {
+    self.init(
+      identifier: text,
+      text: text,
+      font: font,
+      textColor: textColor,
+      switchColor: switchColor,
+      isOn: isOn
+    )
   }
 
   // MARK: - BaseListCellModel

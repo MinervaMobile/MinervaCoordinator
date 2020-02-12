@@ -7,7 +7,7 @@
 import Foundation
 import SwiftProtobuf
 
-public enum ProtoExtensions { }
+public enum ProtoExtensions {}
 
 public enum ProtoError: Error {
   case parseError
@@ -24,7 +24,9 @@ extension Message {
       options.ignoreUnknownFields = true
       try self.init(jsonUTF8Data: data, options: options)
     } catch {
-      assertionFailure("PROTO FAILURE: Failed to convert the proto to json due to \(error) \(dictionary))")
+      assertionFailure(
+        "PROTO FAILURE: Failed to convert the proto to json due to \(error) \(dictionary))"
+      )
       return nil
     }
   }

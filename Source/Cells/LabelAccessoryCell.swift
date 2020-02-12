@@ -18,7 +18,12 @@ open class LabelAccessoryCellModel: BaseListCellModel {
   public var accessorySelectionAction: Action?
 
   public var iconImageRelay = BehaviorRelay<UIImage?>(value: nil)
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 12,
+    leading: 16,
+    bottom: 12,
+    trailing: 16
+  )
 
   public var iconColor: UIColor?
   public var iconImageWidthHeight: CGFloat = 0
@@ -140,7 +145,8 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     label.attributedText = model.attributedText
 
     detailsLabel.attributedText = model.descriptionText
-    let detailsPriority: UILayoutPriority = model.detailsTextResistCompression ? .required : .defaultHigh
+    let detailsPriority: UILayoutPriority = model.detailsTextResistCompression
+      ? .required : .defaultHigh
     detailsLabel.setContentCompressionResistancePriority(detailsPriority, for: .horizontal)
 
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
@@ -194,7 +200,8 @@ extension LabelAccessoryCell {
     iconImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor).isActive = true
     iconImageView.centerYAnchor.constraint(equalTo: layoutGuide.centerYAnchor).isActive = true
     iconImageView.topAnchor.constraint(greaterThanOrEqualTo: layoutGuide.topAnchor).isActive = true
-    iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: layoutGuide.bottomAnchor).isActive = true
+    iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: layoutGuide.bottomAnchor).isActive =
+      true
     iconImageWidthHeightConstraint = iconImageView.widthAnchor.constraint(equalToConstant: 0)
     iconImageWidthHeightConstraint?.isActive = true
     iconImageView.heightAnchor.constraint(equalTo: iconImageView.widthAnchor).isActive = true
@@ -206,7 +213,9 @@ extension LabelAccessoryCell {
       bottom: contentView.bottomAnchor
     )
 
-    iconImageTrailingConstraint = label.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor)
+    iconImageTrailingConstraint = label.leadingAnchor.constraint(
+      equalTo: iconImageView.trailingAnchor
+    )
     iconImageTrailingConstraint?.isActive = true
 
     label.topAnchor.constraint(equalTo: layoutGuide.topAnchor).isActive = true
@@ -216,13 +225,19 @@ extension LabelAccessoryCell {
     detailsLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true
     detailsLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-    accessoryImageLeadingConstraint = accessoryImageView.leadingAnchor.constraint(equalTo: detailsLabel.trailingAnchor)
+    accessoryImageLeadingConstraint = accessoryImageView.leadingAnchor.constraint(
+      equalTo: detailsLabel.trailingAnchor
+    )
     accessoryImageLeadingConstraint?.isActive = true
     accessoryImageView.centerYAnchor.constraint(equalTo: layoutGuide.centerYAnchor).isActive = true
-    accessoryImageView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
-    accessoryImageWidthHeightConstraint = accessoryImageView.widthAnchor.constraint(equalToConstant: 0)
+    accessoryImageView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive =
+      true
+    accessoryImageWidthHeightConstraint = accessoryImageView.widthAnchor.constraint(
+      equalToConstant: 0
+    )
     accessoryImageWidthHeightConstraint?.isActive = true
-    accessoryImageView.heightAnchor.constraint(equalTo: accessoryImageView.widthAnchor).isActive = true
+    accessoryImageView.heightAnchor.constraint(equalTo: accessoryImageView.widthAnchor).isActive =
+      true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

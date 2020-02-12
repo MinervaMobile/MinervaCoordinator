@@ -12,7 +12,9 @@ import SwiftUI
 import UIKit
 
 @available(iOS 13.0, *)
-public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, ListSelectableCellModel, ListBindableCellModel {
+public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
+  ListSelectableCellModel, ListBindableCellModel
+{
   public typealias SelectableModelType = SwiftUITextCellModel
   public var selectionAction: SelectionAction?
 
@@ -30,10 +32,13 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, Li
   public var imagePublisher: AnyPublisher<UIImage?, Error>? {
     didSet {
       cancelleable = imagePublisher?.receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in
-        }, receiveValue: { [weak self] i in
+        .sink(
+          receiveCompletion: { _ in
+          },
+          receiveValue: { [weak self] i in
             self?.image = i
-          })
+          }
+        )
     }
   }
   public var imageObservable: Observable<UIImage?>? {
@@ -62,7 +67,7 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject, Li
   }
 
   // MARK: - BaseListCellModel
-  override public var identifier: String { return title }
+  override public var identifier: String { title }
 
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
@@ -135,9 +140,22 @@ public struct SwiftUITextView: View {
 public struct SwiftUITextViewPreviews: PreviewProvider {
   private static var cells: some View {
     List {
-      SwiftUITextView(model: SwiftUITextCellModel(title: "Hello  World!!!", subtitle: "Bye World!!!"))
-      SwiftUITextView(model: SwiftUITextCellModel(title: "Hello My Very Very Very Very Very Long World!!!", subtitle: "Bye World!!!"))
-      SwiftUITextView(model: SwiftUITextCellModel(title: "Hello World!!!", subtitle: "Bye World!!!", hasChevron: false))
+      SwiftUITextView(
+        model: SwiftUITextCellModel(title: "Hello  World!!!", subtitle: "Bye World!!!")
+      )
+      SwiftUITextView(
+        model: SwiftUITextCellModel(
+          title: "Hello My Very Very Very Very Very Long World!!!",
+          subtitle: "Bye World!!!"
+        )
+      )
+      SwiftUITextView(
+        model: SwiftUITextCellModel(
+          title: "Hello World!!!",
+          subtitle: "Bye World!!!",
+          hasChevron: false
+        )
+      )
       SwiftUITextView(model: SwiftUITextCellModel(title: "Hello World!!!", hasChevron: false))
       SwiftUITextView(model: SwiftUITextCellModel(title: "Hello World!!!"))
     }

@@ -54,7 +54,8 @@ extension TestDataManager: DataManager {
   }
   public func update(user: User, completion: @escaping Completion) {
     self.queue.async {
-      guard user.userID == self.userAuthorization.userID || self.userAuthorization.role.userEditor else {
+      guard user.userID == self.userAuthorization.userID || self.userAuthorization.role.userEditor
+      else {
         completion(SystemError.unauthorized)
         return
       }
@@ -104,7 +105,11 @@ extension TestDataManager: DataManager {
       }
       let userID = UUID().uuidString
       let accessToken = UUID().uuidString
-      let authorization = UserAuthorizationProto(userID: userID, accessToken: accessToken, role: role)
+      let authorization = UserAuthorizationProto(
+        userID: userID,
+        accessToken: accessToken,
+        role: role
+      )
       self.testData.emailToAuthorizationMap[email] = authorization
       self.testData.emailToPasswordMap[email] = password
       self.testData.idToAuthorizationMap[userID] = authorization
@@ -130,7 +135,8 @@ extension TestDataManager: DataManager {
 
   public func store(workout: Workout, completion: @escaping Completion) {
     self.queue.async {
-      guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin else {
+      guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin
+      else {
         completion(SystemError.unauthorized)
         return
       }
@@ -144,7 +150,8 @@ extension TestDataManager: DataManager {
 
   public func delete(workout: Workout, completion: @escaping Completion) {
     self.queue.async {
-      guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin else {
+      guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin
+      else {
         completion(SystemError.unauthorized)
         return
       }
@@ -197,7 +204,9 @@ extension TestDataManager: DataManager {
       let userID = subscription.userID
       workoutSubscriptions[listenerID] = nil
       userSubscriptions[listenerID] = nil
-      let subscriptions = workoutUserIDToSubscriptions[userID, default: []].filter { $0 != listenerID }
+      let subscriptions = workoutUserIDToSubscriptions[userID, default: []].filter {
+        $0 != listenerID
+      }
       workoutUserIDToSubscriptions[userID] = subscriptions.isEmpty ? nil : subscriptions
     }
   }
@@ -229,7 +238,10 @@ extension TestDataManager {
     notifyForWorkoutChanges(userID: userID, subscriptions: subscriptions)
   }
 
-  private func notifyForWorkoutChanges(userID: String, subscriptions: [Subscription<WorkoutsCompletion>]) {
+  private func notifyForWorkoutChanges(
+    userID: String,
+    subscriptions: [Subscription<WorkoutsCompletion>]
+  ) {
     dispatchPrecondition(condition: .onQueue(queue))
     let workoutMap = self.testData.idToWorkoutIDMap[userID] ?? [:]
     let workouts = Array(workoutMap.values)

@@ -15,14 +15,19 @@ public protocol TextInputCellModelDelegate: AnyObject {
 open class TextInputCellModel: BaseListCellModel {
   public weak var delegate: TextInputCellModelDelegate?
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   fileprivate static let bottomBorderHeight: CGFloat = 1.0
   fileprivate static let textBottomMargin: CGFloat = 8.0
   fileprivate static let textInputIndent: CGFloat = 10.0
 
   fileprivate var attributedPlaceholder: NSAttributedString {
-    return NSAttributedString(string: placeholder, font: font, fontColor: placeholderTextColor)
+    NSAttributedString(string: placeholder, font: font, fontColor: placeholderTextColor)
   }
   public var bottomBorderColor = BehaviorSubject<UIColor?>(value: nil)
 

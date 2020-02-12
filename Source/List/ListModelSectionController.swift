@@ -118,11 +118,13 @@ extension ListModelSectionController {
       return MissingListCell()
     }
     let cellType = cellModel.cellType
-    guard let cell = collectionContext.dequeueReusableCell(
-      of: cellType,
-      for: self,
-      at: index
-    ) as? ListCollectionViewCell else {
+    guard
+      let cell = collectionContext.dequeueReusableCell(
+        of: cellType,
+        for: self,
+        at: index
+      ) as? ListCollectionViewCell
+    else {
       assertionFailure("Failed to load the reuseable cell for \(cellType)")
       return MissingListCell()
     }
@@ -139,12 +141,14 @@ extension ListModelSectionController {
       return MissingListCell()
     }
     let cellType = cellModel.cellType
-    guard let cell = collectionContext.dequeueReusableSupplementaryView(
-      ofKind: elementKind,
-      for: self,
-      class: cellType,
-      at: index
-    ) as? ListCollectionViewCell else {
+    guard
+      let cell = collectionContext.dequeueReusableSupplementaryView(
+        ofKind: elementKind,
+        for: self,
+        class: cellType,
+        at: index
+      ) as? ListCollectionViewCell
+    else {
       assertionFailure("Failed to load the reuseable cell for \(cellType)")
       return MissingListCell()
     }
@@ -181,7 +185,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
     cellForViewModel viewModel: Any,
     at index: Int
   ) -> UICollectionViewCell & ListBindable {
-    return cell(for: viewModel, index: index)
+    cell(for: viewModel, index: index)
   }
 
   internal func sectionController(
@@ -191,7 +195,9 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
   ) -> CGSize {
     let size = determineSize(for: viewModel, at: index)
     guard size.height > 0 && size.width > 0 else {
-      assertionFailure("Height and width must be > 0 or the cell shouldn't exist \(size) for \(viewModel)")
+      assertionFailure(
+        "Height and width must be > 0 or the cell shouldn't exist \(size) for \(viewModel)"
+      )
       return CGSize(width: 1, height: 1)
     }
     return size
@@ -213,14 +219,18 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
     if let model = wrapper.model as? ListSelectableCellModelWrapper {
       model.selected(at: indexPath)
     } else {
-      collectionContext?.deselectItem(at: index, sectionController: sectionController, animated: false)
+      collectionContext?.deselectItem(
+        at: index,
+        sectionController: sectionController,
+        animated: false
+      )
     }
   }
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didDeselectItemAt index: Int,
     viewModel: Any
-  ) { }
+  ) {}
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didHighlightItemAt index: Int,
@@ -253,9 +263,15 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
 
 // MARK: - ListDisplayDelegate
 extension ListModelSectionController: ListDisplayDelegate {
-  internal func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) { }
+  internal func listAdapter(
+    _ listAdapter: ListAdapter,
+    willDisplay sectionController: ListSectionController
+  ) {}
 
-  internal func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) { }
+  internal func listAdapter(
+    _ listAdapter: ListAdapter,
+    didEndDisplaying sectionController: ListSectionController
+  ) {}
 
   internal func listAdapter(
     _ listAdapter: ListAdapter,
@@ -292,7 +308,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     return elementKinds
   }
 
-  internal func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
+  internal func viewForSupplementaryElement(ofKind elementKind: String, at index: Int)
+    -> UICollectionReusableView
+  {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
@@ -347,16 +365,20 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object?.section else {
+    guard let animationAttributes = attributes as? ListViewLayoutAttributes,
+      let section = self.object?.section
+    else {
       return attributes
     }
 
-    guard let customAttributes = delegate?.sectionController(
-      self,
-      initialLayoutAttributes: animationAttributes,
-      for: section,
-      at: indexPath
-    ) else {
+    guard
+      let customAttributes = delegate?.sectionController(
+        self,
+        initialLayoutAttributes: animationAttributes,
+        for: section,
+        at: indexPath
+      )
+    else {
       return attributes
     }
     return customAttributes
@@ -368,15 +390,19 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes, let section = self.object?.section else {
+    guard let animationAttributes = attributes as? ListViewLayoutAttributes,
+      let section = self.object?.section
+    else {
       return attributes
     }
-    guard let customAttributes = delegate?.sectionController(
-      self,
-      finalLayoutAttributes: animationAttributes,
-      for: section,
-      at: indexPath
-    ) else {
+    guard
+      let customAttributes = delegate?.sectionController(
+        self,
+        finalLayoutAttributes: animationAttributes,
+        for: section,
+        at: indexPath
+      )
+    else {
       return attributes
     }
     return customAttributes

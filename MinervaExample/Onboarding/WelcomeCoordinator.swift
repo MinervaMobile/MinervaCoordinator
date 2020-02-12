@@ -35,7 +35,9 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, Collect
       presenter: presenter,
       listController: listController
     )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
+      by: disposeBag
+    )
   }
 
   // MARK: - Private
@@ -54,7 +56,10 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, Collect
 }
 
 extension WelcomeCoordinator: SignInCoordinatorDelegate {
-  public func signInCoordinator(_ signInCoordinator: SignInCoordinator, activated dataManager: DataManager) {
+  public func signInCoordinator(
+    _ signInCoordinator: SignInCoordinator,
+    activated dataManager: DataManager
+  ) {
     delegate?.onboardingCoordinator(self, activated: dataManager)
   }
 }

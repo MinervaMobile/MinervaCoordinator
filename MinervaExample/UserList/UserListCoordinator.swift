@@ -137,7 +137,11 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
 
   private func displayUserUpdatePopup(for user: User) {
     let navigator = BasicNavigator(parent: self.navigator)
-    let coordinator = UpdateUserCoordinator(navigator: navigator, dataManager: dataManager, user: user)
+    let coordinator = UpdateUserCoordinator(
+      navigator: navigator,
+      dataManager: dataManager,
+      user: user
+    )
     presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 
@@ -162,7 +166,8 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     let coordinator = WorkoutCoordinator(
       navigator: navigator,
       dataManager: dataManager,
-      userID: userID)
+      userID: userID
+    )
     coordinator.viewController.title = title
     push(coordinator, animated: true)
   }

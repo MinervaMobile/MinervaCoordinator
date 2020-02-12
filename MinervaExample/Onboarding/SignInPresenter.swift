@@ -70,7 +70,8 @@ public final class SignInPresenter: Presenter {
       identifier: "signInButtonModel",
       text: mode.buttonText,
       font: .subheadline,
-      textColor: .white)
+      textColor: .white
+    )
     signInButtonModel.textAlignment = .center
     signInButtonModel.buttonColor = .selectable
     signInButtonModel.directionalLayoutMargins.bottom = 40
@@ -107,7 +108,8 @@ public final class SignInPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: SignInPresenter.emailCellModelIdentifier,
       placeholder: "Email Address",
-      font: inputFont)
+      font: inputFont
+    )
 
     cellModel.keyboardType = .emailAddress
     cellModel.textContentType = .emailAddress
@@ -125,7 +127,8 @@ public final class SignInPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: SignInPresenter.passwordCellModelIdentifier,
       placeholder: "Password",
-      font: inputFont)
+      font: inputFont
+    )
 
     cellModel.keyboardType = .asciiCapable
     cellModel.isSecureTextEntry = true
@@ -143,7 +146,10 @@ public final class SignInPresenter: Presenter {
 
 // MARK: - TextInputCellModelDelegate
 extension SignInPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
+  public func textInputCellModel(
+    _ textInputCellModel: TextInputCellModel,
+    textChangedTo text: String?
+  ) {
     switch textInputCellModel.identifier {
     case SignInPresenter.emailCellModelIdentifier:
       email = text

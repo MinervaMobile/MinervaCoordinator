@@ -35,7 +35,9 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
       presenter: presenter,
       listController: listController
     )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(by: disposeBag)
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
+      by: disposeBag
+    )
   }
 
   // MARK: - Private

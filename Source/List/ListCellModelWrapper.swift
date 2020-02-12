@@ -30,6 +30,6 @@ extension ListCellModelWrapper: ListDiffable {
   }
 
   public func diffIdentifier() -> NSObjectProtocol {
-    return model.identifier as NSString
+    model.identifier as NSString
   }
 }

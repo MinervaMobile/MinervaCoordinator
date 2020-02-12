@@ -23,7 +23,12 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
 
   private var filterPresenter: FilterPresenter?
   private var filterViewController: CollectionViewController?
-  private var workoutFilter: WorkoutFilter = WorkoutFilterProto(startDate: nil, endDate: nil, startTime: nil, endTime: nil)
+  private var workoutFilter: WorkoutFilter = WorkoutFilterProto(
+    startDate: nil,
+    endDate: nil,
+    startTime: nil,
+    endTime: nil
+  )
 
   // MARK: - CoordinatorNavigator
   public var parent: Coordinator?
@@ -39,7 +44,8 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
     self.navigator = navigator
     self.userVC = UserVC(
       userAuthorization: dataManager.userAuthorization,
-      navigationController: navigator.navigationController)
+      navigationController: navigator.navigationController
+    )
     super.init()
     self.userVC.delegate = self
     displayWorkoutList()
@@ -51,18 +57,27 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
     let coordinator = WorkoutCoordinator(
       navigator: navigator,
       dataManager: dataManager,
-      userID: dataManager.userAuthorization.userID)
+      userID: dataManager.userAuthorization.userID
+    )
     setRootCoordinator(coordinator, animated: false)
   }
 
   private func displayUserList() {
-    let coordinator = UserListCoordinator(navigator: navigator, userManager: userManager, dataManager: dataManager)
+    let coordinator = UserListCoordinator(
+      navigator: navigator,
+      userManager: userManager,
+      dataManager: dataManager
+    )
     coordinator.delegate = self
     setRootCoordinator(coordinator, animated: false)
   }
 
   private func displaySettings() {
-    let coordinator = SettingsCoordinator(navigator: navigator, userManager: userManager, dataManager: dataManager)
+    let coordinator = SettingsCoordinator(
+      navigator: navigator,
+      userManager: userManager,
+      dataManager: dataManager
+    )
     coordinator.delegate = self
     setRootCoordinator(coordinator, animated: false)
   }

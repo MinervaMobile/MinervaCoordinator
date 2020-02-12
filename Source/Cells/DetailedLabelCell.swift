@@ -10,7 +10,12 @@ import UIKit
 open class DetailedLabelCellModel: BaseListCellModel {
   fileprivate static let labelMargin: CGFloat = 16
 
-  public var directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+  public var directionalLayoutMargins = NSDirectionalEdgeInsets(
+    top: 8,
+    leading: 16,
+    bottom: 8,
+    trailing: 16
+  )
 
   public var numberOfLines = 0
   public var backgroundColor: UIColor?
@@ -18,17 +23,25 @@ open class DetailedLabelCellModel: BaseListCellModel {
   fileprivate let attributedTitle: NSAttributedString
   fileprivate let attributedDetails: NSAttributedString
 
-  public init(identifier: String, attributedTitle: NSAttributedString, attributedDetails: NSAttributedString) {
+  public init(
+    identifier: String,
+    attributedTitle: NSAttributedString,
+    attributedDetails: NSAttributedString
+  ) {
     self.attributedTitle = attributedTitle
     self.attributedDetails = attributedDetails
     super.init(identifier: identifier)
   }
 
-  public convenience init(attributedTitle: NSAttributedString, attributedDetails: NSAttributedString) {
+  public convenience init(
+    attributedTitle: NSAttributedString,
+    attributedDetails: NSAttributedString
+  ) {
     self.init(
       identifier: "\(attributedTitle.string)-\(attributedDetails.string)",
       attributedTitle: attributedTitle,
-      attributedDetails: attributedDetails)
+      attributedDetails: attributedDetails
+    )
   }
 
   // MARK: - BaseListCellModel

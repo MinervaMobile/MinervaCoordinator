@@ -22,7 +22,11 @@ public final class FilterCellModel: LabelAccessoryCellModel, ListSelectableCellM
       accessoryImageWidthHeight = 0
     }
     if let details = details {
-      descriptionText = NSAttributedString(string: details, font: .subheadline, fontColor: .darkGray)
+      descriptionText = NSAttributedString(
+        string: details,
+        font: .subheadline,
+        fontColor: .darkGray
+      )
     }
   }
 

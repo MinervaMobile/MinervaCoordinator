@@ -32,7 +32,10 @@ internal final class ListCellSizeController {
     cachedCells.removeAll()
   }
 
-  internal func supplementarySize(for cellModel: ListCellModel, sizeConstraints: ListSizeConstraints) -> CGSize {
+  internal func supplementarySize(
+    for cellModel: ListCellModel,
+    sizeConstraints: ListSizeConstraints
+  ) -> CGSize {
     let size = cellModel.size(constrainedTo: sizeConstraints.containerSize)
     switch size {
     case .autolayout:
@@ -57,20 +60,25 @@ internal final class ListCellSizeController {
     case .explicit(let size):
       return size
     case .relative:
-      guard let size = self.delegate?.sizeController(
-        self,
-        sizeFor: cellModel,
-        at: indexPath,
-        constrainedTo: sizeConstraints
-      ) else {
-        assertionFailure("The section controller delegate should provide a size for relative cell sizes.")
+      guard
+        let size = self.delegate?.sizeController(
+          self,
+          sizeFor: cellModel,
+          at: indexPath,
+          constrainedTo: sizeConstraints
+        )
+      else {
+        assertionFailure(
+          "The section controller delegate should provide a size for relative cell sizes."
+        )
         return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
       }
       return size
     }
   }
 
-  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize {
+  internal func size(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> CGSize
+  {
     let size = listCellSize(for: model, with: sizeConstraints)
     switch size {
     case .autolayout:
@@ -102,16 +110,22 @@ internal final class ListCellSizeController {
     switch listSection.constraints.distribution {
     case .entireRow:
       if isVertical {
-        height += listSection.cellModels.reduce(0, { sum, model -> CGFloat in
-          let length = size(for: model, with: constraints).height
-          return sum + length + constraints.minimumLineSpacing
-        })
+        height += listSection.cellModels.reduce(
+          0,
+          { sum, model -> CGFloat in
+            let length = size(for: model, with: constraints).height
+            return sum + length + constraints.minimumLineSpacing
+          }
+        )
         return CGSize(width: adjustedContainerSize.width, height: height)
       } else {
-        width += listSection.cellModels.reduce(0, { sum, model -> CGFloat in
-          let length = size(for: model, with: constraints).width
-          return sum + length + constraints.minimumLineSpacing
-        })
+        width += listSection.cellModels.reduce(
+          0,
+          { sum, model -> CGFloat in
+            let length = size(for: model, with: constraints).width
+            return sum + length + constraints.minimumLineSpacing
+          }
+        )
         return CGSize(width: width, height: adjustedContainerSize.height)
       }
     case .equally(let cellsInRow):
@@ -151,7 +165,10 @@ internal final class ListCellSizeController {
 
   // MARK: - Private
 
-  private func autolayoutSize(for model: ListCellModel, constrainedTo sizeConstraints: ListSizeConstraints) -> CGSize {
+  private func autolayoutSize(
+    for model: ListCellModel,
+    constrainedTo sizeConstraints: ListSizeConstraints
+  ) -> CGSize {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
 
     let collectionCell = cell(for: model)
@@ -168,7 +185,8 @@ internal final class ListCellSizeController {
       let size = view.systemLayoutSizeFitting(
         adjustedContainerSize,
         withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
-        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required)
+        verticalFittingPriority: isVertical ? .fittingSizeLevel : .required
+      )
       if isVertical {
         return CGSize(width: adjustedContainerSize.width, height: size.height)
       } else {
@@ -178,7 +196,8 @@ internal final class ListCellSizeController {
       let size = view.systemLayoutSizeFitting(
         adjustedContainerSize,
         withHorizontalFittingPriority: .fittingSizeLevel,
-        verticalFittingPriority: .fittingSizeLevel)
+        verticalFittingPriority: .fittingSizeLevel
+      )
       return size
     }
   }
@@ -194,7 +213,9 @@ internal final class ListCellSizeController {
     }
   }
 
-  private func listCellSize(for model: ListCellModel, with sizeConstraints: ListSizeConstraints) -> ListCellSize {
+  private func listCellSize(for model: ListCellModel, with sizeConstraints: ListSizeConstraints)
+    -> ListCellSize
+  {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
     let modelSize = model.size(constrainedTo: adjustedContainerSize)
 

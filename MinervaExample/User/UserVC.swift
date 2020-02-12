@@ -19,7 +19,7 @@ public final class UserVC: UIViewController {
     case settings = 3
 
     fileprivate var item: UITabBarItem? {
-      return Tab.tabBarItems[self]
+      Tab.tabBarItems[self]
     }
 
     fileprivate static func tabs(for role: UserRole) -> [Tab] {
@@ -48,9 +48,9 @@ public final class UserVC: UIViewController {
 
     private static var tabBarItems: [Tab: UITabBarItem] = {
       [
-          .workouts: item(for: .workouts),
-          .users: item(for: .users),
-          .settings: item(for: .settings)
+        .workouts: item(for: .workouts),
+        .users: item(for: .users),
+        .settings: item(for: .settings)
       ]
     }()
   }
@@ -76,7 +76,10 @@ public final class UserVC: UIViewController {
 
   // MARK: - Lifecycle
 
-  public required init(userAuthorization: UserAuthorization, navigationController: UINavigationController) {
+  public required init(
+    userAuthorization: UserAuthorization,
+    navigationController: UINavigationController
+  ) {
     self.userAuthorization = userAuthorization
     self.tab = .workouts
     self.navigationVC = navigationController
@@ -91,13 +94,16 @@ public final class UserVC: UIViewController {
   // MARK: - UIViewController
 
   override public var childForStatusBarStyle: UIViewController? {
-    return navigationController
+    navigationController
   }
 
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    self.tabBar.setItems(Tab.tabs(for: userAuthorization.role).compactMap { $0.item }, animated: false)
+    self.tabBar.setItems(
+      Tab.tabs(for: userAuthorization.role).compactMap { $0.item },
+      animated: false
+    )
     self.tabBar.delegate = self
     self.setupConstraints()
     self.change(to: tab)
@@ -121,7 +127,8 @@ public final class UserVC: UIViewController {
       toLeading: view.leadingAnchor,
       top: navigationVC.view.bottomAnchor,
       trailing: view.trailingAnchor,
-      bottom: nil)
+      bottom: nil
+    )
 
     tabBarBottomConstraint = tabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     tabBarBottomConstraint?.priority = .defaultLow
@@ -131,7 +138,8 @@ public final class UserVC: UIViewController {
       toLeading: view.leadingAnchor,
       top: view.topAnchor,
       trailing: view.trailingAnchor,
-      bottom: nil)
+      bottom: nil
+    )
 
     navigationVC.didMove(toParent: self)
 

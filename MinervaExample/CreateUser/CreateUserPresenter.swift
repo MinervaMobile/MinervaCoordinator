@@ -55,7 +55,8 @@ public final class CreateUserPresenter: Presenter {
         email: strongSelf.email,
         password: strongSelf.password,
         dailyCalories: strongSelf.dailyCalories,
-        role: strongSelf.role)
+        role: strongSelf.role
+      )
       strongSelf.actionsRelay.accept(action)
     }
 
@@ -78,7 +79,8 @@ public final class CreateUserPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: CreateUserPresenter.emailCellModelIdentifier,
       placeholder: "Email",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = email
     cellModel.keyboardType = .emailAddress
     cellModel.textContentType = .emailAddress
@@ -95,7 +97,8 @@ public final class CreateUserPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: CreateUserPresenter.caloriesCellModelIdentifier,
       placeholder: "Daily Calories",
-      font: .subheadline)
+      font: .subheadline
+    )
     cellModel.text = dailyCalories > 0 ? String(dailyCalories) : nil
     cellModel.keyboardType = .numberPad
     cellModel.cursorColor = .selectable
@@ -112,7 +115,8 @@ public final class CreateUserPresenter: Presenter {
     let cellModel = TextInputCellModel(
       identifier: CreateUserPresenter.passwordCellModelIdentifier,
       placeholder: "Password",
-      font: inputFont)
+      font: inputFont
+    )
     cellModel.keyboardType = .asciiCapable
     cellModel.isSecureTextEntry = true
     cellModel.textContentType = .password
@@ -156,7 +160,10 @@ public final class CreateUserPresenter: Presenter {
 
 // MARK: - TextInputCellModelDelegate
 extension CreateUserPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?) {
+  public func textInputCellModel(
+    _ textInputCellModel: TextInputCellModel,
+    textChangedTo text: String?
+  ) {
     guard let text = text else { return }
     switch textInputCellModel.identifier {
     case CreateUserPresenter.emailCellModelIdentifier:

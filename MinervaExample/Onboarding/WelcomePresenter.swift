@@ -32,7 +32,10 @@ public final class WelcomePresenter: Presenter {
   private func createSection() -> ListSection {
     let topDynamicMarginModel = MarginCellModel()
 
-    let logoModel = ImageCellModel(image: Asset.Logo.image, imageSize: CGSize(width: 120.0, height: 120.0))
+    let logoModel = ImageCellModel(
+      image: Asset.Logo.image,
+      imageSize: CGSize(width: 120.0, height: 120.0)
+    )
     logoModel.imageColor = .black
     logoModel.contentMode = .scaleAspectFit
 
@@ -45,7 +48,8 @@ public final class WelcomePresenter: Presenter {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = 20
     let attributedString = NSAttributedString(
-      string: "Quickly log your calorie intake for each workout and track your calories over time. Easily see when you hit and miss your daily calorie goal.",
+      string:
+        "Quickly log your calorie intake for each workout and track your calories over time. Easily see when you hit and miss your daily calorie goal.",
       font: .subheadline,
       fontColor: .black
     )
@@ -60,7 +64,11 @@ public final class WelcomePresenter: Presenter {
     paragraphCellModel.textAlignment = .center
     paragraphCellModel.directionalLayoutMargins.bottom = 60
 
-    let newAccountModel = ButtonCellModel(text: "SETUP NEW ACCOUNT", font: .subheadline, textColor: .white)
+    let newAccountModel = ButtonCellModel(
+      text: "SETUP NEW ACCOUNT",
+      font: .subheadline,
+      textColor: .white
+    )
     newAccountModel.textAlignment = .center
     newAccountModel.buttonColor = .selectable
     newAccountModel.buttonAction = { [weak self] _, _ in
@@ -68,7 +76,10 @@ public final class WelcomePresenter: Presenter {
       strongSelf.actionsRelay.accept(.createAccount)
     }
 
-    let existingAccountModel = SelectableLabelCellModel(text: "USE EXISTING ACCOUNT", font: .subheadline)
+    let existingAccountModel = SelectableLabelCellModel(
+      text: "USE EXISTING ACCOUNT",
+      font: .subheadline
+    )
     existingAccountModel.textAlignment = .center
     existingAccountModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }

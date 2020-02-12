@@ -13,6 +13,6 @@ import UIKit
 open class ListViewLayout: ListCollectionViewLayout {
 
   override public class var layoutAttributesClass: AnyClass {
-    return ListViewLayoutAttributes.self
+    ListViewLayoutAttributes.self
   }
 }

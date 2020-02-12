@@ -66,9 +66,11 @@ public final class UserListVC: BaseViewController {
     addButton.addTarget(
       self,
       action: #selector(addButtonPressed),
-      for: .touchUpInside)
+      for: .touchUpInside
+    )
     addButton.equalHorizontalCenter(with: view)
-    addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+    addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+      .isActive = true
   }
 
   @objc
