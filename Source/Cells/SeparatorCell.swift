@@ -16,24 +16,18 @@ open class SeparatorCellModel: BaseListCellModel {
       return "Separator-Top-\(cellModelID)"
     }
   }
-  public enum Location {
-    case bottom(cellModelID: String)
-    case top(cellModelID: String)
 
-    public func isEqual(to other: Location) -> Bool {
-      switch self {
-      case .bottom(let id):
-        switch other {
-        case .bottom(let otherID): return id == otherID
-        case .top: return false
-        }
-      case .top(let id):
-        switch other {
-        case .top(let otherID): return id == otherID
-        case .bottom: return false
-        }
+  public enum Location: Equatable {
+      case bottom(cellModelID: String)
+      case top(cellModelID: String)
+
+      public static func == (lhs: Self, rhs: Self) -> Bool {
+          switch (lhs, rhs) {
+          case (.bottom(let idLeft), .bottom(let idRight)): return idLeft == idRight
+          case (.top(let idLeft), .top(let idRight)): return idLeft == idRight
+          default: return false
+          }
       }
-    }
   }
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
@@ -74,7 +68,7 @@ open class SeparatorCellModel: BaseListCellModel {
       && followsLeadingMargin == model.followsLeadingMargin
       && followsTrailingMargin == model.followsTrailingMargin
       && backgroundColor == model.backgroundColor
-      && location.isEqual(to: model.location)
+      && location == model.location
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
