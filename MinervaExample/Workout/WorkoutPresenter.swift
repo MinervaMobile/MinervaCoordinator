@@ -202,9 +202,9 @@ public final class WorkoutPresenter: Presenter {
     let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
     for workout in sortedWorkoutsForDate {
       let workoutCellModel = createWorkoutCellModel(for: workout)
-      workoutCellModel.selectionAction = { [weak self] _, _ -> Void in
+      workoutCellModel.selectionAction = { [weak self] model, _ in
         guard let strongSelf = self else { return }
-        strongSelf.edit(workout: workout)
+        strongSelf.edit(workout: model.workout)
       }
       workoutCellModel.backgroundColor = workoutBackgroundColor
       cellModels.append(workoutCellModel)
@@ -226,12 +226,8 @@ public final class WorkoutPresenter: Presenter {
     return section
   }
 
-  private func createWorkoutCellModel(for workout: Workout) -> SwipeableLabelCellModel {
-    let cellModel = SwipeableLabelCellModel(
-      identifier: workout.description,
-      attributedText: NSAttributedString(string: "\(workout.details)\n\(workout.text)")
-    )
-
+  private func createWorkoutCellModel(for workout: Workout) -> WorkoutCellModel {
+    let cellModel = WorkoutCellModel(workout: workout)
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.delete(workout: workout)

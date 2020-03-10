@@ -10,6 +10,8 @@
 		1217733ED4ECC7B973CE3F82 /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506C6629BF220271BFD762E9 /* Pods_Minerva.framework */; };
 		2CD24A88891F518C450AD525 /* Pods_MinervaCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19665C6027FF5E560AE8A1ED /* Pods_MinervaCatalog.framework */; };
 		7B2F7071C99EC43E40224E55 /* Pods_MinervaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */; };
+		DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583C24172E1400E2C81E /* UserListCellModel.swift */; };
+		DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
 		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
 		F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F897233C016F00012C5E /* SettingsCoordinator.swift */; };
@@ -210,6 +212,8 @@
 		B52C03260EDFDC3D1A05F307 /* Pods-MinervaCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.debug.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		BF373880490EA10DD3EC8F46 /* Pods-MinervaCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.release.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE9A583C24172E1400E2C81E /* UserListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellModel.swift; sourceTree = "<group>"; };
+		DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellModel.swift; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		F501F882233BE1BC00012C5E /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		F501F886233BE23700012C5E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -418,6 +422,7 @@
 		F501F894233BFF6400012C5E /* UserList */ = {
 			isa = PBXGroup;
 			children = (
+				DE9A583C24172E1400E2C81E /* UserListCellModel.swift */,
 				F501F899233C05E500012C5E /* UserListCoordinator.swift */,
 				F576F988226E16BB0015D14E /* UserListPresenter.swift */,
 				F5CE47C5233E561C00983F72 /* UserListRepository.swift */,
@@ -639,6 +644,7 @@
 		F576F90B226E16820015D14E /* Workout */ = {
 			isa = PBXGroup;
 			children = (
+				DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */,
 				F501F89B233C0A7C00012C5E /* WorkoutCoordinator.swift */,
 				F576F913226E16820015D14E /* WorkoutPresenter.swift */,
 				F5C9083D2343E9A00038BD89 /* WorkoutRepository.swift */,
@@ -1225,9 +1231,11 @@
 				F576F86A226DEE4C0015D14E /* LifecycleCoordinator.swift in Sources */,
 				F576F8F7226DF0B50015D14E /* WelcomePresenter.swift in Sources */,
 				F576F8DE226DF04F0015D14E /* SystemError.swift in Sources */,
+				DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */,
 				F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */,
 				F576F8FF226DF1020015D14E /* UIKitExtensions.swift in Sources */,
 				F576F92F226E168B0015D14E /* SettingsPresenter.swift in Sources */,
+				DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */,
 				F5AF642F235DE7980042F342 /* DataManager+Combine.swift in Sources */,
 				F576F98F226E16BB0015D14E /* UserListPresenter.swift in Sources */,
 				F576F8F4226DF0B50015D14E /* WelcomeCoordinator.swift in Sources */,

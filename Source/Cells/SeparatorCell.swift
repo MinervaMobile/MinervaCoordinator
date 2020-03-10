@@ -23,8 +23,8 @@ open class SeparatorCellModel: BaseListCellModel {
 
       public static func == (lhs: Self, rhs: Self) -> Bool {
           switch (lhs, rhs) {
-          case (.bottom(let idLeft), .bottom(let idRight)): return idLeft == idRight
-          case (.top(let idLeft), .top(let idRight)): return idLeft == idRight
+          case let (.bottom(idLeft), .bottom(idRight)): return idLeft == idRight
+          case let (.top(idLeft), .top(idRight)): return idLeft == idRight
           default: return false
           }
       }

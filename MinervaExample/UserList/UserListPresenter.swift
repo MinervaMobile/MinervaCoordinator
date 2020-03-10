@@ -64,9 +64,9 @@ public final class UserListPresenter: Presenter {
     for user in users {
       let userCellModel = createUserCellModel(for: user)
       if allowSelection {
-        userCellModel.selectionAction = { [weak self] _, _ -> Void in
+        userCellModel.selectionAction = { [weak self] model, _ in
           guard let strongSelf = self else { return }
-          strongSelf.actionsRelay.accept(.view(user: user))
+          strongSelf.actionsRelay.accept(.view(user: model.user))
         }
       }
       cellModels.append(userCellModel)
@@ -76,16 +76,8 @@ public final class UserListPresenter: Presenter {
     return section
   }
 
-  private func createUserCellModel(for user: User) -> SwipeableLabelCellModel {
-    let cellModel = SwipeableLabelCellModel(
-      identifier: user.description,
-      attributedText: NSAttributedString(
-        string: "\(user.email)\n\(user.dailyCalories)",
-        font: .body,
-        fontColor: .label
-      )
-    )
-    cellModel.backgroundColor = .systemBackground
+  private func createUserCellModel(for user: User) -> UserListCellModel {
+    let cellModel = UserListCellModel(user: user)
     cellModel.deleteAction = { [weak self] _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.actionsRelay.accept(.delete(user: user))

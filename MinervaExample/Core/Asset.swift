@@ -16,7 +16,7 @@ public enum Asset: String {
   case Settings = "settings"
   case Users = "users"
 
-  var image: UIImage {
+  public var image: UIImage {
     let bundle = Bundle(for: ImageBundleToken.self)
     guard let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil) else {
       assertionFailure("Missing image for \(self.rawValue)")

@@ -8,7 +8,7 @@ import Foundation
 import SwipeCellKit
 import UIKit
 
-open class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel {
+open class SwipeableLabelCellModel: SwipeableCellModel {
   public typealias Action = (_ cellModel: SwipeableLabelCellModel) -> Void
 
   public var deleteAction: Action?
@@ -30,10 +30,6 @@ open class SwipeableLabelCellModel: SwipeableCellModel, ListSelectableCellModel 
       && deleteColor == model.deleteColor
       && swipeable == model.swipeable
   }
-
-  // MARK: - ListSelectableCellModel
-  public typealias SelectableModelType = SwipeableLabelCellModel
-  public var selectionAction: SelectionAction?
 }
 
 public final class SwipeableLabelCell: SwipeableCell<SwipeableLabelCellModel> {
