@@ -8,10 +8,15 @@
 #import "IGListBindingSingleSectionController.h"
 
 #import <IGListDiffKit/IGListAssert.h>
+#import "IGListSectionControllerInternal.h"
 
+@interface IGListBindingSingleSectionController ()
+
+@end
 
 @implementation IGListBindingSingleSectionController {
     id _item;
+    __weak UICollectionViewCell *_displayingCell;
 }
 
 - (void)didSelectItemWithCell:(UICollectionViewCell *)cell {
@@ -58,16 +63,18 @@
 - (UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index {
     IGParameterAssert(index == 0);
     UICollectionViewCell *cell = [self.collectionContext dequeueReusableCellOfClass:[self cellClass] forSectionController:self atIndex:index];
+    IGAssert(cell != nil, @"could not find a cell of class %@", NSStringFromClass([self cellClass]));
     [self configureCell:cell withViewModel:_item];
     return cell;
 }
 
 - (void)didUpdateToObject:(id)object {
     _item = object;
-    
-    UICollectionViewCell *cell = [self.collectionContext cellForItemAtIndex:0 sectionController:self];
-    if (cell) {
-        [self configureCell:cell withViewModel:_item];
+
+    if (_enabledCellConfigurationDuringUpdate) {
+        if (_displayingCell) {
+            [self configureCell:_displayingCell withViewModel:_item];
+        }
     }
 }
 
@@ -93,6 +100,20 @@
     IGParameterAssert(index == 0);
     UICollectionViewCell *cell = [self.collectionContext cellForItemAtIndex:0 sectionController:self];
     [self didUnhighlightItemWithCell:cell];
+}
+
+- (void)willDisplayCell:(UICollectionViewCell *)cell atIndex:(NSInteger)index listAdapter:(IGListAdapter *)listAdapter {
+    IGParameterAssert(index == 0);
+    _displayingCell = cell;
+    [super willDisplayCell:cell atIndex:index listAdapter:listAdapter];
+}
+
+- (void)didEndDisplayingCell:(UICollectionViewCell *)cell atIndex:(NSInteger)index listAdapter:(IGListAdapter *)listAdapter {
+    IGParameterAssert(index == 0);
+    if (cell == _displayingCell) {
+        _displayingCell = nil;
+    }
+    [super didEndDisplayingCell:cell atIndex:index listAdapter:listAdapter];
 }
 
 @end

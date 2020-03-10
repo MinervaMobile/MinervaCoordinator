@@ -26,7 +26,7 @@ public enum LoadingHUD {
     MBProgressHUD.hide(for: view, animated: true)
   }
   public static func show(in view: UIView?, withGraceTime graceTime: TimeInterval) {
-    guard let view = view, MBProgressHUD(for: view) == nil else {
+    guard let view = view, MBProgressHUD.forView(view) == nil else {
       return
     }
     let hud = MBProgressHUD(view: view)
