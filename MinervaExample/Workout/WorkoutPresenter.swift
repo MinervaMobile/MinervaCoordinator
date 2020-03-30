@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -60,22 +60,28 @@ public final class WorkoutPresenter: Presenter {
       repository.workouts,
       repository.user,
       filterSubject.asObservable()
-    ).observeOn(
+    )
+    .observeOn(
       queue
-    ).subscribe(
+    )
+    .subscribe(
       onNext: process(workoutsResult:userResult:filter:)
-    ).disposed(
+    )
+    .disposed(
       by: disposeBag
     )
 
     Observable.combineLatest(
       errorSubject.asObservable().distinctUntilChanged({ $0 == nil && $1 == nil }),
       loadingSubject.asObservable().distinctUntilChanged()
-    ).map {
+    )
+    .map {
       TransientState(error: $0.0, loading: $0.1)
-    }.subscribe(
+    }
+    .subscribe(
       transientStateSubject
-    ).disposed(
+    )
+    .disposed(
       by: disposeBag
     )
   }
@@ -98,16 +104,18 @@ public final class WorkoutPresenter: Presenter {
 
   public func delete(workout: Workout) {
     loadingSubject.onNext(true)
-    repository.delete(workout).subscribe { [weak self] event in
-      guard let strongSelf = self else { return }
-      switch event {
-      case .error(let error):
-        strongSelf.errorSubject.onNext(error)
-      case .success:
-        break
+    repository.delete(workout)
+      .subscribe { [weak self] event in
+        guard let strongSelf = self else { return }
+        switch event {
+        case .error(let error):
+          strongSelf.errorSubject.onNext(error)
+        case .success:
+          break
+        }
+        strongSelf.loadingSubject.onNext(false)
       }
-      strongSelf.loadingSubject.onNext(false)
-    }.disposed(by: disposeBag)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Private
@@ -197,7 +205,8 @@ public final class WorkoutPresenter: Presenter {
     sectionNumber: Int
   ) -> ListSection {
     var cellModels = [ListCellModel]()
-    let workoutBackgroundColor = failure
+    let workoutBackgroundColor =
+      failure
       ? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
     let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
     for workout in sortedWorkoutsForDate {

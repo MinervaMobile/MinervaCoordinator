@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -340,12 +340,13 @@ public final class ListTests: XCTestCase {
   // MARK: - Private
 
   private func createCellModels(count: Int) -> [FakeCellModel] {
-    (1...count).map {
-      FakeCellModel(
-        identifier: "FakeCellModel\($0)",
-        size: .explicit(size: CGSize(width: 75, height: 100))
-      )
-    }
+    (1...count)
+      .map {
+        FakeCellModel(
+          identifier: "FakeCellModel\($0)",
+          size: .explicit(size: CGSize(width: 75, height: 100))
+        )
+      }
   }
 }
 

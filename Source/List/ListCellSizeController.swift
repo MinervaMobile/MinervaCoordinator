@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -61,12 +61,13 @@ internal final class ListCellSizeController {
       return size
     case .relative:
       guard
-        let size = self.delegate?.sizeController(
-          self,
-          sizeFor: cellModel,
-          at: indexPath,
-          constrainedTo: sizeConstraints
-        )
+        let size = self.delegate?
+          .sizeController(
+            self,
+            sizeFor: cellModel,
+            at: indexPath,
+            constrainedTo: sizeConstraints
+          )
       else {
         assertionFailure(
           "The section controller delegate should provide a size for relative cell sizes."

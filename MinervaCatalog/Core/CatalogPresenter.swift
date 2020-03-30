@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -371,15 +371,16 @@ public final class CatalogPresenter: Presenter {
       startingRow: 0,
       rowTextAlignment: .center
     )
-    let data = (1...5).map {
-      NSAttributedString(
-        string: " \($0) ",
-        attributes: [
-          NSAttributedString.Key.font: font,
-          NSAttributedString.Key.foregroundColor: UIColor.label
-        ]
-      )
-    }
+    let data = (1...5)
+      .map {
+        NSAttributedString(
+          string: " \($0) ",
+          attributes: [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: UIColor.label
+          ]
+        )
+      }
     let pickerData = PickerData(data: data, options: options)
 
     var cellModels = [ListCellModel]()

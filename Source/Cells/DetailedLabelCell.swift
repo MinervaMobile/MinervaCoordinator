@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -101,10 +101,12 @@ extension DetailedLabelCell {
       trailing: nil,
       bottom: layoutGuide.bottomAnchor
     )
-    detailedLabel.leadingAnchor.constraint(
-      equalTo: label.trailingAnchor,
-      constant: DetailedLabelCellModel.labelMargin
-    ).isActive = true
+    detailedLabel.leadingAnchor
+      .constraint(
+        equalTo: label.trailingAnchor,
+        constant: DetailedLabelCellModel.labelMargin
+      )
+      .isActive = true
     detailedLabel.anchor(
       toLeading: nil,
       top: layoutGuide.topAnchor,

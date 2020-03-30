@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -141,10 +141,11 @@ extension BasicNavigator: Navigator {
       }
     }
     navigationController.setViewControllers(viewControllers, animated: animated)
-    Array(completions.keys).forEach { viewController in
-      guard !viewControllers.contains(viewController) else { return }
-      runCompletion(for: viewController)
-    }
+    Array(completions.keys)
+      .forEach { viewController in
+        guard !viewControllers.contains(viewController) else { return }
+        runCompletion(for: viewController)
+      }
   }
 
 }
@@ -184,9 +185,10 @@ extension BasicNavigator {
     animated: Bool
   ) {
     guard
-      let poppingViewController = navigationController.transitionCoordinator?.viewController(
-        forKey: .from
-      )
+      let poppingViewController = navigationController.transitionCoordinator?
+        .viewController(
+          forKey: .from
+        )
     else {
       return
     }

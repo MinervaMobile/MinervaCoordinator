@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -194,12 +194,13 @@ public final class LegacyListController: NSObject, ListController {
       assertionFailure("IndexPath should exist for \(cellModel)")
       return
     }
-    sectionController.collectionContext?.scroll(
-      to: sectionController,
-      at: modelIndex,
-      scrollPosition: scrollPosition,
-      animated: animated
-    )
+    sectionController.collectionContext?
+      .scroll(
+        to: sectionController,
+        at: modelIndex,
+        scrollPosition: scrollPosition,
+        animated: animated
+      )
   }
 
   public func scroll(to scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
@@ -288,12 +289,13 @@ extension LegacyListController: ListCellSizeControllerDelegate {
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    sizeDelegate?.listController(
-      self,
-      sizeFor: model,
-      at: indexPath,
-      constrainedTo: sizeConstraints
-    )
+    sizeDelegate?
+      .listController(
+        self,
+        sizeFor: model,
+        at: indexPath,
+        constrainedTo: sizeConstraints
+      )
   }
 }
 
@@ -315,12 +317,13 @@ extension LegacyListController: ListModelSectionControllerDelegate {
     for section: ListSection,
     at indexPath: IndexPath
   ) -> ListViewLayoutAttributes? {
-    animationDelegate?.listController(
-      self,
-      initialLayoutAttributes: attributes,
-      for: section,
-      at: indexPath
-    )
+    animationDelegate?
+      .listController(
+        self,
+        initialLayoutAttributes: attributes,
+        for: section,
+        at: indexPath
+      )
   }
 
   internal func sectionController(
@@ -329,11 +332,12 @@ extension LegacyListController: ListModelSectionControllerDelegate {
     for section: ListSection,
     at indexPath: IndexPath
   ) -> ListViewLayoutAttributes? {
-    animationDelegate?.listController(
-      self,
-      finalLayoutAttributes: attributes,
-      for: section,
-      at: indexPath
-    )
+    animationDelegate?
+      .listController(
+        self,
+        finalLayoutAttributes: attributes,
+        for: section,
+        at: indexPath
+      )
   }
 }

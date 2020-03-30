@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -131,7 +131,8 @@ open class BaseViewController: UIViewController, ViewController {
     let extraBottomInsetForKeyboard = intersection.height - collectionView.safeAreaInsets.bottom
     self.extraBottomInsetForKeyboard = extraBottomInsetForKeyboard
     UIView.animate(withDuration: Constants.animationDuration) {
-      self.collectionView.contentInset.bottom += extraBottomInsetForKeyboard
+      self.collectionView.contentInset.bottom +=
+        extraBottomInsetForKeyboard
         - previousExtraBottomInset
       self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
     }

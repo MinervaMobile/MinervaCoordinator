@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -165,9 +165,10 @@ extension PickerLabelCellModelHelper: UIPickerViewDelegate {
   }
 
   public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-    let width = pickerData.data.reduce(
-      0
-    ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
+    let width =
+      pickerData.data.reduce(
+        0
+      ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
       + (pickerData.options?.rowMargin ?? 8)
     return width
   }
@@ -193,13 +194,16 @@ extension PickerLabelCell {
       trailingConstraint?.isActive = true
     }
 
-    let pickerWidth = model.helper.pickerData.data.reduce(
-      0
-    ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
+    let pickerWidth =
+      model.helper.pickerData.data.reduce(
+        0
+      ) { max($0, $1.width(constraintedToHeight: CGFloat.greatestFiniteMagnitude)) }
       + (data.options?.rowMargin ?? 8)
-    let labelWidth = data.options?.label?.width(
-      constraintedToHeight: CGFloat.greatestFiniteMagnitude
-    ) ?? 0
+    let labelWidth =
+      data.options?.label?
+      .width(
+        constraintedToHeight: CGFloat.greatestFiniteMagnitude
+      ) ?? 0
 
     labelWidthConstraint?.constant = labelWidth
     pickerWidthConstraint?.constant = pickerWidth

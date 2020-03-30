@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -20,17 +20,18 @@ public class WorkoutRepository {
     self.dataManager = dataManager
     self.userID = userID
     self.workouts = dataManager.observeWorkouts(for: userID)
-    self.user = dataManager.observeUsers().compactMap { changeResult -> Result<User, Error>? in
-      switch changeResult {
-      case .success(let users):
-        guard let user = users.first(where: { $0.userID == userID }) else {
-          return nil
+    self.user = dataManager.observeUsers()
+      .compactMap { changeResult -> Result<User, Error>? in
+        switch changeResult {
+        case .success(let users):
+          guard let user = users.first(where: { $0.userID == userID }) else {
+            return nil
+          }
+          return .success(user)
+        case .failure(let error):
+          return .failure(error)
         }
-        return .success(user)
-      case .failure(let error):
-        return .failure(error)
       }
-    }
   }
 
   public func image(forWorkoutID workoutID: String) -> Observable<UIImage?> {

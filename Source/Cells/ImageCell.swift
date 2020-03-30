@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -44,7 +44,8 @@ open class ImageCellModel: BaseListCellModel {
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     let width = containerSize.width
-    let cellHeight = imageSize.height + directionalLayoutMargins.top
+    let cellHeight =
+      imageSize.height + directionalLayoutMargins.top
       + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))
   }

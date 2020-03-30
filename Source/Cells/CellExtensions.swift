@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -71,10 +71,11 @@ extension String {
 
 extension UIColor {
   internal func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
-    UIGraphicsImageRenderer(size: size).image { rendererContext in
-      self.setFill()
-      rendererContext.fill(CGRect(origin: .zero, size: size))
-    }
+    UIGraphicsImageRenderer(size: size)
+      .image { rendererContext in
+        self.setFill()
+        rendererContext.fill(CGRect(origin: .zero, size: size))
+      }
   }
 }
 

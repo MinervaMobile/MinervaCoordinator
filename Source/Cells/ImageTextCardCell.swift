@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -104,9 +104,10 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
     imageView.contentMode = model.imageContentMode
     imageView.layer.cornerRadius = model.imageCornerRadius
 
-    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
-      by: disposeBag
-    )
+    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
+      .disposed(
+        by: disposeBag
+      )
   }
 }
 
@@ -131,10 +132,12 @@ extension ImageTextCardCell {
       trailing: layoutGuide.trailingAnchor,
       bottom: nil
     )
-    label.topAnchor.constraint(
-      equalTo: imageView.bottomAnchor,
-      constant: ImageTextCardCellModel.textMargin
-    ).isActive = true
+    label.topAnchor
+      .constraint(
+        equalTo: imageView.bottomAnchor,
+        constant: ImageTextCardCellModel.textMargin
+      )
+      .isActive = true
     label.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor).isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)

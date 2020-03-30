@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -18,16 +18,16 @@ open class SeparatorCellModel: BaseListCellModel {
   }
 
   public enum Location: Equatable {
-      case bottom(cellModelID: String)
-      case top(cellModelID: String)
+    case bottom(cellModelID: String)
+    case top(cellModelID: String)
 
-      public static func == (lhs: Self, rhs: Self) -> Bool {
-          switch (lhs, rhs) {
-          case let (.bottom(idLeft), .bottom(idRight)): return idLeft == idRight
-          case let (.top(idLeft), .top(idRight)): return idLeft == idRight
-          default: return false
-          }
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+      switch (lhs, rhs) {
+      case let (.bottom(idLeft), .bottom(idRight)): return idLeft == idRight
+      case let (.top(idLeft), .top(idRight)): return idLeft == idRight
+      default: return false
       }
+    }
   }
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(

@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -74,7 +74,7 @@ extension CoordinatorNavigator {
     animated: Bool = true,
     modalPresentationStyle: UIModalPresentationStyle = .automatic
   ) {
-    coordinator.addCloseButton() { [weak self] child in
+    coordinator.addCloseButton { [weak self] child in
       self?.dismiss(child, animated: true)
     }
     present(
@@ -334,7 +334,8 @@ extension UIView {
       attribute: .centerX,
       multiplier: 1.0,
       constant: 0
-    ).isActive = true
+    )
+    .isActive = true
   }
 
   public func equalVerticalCenter(with view: UIView) {
@@ -346,7 +347,8 @@ extension UIView {
       attribute: .centerY,
       multiplier: 1.0,
       constant: 0
-    ).isActive = true
+    )
+    .isActive = true
   }
 }
 

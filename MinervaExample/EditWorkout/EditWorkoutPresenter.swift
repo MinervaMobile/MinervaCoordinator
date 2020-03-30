@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -41,8 +41,8 @@ public final class EditWorkoutPresenter: Presenter {
     workoutSubject.map({ [weak self] workout -> [ListSection] in
       self?.createSection(with: workout) ?? []
     })
-      .bind(to: sections)
-      .disposed(by: disposeBag)
+    .bind(to: sections)
+    .disposed(by: disposeBag)
   }
 
   // MARK: - Private

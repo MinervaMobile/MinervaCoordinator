@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -153,19 +153,21 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
       trailing: containerView.trailingAnchor,
       bottom: containerView.bottomAnchor
     )
-    label.leadingAnchor.constraint(
-      equalTo: imageView.trailingAnchor,
-      constant: imageData.imageMargin
-    ).isActive = true
+    label.leadingAnchor
+      .constraint(
+        equalTo: imageView.trailingAnchor,
+        constant: imageData.imageMargin
+      )
+      .isActive = true
 
     let rowView = UIView()
     rowView.addSubview(containerView)
 
     let containerWidth: CGFloat = componentData.data.reduce(0) { maxWidth, rowData in
       let textWidth = rowData.text.width(constraintedToHeight: pickerView.bounds.height)
-      let width = textWidth + (rowData.imageData?.imageMargin ?? 0) + (
-        rowData.imageData?.imageSize.width ?? 0
-      )
+      let width =
+        textWidth + (rowData.imageData?.imageMargin ?? 0)
+        + (rowData.imageData?.imageSize.width ?? 0)
       return max(maxWidth, width)
     }
 

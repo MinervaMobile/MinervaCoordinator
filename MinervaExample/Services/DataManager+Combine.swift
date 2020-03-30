@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -85,7 +85,7 @@ extension DataManager {
   ) -> PassthroughSubject<Result<T, Error>, Error> {
     let subject = PassthroughSubject<Result<T, Error>, Error>()
     // TODO: This never cancels the connection. Need to update this to use the cancelID to support unsubscribe.
-    _ = block() { result, error in
+    _ = block { result, error in
       if let error = error {
         subject.send(.failure(error))
       } else {

@@ -10,7 +10,6 @@
     "lineBreakBeforeEachGenericRequirement": true,
     "lineBreakAroundMultilineExpressionChainComponents": true,
     "maximumBlankLines": 1,
-    "prioritizeKeepingFunctionOutputTogether": true,
     "respectsExistingLineBreaks": true,
     "tabWidth": 2
 }

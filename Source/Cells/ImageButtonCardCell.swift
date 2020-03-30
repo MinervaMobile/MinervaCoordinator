@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -139,32 +139,42 @@ extension ImageButtonCardCell {
   private func setupConstraints() {
     buttonContainerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
 
-    imageView.bottomAnchor.constraint(
-      equalTo: label.topAnchor,
-      constant: -ImageButtonCardCellModel.labelMargin
-    ).isActive = true
+    imageView.bottomAnchor
+      .constraint(
+        equalTo: label.topAnchor,
+        constant: -ImageButtonCardCellModel.labelMargin
+      )
+      .isActive = true
 
-    imageView.topAnchor.constraint(
-      equalTo: buttonContainerView.topAnchor,
-      constant: ImageButtonCardCellModel.labelMargin
-    ).isActive = true
+    imageView.topAnchor
+      .constraint(
+        equalTo: buttonContainerView.topAnchor,
+        constant: ImageButtonCardCellModel.labelMargin
+      )
+      .isActive = true
 
     imageView.centerXAnchor.constraint(equalTo: buttonContainerView.centerXAnchor).isActive = true
 
-    label.leadingAnchor.constraint(
-      equalTo: buttonContainerView.leadingAnchor,
-      constant: ImageButtonCardCellModel.labelMargin
-    ).isActive = true
+    label.leadingAnchor
+      .constraint(
+        equalTo: buttonContainerView.leadingAnchor,
+        constant: ImageButtonCardCellModel.labelMargin
+      )
+      .isActive = true
 
-    label.trailingAnchor.constraint(
-      equalTo: buttonContainerView.trailingAnchor,
-      constant: -ImageButtonCardCellModel.labelMargin
-    ).isActive = true
+    label.trailingAnchor
+      .constraint(
+        equalTo: buttonContainerView.trailingAnchor,
+        constant: -ImageButtonCardCellModel.labelMargin
+      )
+      .isActive = true
 
-    label.bottomAnchor.constraint(
-      equalTo: buttonContainerView.bottomAnchor,
-      constant: -ImageButtonCardCellModel.labelMargin
-    ).isActive = true
+    label.bottomAnchor
+      .constraint(
+        equalTo: buttonContainerView.bottomAnchor,
+        constant: -ImageButtonCardCellModel.labelMargin
+      )
+      .isActive = true
 
     imageWidthConstraint.isActive = true
     imageHeightConstraint.isActive = true

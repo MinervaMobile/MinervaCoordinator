@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -145,7 +145,8 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     button.isUserInteractionEnabled = model.buttonAction != nil
 
     button.isSelected = model.isSelected
-    let borderColor = model.isSelected
+    let borderColor =
+      model.isSelected
       ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
     button.layer.borderColor = borderColor
   }

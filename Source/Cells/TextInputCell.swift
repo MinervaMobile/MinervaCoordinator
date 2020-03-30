@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -110,7 +110,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
 
     textField.attributedPlaceholder = model.attributedPlaceholder
 
-    if let initialText = model.text, (textField.text == nil || textField.text?.isEmpty == true) {
+    if let initialText = model.text, textField.text == nil || textField.text?.isEmpty == true {
       textField.text = initialText
     }
     textField.font = model.font
@@ -125,9 +125,11 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
     textField.isSecureTextEntry = model.isSecureTextEntry
     textField.textContentType = model.textContentType
 
-    model.bottomBorderColor.subscribe(onNext: { [weak self] bottomBorderColor -> Void in
-      self?.bottomBorder.backgroundColor = bottomBorderColor
-    }).disposed(by: disposeBag)
+    model.bottomBorderColor
+      .subscribe(onNext: { [weak self] bottomBorderColor -> Void in
+        self?.bottomBorder.backgroundColor = bottomBorderColor
+      })
+      .disposed(by: disposeBag)
 
     if model.becomesFirstResponder {
       textField.becomeFirstResponder()
@@ -154,10 +156,12 @@ extension TextInputCell {
       trailing: layoutGuide.trailingAnchor,
       bottom: layoutGuide.bottomAnchor
     )
-    bottomBorder.topAnchor.constraint(
-      equalTo: textField.bottomAnchor,
-      constant: TextInputCellModel.textBottomMargin
-    ).isActive = true
+    bottomBorder.topAnchor
+      .constraint(
+        equalTo: textField.bottomAnchor,
+        constant: TextInputCellModel.textBottomMargin
+      )
+      .isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

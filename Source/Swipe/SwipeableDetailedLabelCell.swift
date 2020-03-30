@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -89,10 +89,12 @@ extension SwipeableDetailedLabelCell {
       bottom: containerView.bottomAnchor
     )
     label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    detailedLabel.leadingAnchor.constraint(
-      equalTo: label.trailingAnchor,
-      constant: SwipeableDetailedLabelCellModel.labelSpacing
-    ).isActive = true
+    detailedLabel.leadingAnchor
+      .constraint(
+        equalTo: label.trailingAnchor,
+        constant: SwipeableDetailedLabelCellModel.labelSpacing
+      )
+      .isActive = true
     detailedLabel.anchor(
       toLeading: nil,
       top: containerView.topAnchor,

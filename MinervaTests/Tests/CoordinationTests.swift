@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -104,16 +104,17 @@ public final class CoordinationTests: XCTestCase {
 
   public func testPopToRoot() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    (1...5).forEach { _ in
-      let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
-      rootCoordinator.push(childCoordinator, animated: false)
-      XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(
-        navigator.navigationController.viewControllers.contains {
-          $0 === childCoordinator.viewController
-        }
-      )
-    }
+    (1...5)
+      .forEach { _ in
+        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        rootCoordinator.push(childCoordinator, animated: false)
+        XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
+        XCTAssertTrue(
+          navigator.navigationController.viewControllers.contains {
+            $0 === childCoordinator.viewController
+          }
+        )
+      }
     _ = navigator.popToRootViewController(animated: false)
     XCTAssertEqual(navigator.navigationController.viewControllers.count, 1)
     XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
@@ -121,16 +122,17 @@ public final class CoordinationTests: XCTestCase {
 
   public func testPopToCoordinator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    (1...5).forEach { _ in
-      let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
-      rootCoordinator.push(childCoordinator, animated: false)
-      XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(
-        navigator.navigationController.viewControllers.contains {
-          $0 === childCoordinator.viewController
-        }
-      )
-    }
+    (1...5)
+      .forEach { _ in
+        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        rootCoordinator.push(childCoordinator, animated: false)
+        XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
+        XCTAssertTrue(
+          navigator.navigationController.viewControllers.contains {
+            $0 === childCoordinator.viewController
+          }
+        )
+      }
     rootCoordinator.popToCoordinator(
       rootCoordinator.childCoordinators.first! as! FakeCoordinator,
       animated: false
@@ -141,16 +143,17 @@ public final class CoordinationTests: XCTestCase {
 
   public func testSetCoordinators() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    (1...5).forEach { _ in
-      let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
-      rootCoordinator.push(childCoordinator, animated: false)
-      XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
-      XCTAssertTrue(
-        navigator.navigationController.viewControllers.contains {
-          $0 === childCoordinator.viewController
-        }
-      )
-    }
+    (1...5)
+      .forEach { _ in
+        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        rootCoordinator.push(childCoordinator, animated: false)
+        XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
+        XCTAssertTrue(
+          navigator.navigationController.viewControllers.contains {
+            $0 === childCoordinator.viewController
+          }
+        )
+      }
     let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
     rootCoordinator.setCoordinators([childCoordinator], animated: false)
     XCTAssertEqual(navigator.navigationController.viewControllers.count, 1)

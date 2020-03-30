@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -48,19 +48,7 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
   private var highPriorityWidthAnchor: NSLayoutConstraint?
   private var lowPriorityWidthAnchor: NSLayoutConstraint?
 
-  private let datePicker: UIDatePicker = {
-    let datePicker = UIDatePicker()
-    datePicker.setValue(
-      UIColor(
-        red: CGFloat(247) / 255,
-        green: CGFloat(92) / 255,
-        blue: CGFloat(74) / 255,
-        alpha: 1.0
-      ),
-      forKey: "textColor"
-    )
-    return datePicker
-  }()
+  private let datePicker = UIDatePicker()
 
   override public init(frame: CGRect) {
     super.init(frame: frame)

@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -22,12 +22,13 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
     let presenter = WorkoutPresenter(repository: repository)
     let listController = LegacyListController()
     let viewController = WorkoutVC(presenter: presenter, listController: listController)
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
 
   }
 
@@ -55,7 +56,8 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
 
   private func displayWorkoutPopup(with workout: Workout?, forUserID userID: String) {
     let editing = workout != nil
-    let workout = workout
+    let workout =
+      workout
       ?? WorkoutProto(
         workoutID: UUID().uuidString,
         userID: userID,

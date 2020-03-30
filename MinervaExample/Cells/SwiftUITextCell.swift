@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -43,11 +43,14 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
   }
   public var imageObservable: Observable<UIImage?>? {
     didSet {
-      imageObservable?.observeOn(
-        MainScheduler.instance
-      ).subscribe(onNext: { [weak self] i in
-        self?.image = i
-      }).disposed(by: disposeBag)
+      imageObservable?
+        .observeOn(
+          MainScheduler.instance
+        )
+        .subscribe(onNext: { [weak self] i in
+          self?.image = i
+        })
+        .disposed(by: disposeBag)
     }
   }
 
@@ -131,7 +134,8 @@ public struct SwiftUITextView: View {
             .renderingMode(.template)
             .scaledToFit()
         }
-      }.padding()
+      }
+      .padding()
     }
   }
 }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -142,10 +142,12 @@ extension SwitchTextCell {
     label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     switchButton.anchorWidth(to: SwitchTextCellModel.switchWidth)
 
-    switchButton.leadingAnchor.constraint(
-      equalTo: label.trailingAnchor,
-      constant: SwitchTextCellModel.textMargin
-    ).isActive = true
+    switchButton.leadingAnchor
+      .constraint(
+        equalTo: label.trailingAnchor,
+        constant: SwitchTextCellModel.textMargin
+      )
+      .isActive = true
 
     switchButton.anchor(
       toLeading: nil,

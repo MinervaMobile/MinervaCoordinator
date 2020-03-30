@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -145,7 +145,8 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     label.attributedText = model.attributedText
 
     detailsLabel.attributedText = model.descriptionText
-    let detailsPriority: UILayoutPriority = model.detailsTextResistCompression
+    let detailsPriority: UILayoutPriority =
+      model.detailsTextResistCompression
       ? .required : .defaultHigh
     detailsLabel.setContentCompressionResistancePriority(detailsPriority, for: .horizontal)
 
@@ -168,9 +169,11 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
 
     backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImageRelay.subscribe(onNext: { [weak self] image in
-      self?.iconImageView.image = image
-    }).disposed(by: disposeBag)
+    model.iconImageRelay
+      .subscribe(onNext: { [weak self] image in
+        self?.iconImageView.image = image
+      })
+      .disposed(by: disposeBag)
   }
 }
 

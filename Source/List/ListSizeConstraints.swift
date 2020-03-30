@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -36,11 +36,13 @@ public struct ListSizeConstraints: Hashable {
     let rowHeight = insetSize.height
     let maxSize: CGSize
     if scrollDirection == .vertical {
-      let equalCellWidth = (rowWidth / CGFloat(cellsInRow))
+      let equalCellWidth =
+        (rowWidth / CGFloat(cellsInRow))
         - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
       maxSize = CGSize(width: equalCellWidth, height: rowHeight)
     } else {
-      let equalCellHeight = (rowHeight / CGFloat(cellsInRow))
+      let equalCellHeight =
+        (rowHeight / CGFloat(cellsInRow))
         - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
       maxSize = CGSize(width: rowWidth, height: equalCellHeight)
     }

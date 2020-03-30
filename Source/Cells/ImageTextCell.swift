@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -81,9 +81,10 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
     guard !sizing else { return }
 
     imageView.layer.cornerRadius = model.imageViewCornerRadius
-    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
-      by: disposeBag
-    )
+    model.image.subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
+      .disposed(
+        by: disposeBag
+      )
   }
 }
 
@@ -102,10 +103,12 @@ extension ImageTextCell {
     imageViewWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 75)
     imageViewWidthConstraint?.isActive = true
 
-    label.leadingAnchor.constraint(
-      equalTo: imageView.trailingAnchor,
-      constant: ImageTextCellModel.imageMargin
-    ).isActive = true
+    label.leadingAnchor
+      .constraint(
+        equalTo: imageView.trailingAnchor,
+        constant: ImageTextCellModel.imageMargin
+      )
+      .isActive = true
     label.anchor(
       toLeading: nil,
       top: layoutGuide.topAnchor,

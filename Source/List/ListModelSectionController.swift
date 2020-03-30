@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -92,12 +92,13 @@ extension ListModelSectionController {
     let cellModel = wrapper.section.cellModels.remove(at: sourceIndex)
     wrapper.section.cellModels.insert(cellModel, at: destinationIndex)
 
-    self.delegate?.sectionControllerCompletedMove(
-      self,
-      for: cellModel,
-      fromIndex: sourceIndex,
-      toIndex: destinationIndex
-    )
+    self.delegate?
+      .sectionControllerCompletedMove(
+        self,
+        for: cellModel,
+        fromIndex: sourceIndex,
+        toIndex: destinationIndex
+      )
   }
 }
 
@@ -219,11 +220,12 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
     if let model = wrapper.model as? ListSelectableCellModelWrapper {
       model.selected(at: indexPath)
     } else {
-      collectionContext?.deselectItem(
-        at: index,
-        sectionController: sectionController,
-        animated: false
-      )
+      collectionContext?
+        .deselectItem(
+          at: index,
+          sectionController: sectionController,
+          animated: false
+        )
     }
   }
   internal func sectionController(
@@ -372,12 +374,13 @@ extension ListModelSectionController: IGListTransitionDelegate {
     }
 
     guard
-      let customAttributes = delegate?.sectionController(
-        self,
-        initialLayoutAttributes: animationAttributes,
-        for: section,
-        at: indexPath
-      )
+      let customAttributes = delegate?
+        .sectionController(
+          self,
+          initialLayoutAttributes: animationAttributes,
+          for: section,
+          at: indexPath
+        )
     else {
       return attributes
     }
@@ -396,12 +399,13 @@ extension ListModelSectionController: IGListTransitionDelegate {
       return attributes
     }
     guard
-      let customAttributes = delegate?.sectionController(
-        self,
-        finalLayoutAttributes: animationAttributes,
-        for: section,
-        at: indexPath
-      )
+      let customAttributes = delegate?
+        .sectionController(
+          self,
+          finalLayoutAttributes: animationAttributes,
+          for: section,
+          at: indexPath
+        )
     else {
       return attributes
     }

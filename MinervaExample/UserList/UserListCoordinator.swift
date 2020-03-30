@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -31,12 +31,13 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     let presenter = UserListPresenter(repository: repository)
     let viewController = UserListVC()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
   }
 
   // MARK: - ViewControllerDelegate
@@ -106,7 +107,8 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to delete the user")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func logoutUser(withID userID: String) {
@@ -126,7 +128,8 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to logout")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func displayCreateUserPopup() {
@@ -159,7 +162,8 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to save the user")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func displayWorkoutList(forUserID userID: String, title: String) {

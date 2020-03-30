@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -88,7 +88,8 @@ extension CoordinatorNavigator {
   ) {
     addChild(coordinator)
 
-    let viewController = coordinator.baseViewController.navigationController
+    let viewController =
+      coordinator.baseViewController.navigationController
       ?? coordinator.baseViewController
     viewController.modalPresentationStyle = modalPresentationStyle
     navigator.present(
@@ -108,7 +109,8 @@ extension CoordinatorNavigator {
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
-    let viewController = coordinator.baseViewController.navigationController
+    let viewController =
+      coordinator.baseViewController.navigationController
       ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
   }

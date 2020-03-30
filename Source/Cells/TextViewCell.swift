@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -123,13 +123,15 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
       textView.textColor = model.placeholderTextColor
     }
 
-    model.becomesFirstResponder.subscribe(onNext: { [weak self] isFirstResponder in
-      if isFirstResponder {
-        self?.textView.becomeFirstResponder()
-      } else {
-        self?.textView.resignFirstResponder()
-      }
-    }).disposed(by: disposeBag)
+    model.becomesFirstResponder
+      .subscribe(onNext: { [weak self] isFirstResponder in
+        if isFirstResponder {
+          self?.textView.becomeFirstResponder()
+        } else {
+          self?.textView.resignFirstResponder()
+        }
+      })
+      .disposed(by: disposeBag)
 
     backgroundView?.backgroundColor = model.backgroundColor
     textView.delegate = model.helper

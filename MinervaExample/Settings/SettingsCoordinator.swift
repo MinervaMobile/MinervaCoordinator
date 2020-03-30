@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -31,15 +31,17 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
     let presenter = SettingsPresenter(dataManager: dataManager)
     let viewController = CollectionViewController()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
-      by: disposeBag
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
     viewController.title = "Settings"
   }
 
@@ -61,7 +63,8 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to delete the user")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func logoutUser() {
@@ -80,7 +83,8 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to logout")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func displayUserUpdatePopup(for user: User) {

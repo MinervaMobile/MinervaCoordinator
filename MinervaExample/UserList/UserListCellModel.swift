@@ -9,14 +9,15 @@ public final class UserListCellModel: SwipeableLabelCellModel, ListSelectableCel
   public init(user: User) {
     self.user = user
 
-    super.init(
-      identifier: user.description,
-      attributedText: NSAttributedString(
-        string: "\(user.email)\n\(user.dailyCalories)",
-        font: .body,
-        fontColor: .label
+    super
+      .init(
+        identifier: user.description,
+        attributedText: NSAttributedString(
+          string: "\(user.email)\n\(user.dailyCalories)",
+          font: .body,
+          fontColor: .label
+        )
       )
-    )
     backgroundColor = .systemBackground
   }
 

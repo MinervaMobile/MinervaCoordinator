@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -35,7 +35,7 @@ extension DataManager {
     dailyCalories: Int32,
     role: UserRole
   ) -> Single<Void> {
-    Single.create() { single in
+    Single.create { single in
       self.create(withEmail: email, password: password, dailyCalories: dailyCalories, role: role) {
         error in
         if let error = error {
@@ -82,22 +82,23 @@ extension DataManager {
   private func observe<T>(
     _ block: @escaping (@escaping (T, Error?) -> Void) -> SubscriptionID
   ) -> Observable<Result<T, Error>> {
-    Observable<Result<T, Error>>.create { observer in
-      let subscriptionID = block() { result, error in
-        if let error = error {
-          observer.onNext(.failure(error))
-        } else {
-          observer.onNext(.success(result))
+    Observable<Result<T, Error>>
+      .create { observer in
+        let subscriptionID = block() { result, error in
+          if let error = error {
+            observer.onNext(.failure(error))
+          } else {
+            observer.onNext(.success(result))
+          }
+        }
+        return Disposables.create {
+          self.unsubscribe(listenerID: subscriptionID)
         }
       }
-      return Disposables.create {
-        self.unsubscribe(listenerID: subscriptionID)
-      }
-    }
   }
 
   private func asSingle(_ block: @escaping (@escaping (Error?) -> Void) -> Void) -> Single<Void> {
-    Single.create() { single in
+    Single.create { single in
       block() { error in
         if let error = error {
           single(.error(error))
@@ -111,7 +112,7 @@ extension DataManager {
 
   private func asSingle<T>(_ block: @escaping (@escaping (T, Error?) -> Void) -> Void) -> Single<T>
   {
-    Single.create() { single in
+    Single.create { single in
       block() { result, error in
         if let error = error {
           single(.error(error))

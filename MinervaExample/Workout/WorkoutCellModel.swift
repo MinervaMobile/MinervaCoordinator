@@ -9,10 +9,11 @@ public final class WorkoutCellModel: SwipeableLabelCellModel, ListSelectableCell
   public init(workout: Workout) {
     self.workout = workout
 
-    super.init(
-      identifier: workout.description,
-      attributedText: NSAttributedString(string: "\(workout.details)\n\(workout.text)")
-    )
+    super
+      .init(
+        identifier: workout.description,
+        attributedText: NSAttributedString(string: "\(workout.details)\n\(workout.text)")
+      )
     backgroundColor = .systemBackground
   }
 

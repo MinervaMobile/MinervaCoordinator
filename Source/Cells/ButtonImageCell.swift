@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -131,9 +131,10 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
     buttonBackgroundView.backgroundColor = model.buttonColor
     backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
-      by: disposeBag
-    )
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
+      .disposed(
+        by: disposeBag
+      )
   }
 }
 
@@ -151,55 +152,75 @@ extension ButtonImageCell {
 
     buttonBackgroundView.anchorTo(layoutGuide: layoutGuide)
 
-    marginContainer.topAnchor.constraint(
-      equalTo: layoutGuide.topAnchor
-    ).isActive = true
-    marginContainer.bottomAnchor.constraint(
-      equalTo: layoutGuide.bottomAnchor
-    ).isActive = true
-    marginContainer.leadingAnchor.constraint(
-      greaterThanOrEqualTo: layoutGuide.leadingAnchor
-    ).isActive = true
-    marginContainer.trailingAnchor.constraint(
-      lessThanOrEqualTo: layoutGuide.trailingAnchor
-    ).isActive = true
+    marginContainer.topAnchor
+      .constraint(
+        equalTo: layoutGuide.topAnchor
+      )
+      .isActive = true
+    marginContainer.bottomAnchor
+      .constraint(
+        equalTo: layoutGuide.bottomAnchor
+      )
+      .isActive = true
+    marginContainer.leadingAnchor
+      .constraint(
+        greaterThanOrEqualTo: layoutGuide.leadingAnchor
+      )
+      .isActive = true
+    marginContainer.trailingAnchor
+      .constraint(
+        lessThanOrEqualTo: layoutGuide.trailingAnchor
+      )
+      .isActive = true
     marginContainer.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
     minimumContainerHeightConstraint = marginContainer.heightAnchor.constraint(
       greaterThanOrEqualToConstant: 0
     )
     minimumContainerHeightConstraint?.isActive = true
 
-    imageView.leadingAnchor.constraint(
-      equalTo: marginContainer.leadingAnchor,
-      constant: ButtonImageCellModel.imageMargin
-    ).isActive = true
-    imageView.topAnchor.constraint(
-      equalTo: marginContainer.topAnchor,
-      constant: ButtonImageCellModel.imageMargin
-    ).isActive = true
-    imageView.bottomAnchor.constraint(
-      equalTo: marginContainer.bottomAnchor,
-      constant: -ButtonImageCellModel.imageMargin
-    ).isActive = true
+    imageView.leadingAnchor
+      .constraint(
+        equalTo: marginContainer.leadingAnchor,
+        constant: ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
+    imageView.topAnchor
+      .constraint(
+        equalTo: marginContainer.topAnchor,
+        constant: ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
+    imageView.bottomAnchor
+      .constraint(
+        equalTo: marginContainer.bottomAnchor,
+        constant: -ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
 
     imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
     imageWidthConstraint?.isActive = true
     imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
     imageWidthConstraint?.isActive = true
 
-    label.leadingAnchor.constraint(
-      equalTo: imageView.trailingAnchor,
-      constant: ButtonImageCellModel.imageMargin
-    ).isActive = true
+    label.leadingAnchor
+      .constraint(
+        equalTo: imageView.trailingAnchor,
+        constant: ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
     label.trailingAnchor.constraint(equalTo: marginContainer.trailingAnchor).isActive = true
-    label.topAnchor.constraint(
-      equalTo: marginContainer.topAnchor,
-      constant: ButtonImageCellModel.imageMargin
-    ).isActive = true
-    label.bottomAnchor.constraint(
-      equalTo: marginContainer.bottomAnchor,
-      constant: -ButtonImageCellModel.imageMargin
-    ).isActive = true
+    label.topAnchor
+      .constraint(
+        equalTo: marginContainer.topAnchor,
+        constant: ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
+    label.bottomAnchor
+      .constraint(
+        equalTo: marginContainer.bottomAnchor,
+        constant: -ButtonImageCellModel.imageMargin
+      )
+      .isActive = true
     marginContainer.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

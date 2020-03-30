@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -26,15 +26,17 @@ public final class FilterCoordinator: MainCoordinator<FilterPresenter, Collectio
     let presenter = FilterPresenter(filter: filter)
     let viewController = CollectionViewController()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
-      by: disposeBag
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
   }
 
   // MARK: - Private

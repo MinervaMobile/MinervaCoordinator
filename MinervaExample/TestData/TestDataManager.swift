@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -66,17 +66,19 @@ extension TestDataManager: DataManager {
   }
 
   public func delete(userID: String, completion: @escaping Completion) {
-    userManager.delete(userID: userID).subscribe(
-      onSuccess: { () -> Void in
-        self.queue.async {
-          self.notifyForUserChanges()
-          completion(nil)
+    userManager.delete(userID: userID)
+      .subscribe(
+        onSuccess: { () -> Void in
+          self.queue.async {
+            self.notifyForUserChanges()
+            completion(nil)
+          }
+        },
+        onError: { error -> Void in
+          completion(error)
         }
-      },
-      onError: { error -> Void in
-        completion(error)
-      }
-    ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   public func create(
@@ -204,9 +206,10 @@ extension TestDataManager: DataManager {
       let userID = subscription.userID
       workoutSubscriptions[listenerID] = nil
       userSubscriptions[listenerID] = nil
-      let subscriptions = workoutUserIDToSubscriptions[userID, default: []].filter {
-        $0 != listenerID
-      }
+      let subscriptions = workoutUserIDToSubscriptions[userID, default: []]
+        .filter {
+          $0 != listenerID
+        }
       workoutUserIDToSubscriptions[userID] = subscriptions.isEmpty ? nil : subscriptions
     }
   }

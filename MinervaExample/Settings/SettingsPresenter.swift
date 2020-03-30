@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -29,16 +29,18 @@ public final class SettingsPresenter: Presenter {
 
   public init(dataManager: DataManager) {
     self.dataManager = dataManager
-    dataManager.user(withID: dataManager.userAuthorization.userID).subscribe(
-      onSuccess: { [weak self] (user: User?) -> Void in
-        guard let strongSelf = self else { return }
-        strongSelf.sections.accept(strongSelf.createSections(with: user))
-      },
-      onError: { [weak self] _ -> Void in
-        guard let strongSelf = self else { return }
-        strongSelf.sections.accept(strongSelf.createSections(with: nil))
-      }
-    ).disposed(by: disposeBag)
+    dataManager.user(withID: dataManager.userAuthorization.userID)
+      .subscribe(
+        onSuccess: { [weak self] (user: User?) -> Void in
+          guard let strongSelf = self else { return }
+          strongSelf.sections.accept(strongSelf.createSections(with: user))
+        },
+        onError: { [weak self] _ -> Void in
+          guard let strongSelf = self else { return }
+          strongSelf.sections.accept(strongSelf.createSections(with: nil))
+        }
+      )
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Private

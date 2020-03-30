@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -29,15 +29,17 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
     let presenter = SignInPresenter(mode: mode)
     let viewController = CollectionViewController()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
-      by: disposeBag
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
   }
 
   // MARK: - Private
@@ -60,7 +62,8 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
             title: "Failed to create the account."
           )
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
 
   private func login(withEmail email: String, password: String) {
@@ -81,7 +84,8 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
             title: "Failed to login to the account."
           )
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
   private func handle(_ action: SignInPresenter.Action) {
     switch action {

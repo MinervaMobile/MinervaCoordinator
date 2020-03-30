@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -23,15 +23,17 @@ public final class EditWorkoutCoordinator: MainCoordinator<
     let presenter = EditWorkoutPresenter(workout: workout)
     let viewController = CollectionViewController()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
-      by: disposeBag
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
     viewController.title = editing ? "Update Workout" : "Add Workout"
   }
 
@@ -52,7 +54,8 @@ public final class EditWorkoutCoordinator: MainCoordinator<
           LoadingHUD.hide(from: strongSelf.viewController.view)
           strongSelf.viewController.alert(error, title: "Failed to store the workout")
         }
-      ).disposed(by: disposeBag)
+      )
+      .disposed(by: disposeBag)
   }
   private func handle(_ action: EditWorkoutPresenter.Action) {
     switch action {

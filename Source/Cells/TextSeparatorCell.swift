@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -88,17 +88,21 @@ extension TextSeparatorCell {
     leftLineView.anchorHeight(to: TextSeparatorCellModel.separatorHeight)
     leftLineView.centerYAnchor.constraint(equalTo: label.centerYAnchor).isActive = true
     leftLineView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor).isActive = true
-    leftLineView.trailingAnchor.constraint(
-      equalTo: label.leadingAnchor,
-      constant: -TextSeparatorCellModel.textMargin
-    ).isActive = true
+    leftLineView.trailingAnchor
+      .constraint(
+        equalTo: label.leadingAnchor,
+        constant: -TextSeparatorCellModel.textMargin
+      )
+      .isActive = true
 
     rightLineView.anchorHeight(to: TextSeparatorCellModel.separatorHeight)
     rightLineView.centerYAnchor.constraint(equalTo: label.centerYAnchor).isActive = true
-    rightLineView.leadingAnchor.constraint(
-      equalTo: label.trailingAnchor,
-      constant: TextSeparatorCellModel.textMargin
-    ).isActive = true
+    rightLineView.leadingAnchor
+      .constraint(
+        equalTo: label.trailingAnchor,
+        constant: TextSeparatorCellModel.textMargin
+      )
+      .isActive = true
     rightLineView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
 
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)

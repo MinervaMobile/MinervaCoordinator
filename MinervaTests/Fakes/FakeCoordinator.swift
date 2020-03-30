@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -23,12 +23,13 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     let listController = LegacyListController()
     let navigator = navigator ?? BasicNavigator(parent: nil)
     let presenter = FakePresenter()
-    super.init(
-      navigator: navigator,
-      viewController: collectionVC,
-      presenter: presenter,
-      listController: listController
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: collectionVC,
+        presenter: presenter,
+        listController: listController
+      )
     collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
   }
 

@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -153,9 +153,10 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 
     self.backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 }).disposed(
-      by: disposeBag
-    )
+    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
+      .disposed(
+        by: disposeBag
+      )
   }
 }
 

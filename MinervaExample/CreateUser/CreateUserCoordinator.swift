@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Optimize Fitness Inc.
+// Copyright © 2020 Optimize Fitness Inc.
 // Licensed under the MIT license
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
@@ -23,15 +23,17 @@ public final class CreateUserCoordinator: MainCoordinator<
     let presenter = CreateUserPresenter()
     let viewController = CollectionViewController()
     let listController = LegacyListController()
-    super.init(
-      navigator: navigator,
-      viewController: viewController,
-      presenter: presenter,
-      listController: listController
-    )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) }).disposed(
-      by: disposeBag
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: viewController,
+        presenter: presenter,
+        listController: listController
+      )
+    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
     viewController.title = "Create User"
   }
 
@@ -45,19 +47,20 @@ public final class CreateUserCoordinator: MainCoordinator<
       dailyCalories: dailyCalories,
       role: role
     )
-      .observeOn(MainScheduler.instance)
-      .subscribe(
-        onSuccess: { [weak self] () -> Void in
-          guard let strongSelf = self else { return }
-          LoadingHUD.hide(from: strongSelf.viewController.view)
-          strongSelf.navigator.dismiss(strongSelf.viewController, animated: true)
-        },
-        onError: { [weak self] error -> Void in
-          guard let strongSelf = self else { return }
-          LoadingHUD.hide(from: strongSelf.viewController.view)
-          strongSelf.viewController.alert(error, title: "Failed to save the user")
-        }
-      ).disposed(by: disposeBag)
+    .observeOn(MainScheduler.instance)
+    .subscribe(
+      onSuccess: { [weak self] () -> Void in
+        guard let strongSelf = self else { return }
+        LoadingHUD.hide(from: strongSelf.viewController.view)
+        strongSelf.navigator.dismiss(strongSelf.viewController, animated: true)
+      },
+      onError: { [weak self] error -> Void in
+        guard let strongSelf = self else { return }
+        LoadingHUD.hide(from: strongSelf.viewController.view)
+        strongSelf.viewController.alert(error, title: "Failed to save the user")
+      }
+    )
+    .disposed(by: disposeBag)
   }
   private func handle(_ action: CreateUserPresenter.Action) {
     switch action {
