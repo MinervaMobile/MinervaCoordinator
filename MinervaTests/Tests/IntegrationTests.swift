@@ -38,7 +38,7 @@ public final class IntegrationTests: XCTestCase {
   public func testUpdate() {
     let updateExpectation = expectation(description: "Update Expectation")
     let disposable = coordinator.presenter.sections
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onNext: { sections in
           XCTAssertEqual(sections.count, 2)

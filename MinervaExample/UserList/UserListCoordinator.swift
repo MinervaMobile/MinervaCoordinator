@@ -45,14 +45,17 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     super.viewControllerViewDidLoad(viewController)
 
     presenter.state
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
 
     presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
 
     self.viewController.actions
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: handle(_:))
       .disposed(by: disposeBag)
   }
@@ -94,7 +97,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
     dataManager.deleteUser(withUserID: userID)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }
@@ -115,7 +118,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
     userManager.logout(userID: userID)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }
@@ -151,7 +154,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
     dataManager.update(user)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }

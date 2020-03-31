@@ -6,6 +6,7 @@
 
 import Foundation
 import Minerva
+import RxSwift
 import UIKit
 
 public protocol WelcomeCoordinatorDelegate: AnyObject {
@@ -36,7 +37,9 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, Collect
         presenter: presenter,
         listController: listController
       )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+    presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
       )

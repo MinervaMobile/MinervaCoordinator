@@ -36,7 +36,9 @@ public final class UpdateFilterCoordinator: MainCoordinator<
         presenter: presenter,
         listController: listController
       )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+    presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
       )

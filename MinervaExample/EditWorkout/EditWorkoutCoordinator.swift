@@ -30,7 +30,9 @@ public final class EditWorkoutCoordinator: MainCoordinator<
         presenter: presenter,
         listController: listController
       )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+    presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
       )
@@ -42,7 +44,7 @@ public final class EditWorkoutCoordinator: MainCoordinator<
   private func save(workout: Workout) {
     LoadingHUD.show(in: viewController.view)
     dataManager.store(workout)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] () -> Void in
           guard let strongSelf = self else { return }

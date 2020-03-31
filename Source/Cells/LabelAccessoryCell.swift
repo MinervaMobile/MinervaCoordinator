@@ -6,6 +6,7 @@
 
 import Foundation
 import RxRelay
+import RxSwift
 import UIKit
 
 open class LabelAccessoryCellModel: BaseListCellModel {
@@ -170,6 +171,7 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     backgroundView?.backgroundColor = model.backgroundColor
 
     model.iconImageRelay
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: { [weak self] image in
         self?.iconImageView.image = image
       })

@@ -37,6 +37,7 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
     super.viewControllerViewDidLoad(viewController)
 
     presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
   }

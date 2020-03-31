@@ -131,7 +131,9 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
     buttonBackgroundView.backgroundColor = model.buttonColor
     backgroundView?.backgroundColor = model.backgroundColor
 
-    model.iconImage.subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
+    model.iconImage
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(
         by: disposeBag
       )

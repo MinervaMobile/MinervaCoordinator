@@ -30,7 +30,9 @@ public final class UpdateUserCoordinator: MainCoordinator<
         presenter: presenter,
         listController: listController
       )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+    presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
       )
@@ -40,7 +42,7 @@ public final class UpdateUserCoordinator: MainCoordinator<
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
     dataManager.update(user)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] () -> Void in
           guard let strongSelf = self else { return }

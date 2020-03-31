@@ -30,6 +30,7 @@ public final class SettingsPresenter: Presenter {
   public init(dataManager: DataManager) {
     self.dataManager = dataManager
     dataManager.user(withID: dataManager.userAuthorization.userID)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] (user: User?) -> Void in
           guard let strongSelf = self else { return }

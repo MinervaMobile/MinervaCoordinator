@@ -38,7 +38,9 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
         presenter: presenter,
         listController: listController
       )
-    presenter.actions.subscribe(onNext: { [weak self] in self?.handle($0) })
+    presenter.actions
+      .observeOn(MainScheduler.asyncInstance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
       )
@@ -51,7 +53,7 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
     let userID = dataManager.userAuthorization.userID
     LoadingHUD.show(in: viewController.view)
     userManager.delete(userID: userID)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] () -> Void in
           guard let strongSelf = self else { return }
@@ -71,7 +73,7 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
     let userID = dataManager.userAuthorization.userID
     LoadingHUD.show(in: viewController.view)
     userManager.logout(userID: userID)
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(
         onSuccess: { [weak self] () -> Void in
           guard let strongSelf = self else { return }

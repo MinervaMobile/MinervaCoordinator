@@ -126,6 +126,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
     textField.textContentType = model.textContentType
 
     model.bottomBorderColor
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: { [weak self] bottomBorderColor -> Void in
         self?.bottomBorder.backgroundColor = bottomBorderColor
       })

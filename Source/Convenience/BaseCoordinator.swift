@@ -65,7 +65,7 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
     updateDisposable?.dispose()
     updateDisposable =
       updateRelay
-      .observeOn(MainScheduler.instance)
+      .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: { [weak self] sections in
         self?.listController.update(with: sections, animated: true)
       })
