@@ -13,13 +13,10 @@ import UIKit
 
 @available(iOS 13.0, *)
 public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
-  ListSelectableCellModel, ListBindableCellModel
+  ListSelectableCellModel
 {
   public typealias SelectableModelType = SwiftUITextCellModel
   public var selectionAction: SelectionAction?
-
-  public typealias BindableModelType = SwiftUITextCellModel
-  public var willBindAction: BindAction?
 
   public var title: String
   public var subtitle: String?

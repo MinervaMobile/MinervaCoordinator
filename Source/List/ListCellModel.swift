@@ -157,31 +157,6 @@ extension ListHighlightableCellModel {
   }
 }
 
-/// This should not be used directly, conform to ListBindableCellModel instead.
-public protocol ListBindableCellModelWrapper {
-  func willBind()
-}
-
-/// If a model needs to trigger fetching of thumbnails or other heavy data before binding to a
-/// cell, it should do that here. |willBindAction| is not called during sizing.
-public protocol ListBindableCellModel: ListBindableCellModelWrapper {
-  associatedtype BindableModelType: ListCellModel
-  typealias BindAction = (_ cellModel: BindableModelType) -> Void
-
-  /// The block that will be called before a model is bound to a cell.
-  var willBindAction: BindAction? { get }
-}
-
-extension ListBindableCellModel {
-  public func willBind() {
-    guard let model = self as? BindableModelType else {
-      assertionFailure("Invalid model type \(self) for \(BindableModelType.self)")
-      return
-    }
-    willBindAction?(model)
-  }
-}
-
 /// Adds type information to the cell model with convenient type safe functions.
 public protocol ListTypedCellModel: ListCellModel {
   associatedtype CellType: ListCollectionViewCell

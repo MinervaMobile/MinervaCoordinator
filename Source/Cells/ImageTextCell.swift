@@ -11,7 +11,7 @@ import UIKit
 open class ImageTextCellModel: BaseListCellModel {
   fileprivate static let imageMargin: CGFloat = 10
 
-  public let image = BehaviorSubject<UIImage?>(value: nil)
+  public let imageObservable: Observable<UIImage?>
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
@@ -24,8 +24,13 @@ open class ImageTextCellModel: BaseListCellModel {
   public var imageSize = CGSize(width: 75, height: 75)
   public var imageViewCornerRadius: CGFloat = 0
 
-  public init(identifier: String, attributedText: NSAttributedString) {
+  public init(
+    identifier: String,
+    attributedText: NSAttributedString,
+    imageObservable: Observable<UIImage?> = .empty()
+  ) {
     self.attributedText = attributedText
+    self.imageObservable = imageObservable
     super.init(identifier: identifier)
   }
 
@@ -81,7 +86,7 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
     guard !sizing else { return }
 
     imageView.layer.cornerRadius = model.imageViewCornerRadius
-    model.image
+    model.imageObservable
       .observeOn(MainScheduler.asyncInstance)
       .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(

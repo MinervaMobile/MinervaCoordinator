@@ -55,9 +55,6 @@ extension ListTypedCell {
       assertionFailure("Invalid view model type \(viewModel)")
       return
     }
-    if let model = wrapper.model as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
     bind(cellModel: wrapper.model, sizing: false)
   }
 }

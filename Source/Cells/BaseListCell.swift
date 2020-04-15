@@ -79,9 +79,6 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
 
   open func bind(model: CellModelType, sizing: Bool) {
     guard !sizing else { return }
-    if let model = model as? ListBindableCellModelWrapper {
-      model.willBind()
-    }
     self.model = model
   }
 

@@ -75,10 +75,6 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
 
   open func bind(model: CellModelType, sizing: Bool) {
     if !sizing {
-      // Run the willBind function before reading any data from the model
-      if let model = model as? ListBindableCellModelWrapper {
-        model.willBind()
-      }
       self.model = model
     }
     contentView.directionalLayoutMargins = model.directionalLayoutMargins

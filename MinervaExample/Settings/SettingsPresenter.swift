@@ -74,11 +74,9 @@ public final class SettingsPresenter: Presenter {
         subtitle: dataManager.userAuthorization.role.description,
         hasChevron: false
       )
-      roleCellModel.willBindAction = { [weak self] model in
-        guard let strongSelf = self else { return }
-        model.imagePublisher = strongSelf.dataManager.combineImage(forWorkoutID: "")
-          .eraseToAnyPublisher()
-      }
+      roleCellModel.imagePublisher = dataManager.combineImage(forWorkoutID: "")
+        .eraseToAnyPublisher()
+
       cellModels.append(roleCellModel)
 
       var section = ListSection(cellModels: cellModels, identifier: "USER")
@@ -97,10 +95,8 @@ public final class SettingsPresenter: Presenter {
     cellModels.append(logoutCellModel)
 
     let deleteCellModel = SwiftUITextCellModel(title: "Delete")
-    deleteCellModel.willBindAction = { [weak self] model in
-      guard let strongSelf = self else { return }
-      model.imageObservable = strongSelf.dataManager.image(forWorkoutID: "a").asObservable()
-    }
+    deleteCellModel.imageObservable = dataManager.image(forWorkoutID: "a").asObservable()
+
     deleteCellModel.selectionAction = { [weak self] _, _ -> Void in
       guard let strongSelf = self else { return }
       strongSelf.actionsRelay.accept(.deleteAccount)

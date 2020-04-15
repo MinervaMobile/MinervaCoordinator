@@ -7,16 +7,13 @@
 import Foundation
 import Minerva
 
-public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel, ListBindableCellModel,
+public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel,
   ListHighlightableCellModel, ListReorderableCellModel
 {
   public typealias CellType = FakeCell
 
   public typealias SelectableModelType = FakeCellModel
   public var selectionAction: SelectionAction?
-
-  public typealias BindableModelType = FakeCellModel
-  public var willBindAction: BindAction?
 
   public typealias HighlightableModelType = FakeCellModel
   public var highlightEnabled: Bool = true

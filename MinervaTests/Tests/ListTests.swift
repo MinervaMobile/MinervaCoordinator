@@ -97,26 +97,6 @@ public final class ListTests: XCTestCase {
     wait(for: [updateExpectation], timeout: 5)
   }
 
-  public func testBinding() {
-    var cellModel = FakeCellModel(
-      identifier: "FakeCellModel1",
-      size: .explicit(size: CGSize(width: 100, height: 100))
-    )
-    var bound = false
-    cellModel.willBindAction = { _ in
-      bound = true
-    }
-    let section = ListSection(cellModels: [cellModel], identifier: "Section")
-
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: [section], animated: false) { finished in
-      XCTAssertTrue(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 5)
-    XCTAssertTrue(bound)
-  }
-
   public func testSelection() {
     var cellModel = FakeCellModel(
       identifier: "FakeCellModel1",
