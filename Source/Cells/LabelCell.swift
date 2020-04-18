@@ -13,6 +13,7 @@ open class LabelCellModel: BaseListCellModel {
   ) -> Void
 
   public var labelAction: LabelAction?
+  public var labelAccessibilityIdentifier: String?
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
@@ -130,6 +131,7 @@ public final class LabelCell: BaseListCell<LabelCellModel> {
     labelBackgroundView.layer.borderColor = model.backgroundColor?.cgColor
 
     label.isUserInteractionEnabled = model.labelAction != nil
+    label.accessibilityIdentifier = model.labelAccessibilityIdentifier
     backgroundView?.backgroundColor = model.backgroundColor
   }
 

@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class WorkoutPresenter: Presenter {
+public final class WorkoutPresenter: ListPresenter {
 
   public enum Action {
     case createWorkout(userID: String)

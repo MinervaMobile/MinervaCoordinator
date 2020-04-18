@@ -12,7 +12,7 @@ open class ButtonImageCellModel: BaseListCellModel {
 
   public static let imageMargin: CGFloat = 4.0
 
-  public let iconImage = BehaviorSubject<UIImage?>(value: nil)
+  public let iconImage: Observable<UIImage?>
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
@@ -39,15 +39,27 @@ open class ButtonImageCellModel: BaseListCellModel {
   public let font: UIFont
   public let imageSize: CGSize
 
-  public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
+  public init(
+    identifier: String,
+    imageSize: CGSize,
+    text: String,
+    font: UIFont,
+    iconImage: Observable<UIImage?> = .empty()
+  ) {
     self.imageSize = imageSize
     self.text = text
     self.font = font
+    self.iconImage = iconImage
     super.init(identifier: identifier)
   }
 
-  public convenience init(imageSize: CGSize, text: String, font: UIFont) {
-    self.init(identifier: text, imageSize: imageSize, text: text, font: font)
+  public convenience init(
+    imageSize: CGSize,
+    text: String,
+    font: UIFont,
+    iconImage: Observable<UIImage?> = .empty()
+  ) {
+    self.init(identifier: text, imageSize: imageSize, text: text, font: font, iconImage: iconImage)
   }
 
   // MARK: - BaseListCellModel
@@ -132,7 +144,7 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
     backgroundView?.backgroundColor = model.backgroundColor
 
     model.iconImage
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(
         by: disposeBag

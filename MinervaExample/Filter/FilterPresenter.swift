@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class FilterPresenter: Presenter {
+public final class FilterPresenter: ListPresenter {
   public enum Action {
     case edit(filter: WorkoutFilter, type: FilterType)
   }

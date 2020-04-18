@@ -40,17 +40,17 @@ public final class WorkoutVC: BaseViewController {
     setupViewsAndConstraints()
 
     presenter.sections
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
 
     presenter.persistentState
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
 
     presenter.transientState
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: updated(_:), onError: nil, onCompleted: nil, onDisposed: nil)
       .disposed(by: disposeBag)
 

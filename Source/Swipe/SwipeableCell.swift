@@ -20,36 +20,45 @@ open class SwipeableCellModel: BaseListCellModel {
   )
   public var backgroundColor: UIColor?
 
-  public var separatorColor: UIColor?
-  public var separatorLeadingInset = false
-
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
-    return separatorColor == model.separatorColor
-      && separatorLeadingInset == model.separatorLeadingInset
-      && backgroundColor == model.backgroundColor
+    return backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
   }
 }
 
-open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell,
-  ListBindable
-{
-  public var disposeBag = DisposeBag()
+open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionViewCell, ListCell {
+  public private(set) var disposeBag = DisposeBag()
 
   open private(set) var model: CellModelType?
+  open private(set) var highlightView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isHidden = true
+    return view
+  }()
 
-  private var insetLeadingSeparatorConstraint: NSLayoutConstraint?
-  private var leadingSeparatorConstraint: NSLayoutConstraint?
+  override open var isHighlighted: Bool {
+    didSet {
+      guard let highlightModel = model as? ListHighlightableCellModelWrapper,
+        highlightModel.highlightEnabled
+      else {
+        self.highlightView.isHidden = true
+        return
+      }
+
+      self.highlightView.isHidden = !self.isHighlighted
+    }
+  }
 
   public let containerView = UIView()
-  public let bottomSeparatorView = UIView()
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
     contentView.addSubview(containerView)
-    contentView.addSubview(bottomSeparatorView)
-    setupConstraints()
+    contentView.addSubview(highlightView)
+    containerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
+    highlightView.anchor(to: contentView)
   }
 
   @available(*, unavailable)
@@ -74,16 +83,17 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
   }
 
   open func bind(model: CellModelType, sizing: Bool) {
-    if !sizing {
-      self.model = model
-    }
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
-    remakeConstraints(with: model)
-
     guard !sizing else { return }
+    disposeBag = DisposeBag()
+    self.model = model
+
+    if let highlightableViewModel = model as? ListHighlightableCellModelWrapper {
+      highlightView.backgroundColor = highlightableViewModel.highlightColor
+    }
 
     contentView.backgroundColor = model.backgroundColor
-    bottomSeparatorView.backgroundColor = model.separatorColor
+    accessibilityIdentifier = model.accessibilityIdentifier
   }
 
   // MARK: - ListCell
@@ -93,6 +103,7 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
       assertionFailure("Invalid view model \(viewModel)")
       return
     }
+
     bind(cellModel: wrapper.model, sizing: false)
   }
 
@@ -103,33 +114,5 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
       return
     }
     bind(model: model, sizing: sizing)
-  }
-}
-
-// MARK: - Constraints
-extension SwipeableCell {
-
-  private func remakeConstraints(with model: SwipeableCellModel) {
-    leadingSeparatorConstraint?.isActive = !model.separatorLeadingInset
-    insetLeadingSeparatorConstraint?.isActive = model.separatorLeadingInset
-  }
-
-  private func setupConstraints() {
-    let layoutGuide = contentView.layoutMarginsGuide
-    containerView.anchorTo(layoutGuide: layoutGuide)
-
-    insetLeadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(
-      equalTo: layoutGuide.leadingAnchor
-    )
-    leadingSeparatorConstraint = bottomSeparatorView.leadingAnchor.constraint(
-      equalTo: contentView.leadingAnchor
-    )
-    leadingSeparatorConstraint?.isActive = true
-
-    bottomSeparatorView.anchorHeight(to: 1)
-    bottomSeparatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive =
-      true
-    bottomSeparatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
   }
 }

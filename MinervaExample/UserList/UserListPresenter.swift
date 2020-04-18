@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class UserListPresenter: Presenter {
+public final class UserListPresenter: ListPresenter {
   // TODO: Update the old presenter to use the new persistent / transient state model
   public var sections = BehaviorRelay<[ListSection]>(value: [])
 

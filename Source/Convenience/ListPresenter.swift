@@ -8,6 +8,6 @@ import Foundation
 import RxRelay
 import UIKit
 
-public protocol Presenter {
+public protocol ListPresenter {
   var sections: BehaviorRelay<[ListSection]> { get }
 }

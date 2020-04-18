@@ -9,7 +9,7 @@ import Minerva
 import RxRelay
 import RxSwift
 
-public final class FakePresenter: Presenter {
+public final class FakePresenter: ListPresenter {
   public let cellModels: [ListCellModel] = {
     let font = UIFont.preferredFont(forTextStyle: .body)
     let color = UIColor.label

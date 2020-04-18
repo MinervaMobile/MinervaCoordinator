@@ -11,7 +11,7 @@ import UIKit
 open class ImageTextCardCellModel: BaseListCellModel {
   fileprivate static let textMargin: CGFloat = 8
 
-  public let image = BehaviorSubject<UIImage?>(value: nil)
+  public let image: Observable<UIImage?>
 
   public let attributedText: NSAttributedString
   public var cellSize = CGSize(width: 140, height: 170)
@@ -24,14 +24,22 @@ open class ImageTextCardCellModel: BaseListCellModel {
   public var imageColor: UIColor?
   public var backgroundColor: UIColor?
 
-  public init(identifier: String, attributedText: NSAttributedString) {
+  public init(
+    identifier: String,
+    attributedText: NSAttributedString,
+    image: Observable<UIImage?> = .empty()
+  ) {
     self.attributedText = attributedText
     self.imageSize = CGSize(width: cellSize.width, height: cellSize.height)
+    self.image = image
     super.init(identifier: identifier)
   }
 
-  public convenience init(attributedText: NSAttributedString) {
-    self.init(identifier: attributedText.string, attributedText: attributedText)
+  public convenience init(
+    attributedText: NSAttributedString,
+    image: Observable<UIImage?> = .empty()
+  ) {
+    self.init(identifier: attributedText.string, attributedText: attributedText, image: image)
   }
 
   // MARK: - BaseListCellModel
@@ -105,7 +113,7 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
     imageView.layer.cornerRadius = model.imageCornerRadius
 
     model.image
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(
         by: disposeBag

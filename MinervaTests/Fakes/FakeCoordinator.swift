@@ -30,6 +30,11 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
         presenter: presenter,
         listController: listController
       )
+    viewController.events
+      .subscribe(onNext: { [weak self] event in
+        self?.handle(event)
+      })
+      .disposed(by: disposeBag)
     collectionVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 10_000)
   }
 
@@ -44,37 +49,18 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
     CGSize(width: sizeConstraints.adjustedContainerSize.width, height: 24)
   }
 
-  // MARK: - ViewControllerDelegate
-  override public func viewControllerViewDidLoad(_ viewController: ViewController) {
-    super.viewControllerViewDidLoad(viewController)
-    viewDidLoad = true
-  }
-  override public func viewController(
-    _ viewController: ViewController,
-    viewWillAppear animated: Bool
-  ) {
-    super.viewController(viewController, viewWillAppear: animated)
-    viewWillAppear = true
-  }
-  override public func viewController(
-    _ viewController: ViewController,
-    viewWillDisappear animated: Bool
-  ) {
-    super.viewController(viewController, viewWillAppear: animated)
-    viewWillDisappear = true
-  }
-  override public func viewController(
-    _ viewController: ViewController,
-    viewDidDisappear animated: Bool
-  ) {
-    super.viewController(viewController, viewWillDisappear: animated)
-    viewDidDisappear = true
-  }
-  override public func viewController(
-    _ viewController: ViewController,
-    traitCollectionDidChangeFrom previousTraitCollection: UITraitCollection?
-  ) {
-    super.viewController(viewController, traitCollectionDidChangeFrom: previousTraitCollection)
-    traitCollectionDidChange = true
+  private func handle(_ event: ListViewControllerEvent) {
+    switch event {
+    case .traitCollectionDidChange:
+      traitCollectionDidChange = true
+    case .viewDidDisappear:
+      viewDidDisappear = true
+    case .viewDidLoad:
+      viewDidLoad = true
+    case .viewWillAppear:
+      viewWillAppear = true
+    case .viewWillDisappear:
+      viewWillDisappear = true
+    }
   }
 }

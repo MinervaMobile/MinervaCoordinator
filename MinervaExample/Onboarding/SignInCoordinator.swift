@@ -37,7 +37,7 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
         listController: listController
       )
     presenter.actions
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
@@ -49,7 +49,7 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
   private func createAccount(withEmail email: String, password: String) {
     LoadingHUD.show(in: viewController.view)
     userManager.createAccount(withEmail: email, password: password)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { [weak self] dataManager in
           guard let strongSelf = self else { return }
@@ -71,7 +71,7 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
   private func login(withEmail email: String, password: String) {
     LoadingHUD.show(in: viewController.view)
     userManager.login(withEmail: email, password: password)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { [weak self] dataManager in
           guard let strongSelf = self else { return }

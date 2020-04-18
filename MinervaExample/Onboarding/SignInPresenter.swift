@@ -9,7 +9,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class SignInPresenter: Presenter {
+public final class SignInPresenter: ListPresenter {
   private static let emailCellModelIdentifier = "emailInputCellModel"
   private static let passwordCellModelIdentifier = "passwordInputCellModel"
 
@@ -118,7 +118,9 @@ public final class SignInPresenter: Presenter {
     cellModel.placeholderTextColor = .darkGray
     cellModel.bottomBorderColor.onNext(.black)
 
-    cellModel.delegate = self
+    cellModel.textInputAction = { [weak self] _, text in
+      self?.email = text
+    }
     return cellModel
   }
 
@@ -139,24 +141,9 @@ public final class SignInPresenter: Presenter {
     cellModel.placeholderTextColor = .darkGray
     cellModel.bottomBorderColor.onNext(.black)
 
-    cellModel.delegate = self
-    return cellModel
-  }
-}
-
-// MARK: - TextInputCellModelDelegate
-extension SignInPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(
-    _ textInputCellModel: TextInputCellModel,
-    textChangedTo text: String?
-  ) {
-    switch textInputCellModel.identifier {
-    case SignInPresenter.emailCellModelIdentifier:
-      email = text
-    case SignInPresenter.passwordCellModelIdentifier:
-      password = text
-    default:
-      assertionFailure("Invalid text input cell \(textInputCellModel.identifier)")
+    cellModel.textInputAction = { [weak self] _, text in
+      self?.password = text
     }
+    return cellModel
   }
 }

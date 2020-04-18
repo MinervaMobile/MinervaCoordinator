@@ -8,12 +8,11 @@ import Foundation
 import RxSwift
 import UIKit
 
-public protocol TextInputCellModelDelegate: AnyObject {
-  func textInputCellModel(_ textInputCellModel: TextInputCellModel, textChangedTo text: String?)
-}
-
 open class TextInputCellModel: BaseListCellModel {
-  public weak var delegate: TextInputCellModelDelegate?
+  public typealias TextInputAction = (_ textInputCellModel: TextInputCellModel, _ text: String?) ->
+    Void
+
+  public var textInputAction: TextInputAction?
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
@@ -102,7 +101,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
   private func textFieldDidChange(_ textField: UITextField) {
     guard let model = self.model else { return }
     model.text = textField.text
-    model.delegate?.textInputCellModel(model, textChangedTo: textField.text)
+    model.textInputAction?(model, textField.text)
   }
 
   override public func bind(model: TextInputCellModel, sizing: Bool) {
@@ -126,7 +125,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
     textField.textContentType = model.textContentType
 
     model.bottomBorderColor
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] bottomBorderColor -> Void in
         self?.bottomBorder.backgroundColor = bottomBorderColor
       })

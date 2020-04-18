@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class UpdateUserPresenter: Presenter {
+public final class UpdateUserPresenter: ListPresenter {
   public enum Action {
     case save(user: User)
   }
@@ -86,7 +86,10 @@ public final class UpdateUserPresenter: Presenter {
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
     cellModel.bottomBorderColor.onNext(.black)
-    cellModel.delegate = self
+    cellModel.textInputAction = { [weak self] _, text in
+      guard let text = text else { return }
+      self?.user.email = text
+    }
     return cellModel
   }
 
@@ -103,25 +106,10 @@ public final class UpdateUserPresenter: Presenter {
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
     cellModel.bottomBorderColor.onNext(.black)
-    cellModel.delegate = self
-    return cellModel
-  }
-}
-
-// MARK: - TextInputCellModelDelegate
-extension UpdateUserPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(
-    _ textInputCellModel: TextInputCellModel,
-    textChangedTo text: String?
-  ) {
-    guard let text = text else { return }
-    switch textInputCellModel.identifier {
-    case UpdateUserPresenter.emailCellModelIdentifier:
-      user.email = text
-    case UpdateUserPresenter.caloriesCellModelIdentifier:
-      user.dailyCalories = Int32(text) ?? user.dailyCalories
-    default:
-      assertionFailure("Unknown text input cell model")
+    cellModel.textInputAction = { [weak self] _, text in
+      guard let text = text, let calories = Int32(text) else { return }
+      self?.user.dailyCalories = calories
     }
+    return cellModel
   }
 }

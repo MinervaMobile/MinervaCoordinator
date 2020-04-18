@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class CreateUserPresenter: Presenter {
+public final class CreateUserPresenter: ListPresenter {
   public enum Action {
     case create(email: String, password: String, dailyCalories: Int32, role: UserRole)
   }
@@ -89,7 +89,10 @@ public final class CreateUserPresenter: Presenter {
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
     cellModel.bottomBorderColor.onNext(.black)
-    cellModel.delegate = self
+    cellModel.textInputAction = { [weak self] _, text in
+      guard let text = text else { return }
+      self?.email = text
+    }
     return cellModel
   }
 
@@ -106,7 +109,10 @@ public final class CreateUserPresenter: Presenter {
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .gray
     cellModel.bottomBorderColor.onNext(.black)
-    cellModel.delegate = self
+    cellModel.textInputAction = { [weak self] _, text in
+      guard let text = text, let calories = Int32(text) else { return }
+      self?.dailyCalories = calories
+    }
     return cellModel
   }
 
@@ -125,7 +131,10 @@ public final class CreateUserPresenter: Presenter {
     cellModel.inputTextColor = .black
     cellModel.placeholderTextColor = .darkGray
     cellModel.bottomBorderColor.onNext(.black)
-    cellModel.delegate = self
+    cellModel.textInputAction = { [weak self] _, text in
+      guard let text = text else { return }
+      self?.password = text
+    }
     return cellModel
   }
 
@@ -155,25 +164,5 @@ public final class CreateUserPresenter: Presenter {
       self?.role = role
     }
     return pickerModel
-  }
-}
-
-// MARK: - TextInputCellModelDelegate
-extension CreateUserPresenter: TextInputCellModelDelegate {
-  public func textInputCellModel(
-    _ textInputCellModel: TextInputCellModel,
-    textChangedTo text: String?
-  ) {
-    guard let text = text else { return }
-    switch textInputCellModel.identifier {
-    case CreateUserPresenter.emailCellModelIdentifier:
-      email = text
-    case CreateUserPresenter.caloriesCellModelIdentifier:
-      dailyCalories = Int32(text) ?? dailyCalories
-    case CreateUserPresenter.passwordCellModelIdentifier:
-      password = text
-    default:
-      assertionFailure("Unknown text input cell model")
-    }
   }
 }

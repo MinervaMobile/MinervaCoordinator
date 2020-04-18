@@ -38,7 +38,7 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, Collect
         listController: listController
       )
     presenter.actions
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
