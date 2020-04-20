@@ -30,19 +30,23 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
         listController: listController
       )
 
-  }
-
-  // MARK: - ViewControllerDelegate
-  override public func viewControllerViewDidLoad(_ viewController: ViewController) {
-    super.viewControllerViewDidLoad(viewController)
-
-    presenter.actions
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
+    viewController.events
+      .subscribe(onNext: { [weak self] event in
+        self?.handle(event)
+      })
       .disposed(by: disposeBag)
   }
 
   // MARK: - Private
+
+  private func handle(_ event: ListViewControllerEvent) {
+    guard case .viewDidLoad = event else { return }
+
+    presenter.actions
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: handle(action:), onError: nil, onCompleted: nil, onDisposed: nil)
+      .disposed(by: disposeBag)
+  }
 
   private func handle(action: WorkoutPresenter.Action) {
     switch action {

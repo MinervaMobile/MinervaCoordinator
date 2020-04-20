@@ -125,7 +125,7 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
     }
 
     model.becomesFirstResponder
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] isFirstResponder in
         if isFirstResponder {
           self?.textView.becomeFirstResponder()

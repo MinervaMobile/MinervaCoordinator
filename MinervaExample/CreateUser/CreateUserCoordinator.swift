@@ -31,7 +31,7 @@ public final class CreateUserCoordinator: MainCoordinator<
         listController: listController
       )
     presenter.actions
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.handle($0) })
       .disposed(
         by: disposeBag
@@ -49,7 +49,7 @@ public final class CreateUserCoordinator: MainCoordinator<
       dailyCalories: dailyCalories,
       role: role
     )
-    .observeOn(MainScheduler.asyncInstance)
+    .observeOn(MainScheduler.instance)
     .subscribe(
       onSuccess: { [weak self] () -> Void in
         guard let strongSelf = self else { return }

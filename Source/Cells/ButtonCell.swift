@@ -11,6 +11,7 @@ open class ButtonCellModel: BaseListCellModel {
   public typealias ButtonAction = (_ model: ButtonCellModel, _ button: UIButton) -> Void
 
   public var buttonAction: ButtonAction?
+  public var buttonAccessibilityIdentifier: String?
   public var isSelected = false
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
@@ -84,6 +85,7 @@ open class ButtonCellModel: BaseListCellModel {
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
       && isSelected == model.isSelected
+      && buttonAccessibilityIdentifier == model.buttonAccessibilityIdentifier
   }
 }
 
@@ -143,6 +145,7 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     button.layer.borderWidth = model.borderWidth
     button.layer.cornerRadius = model.borderRadius
     button.isUserInteractionEnabled = model.buttonAction != nil
+    button.accessibilityIdentifier = model.buttonAccessibilityIdentifier
 
     button.isSelected = model.isSelected
     let borderColor =

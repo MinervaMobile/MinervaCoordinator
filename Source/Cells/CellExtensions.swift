@@ -128,6 +128,6 @@ extension UIView {
   }
 
   internal func shouldTranslateAutoresizingMaskIntoConstraints(_ value: Bool) {
-    self.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = value }
+    subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = value }
   }
 }

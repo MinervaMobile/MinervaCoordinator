@@ -9,22 +9,28 @@ import RxRelay
 import RxSwift
 import UIKit
 
-open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, CoordinatorNavigator,
-  CoordinatorPresentable, ListControllerSizeDelegate, ViewControllerDelegate
+open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, CoordinatorNavigator,
+  CoordinatorPresentable, ListControllerSizeDelegate
 {
-
-  public typealias CoordinatorVC = U
-
-  public weak var parent: Coordinator?
-  public var childCoordinators = [Coordinator]()
-  public let listController: ListController
-
-  public let viewController: U
-  public let presenter: T
-  public let navigator: Navigator
-  public let disposeBag = DisposeBag()
   private var updateRelay = BehaviorRelay<[ListSection]>(value: [])
   private var updateDisposable: Disposable?
+
+  public let listController: ListController
+  public let presenter: T
+  public let disposeBag = DisposeBag()
+
+  // MARK: - Coordinator
+  public weak var parent: Coordinator?
+  public var childCoordinators = [Coordinator]()
+
+  // MARK: - CoordinatorNavigator
+  public let navigator: Navigator
+
+  // MARK: - CoordinatorPresentable
+  public typealias CoordinatorVC = U
+  public let viewController: CoordinatorVC
+
+  // MARK: - Lifecycle
 
   public init(
     navigator: Navigator,
@@ -42,11 +48,16 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
     listController.collectionView = viewController.collectionView
     listController.viewController = viewController
     listController.sizeDelegate = self
-    viewController.lifecycleDelegate = self
+    viewController.events
+      .subscribe(
+        onNext: { [weak self] event -> Void in
+          self?.handle(event)
+        }
+      )
+      .disposed(by: disposeBag)
   }
 
   // MARK: - ListControllerSizeDelegate
-
   open func listController(
     _ listController: ListController,
     sizeFor model: ListCellModel,
@@ -56,31 +67,29 @@ open class BaseCoordinator<T: Presenter, U: ViewController>: NSObject, Coordinat
     nil
   }
 
-  // MARK: - ViewControllerDelegate
-  open func viewControllerViewDidLoad(_ viewController: ViewController) {
-    presenter.sections.bind(to: updateRelay).disposed(by: disposeBag)
-  }
-  open func viewController(_ viewController: ViewController, viewWillAppear animated: Bool) {
-    listController.willDisplay()
-    updateDisposable?.dispose()
-    updateDisposable =
-      updateRelay
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: { [weak self] sections in
-        self?.listController.update(with: sections, animated: true)
-      })
-  }
-  open func viewController(_ viewController: ViewController, viewWillDisappear animated: Bool) {
-  }
-  open func viewController(_ viewController: ViewController, viewDidDisappear animated: Bool) {
-    listController.didEndDisplaying()
-    updateDisposable?.dispose()
-    updateDisposable = nil
-  }
-  open func viewController(
-    _ viewController: ViewController,
-    traitCollectionDidChangeFrom previousTraitCollection: UITraitCollection?
-  ) {
-    listController.invalidateLayout()
+  // MARK: - Private
+
+  private func handle(_ event: ListViewControllerEvent) {
+    switch event {
+    case .traitCollectionDidChange:
+      listController.invalidateLayout()
+    case .viewDidDisappear:
+      listController.didEndDisplaying()
+      updateDisposable?.dispose()
+      updateDisposable = nil
+    case .viewDidLoad:
+      presenter.sections.bind(to: updateRelay).disposed(by: disposeBag)
+    case .viewWillAppear:
+      listController.willDisplay()
+      updateDisposable?.dispose()
+      updateDisposable =
+        updateRelay
+        .observeOn(MainScheduler.instance)
+        .subscribe(onNext: { [weak self] sections in
+          self?.listController.update(with: sections, animated: true)
+        })
+    case .viewWillDisappear:
+      break
+    }
   }
 }

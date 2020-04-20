@@ -9,7 +9,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class CatalogPresenter: Presenter {
+public final class CatalogPresenter: ListPresenter {
   public lazy var sections: BehaviorRelay<[ListSection]> = BehaviorRelay(
     value: [
       createButtonCellModelSection(),
@@ -63,9 +63,9 @@ public final class CatalogPresenter: Presenter {
     let model1 = ButtonImageCellModel(
       imageSize: CGSize(width: 24, height: 24),
       text: "ButtonImageCellModel",
-      font: font
+      font: font,
+      iconImage: .just(image)
     )
-    model1.iconImage.onNext(image)
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "ButtonImageCellModel")
@@ -131,9 +131,9 @@ public final class CatalogPresenter: Presenter {
     let model2 = HighlightableIconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
       text: "IconTextCellModel",
-      font: font
+      font: font,
+      iconImage: .just(image)
     )
-    model2.iconImage.onNext(image)
     model2.highlightEnabled = true
     model2.highlightColor = model1.highlightColor
 
@@ -149,9 +149,9 @@ public final class CatalogPresenter: Presenter {
     let model1 = IconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
       text: "IconTextCellModel",
-      font: font
+      font: font,
+      iconImage: .just(image)
     )
-    model1.iconImage.onNext(image)
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "IconTextCellModel")
@@ -236,8 +236,11 @@ public final class CatalogPresenter: Presenter {
 
     var cellModels = [ListCellModel]()
 
-    let model1 = ImageTextCardCellModel(identifier: "model1", attributedText: attributedText)
-    model1.image.onNext(image)
+    let model1 = ImageTextCardCellModel(
+      identifier: "model1",
+      attributedText: attributedText,
+      image: .just(image)
+    )
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "ImageTextCardCellModel")
@@ -258,9 +261,9 @@ public final class CatalogPresenter: Presenter {
 
     let model1 = ImageTextCellModel(
       identifier: "ImageTextCellModel",
-      attributedText: attributedText
+      attributedText: attributedText,
+      imageObservable: .just(image)
     )
-    model1.image.onNext(image)
     cellModels.append(model1)
 
     return createSection(for: cellModels, name: "ImageTextCellModel")

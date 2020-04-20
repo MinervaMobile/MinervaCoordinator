@@ -9,7 +9,6 @@ import UIKit
 
 open class ImageCellModel: BaseListCellModel {
 
-  public var selectionAction: ((_ cellModel: ImageCellModel, _ indexPath: IndexPath) -> Void)?
   public var imageColor: UIColor?
   public var contentMode: UIView.ContentMode = .scaleAspectFit
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(

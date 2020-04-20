@@ -257,7 +257,6 @@ extension PickerLabelCell {
 
     containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-
   }
 }
 

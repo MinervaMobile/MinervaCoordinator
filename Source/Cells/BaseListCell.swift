@@ -11,6 +11,8 @@ import UIKit
 open class BaseListCellModel: ListCellModel {
   private let cellIdentifier: String?
 
+  public var accessibilityIdentifier: String?
+
   public init(identifier: String? = nil) {
     self.cellIdentifier = identifier
   }
@@ -20,7 +22,9 @@ open class BaseListCellModel: ListCellModel {
   open var cellType: ListCollectionViewCell.Type { cellTypeFromModelName }
 
   open func identical(to model: ListCellModel) -> Bool {
-    identifier == model.identifier
+    guard let model = model as? Self else { return false }
+    return identifier == model.identifier
+      && accessibilityIdentifier == model.accessibilityIdentifier
   }
   open func size(
     constrainedTo containerSize: CGSize
@@ -29,7 +33,7 @@ open class BaseListCellModel: ListCellModel {
   }
 }
 
-open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
+open class BaseListCell<CellModelType: BaseListCellModel>: ListCollectionViewCell {
   open private(set) var model: CellModelType?
   open private(set) var highlightView: UIView = {
     let view = UIView()
@@ -80,6 +84,11 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
   open func bind(model: CellModelType, sizing: Bool) {
     guard !sizing else { return }
     self.model = model
+
+    if let highlightableViewModel = model as? ListHighlightableCellModelWrapper {
+      highlightView.backgroundColor = highlightableViewModel.highlightColor
+    }
+    accessibilityIdentifier = model.accessibilityIdentifier
   }
 
   // MARK: - ListCell
@@ -99,18 +108,11 @@ open class BaseListCell<CellModelType: ListCellModel>: ListCollectionViewCell {
       self.model = nil
       return
     }
-    if !sizing {
-      if let highlightableViewModel = cellModel as? ListHighlightableCellModelWrapper,
-        highlightableViewModel.highlightEnabled
-      {
-        highlightView.backgroundColor = highlightableViewModel.highlightColor
-      }
-    }
     bind(model: model, sizing: sizing)
   }
 }
 
-open class BaseReactiveListCell<CellModelType: ListCellModel>: BaseListCell<CellModelType> {
+open class BaseReactiveListCell<CellModelType: BaseListCellModel>: BaseListCell<CellModelType> {
   public private(set) var disposeBag = DisposeBag()
 
   override open func prepareForReuse() {

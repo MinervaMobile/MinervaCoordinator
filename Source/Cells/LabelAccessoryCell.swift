@@ -14,9 +14,6 @@ open class LabelAccessoryCellModel: BaseListCellModel {
   public static let iconTrailingLength: CGFloat = 10
   public static let accessoryImageMargin: CGFloat = 10
 
-  public var iconSelectionAction: Action?
-  public var accessorySelectionAction: Action?
-
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 12,
     leading: 16,
@@ -24,20 +21,23 @@ open class LabelAccessoryCellModel: BaseListCellModel {
     trailing: 16
   )
 
+  public var iconSelectionAction: Action?
   public var iconColor: UIColor?
   public var iconImageWidthHeight: CGFloat = 0
   public var iconCornerRadius: CGFloat = 0
   public var iconImageContentMode: UIView.ContentMode = .scaleAspectFit
-  public var detailsTextResistCompression = true
-  public var backgroundColor: UIColor?
+  public var iconAccessibilityIdentifier: String?
 
+  public var accessorySelectionAction: Action?
   public var accessoryImage: UIImage?
   public var accessoryColor: UIColor?
   public var accessoryImageWidthHeight: CGFloat = 14.0
+  public var accessoryAccessibilityIdentifier: String?
 
+  public var detailsTextResistCompression = true
+  public var backgroundColor: UIColor?
   public var textAlignment: NSTextAlignment = .left
   public var descriptionText: NSAttributedString?
-
   public let attributedText: NSAttributedString
   public let iconImageObservable: Observable<UIImage?>
 
@@ -67,6 +67,8 @@ open class LabelAccessoryCellModel: BaseListCellModel {
       && detailsTextResistCompression == model.detailsTextResistCompression
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && iconAccessibilityIdentifier == model.iconAccessibilityIdentifier
+      && accessoryAccessibilityIdentifier == model.accessoryAccessibilityIdentifier
   }
 }
 
@@ -165,17 +167,19 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     accessoryImageView.tintColor = model.accessoryColor
     accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
     accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
+    accessoryImageView.accessibilityIdentifier = model.accessoryAccessibilityIdentifier
 
     iconImageView.tintColor = model.iconColor
     iconImageView.layer.cornerRadius = model.iconCornerRadius
     iconImageView.contentMode = model.iconImageContentMode
     iconImageView.isUserInteractionEnabled = model.iconSelectionAction != nil
+    iconImageView.accessibilityIdentifier = model.iconAccessibilityIdentifier
     iconTapView.isUserInteractionEnabled = model.iconSelectionAction != nil
 
     backgroundView?.backgroundColor = model.backgroundColor
 
     model.iconImageObservable
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] image in
         self?.iconImageView.image = image
       })

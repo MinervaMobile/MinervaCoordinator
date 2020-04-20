@@ -87,7 +87,7 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
 
     imageView.layer.cornerRadius = model.imageViewCornerRadius
     model.imageObservable
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(
         by: disposeBag

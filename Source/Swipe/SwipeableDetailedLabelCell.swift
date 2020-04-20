@@ -101,7 +101,6 @@ extension SwipeableDetailedLabelCell {
       trailing: containerView.trailingAnchor,
       bottom: containerView.bottomAnchor
     )
-
     containerView.shouldTranslateAutoresizingMaskIntoConstraints(false)
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }

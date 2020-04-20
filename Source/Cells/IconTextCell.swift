@@ -9,7 +9,7 @@ import RxSwift
 import UIKit
 
 open class IconTextCellModel: BaseListCellModel {
-  public let iconImage = BehaviorSubject<UIImage?>(value: nil)
+  public let iconImage: Observable<UIImage?>
 
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
@@ -34,19 +34,36 @@ open class IconTextCellModel: BaseListCellModel {
   fileprivate let text: String
   fileprivate let font: UIFont
 
-  public init(identifier: String, imageSize: CGSize, text: String, font: UIFont) {
+  public init(
+    identifier: String,
+    imageSize: CGSize,
+    text: String,
+    font: UIFont,
+    iconImage: Observable<UIImage?> = .empty()
+  ) {
     self.imageSize = imageSize
     self.text = text
     self.font = font
+    self.iconImage = iconImage
     super.init(identifier: identifier)
   }
 
-  public convenience init(imageSize: CGSize, text: String, font: UIFont) {
-    self.init(identifier: text, imageSize: imageSize, text: text, font: font)
+  public convenience init(
+    imageSize: CGSize,
+    text: String,
+    font: UIFont,
+    iconImage: Observable<UIImage?> = .empty()
+  ) {
+    self.init(identifier: text, imageSize: imageSize, text: text, font: font, iconImage: iconImage)
   }
 
-  public convenience init(imageSize: CGSize, attributedText: NSAttributedString, font: UIFont) {
-    self.init(imageSize: imageSize, text: attributedText.string, font: font)
+  public convenience init(
+    imageSize: CGSize,
+    attributedText: NSAttributedString,
+    font: UIFont,
+    iconImage: Observable<UIImage?> = .empty()
+  ) {
+    self.init(imageSize: imageSize, text: attributedText.string, font: font, iconImage: iconImage)
     self.attributedText = attributedText
   }
 
@@ -154,7 +171,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     self.backgroundView?.backgroundColor = model.backgroundColor
 
     model.iconImage
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] in self?.imageView.image = $0 })
       .disposed(
         by: disposeBag
@@ -205,7 +222,6 @@ extension IconTextCell {
     imageHeightConstraint?.isActive = true
 
     buttonView.shouldTranslateAutoresizingMaskIntoConstraints(false)
-
     contentView.shouldTranslateAutoresizingMaskIntoConstraints(false)
   }
 }

@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UIKit
 
-public final class WelcomePresenter: Presenter {
+public final class WelcomePresenter: ListPresenter {
   public enum Action {
     case createAccount
     case login

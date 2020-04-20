@@ -41,7 +41,7 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
   public var imageObservable: Observable<UIImage?>? {
     didSet {
       imageObservable?
-        .observeOn(MainScheduler.asyncInstance)
+        .observeOn(MainScheduler.instance)
         .subscribe(onNext: { [weak self] i in
           self?.image = i
         })

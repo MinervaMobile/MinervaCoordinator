@@ -38,29 +38,33 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
         presenter: presenter,
         listController: listController
       )
-  }
-
-  // MARK: - ViewControllerDelegate
-  override public func viewControllerViewDidLoad(_ viewController: ViewController) {
-    super.viewControllerViewDidLoad(viewController)
-
-    presenter.state
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: handle(_:))
-      .disposed(by: disposeBag)
-
-    presenter.actions
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: handle(_:))
-      .disposed(by: disposeBag)
-
-    self.viewController.actions
-      .observeOn(MainScheduler.asyncInstance)
-      .subscribe(onNext: handle(_:))
+    viewController.events
+      .subscribe(onNext: { [weak self] event in
+        self?.handle(event)
+      })
       .disposed(by: disposeBag)
   }
 
   // MARK: - Private
+
+  private func handle(_ event: ListViewControllerEvent) {
+    guard case .viewDidLoad = event else { return }
+
+    presenter.state
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: handle(_:))
+      .disposed(by: disposeBag)
+
+    presenter.actions
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: handle(_:))
+      .disposed(by: disposeBag)
+
+    viewController.actions
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: handle(_:))
+      .disposed(by: disposeBag)
+  }
 
   private func handle(_ state: UserListPresenter.State) {
     switch state {
@@ -97,7 +101,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
     dataManager.deleteUser(withUserID: userID)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }
@@ -118,7 +122,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     LoadingHUD.show(in: viewController.view)
     let logoutCurrentUser = dataManager.userAuthorization.userID == userID
     userManager.logout(userID: userID)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }
@@ -154,7 +158,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
   private func save(user: User) {
     LoadingHUD.show(in: viewController.view)
     dataManager.update(user)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { [weak self] in
           guard let strongSelf = self else { return }

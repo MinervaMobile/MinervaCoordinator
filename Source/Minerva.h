@@ -1,7 +1,7 @@
 //
-//  Minerva.h
-//
-//  Copyright © 2019 Optimize Fitness. All rights reserved.
+// Copyright © 2020 Optimize Fitness Inc.
+// Licensed under the MIT license
+// https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
 
 #import <UIKit/UIKit.h>

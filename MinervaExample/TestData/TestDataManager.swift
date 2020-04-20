@@ -67,7 +67,7 @@ extension TestDataManager: DataManager {
 
   public func delete(userID: String, completion: @escaping Completion) {
     userManager.delete(userID: userID)
-      .observeOn(MainScheduler.asyncInstance)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onSuccess: { () -> Void in
           self.queue.async {
