@@ -24,6 +24,7 @@ open class PickerCellModel: BaseListCellModel {
     trailing: 16
   )
 
+  public var pickerAccessibilityIdentifier: String?
   public var backgroundColor: UIColor?
 
   fileprivate let helper: PickerCellModelHelper
@@ -50,6 +51,7 @@ open class PickerCellModel: BaseListCellModel {
     return helper.pickerDataComponents == model.helper.pickerDataComponents
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && pickerAccessibilityIdentifier == model.pickerAccessibilityIdentifier
   }
 }
 
@@ -78,6 +80,7 @@ public final class PickerCell: BaseListCell<PickerCellModel> {
     }
 
     backgroundView?.backgroundColor = model.backgroundColor
+    pickerView.accessibilityIdentifier = model.pickerAccessibilityIdentifier
   }
 }
 

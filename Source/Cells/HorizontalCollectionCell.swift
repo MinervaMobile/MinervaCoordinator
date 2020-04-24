@@ -17,6 +17,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     trailing: 16
   )
 
+  public var listAccessibilityIdentifier: String?
   public var isScrollEnabled = true
   public var minimumLineSpacing: CGFloat {
     get { section.constraints.minimumLineSpacing }
@@ -56,6 +57,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
         && listController === model.listController
         && backgroundColor == model.backgroundColor
         && directionalLayoutMargins == model.directionalLayoutMargins
+        && listAccessibilityIdentifier == model.listAccessibilityIdentifier
     else {
       return false
     }
@@ -130,6 +132,7 @@ public final class HorizontalCollectionCell: BaseListCell<HorizontalCollectionCe
 
     guard !sizing else { return }
 
+    collectionView.accessibilityIdentifier = model.listAccessibilityIdentifier
     collectionView.isScrollEnabled = model.isScrollEnabled
     backgroundView?.backgroundColor = model.backgroundColor
   }

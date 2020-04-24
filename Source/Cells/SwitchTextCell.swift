@@ -25,6 +25,7 @@ open class SwitchTextCellModel: BaseListCellModel {
     trailing: 16
   )
   public var backgroundColor: UIColor?
+  public var switchAccessibilityIdentifier: String?
 
   fileprivate let text: String
   fileprivate let font: UIFont
@@ -76,6 +77,7 @@ open class SwitchTextCellModel: BaseListCellModel {
       && switchColor == model.switchColor
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && switchAccessibilityIdentifier == model.switchAccessibilityIdentifier
   }
 }
 
@@ -110,13 +112,14 @@ public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
     label.text = model.text
     label.font = model.font
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
-    switchButton.isUserInteractionEnabled = model.didSwitchAction != nil
 
     guard !sizing else { return }
 
     label.textColor = model.textColor
     switchButton.onTintColor = model.switchColor
     switchButton.isOn = model.isOn
+    switchButton.isUserInteractionEnabled = model.didSwitchAction != nil
+    switchButton.accessibilityIdentifier = model.switchAccessibilityIdentifier
 
     backgroundView?.backgroundColor = model.backgroundColor
   }

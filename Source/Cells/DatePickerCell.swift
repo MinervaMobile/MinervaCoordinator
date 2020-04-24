@@ -24,6 +24,7 @@ open class DatePickerCellModel: BaseListCellModel {
   public var minimumDate: Date?
   public var backgroundColor: UIColor?
   public var mode: UIDatePicker.Mode = .date
+  public var pickerAccessibilityIdentifier: String?
 
   public init(identifier: String, startDate: Date) {
     self.startDate = startDate
@@ -40,6 +41,7 @@ open class DatePickerCellModel: BaseListCellModel {
       && maximumDate == model.maximumDate
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && pickerAccessibilityIdentifier == model.pickerAccessibilityIdentifier
   }
 }
 
@@ -83,6 +85,7 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
     self.backgroundView?.backgroundColor = model.backgroundColor
     datePicker.setDate(model.startDate, animated: false)
     datePicker.datePickerMode = model.mode
+    datePicker.accessibilityIdentifier = model.pickerAccessibilityIdentifier
   }
 }
 

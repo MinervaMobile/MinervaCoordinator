@@ -166,14 +166,12 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     accessoryImageView.image = model.accessoryImage
     accessoryImageView.tintColor = model.accessoryColor
     accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
-    accessoryImageView.isUserInteractionEnabled = model.accessorySelectionAction != nil
     accessoryImageView.accessibilityIdentifier = model.accessoryAccessibilityIdentifier
 
     iconImageView.tintColor = model.iconColor
     iconImageView.layer.cornerRadius = model.iconCornerRadius
     iconImageView.contentMode = model.iconImageContentMode
-    iconImageView.isUserInteractionEnabled = model.iconSelectionAction != nil
-    iconImageView.accessibilityIdentifier = model.iconAccessibilityIdentifier
+    iconTapView.accessibilityIdentifier = model.iconAccessibilityIdentifier
     iconTapView.isUserInteractionEnabled = model.iconSelectionAction != nil
 
     backgroundView?.backgroundColor = model.backgroundColor

@@ -45,6 +45,7 @@ open class TextInputCellModel: BaseListCellModel {
   public var inputTextColor: UIColor = .white
   public var placeholderTextColor: UIColor = .white
   public var maxControlWidth: CGFloat = 340
+  public var textFieldAccessibilityIdentifier: String?
 
   public init(identifier: String, placeholder: String, font: UIFont) {
     self.placeholder = placeholder
@@ -70,6 +71,7 @@ open class TextInputCellModel: BaseListCellModel {
       && placeholderTextColor == model.placeholderTextColor
       && maxControlWidth == model.maxControlWidth
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && textFieldAccessibilityIdentifier == model.textFieldAccessibilityIdentifier
   }
 }
 
@@ -116,6 +118,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
+    textField.accessibilityIdentifier = model.textFieldAccessibilityIdentifier
     textField.textColor = model.inputTextColor
     textField.autocapitalizationType = model.autocapitalizationType
     textField.autocorrectionType = model.autocorrectionType

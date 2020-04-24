@@ -16,6 +16,7 @@ open class SegmentedControlCellModel: BaseListCellModel {
     trailing: 16
   )
 
+  public var segmentAccessibilityIdentifier: String?
   public var apportionsSegmentWidthsByContent: Bool = false
   public var backgroundColor: UIColor?
   public var switchedSegmentAction: Action?
@@ -50,6 +51,7 @@ open class SegmentedControlCellModel: BaseListCellModel {
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
       && apportionsSegmentWidthsByContent == model.apportionsSegmentWidthsByContent
+      && segmentAccessibilityIdentifier == model.segmentAccessibilityIdentifier
   }
 }
 
@@ -84,6 +86,7 @@ public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel>
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
     guard !sizing else { return }
 
+    segmentedControl.accessibilityIdentifier = model.segmentAccessibilityIdentifier
     segmentedControl.tintColor = model.tintColor
     segmentedControl.selectedSegmentIndex = model.selectedSegment
     backgroundView?.backgroundColor = model.backgroundColor

@@ -39,6 +39,7 @@ open class TextViewCellModel: BaseListCellModel {
   public var height: CGFloat = 200
 
   public var cursorColor: UIColor?
+  public var textViewAccessibilityIdentifier: String?
 
   fileprivate let font: UIFont
   fileprivate var text: String?
@@ -78,6 +79,7 @@ open class TextViewCellModel: BaseListCellModel {
       && text == model.text
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && textViewAccessibilityIdentifier == model.textViewAccessibilityIdentifier
   }
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
@@ -117,6 +119,7 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
 
     textView.tintColor = model.cursorColor
     textView.textColor = model.textColor
+    textView.accessibilityIdentifier = model.textViewAccessibilityIdentifier
 
     if let text = model.text, !text.isEmpty {
       textView.textColor = model.textColor

@@ -27,6 +27,7 @@ open class PickerLabelCellModel: BaseListCellModel {
   public var backgroundColor: UIColor?
   public var staticHeight: CGFloat?
 
+  public var pickerAccessibilityIdentifier: String?
   public var cellAlignment = CellAlignment.center
   fileprivate let helper: PickerLabelCellModelHelper
 
@@ -48,6 +49,7 @@ open class PickerLabelCellModel: BaseListCellModel {
       && backgroundColor == model.backgroundColor
       && staticHeight == model.staticHeight
       && directionalLayoutMargins == model.directionalLayoutMargins
+      && pickerAccessibilityIdentifier == model.pickerAccessibilityIdentifier
   }
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
@@ -99,6 +101,7 @@ public final class PickerLabelCell: BaseListCell<PickerLabelCellModel> {
 
     guard !sizing else { return }
 
+    pickerView.accessibilityIdentifier = model.pickerAccessibilityIdentifier
     if let options = data.options, !data.data.isEmpty {
       let row = min(max(0, options.startingRow), data.data.count - 1)
       pickerView.selectRow(row, inComponent: 0, animated: false)
