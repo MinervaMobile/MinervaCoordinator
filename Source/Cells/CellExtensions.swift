@@ -80,8 +80,7 @@ extension UIColor {
 }
 
 extension UIView {
-
-  internal func anchor(
+  public func anchor(
     toLeading leading: NSLayoutXAxisAnchor?,
     top: NSLayoutYAxisAnchor?,
     trailing: NSLayoutXAxisAnchor?,
@@ -101,7 +100,7 @@ extension UIView {
     }
   }
 
-  internal func anchorTo(layoutGuide: UILayoutGuide) {
+  public func anchorTo(layoutGuide: UILayoutGuide) {
     anchor(
       toLeading: layoutGuide.leadingAnchor,
       top: layoutGuide.topAnchor,
@@ -110,7 +109,7 @@ extension UIView {
     )
   }
 
-  internal func anchor(to view: UIView) {
+  public func anchor(to view: UIView) {
     anchor(
       toLeading: view.leadingAnchor,
       top: view.topAnchor,
@@ -119,15 +118,15 @@ extension UIView {
     )
   }
 
-  internal func anchorHeight(to height: CGFloat) {
+  public func anchorHeight(to height: CGFloat) {
     heightAnchor.constraint(equalToConstant: height).isActive = true
   }
 
-  internal func anchorWidth(to width: CGFloat) {
+  public func anchorWidth(to width: CGFloat) {
     widthAnchor.constraint(equalToConstant: width).isActive = true
   }
 
-  internal func shouldTranslateAutoresizingMaskIntoConstraints(_ value: Bool) {
+  public func shouldTranslateAutoresizingMaskIntoConstraints(_ value: Bool) {
     subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = value }
   }
 }
