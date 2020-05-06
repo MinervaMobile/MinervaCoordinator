@@ -9,28 +9,38 @@ import UIKit
 
 /// A simple implementation of a navigator that manages the RemovalCompletions when view controllers are no longer displayed.
 public final class BasicNavigator: NSObject {
+  private class RemovalCompletionBox {
+    let completion: RemovalCompletion
+    init(_ completion: @escaping RemovalCompletion) {
+      self.completion = completion
+    }
+  }
 
-  private let parent: Navigator?
+  private weak var parent: Navigator?
   public let navigationController: UINavigationController
-  private var completions = [UIViewController: RemovalCompletion]()
+  private var completions: NSMapTable<UIViewController, RemovalCompletionBox>
 
   public init(
     parent: Navigator?,
     navigationController: UINavigationController = UINavigationController()
   ) {
+    completions = NSMapTable(keyOptions: .weakMemory, valueOptions: .strongMemory)
     self.parent = parent
     self.navigationController = navigationController
     super.init()
     navigationController.delegate = self
-    navigationController.presentationController?.delegate = parent ?? self
+  }
+
+  deinit {
+    navigationController.setViewControllers([], animated: false)
   }
 
   // MARK: - Private
 
   private func runCompletion(for controller: UIViewController) {
-    guard let completion = completions[controller] else { return }
-    completion(controller)
-    completions[controller] = nil
+    guard let box = completions.object(forKey: controller) else { return }
+    box.completion(controller)
+    completions.removeObject(forKey: controller)
   }
 }
 
@@ -43,12 +53,10 @@ extension BasicNavigator: Navigator {
     removalCompletion: RemovalCompletion?,
     animationCompletion: AnimationCompletion?
   ) {
-    completions[viewController] = removalCompletion
-    navigationController.present(
-      viewController,
-      animated: animated,
-      completion: animationCompletion
-    )
+    if let removalCompletion = removalCompletion {
+        completions.setObject(RemovalCompletionBox(removalCompletion), forKey: viewController)
+    }
+    navigationController.present(viewController, animated: animated, completion: animationCompletion)
   }
 
   public func dismiss(
@@ -87,23 +95,15 @@ extension BasicNavigator: Navigator {
   }
 
   public func popToRootViewController(animated: Bool) -> [UIViewController]? {
-    guard let poppedControllers = navigationController.popToRootViewController(animated: animated)
-    else {
+    guard let poppedControllers = navigationController.popToRootViewController(animated: animated) else {
       return nil
     }
     poppedControllers.forEach { runCompletion(for: $0) }
     return poppedControllers
   }
 
-  public func popToViewController(_ viewController: UIViewController, animated: Bool)
-    -> [UIViewController]?
-  {
-    guard
-      let poppedControllers = navigationController.popToViewController(
-        viewController,
-        animated: animated
-      )
-    else {
+  public func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+    guard let poppedControllers = navigationController.popToViewController(viewController, animated: animated) else {
       return nil
     }
     poppedControllers.forEach { runCompletion(for: $0) }
@@ -118,13 +118,9 @@ extension BasicNavigator: Navigator {
     return poppedController
   }
 
-  public func push(
-    _ viewController: UIViewController,
-    animated: Bool,
-    completion: RemovalCompletion?
-  ) {
+  public func push(_ viewController: UIViewController, animated: Bool, completion: RemovalCompletion?) {
     if let completion = completion {
-      completions[viewController] = completion
+        completions.setObject(RemovalCompletionBox(completion), forKey: viewController)
     }
 
     navigationController.pushViewController(viewController, animated: animated)
@@ -137,15 +133,15 @@ extension BasicNavigator: Navigator {
   ) {
     if let completion = completion {
       viewControllers.forEach { viewController in
-        completions[viewController] = completion
+        completions.setObject(RemovalCompletionBox(completion), forKey: viewController)
       }
     }
     navigationController.setViewControllers(viewControllers, animated: animated)
-    Array(completions.keys)
-      .forEach { viewController in
+    let enumerator = completions.keyEnumerator()
+    while let viewController = enumerator.nextObject() as? UIViewController {
         guard !viewControllers.contains(viewController) else { return }
         runCompletion(for: viewController)
-      }
+    }
   }
 
 }
@@ -160,9 +156,7 @@ extension BasicNavigator {
   }
 
   // This allows explicitly setting the modalPresentationStyle from a view controller.
-  public func adaptivePresentationStyle(for controller: UIPresentationController)
-    -> UIModalPresentationStyle
-  {
+  public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
     controller.presentedViewController.modalPresentationStyle
   }
 
@@ -184,12 +178,7 @@ extension BasicNavigator {
     didShow viewController: UIViewController,
     animated: Bool
   ) {
-    guard
-      let poppingViewController = navigationController.transitionCoordinator?
-        .viewController(
-          forKey: .from
-        )
-    else {
+    guard let poppingViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
       return
     }
     // The view controller could be .from if it is being popped, or if another VC is being pushed. Check the

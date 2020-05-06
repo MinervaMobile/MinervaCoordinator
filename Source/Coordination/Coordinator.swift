@@ -41,7 +41,7 @@ public protocol CoordinatorPresentable: BaseCoordinatorPresentable {
 }
 
 extension CoordinatorPresentable {
-  public var baseViewController: UIViewController { viewController }
+  public var baseViewController: UIViewController { return viewController }
 }
 
 /// A coordinator that manages the presentation of other coordinators should implement this protocol.
@@ -82,20 +82,23 @@ extension CoordinatorNavigator {
   /// - Parameter animationCompletion: The completion to call when the presentation completes.
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
-    modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
+    modalPresentationStyle: UIModalPresentationStyle? = nil,
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
     addChild(coordinator)
 
-    let viewController =
-      coordinator.baseViewController.navigationController
-      ?? coordinator.baseViewController
-    viewController.modalPresentationStyle = modalPresentationStyle
+    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
+    if let modalPresentationStyle = modalPresentationStyle {
+        viewController.modalPresentationStyle = modalPresentationStyle
+    }
     navigator.present(
       viewController,
       animated: animated,
-      removalCompletion: { [weak self] _ in self?.removeChild(coordinator) },
+      removalCompletion: { [weak self, weak coordinator] _ in
+        guard let coordinator = coordinator else { return }
+        self?.removeChild(coordinator)
+      },
       animationCompletion: animationCompletion
     )
   }
@@ -109,9 +112,7 @@ extension CoordinatorNavigator {
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
-    let viewController =
-      coordinator.baseViewController.navigationController
-      ?? coordinator.baseViewController
+    let viewController = coordinator.baseViewController.navigationController ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
   }
 
@@ -120,7 +121,8 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
   public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
-    navigator.push(coordinator.baseViewController, animated: animated) { [weak self] _ in
+    navigator.push(coordinator.baseViewController, animated: animated) { [weak self, weak coordinator] _ in
+      guard let coordinator = coordinator else { return }
       self?.removeChild(coordinator)
     }
   }
@@ -130,13 +132,12 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controllers.
   public func setCoordinators(_ coordinators: [BaseCoordinatorPresentable], animated: Bool = true) {
     coordinators.forEach { addChild($0) }
+    let weakVCs = coordinators.map({ WeakVC($0)})
     navigator.setViewControllers(
       coordinators.map { $0.baseViewController },
       animated: animated
     ) { [weak self] viewController in
-      guard
-        let coordinator = coordinators.first(where: { $0.baseViewController === viewController })
-      else {
+        guard let coordinator = weakVCs.first(where: { $0.vc?.baseViewController === viewController })?.vc else {
         assertionFailure("Coordinator does not exist for \(viewController)")
         return
       }
@@ -149,8 +150,8 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
   public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
-    navigator.setViewControllers([coordinator.baseViewController], animated: animated) {
-      [weak self] _ in
+    navigator.setViewControllers([coordinator.baseViewController], animated: animated) { [weak self, weak coordinator] _ in
+      guard let coordinator = coordinator else { return }
       self?.removeChild(coordinator)
     }
   }
@@ -167,6 +168,14 @@ extension CoordinatorNavigator {
   public func popToCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     _ = navigator.popToViewController(coordinator.baseViewController, animated: animated)
   }
+}
+
+
+private class WeakVC {
+    weak var vc: BaseCoordinatorPresentable?
+    init(_ vc: BaseCoordinatorPresentable?) {
+        self.vc = vc
+    }
 }
 
 extension UIModalPresentationStyle {
