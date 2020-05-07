@@ -137,8 +137,9 @@ extension BasicNavigator: Navigator {
       }
     }
     navigationController.setViewControllers(viewControllers, animated: animated)
-    let enumerator = completions.keyEnumerator()
-    while let viewController = enumerator.nextObject() as? UIViewController {
+    let keys = completions.keyEnumerator().allObjects
+    keys.forEach { key in
+        guard let viewController = key as? UIViewController else { return }
         guard !viewControllers.contains(viewController) else { return }
         runCompletion(for: viewController)
     }
