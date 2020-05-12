@@ -10,14 +10,23 @@ import UIKit
 /// A simple implementation of a navigator that manages the RemovalCompletions when view controllers are no longer displayed.
 public final class BasicNavigator: NSObject {
 
-  private let parent: Navigator?
+  private final class RemovalCompletionBox {
+    let completion: RemovalCompletion
+
+    init(_ completion: @escaping RemovalCompletion) {
+      self.completion = completion
+    }
+  }
+
+  private weak var parent: Navigator?
   public let navigationController: UINavigationController
-  private var completions = [UIViewController: RemovalCompletion]()
+  private var completions: NSMapTable<UIViewController, RemovalCompletionBox>
 
   public init(
     parent: Navigator?,
     navigationController: UINavigationController = UINavigationController()
   ) {
+    self.completions = NSMapTable(keyOptions: .weakMemory, valueOptions: .strongMemory)
     self.parent = parent
     self.navigationController = navigationController
     super.init()
@@ -25,12 +34,16 @@ public final class BasicNavigator: NSObject {
     navigationController.presentationController?.delegate = parent ?? self
   }
 
+  deinit {
+    navigationController.setViewControllers([], animated: false)
+  }
+
   // MARK: - Private
 
   private func runCompletion(for controller: UIViewController) {
-    guard let completion = completions[controller] else { return }
-    completion(controller)
-    completions[controller] = nil
+    guard let box = completions.object(forKey: controller) else { return }
+    box.completion(controller)
+    completions.removeObject(forKey: controller)
   }
 }
 
@@ -43,7 +56,9 @@ extension BasicNavigator: Navigator {
     removalCompletion: RemovalCompletion?,
     animationCompletion: AnimationCompletion?
   ) {
-    completions[viewController] = removalCompletion
+    if let removalCompletion = removalCompletion {
+      completions.setObject(RemovalCompletionBox(removalCompletion), forKey: viewController)
+    }
     navigationController.present(
       viewController,
       animated: animated,
@@ -124,7 +139,7 @@ extension BasicNavigator: Navigator {
     completion: RemovalCompletion?
   ) {
     if let completion = completion {
-      completions[viewController] = completion
+      completions.setObject(RemovalCompletionBox(completion), forKey: viewController)
     }
 
     navigationController.pushViewController(viewController, animated: animated)
@@ -137,12 +152,13 @@ extension BasicNavigator: Navigator {
   ) {
     if let completion = completion {
       viewControllers.forEach { viewController in
-        completions[viewController] = completion
+        completions.setObject(RemovalCompletionBox(completion), forKey: viewController)
       }
     }
     navigationController.setViewControllers(viewControllers, animated: animated)
-    Array(completions.keys)
-      .forEach { viewController in
+    completions.keyEnumerator().allObjects
+      .forEach { key in
+        guard let viewController = key as? UIViewController else { return }
         guard !viewControllers.contains(viewController) else { return }
         runCompletion(for: viewController)
       }
