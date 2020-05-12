@@ -62,7 +62,7 @@ extension CoordinatorNavigator {
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
     from navigator: Navigator,
-    modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
+    modalPresentationStyle: UIModalPresentationStyle? = nil,
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
@@ -82,7 +82,7 @@ extension CoordinatorNavigator {
   /// - Parameter animationCompletion: The completion to call when the presentation completes.
   public func present(
     _ coordinator: BaseCoordinatorPresentable,
-    modalPresentationStyle: UIModalPresentationStyle = .safeAutomatic,
+    modalPresentationStyle: UIModalPresentationStyle? = nil,
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil
   ) {
@@ -91,11 +91,16 @@ extension CoordinatorNavigator {
     let viewController =
       coordinator.baseViewController.navigationController
       ?? coordinator.baseViewController
-    viewController.modalPresentationStyle = modalPresentationStyle
+    if let modalPresentationStyle = modalPresentationStyle {
+      viewController.modalPresentationStyle = modalPresentationStyle
+    }
     navigator.present(
       viewController,
       animated: animated,
-      removalCompletion: { [weak self] _ in self?.removeChild(coordinator) },
+      removalCompletion: { [weak self, weak coordinator] _ in
+        guard let coordinator = coordinator else { return }
+        self?.removeChild(coordinator)
+      },
       animationCompletion: animationCompletion
     )
   }
@@ -120,7 +125,9 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
   public func push(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
-    navigator.push(coordinator.baseViewController, animated: animated) { [weak self] _ in
+    navigator.push(coordinator.baseViewController, animated: animated) {
+      [weak self, weak coordinator] _ in
+      guard let coordinator = coordinator else { return }
       self?.removeChild(coordinator)
     }
   }
@@ -130,13 +137,15 @@ extension CoordinatorNavigator {
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controllers.
   public func setCoordinators(_ coordinators: [BaseCoordinatorPresentable], animated: Bool = true) {
     coordinators.forEach { addChild($0) }
+    let weakCoordinators = coordinators.map({ WeakBaseCoordinatorPresentable($0) })
     navigator.setViewControllers(
       coordinators.map { $0.baseViewController },
       animated: animated
     ) { [weak self] viewController in
-      guard
-        let coordinator = coordinators.first(where: { $0.baseViewController === viewController })
-      else {
+      let weakCoordinator = weakCoordinators.first {
+        $0.coordinator?.baseViewController === viewController
+      }
+      guard let coordinator = weakCoordinator?.coordinator else {
         assertionFailure("Coordinator does not exist for \(viewController)")
         return
       }
@@ -150,7 +159,8 @@ extension CoordinatorNavigator {
   public func setRootCoordinator(_ coordinator: BaseCoordinatorPresentable, animated: Bool = true) {
     addChild(coordinator)
     navigator.setViewControllers([coordinator.baseViewController], animated: animated) {
-      [weak self] _ in
+      [weak self, weak coordinator] _ in
+      guard let coordinator = coordinator else { return }
       self?.removeChild(coordinator)
     }
   }
@@ -169,13 +179,10 @@ extension CoordinatorNavigator {
   }
 }
 
-extension UIModalPresentationStyle {
-  /// On iOS13+ this is UIModalPresentationStyle.automatic and earler versions are UIModalPresentationStyle.fullScreen
-  public static var safeAutomatic: UIModalPresentationStyle {
-    if #available(iOS 13, tvOS 13.0, *) {
-      return .automatic
-    } else {
-      return .fullScreen
-    }
+private class WeakBaseCoordinatorPresentable {
+  weak var coordinator: BaseCoordinatorPresentable?
+
+  init(_ coordinator: BaseCoordinatorPresentable?) {
+    self.coordinator = coordinator
   }
 }
