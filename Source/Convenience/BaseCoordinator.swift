@@ -25,6 +25,7 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
 
   // MARK: - CoordinatorNavigator
   public let navigator: Navigator
+  public weak var presentedCoordinator: BaseCoordinatorPresentable?
 
   // MARK: - CoordinatorPresentable
   public typealias CoordinatorVC = U
