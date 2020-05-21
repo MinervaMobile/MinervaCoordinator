@@ -31,7 +31,8 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
   )
 
   // MARK: - CoordinatorNavigator
-  public var parent: Coordinator?
+  public weak var parent: Coordinator?
+  public weak var presentedCoordinator: BaseCoordinatorPresentable?
   public var childCoordinators = [Coordinator]()
   public let navigator: Navigator
 

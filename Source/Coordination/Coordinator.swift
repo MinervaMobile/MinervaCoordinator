@@ -47,6 +47,7 @@ extension CoordinatorPresentable {
 /// A coordinator that manages the presentation of other coordinators should implement this protocol.
 public protocol CoordinatorNavigator: Coordinator {
   var navigator: Navigator { get }
+  var presentedCoordinator: BaseCoordinatorPresentable? { get set }
 }
 
 extension CoordinatorNavigator {
@@ -87,7 +88,7 @@ extension CoordinatorNavigator {
     animationCompletion: AnimationCompletion? = nil
   ) {
     addChild(coordinator)
-
+    presentedCoordinator = coordinator
     let viewController =
       coordinator.baseViewController.navigationController
       ?? coordinator.baseViewController
@@ -118,6 +119,7 @@ extension CoordinatorNavigator {
       coordinator.baseViewController.navigationController
       ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
+    presentedCoordinator = nil
   }
 
   /// Pushes a coordinator onto the navigators navigation controller.
