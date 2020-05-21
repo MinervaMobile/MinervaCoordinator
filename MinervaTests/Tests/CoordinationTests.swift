@@ -67,6 +67,28 @@ public final class CoordinationTests: XCTestCase {
     XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
   }
 
+  public func testStackedPresentationFromNavigator() {
+    XCTAssertNotNil(rootCoordinator.viewController.view)
+    let vcA = UIViewController()
+    let vcB = UIViewController()
+
+    let presentationExpectationA = expectation(description: "Presentation")
+    navigator.present(vcA, animated: true, removalCompletion: nil) {
+      presentationExpectationA.fulfill()
+    }
+    wait(for: [presentationExpectationA], timeout: 5)
+
+    let presentationExpectationB = expectation(description: "Presentation")
+    navigator.present(vcB, animated: true, removalCompletion: nil) {
+      presentationExpectationB.fulfill()
+    }
+    wait(for: [presentationExpectationB], timeout: 5)
+
+    XCTAssertEqual(navigator.navigationController.presentedViewController, vcA)
+    XCTAssertEqual(vcA.presentedViewController, vcB)
+
+  }
+
   public func testDismissalFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     let childCoordinator = FakeCoordinator()
