@@ -49,7 +49,6 @@ public final class BasicNavigator: NSObject {
 
 // MARK: - NavigatorType
 extension BasicNavigator: Navigator {
-
   public func present(
     _ viewController: UIViewController,
     animated: Bool,
@@ -59,11 +58,11 @@ extension BasicNavigator: Navigator {
     if let removalCompletion = removalCompletion {
       completions.setObject(RemovalCompletionBox(removalCompletion), forKey: viewController)
     }
-    navigationController.present(
-      viewController,
-      animated: animated,
-      completion: animationCompletion
-    )
+    var topPresentedVC: UIViewController = navigationController
+    while let vc = topPresentedVC.presentedViewController {
+      topPresentedVC = vc
+    }
+    topPresentedVC.present(viewController, animated: animated, completion: animationCompletion)
   }
 
   public func dismiss(
