@@ -488,8 +488,7 @@ public final class CatalogPresenter: ListPresenter {
     let model1 = TextViewCellModel(
       identifier: "TextViewCellModel",
       text: nil,
-      font: font,
-      changedValue: { _, _ in }
+      font: font
     )
     model1.textColor = .label
     model1.placeholderTextColor = .secondaryLabel

@@ -87,11 +87,11 @@ public final class FakePresenter: ListPresenter {
       ),
       TextInputCellModel(identifier: "TextInputCellModel", placeholder: text, font: font),
       TextSeparatorCellModel(text: "TextSeparatorCellModel"),
+
       TextViewCellModel(
         identifier: "TextViewCellModel",
         text: text,
-        font: font,
-        changedValue: { _, _ in }
+        font: font
       ),
       // Swipe
       SwipeableDetailedLabelCellModel(

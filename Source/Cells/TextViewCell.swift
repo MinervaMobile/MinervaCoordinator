@@ -12,19 +12,6 @@ import UIKit
 open class TextViewCellModel: BaseListCellModel {
   public typealias Action = (_ cellModel: TextViewCellModel, _ text: String?) -> Void
 
-  public var placeholderText: String? {
-    get { helper.placeholderText }
-    set { helper.placeholderText = newValue }
-  }
-  public var placeholderTextColor: UIColor? {
-    get { helper.placeholderTextColor }
-    set { helper.placeholderTextColor = newValue }
-  }
-  public var textColor: UIColor? {
-    get { helper.textColor }
-    set { helper.textColor = newValue }
-  }
-
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
     leading: 16,
@@ -39,31 +26,26 @@ open class TextViewCellModel: BaseListCellModel {
   public var height: CGFloat = 200
 
   public var cursorColor: UIColor?
+  public var textColor: UIColor?
+  public var placeholderText: String?
+  public var placeholderTextColor: UIColor?
+  public var beginEditingSelectsAllText = true
+  public var changedTextAction: Action?
+  public var finishEditingTextAction: Action?
+
   public var textViewAccessibilityIdentifier: String?
 
   fileprivate let font: UIFont
   fileprivate var text: String?
-  fileprivate let helper: TextViewCellModelHelper
 
   public init(
     identifier: String,
     text: String?,
-    font: UIFont,
-    changedValue: Action? = nil,
-    finishEditingTextAction: Action? = nil
+    font: UIFont
   ) {
     self.text = text
     self.font = font
-    self.helper = TextViewCellModelHelper()
     super.init(identifier: identifier)
-    self.helper.changedTextAction = { [weak self] text -> Void in
-      guard let strongSelf = self else { return }
-      changedValue?(strongSelf, text)
-    }
-    self.helper.finishEditingTextAction = { [weak self] text -> Void in
-      guard let strongSelf = self else { return }
-      finishEditingTextAction?(strongSelf, text)
-    }
   }
 
   // MARK: - BaseListCellModel
@@ -80,6 +62,7 @@ open class TextViewCellModel: BaseListCellModel {
       && backgroundColor == model.backgroundColor
       && directionalLayoutMargins == model.directionalLayoutMargins
       && textViewAccessibilityIdentifier == model.textViewAccessibilityIdentifier
+      && beginEditingSelectsAllText == model.beginEditingSelectsAllText
   }
 
   override open func size(constrainedTo containerSize: CGSize) -> ListCellSize {
@@ -103,6 +86,11 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
     contentView.addSubview(textView)
     backgroundView = UIView()
     setupConstraints()
+  }
+
+  public override func prepareForReuse() {
+    super.prepareForReuse()
+    textView.delegate = nil
   }
 
   override public func bind(model: TextViewCellModel, sizing: Bool) {
@@ -139,46 +127,49 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
       .disposed(by: disposeBag)
 
     backgroundView?.backgroundColor = model.backgroundColor
-    textView.delegate = model.helper
-  }
-}
-
-private class TextViewCellModelHelper: NSObject {
-  fileprivate typealias Action = (_ text: String?) -> Void
-
-  fileprivate var changedTextAction: Action?
-  fileprivate var finishEditingTextAction: Action?
-  fileprivate var placeholderText: String?
-  fileprivate var placeholderTextColor: UIColor?
-  fileprivate var textColor: UIColor?
-
-  override fileprivate init() {
+    textView.delegate = self
   }
 }
 
 // MARK: - UITextViewDelegate
-extension TextViewCellModelHelper: UITextViewDelegate {
+extension TextViewCell: UITextViewDelegate {
   public func textViewDidChange(_ textView: UITextView) {
-    let text = textView.text.isEmpty && textView.text != placeholderText ? nil : textView.text
-    changedTextAction?(text)
+    guard let model = model else {
+      assertionFailure("TextViewCell should be bound to a model")
+      return
+    }
+    let text = textView.text.isEmpty && textView.text != model.placeholderText ? nil : textView.text
+    model.changedTextAction?(model, text)
   }
 
   public func textViewDidBeginEditing(_ textView: UITextView) {
-    guard textView.textColor == placeholderTextColor else {
+    guard let model = model else {
+      assertionFailure("TextViewCell should be bound to a model")
+      return
+    }
+    guard textView.textColor == model.placeholderTextColor else {
+      if model.beginEditingSelectsAllText {
+        DispatchQueue.main.async {
+          textView.selectAll(nil)
+        }
+      }
       return
     }
     textView.text = nil
-    textView.textColor = textColor
-
+    textView.textColor = model.textColor
   }
 
   public func textViewDidEndEditing(_ textView: UITextView) {
-    finishEditingTextAction?(textView.text)
+    guard let model = model else {
+      assertionFailure("TextViewCell should be bound to a model")
+      return
+    }
+    model.finishEditingTextAction?(model, textView.text)
     guard textView.text.isEmpty else {
       return
     }
-    textView.text = placeholderText
-    textView.textColor = placeholderTextColor
+    textView.text = model.placeholderText
+    textView.textColor = model.placeholderTextColor
   }
 }
 
