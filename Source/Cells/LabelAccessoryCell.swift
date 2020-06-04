@@ -9,7 +9,7 @@ import RxSwift
 import UIKit
 
 open class LabelAccessoryCellModel: BaseListCellModel {
-  public typealias Action = (_ model: LabelAccessoryCellModel) -> Void
+    public typealias Action = (_ model: LabelAccessoryCellModel, _ view: UIView) -> Void
 
   public static let iconTrailingLength: CGFloat = 10
   public static let accessoryImageMargin: CGFloat = 10
@@ -136,13 +136,13 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
   @objc
   private func iconPressed(_ sender: UITapGestureRecognizer) {
     guard let model = model else { return }
-    model.iconSelectionAction?(model)
+    model.iconSelectionAction?(model, iconTapView)
   }
 
   @objc
   private func accessoryPressed(_ sender: UITapGestureRecognizer) {
     guard let model = model else { return }
-    model.accessorySelectionAction?(model)
+    model.accessorySelectionAction?(model, accessoryImageView)
   }
 
   override public func bind(model: LabelAccessoryCellModel, sizing: Bool) {
