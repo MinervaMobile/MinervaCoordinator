@@ -9,7 +9,7 @@ import RxSwift
 import UIKit
 
 open class LabelAccessoryCellModel: BaseListCellModel {
-    public typealias Action = (_ model: LabelAccessoryCellModel, _ view: UIView) -> Void
+  public typealias Action = (_ model: LabelAccessoryCellModel, _ view: UIView) -> Void
 
   public static let iconTrailingLength: CGFloat = 10
   public static let accessoryImageMargin: CGFloat = 10
