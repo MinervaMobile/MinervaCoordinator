@@ -180,9 +180,9 @@ internal final class ListCellSizeController {
 
     let view = collectionCell.contentView
 
+    let isVertical = sizeConstraints.scrollDirection == .vertical
     switch sizeConstraints.distribution {
     case .equally, .entireRow:
-      let isVertical = sizeConstraints.scrollDirection == .vertical
       let size = view.systemLayoutSizeFitting(
         adjustedContainerSize,
         withHorizontalFittingPriority: isVertical ? .required : .fittingSizeLevel,
@@ -199,7 +199,11 @@ internal final class ListCellSizeController {
         withHorizontalFittingPriority: .fittingSizeLevel,
         verticalFittingPriority: .fittingSizeLevel
       )
-      return size
+      if isVertical {
+          return CGSize(width: min(size.width, adjustedContainerSize.width), height: size.height)
+      } else {
+          return CGSize(width: size.width, height: min(size.height, adjustedContainerSize.height))
+      }
     }
   }
 
