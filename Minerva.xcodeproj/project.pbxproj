@@ -10,6 +10,9 @@
 		1217733ED4ECC7B973CE3F82 /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506C6629BF220271BFD762E9 /* Pods_Minerva.framework */; };
 		2CD24A88891F518C450AD525 /* Pods_MinervaCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19665C6027FF5E560AE8A1ED /* Pods_MinervaCatalog.framework */; };
 		7B2F7071C99EC43E40224E55 /* Pods_MinervaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */; };
+		DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */; };
+		DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */; };
+		DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */; };
 		DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583C24172E1400E2C81E /* UserListCellModel.swift */; };
 		DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
@@ -212,6 +215,9 @@
 		B52C03260EDFDC3D1A05F307 /* Pods-MinervaCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.debug.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		BF373880490EA10DD3EC8F46 /* Pods-MinervaCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.release.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorNavigator.swift; sourceTree = "<group>"; };
+		DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
+		DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinationWithNCNTests.swift; sourceTree = "<group>"; };
 		DE9A583C24172E1400E2C81E /* UserListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellModel.swift; sourceTree = "<group>"; };
 		DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellModel.swift; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
@@ -796,6 +802,7 @@
 				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
 				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
 				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
+				DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -835,6 +842,8 @@
 			children = (
 				F5AF6430235E414A0042F342 /* BasicNavigator.swift */,
 				F5F08AF323192C4900C249E9 /* Coordinator.swift */,
+				DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */,
+				DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */,
 				F5F08AF523192C9B00C249E9 /* Navigator.swift */,
 			);
 			path = Coordination;
@@ -1199,6 +1208,7 @@
 				F5EB49DD238395920029BAAD /* FakeCoordinator.swift in Sources */,
 				F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */,
 				F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */,
+				DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */,
 				F5EB49E32385AA5E0029BAAD /* FakeCell.swift in Sources */,
 				F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */,
 			);
@@ -1290,6 +1300,7 @@
 				F595F46A237DCE4E00A424E2 /* ButtonImageCell.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
 				F595F46E237DCE4E00A424E2 /* DatePickerCell.swift in Sources */,
+				DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */,
 				F595F46F237DCE4E00A424E2 /* ImageButtonCardCell.swift in Sources */,
 				F595F476237DCE8900A424E2 /* SwipeableLabelCell.swift in Sources */,
 				F5F08AF623192C9B00C249E9 /* Navigator.swift in Sources */,
@@ -1321,6 +1332,7 @@
 				F595F46D237DCE4E00A424E2 /* LabelCell.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
 				F595F46B237DCE4E00A424E2 /* TextSeparatorCell.swift in Sources */,
+				DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */,
 				F595F467237DCE4E00A424E2 /* HorizontalCollectionCell.swift in Sources */,
 				F595F478237DE2CD00A424E2 /* CellExtensions.swift in Sources */,
 				F595F459237DCE4E00A424E2 /* ImageTextCell.swift in Sources */,
