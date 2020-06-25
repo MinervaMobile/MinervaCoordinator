@@ -72,6 +72,8 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
       sectionConstraints: section.constraints
     )
 
+    // Calculating height before cellModels have been laid out.
+    // This means that cells with ListCellSize.relative are not supported.
     let height = section.cellModels.reduce(1) { maxHeight, cellModel -> CGFloat in
       max(maxHeight, listController.size(of: cellModel, with: constraints).height)
     }

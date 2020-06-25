@@ -66,12 +66,12 @@ public final class LegacyListController: NSObject, ListController {
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
     #if DEBUG
+    var identifiers = [String: ListCellModel]()  // Should be unique across ListSections in the same UICollectionView.
     for section in listSections {
-      var identifiers = [String: ListCellModel]()
       for cellModel in section.cellModels {
         let identifier = cellModel.identifier
         if identifier.isEmpty {
-          assertionFailure("Found a cell model an invalid ID \(cellModel)")
+          assertionFailure("Found a cell model with an invalid ID \(cellModel)")
         }
         if let existingCellModel = identifiers[identifier] {
           assertionFailure(
@@ -111,17 +111,16 @@ public final class LegacyListController: NSObject, ListController {
     sizeController.clearCache()
   }
 
-  public func indexPaths(for cellModel: ListCellModel) -> [IndexPath] {
+  public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
     dispatchPrecondition(condition: .onQueue(.main))
-    var indexPaths = [IndexPath]()
     for (sectionIndex, section) in listSections.enumerated() {
       for (rowIndex, model) in section.cellModels.enumerated() {
         if cellModel.identifier == model.identifier && cellModel.identical(to: model) {
-          indexPaths.append(IndexPath(item: rowIndex, section: sectionIndex))
+          return IndexPath(item: rowIndex, section: sectionIndex)
         }
       }
     }
-    return indexPaths
+    return nil
   }
 
   public var centerCellModel: ListCellModel? {
@@ -231,12 +230,23 @@ public final class LegacyListController: NSObject, ListController {
       containerSize: containerSize,
       sectionConstraints: listSection.constraints
     )
-    return sizeController.size(of: listSection, with: sizeConstraints)
+
+    guard let sectionIndex = sectionIndexOf(listSection) else { return .zero }
+    return sizeController.size(of: listSection, atSectionIndex: sectionIndex, with: sizeConstraints)
   }
 
   public func size(of cellModel: ListCellModel, with constraints: ListSizeConstraints) -> CGSize {
     dispatchPrecondition(condition: .onQueue(.main))
-    return sizeController.size(for: cellModel, with: constraints)
+
+    let indexPath = self.indexPath(for: cellModel)
+    let listSection: ListSection?
+    if let indexPath = indexPath {
+        listSection = listSections.at(indexPath.section)
+    } else {
+        listSection = nil
+    }
+
+    return sizeController.size(for: cellModel, at: indexPath, in: listSection, with: constraints)
   }
 
   // MARK: - Private
@@ -244,6 +254,16 @@ public final class LegacyListController: NSObject, ListController {
   private func endDisplayingVisibleCells() {
     guard let visibleCells = adapter.collectionView?.visibleCells else { return }
     visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.didEndDisplayingCell() }
+  }
+
+  private func sectionIndexOf(_ listSection: ListSection) -> Int? {
+    guard let sectionIndex = listSections.firstIndex(where: { $0.identifier == listSection.identifier }) else {
+      assertionFailure(
+        "The listSection should be in listSections"
+      )
+      return nil
+    }
+    return sectionIndex
   }
 }
 

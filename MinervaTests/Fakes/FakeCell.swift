@@ -58,3 +58,39 @@ public final class FakeCell: ListCollectionViewCell, ListTypedCell, ListDisplaya
     displaying = false
   }
 }
+
+/// Used to test the last item in Distribution.proportionallyWithLastCellFillingWidth
+public final class ExpandingTextInputCellModel: TextInputCellModel {
+  override public var cellType: ListCollectionViewCell.Type { TextInputCell.self }
+
+  public init(identifier: String, placeholder: String) {
+    super.init(identifier: identifier, placeholder: placeholder, font: .systemFont(ofSize: 16))
+  }
+
+  override public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
+    .relative
+  }
+}
+
+public func createCellModels(count: Int) -> [FakeCellModel] {
+  (1...count)
+    .map {
+      FakeCellModel(
+        identifier: "FakeCellModel\($0)",
+        size: .explicit(size: CGSize(width: 75, height: 100))
+      )
+    }
+}
+
+public func createCellModelsWithRelativeLastCell(count: Int) -> [ListCellModel] {
+  var cells: [ListCellModel] = (1..<count)
+    .map {
+      FakeCellModel(
+        identifier: "FakeCellModel\($0)",
+        size: .explicit(size: CGSize(width: 50, height: 50))
+      )
+    }
+  let lastCell = ExpandingTextInputCellModel(identifier: "LastCellThatFillsWidth", placeholder: "input")
+  cells.append(lastCell)
+  return cells
+}

@@ -68,7 +68,7 @@ public protocol ListController: AnyObject {
 
   /// Finds the IndexPath's for a given cell model, if it is present in the list.
   /// - Parameter cellModel: The cell model to find in the current list sections.
-  func indexPaths(for cellModel: ListCellModel) -> [IndexPath]
+  func indexPath(for cellModel: ListCellModel) -> IndexPath?
 
   /// Returns the cell model for a given IndexPath if one exists.
   /// - Parameter indexPath: The IindexPath of the cellModel you want.

@@ -21,6 +21,12 @@ public struct ListSection {
     /// Cells should take up however much space they want with no guidance on the #
     /// per row.
     case proportionally
+    /// Identical to proportionally except that the last cell will take up the remaining width.
+    /// If `minimumWidth` is not available, it will be full width on a new line.
+    /// This is useful when, for example, displaying an input field at the end of an array of items.
+    /// Your last cellModel should return `.relative` from  `size(constrainedTo:)` to get
+    /// fill-remaining-width behavior, or  `.autolayout` to keep `.proportionally` behavior.
+    case proportionallyWithLastCellFillingWidth(minimumWidth: CGFloat)
   }
 
   /// Information the section uses to size its cells.

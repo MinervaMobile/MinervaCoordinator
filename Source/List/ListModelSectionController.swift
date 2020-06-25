@@ -165,9 +165,16 @@ extension ListModelSectionController {
       assertionFailure("The size constraints should exist.")
       return super.sizeForItem(at: index)
     }
+
+    guard let section = self.object?.section else {
+      assertionFailure("List Section model should exist")
+      return super.sizeForItem(at: index)
+    }
+
     let cellModel = wrapper.model
     let indexPath = IndexPath(item: index, section: self.section)
-    return sizeController.size(for: cellModel, at: indexPath, sizeConstraints: sizeConstraints)
+
+    return sizeController.size(for: cellModel, at: indexPath, in: section, with: sizeConstraints)
   }
 }
 

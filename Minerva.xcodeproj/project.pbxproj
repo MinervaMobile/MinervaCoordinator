@@ -10,6 +10,9 @@
 		1217733ED4ECC7B973CE3F82 /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506C6629BF220271BFD762E9 /* Pods_Minerva.framework */; };
 		2CD24A88891F518C450AD525 /* Pods_MinervaCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19665C6027FF5E560AE8A1ED /* Pods_MinervaCatalog.framework */; };
 		7B2F7071C99EC43E40224E55 /* Pods_MinervaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */; };
+		DD0DD119249D4143003899B4 /* ListSizeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0DD118249D4143003899B4 /* ListSizeControllerTests.swift */; };
+		DDAB55D924A2B839004BB933 /* LegacyListControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */; };
+		DDAB55DD24A52552004BB933 /* FakeSizeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */; };
 		DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */; };
 		DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */; };
 		DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */; };
@@ -215,6 +218,9 @@
 		B52C03260EDFDC3D1A05F307 /* Pods-MinervaCatalog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.debug.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.debug.xcconfig"; sourceTree = "<group>"; };
 		BF373880490EA10DD3EC8F46 /* Pods-MinervaCatalog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaCatalog.release.xcconfig"; path = "Target Support Files/Pods-MinervaCatalog/Pods-MinervaCatalog.release.xcconfig"; sourceTree = "<group>"; };
 		CB7604DF25C8A340E28653D4 /* Pods_MinervaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD0DD118249D4143003899B4 /* ListSizeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSizeControllerTests.swift; sourceTree = "<group>"; };
+		DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyListControllerTests.swift; sourceTree = "<group>"; };
+		DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSizeManager.swift; sourceTree = "<group>"; };
 		DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinationWithNCNTests.swift; sourceTree = "<group>"; };
@@ -800,9 +806,11 @@
 			isa = PBXGroup;
 			children = (
 				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
+				DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */,
 				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
 				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
 				DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */,
+				DD0DD118249D4143003899B4 /* ListSizeControllerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -813,6 +821,7 @@
 				F5EB49E22385AA5E0029BAAD /* FakeCell.swift */,
 				F5EB49DC238395920029BAAD /* FakeCoordinator.swift */,
 				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
+				DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -1210,7 +1219,10 @@
 				F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */,
 				DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */,
 				F5EB49E32385AA5E0029BAAD /* FakeCell.swift in Sources */,
+				DDAB55D924A2B839004BB933 /* LegacyListControllerTests.swift in Sources */,
+				DDAB55DD24A52552004BB933 /* FakeSizeManager.swift in Sources */,
 				F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */,
+				DD0DD119249D4143003899B4 /* ListSizeControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

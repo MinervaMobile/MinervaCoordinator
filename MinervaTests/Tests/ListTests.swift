@@ -9,27 +9,10 @@ import Minerva
 import RxSwift
 import XCTest
 
-public final class ListTests: XCTestCase {
-
-  private var listController: ListController!
-  private var collectionVC: UICollectionViewController!
-
-  override public func setUp() {
-    super.setUp()
-    collectionVC = UICollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
-    listController = LegacyListController()
-    listController.collectionView = collectionVC.collectionView
-    listController.viewController = collectionVC
-    collectionVC.view.frame = CGRect(x: 0, y: 0, width: 200, height: 500)
-  }
-
-  override public func tearDown() {
-    listController = nil
-    super.tearDown()
-  }
+public final class ListTests: CommonSetupTestCase {
 
   public func testDynamicSizing() {
-    let sizeManager = SizeManager()
+    let sizeManager = FakeSizeManager()
     listController.sizeDelegate = sizeManager
     let marginCellModel = MarginCellModel()
     let section = ListSection(cellModels: [marginCellModel], identifier: "Section")
@@ -169,7 +152,7 @@ public final class ListTests: XCTestCase {
       updateExpectation.fulfill()
     }
     wait(for: [updateExpectation], timeout: 5)
-    guard let indexPath = listController.indexPaths(for: cellModel).first,
+    guard let indexPath = listController.indexPath(for: cellModel),
       let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeCell
     else {
       XCTFail("Missing the cell")
@@ -183,6 +166,38 @@ public final class ListTests: XCTestCase {
   }
 
   public func testRemoveCellModel() {
+    let cellModel0 = FakeCellModel(
+      identifier: "FakeCellModel0",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
+    let cellModel1 = FakeCellModel(
+      identifier: "FakeCellModel1",
+      size: .explicit(size: CGSize(width: 100, height: 100))
+    )
+
+    let section = ListSection(cellModels: [cellModel0, cellModel1], identifier: "Section")
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+    XCTAssertEqual(collectionVC.collectionView.numberOfSections, 1)
+    XCTAssertEqual(collectionVC.collectionView.numberOfItems(inSection: 0), 2)
+
+    let removeExpectation = expectation(description: "Remove Expectation")
+    listController.removeCellModel(at: IndexPath(item: 0, section: 0), animated: false) {
+      finished in
+      XCTAssertTrue(finished)
+      removeExpectation.fulfill()
+    }
+    wait(for: [removeExpectation], timeout: 5)
+    XCTAssertEqual(collectionVC.collectionView.numberOfSections, 1)
+    XCTAssertEqual(collectionVC.collectionView.numberOfItems(inSection: 0), 1)
+  }
+
+  public func testRemoveLastCellModelInSection() {
     let cellModel = FakeCellModel(
       identifier: "FakeCellModel1",
       size: .explicit(size: CGSize(width: 100, height: 100))
@@ -237,111 +252,23 @@ public final class ListTests: XCTestCase {
       cellModels.count - 1
     )
   }
-
-  public func testSectionSizing_verticalScrolling() {
-    let cellModels = createCellModels(count: 19)
-    let section = ListSection(cellModels: cellModels, identifier: "Section")
-
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: [section], animated: false) { finished in
-      XCTAssertTrue(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 5)
-
-    let containerSize = CGSize(
-      width: collectionVC.view.frame.width,
-      height: collectionVC.view.frame.height
-    )
-    let size = listController.size(of: section, containerSize: containerSize)
-    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_900))
-  }
-
-  public func testSectionSizing_verticalScrolling_equalDistribution() {
-    let cellModels = createCellModels(count: 19)
-    var section = ListSection(cellModels: cellModels, identifier: "Section")
-    section.constraints.distribution = .equally(cellsInRow: 3)
-
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: [section], animated: false) { finished in
-      XCTAssertTrue(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 5)
-
-    let containerSize = CGSize(
-      width: collectionVC.view.frame.width,
-      height: collectionVC.view.frame.height
-    )
-    let size = listController.size(of: section, containerSize: containerSize)
-    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 700))
-  }
-
-  public func testSectionSizing_verticalScrolling_proportionalDistribution() {
-    let cellModels = createCellModels(count: 19)
-    var section = ListSection(cellModels: cellModels, identifier: "Section")
-    section.constraints.distribution = .proportionally
-
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: [section], animated: false) { finished in
-      XCTAssertTrue(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 5)
-
-    let containerSize = CGSize(
-      width: collectionVC.view.frame.width,
-      height: collectionVC.view.frame.height
-    )
-    let size = listController.size(of: section, containerSize: containerSize)
-    XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_000))
-  }
-
-  public func testSectionSizing_horizontalScrolling() {
-    let cellModels = createCellModels(count: 19)
-    var section = ListSection(cellModels: cellModels, identifier: "Section")
-    section.constraints.scrollDirection = .horizontal
-
-    let updateExpectation = expectation(description: "Update Expectation")
-    listController.update(with: [section], animated: false) { finished in
-      XCTAssertTrue(finished)
-      updateExpectation.fulfill()
-    }
-    wait(for: [updateExpectation], timeout: 5)
-
-    let containerSize = CGSize(
-      width: collectionVC.view.frame.width,
-      height: collectionVC.view.frame.height
-    )
-    let size = listController.size(of: section, containerSize: containerSize)
-    XCTAssertEqual(size, CGSize(width: 1_425, height: 500))
-  }
-
-  // MARK: - Private
-
-  private func createCellModels(count: Int) -> [FakeCellModel] {
-    (1...count)
-      .map {
-        FakeCellModel(
-          identifier: "FakeCellModel\($0)",
-          size: .explicit(size: CGSize(width: 75, height: 100))
-        )
-      }
-  }
 }
 
-// MARK: - ListControllerSizeDelegate
-public final class SizeManager: ListControllerSizeDelegate {
-  public var handledSizeRequest = false
+public class CommonSetupTestCase: XCTestCase {
+  public var listController: ListController!
+  public var collectionVC: UICollectionViewController!
 
-  public func listController(
-    _ listController: ListController,
-    sizeFor model: ListCellModel,
-    at indexPath: IndexPath,
-    constrainedTo sizeConstraints: ListSizeConstraints
-  ) -> CGSize? {
-    handledSizeRequest = true
-    return .init(width: 24, height: 24)
+  override public func setUp() {
+    super.setUp()
+    collectionVC = UICollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+    listController = LegacyListController()
+    listController.collectionView = collectionVC.collectionView
+    listController.viewController = collectionVC
+    collectionVC.view.frame = CGRect(x: 0, y: 0, width: 200, height: 500)
   }
 
+  override public func tearDown() {
+    listController = nil
+    super.tearDown()
+  }
 }

@@ -130,7 +130,7 @@ public final class CatalogPresenter: ListPresenter {
 
     let model2 = HighlightableIconTextCellModel(
       imageSize: CGSize(width: 32, height: 32),
-      text: "IconTextCellModel",
+      text: "HighlightableIconTextCellModel",
       font: font,
       iconImage: .just(image)
     )
@@ -196,7 +196,7 @@ public final class CatalogPresenter: ListPresenter {
     var cellModels = [ListCellModel]()
 
     let model1 = ImageCellModel(
-      identifier: "model1",
+      identifier: "ImageCellModel-model1",
       image: image,
       imageSize: CGSize(width: 32, height: 32)
     )
@@ -237,7 +237,7 @@ public final class CatalogPresenter: ListPresenter {
     var cellModels = [ListCellModel]()
 
     let model1 = ImageTextCardCellModel(
-      identifier: "model1",
+      identifier: "ImageTextCardCellModelmodel1",
       attributedText: attributedText,
       image: .just(image)
     )
@@ -313,10 +313,10 @@ public final class CatalogPresenter: ListPresenter {
   private func createMarginCellModelSection() -> ListSection {
     var cellModels = [ListCellModel]()
 
-    let model1 = MarginCellModel(identifier: "MarginCellModel1", height: 64)
+    let model1 = MarginCellModel(identifier: "MarginSection-MarginCellModel1", height: 64)
     cellModels.append(model1)
 
-    let model2 = MarginCellModel(identifier: "MarginCellModel2", height: 8)
+    let model2 = MarginCellModel(identifier: "MarginSection-MarginCellModel2", height: 8)
     cellModels.append(model2)
 
     return createSection(for: cellModels, name: "MarginCellModel")
@@ -413,7 +413,7 @@ public final class CatalogPresenter: ListPresenter {
   private func createSeparatorCellModelSection() -> ListSection {
     var cellModels = [ListCellModel]()
 
-    cellModels.append(MarginCellModel(identifier: "MarginCellModel1", height: 8))
+    cellModels.append(MarginCellModel(identifier: "SeperatorSection-MarginCellModel1", height: 8))
     let model1 = SeparatorCellModel(
       location: .top(cellModelID: "SeparatorCellModel1"),
       color: .separator,
@@ -421,7 +421,7 @@ public final class CatalogPresenter: ListPresenter {
     )
     cellModels.append(model1)
 
-    cellModels.append(MarginCellModel(identifier: "MarginCellModel2", height: 8))
+    cellModels.append(MarginCellModel(identifier: "SeperatorSection-MarginCellModel2", height: 8))
 
     let model2 = SeparatorCellModel(
       location: .bottom(cellModelID: "SeparatorCellModel2"),
