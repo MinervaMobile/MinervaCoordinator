@@ -53,7 +53,7 @@ internal final class ListCellSizeController {
     at indexPath: IndexPath?,
     in section: ListSection?,
     with sizeConstraints: ListSizeConstraints,
-    enableSizeByDelegate: Bool = false
+    enableSizeByDelegate: Bool
   ) -> CGSize {
     let cellSize = listCellSize(for: cellModel, with: sizeConstraints)
     switch cellSize {
@@ -111,7 +111,7 @@ internal final class ListCellSizeController {
     var width: CGFloat = listSection.constraints.inset.left + listSection.constraints.inset.right
     func adjustDimensions(for model: ListCellModel?) {
       guard let model = model else { return }
-      let cellSize = size(for: model, at: nil, in: listSection, with: constraints)
+        let cellSize = size(for: model, at: nil, in: listSection, with: constraints, enableSizeByDelegate: false)
       if isVertical {
         height += cellSize.height
       } else {
@@ -128,7 +128,7 @@ internal final class ListCellSizeController {
           (sum: 0, itemIndex: 0),
           { x, model -> (sum: CGFloat, itemIndex: Int) in
             let indexPath = IndexPath(item: x.itemIndex, section: sectionIndex)
-            let length = size(for: model, at: indexPath, in: listSection, with: constraints).height
+            let length = size(for: model, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false).height
             let newSum = x.sum + length + constraints.minimumLineSpacing
             let newIndex = x.itemIndex + 1
             return (newSum, newIndex)
@@ -140,7 +140,7 @@ internal final class ListCellSizeController {
         width += listSection.cellModels.reduce(
           0,
           { sum, model -> CGFloat in
-            let length = size(for: model, at: nil, in: listSection, with: constraints).width
+            let length = size(for: model, at: nil, in: listSection, with: constraints, enableSizeByDelegate: false).width
             return sum + length + constraints.minimumLineSpacing
           }
         )
@@ -155,7 +155,7 @@ internal final class ListCellSizeController {
           rowHeight = 0
         }
         let indexPath = IndexPath(item: index, section: sectionIndex)
-        let modelHeight = size(for: model, at: indexPath, in: listSection, with: constraints).height
+        let modelHeight = size(for: model, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false).height
         rowHeight = max(rowHeight, modelHeight)
       }
       height += (rowHeight + constraints.minimumLineSpacing)
@@ -166,7 +166,7 @@ internal final class ListCellSizeController {
       var currentRowWidth: CGFloat = 0
       for (index, model) in listSection.cellModels.enumerated() {
         let indexPath = IndexPath(item: index, section: sectionIndex)
-        let modelSize = size(for: model, at: indexPath, in: listSection, with: constraints)
+        let modelSize = size(for: model, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false)
         let modelHeight = modelSize.height + constraints.minimumLineSpacing
         let modelWidth = modelSize.width + constraints.minimumInteritemSpacing
         maxCellHeightInRow = max(maxCellHeightInRow, modelHeight)
@@ -193,7 +193,7 @@ internal final class ListCellSizeController {
 
     for (index, model) in listSection.cellModels[0..<indexPath.item].enumerated() {
         let indexPath = IndexPath(item: index, section: indexPath.section)
-        let modelSize = size(for: model, at: indexPath, in: listSection, with: constraints)
+        let modelSize = size(for: model, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false)
         let modelHeight = modelSize.height + constraints.minimumLineSpacing
         let modelWidth = modelSize.width + constraints.minimumInteritemSpacing
         maxCellHeightInRow = max(maxCellHeightInRow, modelHeight)

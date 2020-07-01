@@ -4,6 +4,9 @@
 // https://github.com/OptimizeFitness/Minerva/blob/master/LICENSE
 //
 
+import Foundation
+import UIKit
+
 public enum RelativeCellSizingHelper {
   /// Divide remaining vertical space to fill `sizeConstraints.containerSize` equally between all cells matching filter.
   public static func sizeOf(

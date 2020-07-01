@@ -246,7 +246,7 @@ public final class LegacyListController: NSObject, ListController {
         listSection = nil
     }
 
-    return sizeController.size(for: cellModel, at: indexPath, in: listSection, with: constraints)
+    return sizeController.size(for: cellModel, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false)
   }
 
   // MARK: - Private
