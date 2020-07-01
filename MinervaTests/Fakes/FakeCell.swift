@@ -72,21 +72,21 @@ public final class ExpandingTextInputCellModel: TextInputCellModel {
   }
 }
 
-public func createCellModels(count: Int) -> [FakeCellModel] {
+public func createCellModels(count: Int, idPrefix: String = UUID().uuidString + "-") -> [FakeCellModel] {
   (1...count)
     .map {
       FakeCellModel(
-        identifier: "FakeCellModel\($0)",
+        identifier: "FakeCellModel-\(idPrefix)\($0)",
         size: .explicit(size: CGSize(width: 75, height: 100))
       )
     }
 }
 
-public func createCellModelsWithRelativeLastCell(count: Int) -> [ListCellModel] {
+public func createCellModelsWithRelativeLastCell(count: Int, idPrefix: String = UUID().uuidString + "-") -> [ListCellModel] {
   var cells: [ListCellModel] = (1..<count)
     .map {
       FakeCellModel(
-        identifier: "FakeCellModel\($0)",
+        identifier: "FakeCellModel-\(idPrefix)\($0)",
         size: .explicit(size: CGSize(width: 50, height: 50))
       )
     }

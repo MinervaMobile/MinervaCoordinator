@@ -41,23 +41,16 @@ public class MainCoordinator<T: ListPresenter, U: ListViewController>: BaseCoord
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    let collectionViewBounds = sizeConstraints.containerSize
-    let minHeight: CGFloat = 1
-    let dynamicHeight = listController.listSections.reduce(collectionViewBounds.height) {
-      sum,
-      section -> CGFloat in
-      sum - listController.size(of: section, containerSize: collectionViewBounds).height
+    if model is MarginCellModel {
+      return RelativeCellSizingHelper.sizeOf(
+        cellModel: model,
+        withExcessHeightDividedEquallyBetween: { $0 is MarginCellModel },
+        listController: listController,
+        constrainedTo: sizeConstraints
+      )
+    } else {
+      return nil
     }
-    let marginCellCount = listController.cellModels.reduce(0) { count, model -> Int in
-      guard case .relative = model.size(constrainedTo: .zero) else { return count }
-      return count + 1
-    }
-    let width = sizeConstraints.adjustedContainerSize.width
-    guard marginCellCount > 0 else {
-      return CGSize(width: width, height: minHeight)
-    }
-    let height = max(minHeight, dynamicHeight / CGFloat(marginCellCount))
-    return CGSize(width: width, height: height)
   }
 }
 

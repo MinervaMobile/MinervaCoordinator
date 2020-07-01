@@ -253,22 +253,3 @@ public final class ListTests: CommonSetupTestCase {
     )
   }
 }
-
-public class CommonSetupTestCase: XCTestCase {
-  public var listController: ListController!
-  public var collectionVC: UICollectionViewController!
-
-  override public func setUp() {
-    super.setUp()
-    collectionVC = UICollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
-    listController = LegacyListController()
-    listController.collectionView = collectionVC.collectionView
-    listController.viewController = collectionVC
-    collectionVC.view.frame = CGRect(x: 0, y: 0, width: 200, height: 500)
-  }
-
-  override public func tearDown() {
-    listController = nil
-    super.tearDown()
-  }
-}
