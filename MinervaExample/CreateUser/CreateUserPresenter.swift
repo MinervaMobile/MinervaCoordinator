@@ -61,7 +61,7 @@ public final class CreateUserPresenter: ListPresenter {
     }
 
     return [
-      MarginCellModel(identifier: "headerMarginModel", height: 12),
+      MarginCellModel(identifier: "headerMarginModel"),
       createEmailCellModel(),
       MarginCellModel(identifier: "emailMarginModel", height: 12),
       createCaloriesCellModel(),
@@ -71,7 +71,7 @@ public final class CreateUserPresenter: ListPresenter {
       createRoleCellModel(),
       MarginCellModel(identifier: "roleMarginModel", height: 12),
       doneModel,
-      MarginCellModel(identifier: "doneMarginModel", height: 12)
+      MarginCellModel(identifier: "doneMarginModel")
     ]
   }
 

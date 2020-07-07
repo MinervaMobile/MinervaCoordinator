@@ -31,9 +31,9 @@ public final class FakeSizeManagerForMarginCells: ListControllerSizeDelegate {
   ) -> CGSize? {
     RelativeCellSizingHelper.sizeOf(
       cellModel: model,
-      withExcessHeightDividedEquallyBetween: { $0 is MarginCellModel },
       listController: listController,
-      constrainedTo: sizeConstraints
+      constrainedTo: sizeConstraints,
+      withExcessHeightDividedEquallyBetween: { $0 is MarginCellModel }
     )
   }
 }

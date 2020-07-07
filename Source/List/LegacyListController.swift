@@ -9,6 +9,19 @@ import IGListKit
 import UIKit
 
 public final class LegacyListController: NSObject, ListController {
+  private enum Action {
+    case didEndDisplaying
+    case invalidateLayout
+    case reloadData(completion: Completion?)
+    case scrollTo(
+      cellModel: ListCellModel,
+      scrollPosition: UICollectionView.ScrollPosition,
+      animated: Bool
+    )
+    case scroll(scrollPosition: UICollectionView.ScrollPosition, animated: Bool)
+    case update(listSections: [ListSection], animated: Bool, completion: Completion?)
+    case willDisplay
+  }
 
   public typealias Completion = (Bool) -> Void
 
@@ -37,6 +50,8 @@ public final class LegacyListController: NSObject, ListController {
   private var noLongerDisplayingCells = false
   private var listSectionWrappers: [ListSectionWrapper]
   private var sizeController: ListCellSizeController
+  private var actionQueue = [Action]()
+  private var updating = false
 
   // MARK: - Initializers
 
@@ -55,60 +70,27 @@ public final class LegacyListController: NSObject, ListController {
 
   public func reloadData(completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
-    adapter.reloadData { [weak self] finished in
-      if let strongSelf = self, strongSelf.noLongerDisplayingCells {
-        strongSelf.endDisplayingVisibleCells()
-      }
-      completion?(finished)
-    }
+    reloadData(completion: completion, enqueueIfNeeded: true)
   }
 
   public func update(with listSections: [ListSection], animated: Bool, completion: Completion?) {
     dispatchPrecondition(condition: .onQueue(.main))
-    #if DEBUG
-    var identifiers = [String: ListCellModel]()  // Should be unique across ListSections in the same UICollectionView.
-    for section in listSections {
-      for cellModel in section.cellModels {
-        let identifier = cellModel.identifier
-        if identifier.isEmpty {
-          assertionFailure("Found a cell model with an invalid ID \(cellModel)")
-        }
-        if let existingCellModel = identifiers[identifier] {
-          assertionFailure(
-            "Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)"
-          )
-        }
-        identifiers[identifier] = cellModel
-      }
-    }
-    #endif
-    listSectionWrappers = listSections.map(ListSectionWrapper.init)
-    adapter.performUpdates(animated: animated) { [weak self] finished in
-      if let strongSelf = self, strongSelf.noLongerDisplayingCells {
-        strongSelf.endDisplayingVisibleCells()
-      }
-      completion?(finished)
-    }
+    update(with: listSections, animated: animated, completion: completion, enqueueIfNeeded: true)
   }
 
   public func willDisplay() {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard noLongerDisplayingCells else { return }
-    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
-    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.willDisplayCell() }
-    noLongerDisplayingCells = false
+    willDisplay(enqueueIfNeeded: true)
   }
 
   public func didEndDisplaying() {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard !noLongerDisplayingCells else { return }
-    endDisplayingVisibleCells()
-    noLongerDisplayingCells = true
+    didEndDisplaying(enqueueIfNeeded: true)
   }
 
   public func invalidateLayout() {
     dispatchPrecondition(condition: .onQueue(.main))
-    sizeController.clearCache()
+    invalidateLayout(enqueueIfNeeded: true)
   }
 
   public func indexPath(for cellModel: ListCellModel) -> IndexPath? {
@@ -167,61 +149,17 @@ public final class LegacyListController: NSObject, ListController {
     animated: Bool
   ) {
     dispatchPrecondition(condition: .onQueue(.main))
-
-    guard
-      let sectionWrapper = listSectionWrappers.first(where: {
-        $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
-      })
-    else {
-      assertionFailure("Section should exist for \(cellModel)")
-      return
-    }
-    guard let sectionController = adapter.sectionController(for: sectionWrapper) else {
-      assertionFailure("Section Controller should exist for \(sectionWrapper) and \(cellModel)")
-      return
-    }
-    guard
-      let modelIndex = sectionWrapper.section.cellModels.firstIndex(where: {
-        $0.identifier == cellModel.identifier
-      })
-    else {
-      assertionFailure("index should exist for \(cellModel)")
-      return
-    }
-    let indexPath = IndexPath(item: modelIndex, section: sectionController.section)
-    guard collectionView?.isIndexPathAvailable(indexPath) ?? false else {
-      assertionFailure("IndexPath should exist for \(cellModel)")
-      return
-    }
-    sectionController.collectionContext?
-      .scroll(
-        to: sectionController,
-        at: modelIndex,
-        scrollPosition: scrollPosition,
-        animated: animated
-      )
+    scrollTo(
+      cellModel: cellModel,
+      scrollPosition: scrollPosition,
+      animated: animated,
+      enqueueIfNeeded: true
+    )
   }
 
   public func scroll(to scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard !listSections.isEmpty else { return }
-    let cellModels = listSections.flatMap { $0.cellModels }
-    guard !cellModels.isEmpty else { return }
-    let model: ListCellModel?
-    switch scrollPosition {
-    case .top, .left:
-      model = cellModels.first
-    case .centeredVertically, .centeredHorizontally:
-      let middleIndex = cellModels.count / 2
-      model = cellModels.at(middleIndex)
-    case .bottom, .right:
-      model = cellModels.last
-    default:
-      model = cellModels.first
-    }
-
-    guard let cellModel = model else { return }
-    scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
+    scroll(to: scrollPosition, animated: animated, enqueueIfNeeded: true)
   }
 
   public func size(of listSection: ListSection, containerSize: CGSize) -> CGSize {
@@ -272,6 +210,227 @@ public final class LegacyListController: NSObject, ListController {
       return nil
     }
     return sectionIndex
+  }
+
+  private func processActionQueue() {
+    guard !actionQueue.isEmpty else {
+      return
+    }
+    let action = actionQueue.removeFirst()
+    switch action {
+    case .didEndDisplaying:
+      didEndDisplaying(enqueueIfNeeded: false)
+    case .invalidateLayout:
+      invalidateLayout(enqueueIfNeeded: false)
+    case .reloadData(let completion):
+      reloadData(completion: completion, enqueueIfNeeded: false)
+    case let .scroll(scrollPosition, animated):
+      scroll(to: scrollPosition, animated: animated, enqueueIfNeeded: false)
+    case let .scrollTo(cellModel, scrollPosition, animated):
+      scrollTo(
+        cellModel: cellModel,
+        scrollPosition: scrollPosition,
+        animated: animated,
+        enqueueIfNeeded: false
+      )
+    case let .update(listSections, animated, completion):
+      update(with: listSections, animated: animated, completion: completion, enqueueIfNeeded: false)
+    case .willDisplay:
+      willDisplay(enqueueIfNeeded: false)
+    }
+  }
+
+  private func reloadData(completion: Completion?, enqueueIfNeeded: Bool) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(.reloadData(completion: completion))
+      return
+    }
+    updating = true
+    adapter.reloadData { [weak self] finished in
+      defer {
+        completion?(finished)
+      }
+      guard let strongSelf = self else {
+        return
+      }
+      if strongSelf.noLongerDisplayingCells {
+        strongSelf.endDisplayingVisibleCells()
+      }
+      strongSelf.updating = false
+      strongSelf.processActionQueue()
+    }
+  }
+
+  private func update(
+    with listSections: [ListSection],
+    animated: Bool,
+    completion: Completion?,
+    enqueueIfNeeded: Bool
+  ) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(
+        .update(listSections: listSections, animated: animated, completion: completion)
+      )
+      return
+    }
+    #if DEBUG
+    var identifiers = [String: ListCellModel]()  // Should be unique across ListSections in the same UICollectionView.
+    for section in listSections {
+      for cellModel in section.cellModels {
+        let identifier = cellModel.identifier
+        if identifier.isEmpty {
+          assertionFailure("Found a cell model with an invalid ID \(cellModel)")
+        }
+        if let existingCellModel = identifiers[identifier] {
+          assertionFailure(
+            "Found a cell model with a duplicate ID \(identifier) - \(cellModel) - \(existingCellModel)"
+          )
+        }
+        identifiers[identifier] = cellModel
+      }
+    }
+    #endif
+    updating = true
+    listSectionWrappers = listSections.map(ListSectionWrapper.init)
+    adapter.performUpdates(animated: animated) { [weak self] finished in
+      defer {
+        completion?(finished)
+      }
+      guard let strongSelf = self else {
+        return
+      }
+      if strongSelf.noLongerDisplayingCells {
+        strongSelf.endDisplayingVisibleCells()
+      }
+      strongSelf.updating = false
+      strongSelf.processActionQueue()
+    }
+  }
+
+  private func didEndDisplaying(enqueueIfNeeded: Bool) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(.didEndDisplaying)
+      return
+    }
+    defer {
+      processActionQueue()
+    }
+    guard !noLongerDisplayingCells else { return }
+    endDisplayingVisibleCells()
+    noLongerDisplayingCells = true
+  }
+  private func willDisplay(enqueueIfNeeded: Bool) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(.willDisplay)
+      return
+    }
+    defer {
+      processActionQueue()
+    }
+    guard noLongerDisplayingCells else { return }
+    guard let visibleCells = adapter.collectionView?.visibleCells else { return }
+    visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.willDisplayCell() }
+    noLongerDisplayingCells = false
+  }
+  private func invalidateLayout(enqueueIfNeeded: Bool) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(.invalidateLayout)
+      return
+    }
+    sizeController.clearCache()
+    processActionQueue()
+  }
+
+  private func scrollTo(
+    cellModel: ListCellModel,
+    scrollPosition: UICollectionView.ScrollPosition,
+    animated: Bool,
+    enqueueIfNeeded: Bool
+  ) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(
+        .scrollTo(cellModel: cellModel, scrollPosition: scrollPosition, animated: animated)
+      )
+      return
+    }
+    defer {
+      processActionQueue()
+    }
+    guard
+      let sectionWrapper = listSectionWrappers.first(where: {
+        $0.section.cellModels.contains(where: { $0.identifier == cellModel.identifier })
+      })
+    else {
+      assertionFailure("Section should exist for \(cellModel)")
+      return
+    }
+    guard let sectionController = adapter.sectionController(for: sectionWrapper) else {
+      assertionFailure("Section Controller should exist for \(sectionWrapper) and \(cellModel)")
+      return
+    }
+    guard
+      let modelIndex = sectionWrapper.section.cellModels.firstIndex(where: {
+        $0.identifier == cellModel.identifier
+      })
+    else {
+      assertionFailure("index should exist for \(cellModel)")
+      return
+    }
+    let indexPath = IndexPath(item: modelIndex, section: sectionController.section)
+    guard collectionView?.isIndexPathAvailable(indexPath) ?? false else {
+      assertionFailure("IndexPath should exist for \(cellModel)")
+      return
+    }
+    sectionController.collectionContext?
+      .scroll(
+        to: sectionController,
+        at: modelIndex,
+        scrollPosition: scrollPosition,
+        animated: animated
+      )
+  }
+
+  private func scroll(
+    to scrollPosition: UICollectionView.ScrollPosition,
+    animated: Bool,
+    enqueueIfNeeded: Bool
+  ) {
+    guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
+      actionQueue.append(.scroll(scrollPosition: scrollPosition, animated: animated))
+      return
+    }
+    guard !listSections.isEmpty else {
+      processActionQueue()
+      return
+    }
+    let cellModels = listSections.flatMap { $0.cellModels }
+    guard !cellModels.isEmpty else {
+      processActionQueue()
+      return
+    }
+    let model: ListCellModel?
+    switch scrollPosition {
+    case .top, .left:
+      model = cellModels.first
+    case .centeredVertically, .centeredHorizontally:
+      let middleIndex = cellModels.count / 2
+      model = cellModels.at(middleIndex)
+    case .bottom, .right:
+      model = cellModels.last
+    default:
+      model = cellModels.first
+    }
+
+    guard let cellModel = model else {
+      processActionQueue()
+      return
+    }
+    scrollTo(
+      cellModel: cellModel,
+      scrollPosition: .centeredVertically,
+      animated: animated,
+      enqueueIfNeeded: false
+    )
   }
 }
 

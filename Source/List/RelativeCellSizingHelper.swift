@@ -11,9 +11,9 @@ public enum RelativeCellSizingHelper {
   /// Divide remaining vertical space to fill `sizeConstraints.containerSize` equally between all cells matching filter.
   public static func sizeOf(
     cellModel: ListCellModel,
-    withExcessHeightDividedEquallyBetween include: (ListCellModel) -> Bool,
     listController: ListController,
-    constrainedTo sizeConstraints: ListSizeConstraints
+    constrainedTo sizeConstraints: ListSizeConstraints,
+    withExcessHeightDividedEquallyBetween include: (ListCellModel) -> Bool = { _ in true }
   ) -> CGSize {
     let collectionViewBounds = sizeConstraints.containerSize
     let minHeight: CGFloat = 1

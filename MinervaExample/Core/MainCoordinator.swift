@@ -32,22 +32,6 @@ public class MainCoordinator<T: ListPresenter, U: ListViewController>: BaseCoord
   private func closeButtonPressed(_ sender: UIBarButtonItem) {
     dismissBlock?(self)
   }
-
-  // MARK: - ListControllerSizeDelegate
-
-  override public func listController(
-    _ listController: ListController,
-    sizeFor model: ListCellModel,
-    at indexPath: IndexPath,
-    constrainedTo sizeConstraints: ListSizeConstraints
-  ) -> CGSize? {
-    RelativeCellSizingHelper.sizeOf(
-      cellModel: model,
-      withExcessHeightDividedEquallyBetween: { $0 is MarginCellModel },
-      listController: listController,
-      constrainedTo: sizeConstraints
-    )
-  }
 }
 
 extension UIModalPresentationStyle {

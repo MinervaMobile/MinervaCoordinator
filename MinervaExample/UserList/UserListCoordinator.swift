@@ -71,9 +71,8 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
     case .failure(let error):
       LoadingHUD.hide(from: viewController.view)
       viewController.alert(error, title: "Failed to load")
-    case .loaded(let sections):
+    case .loaded:
       LoadingHUD.hide(from: viewController.view)
-      listController.update(with: sections, animated: true, completion: nil)
     case .loading:
       LoadingHUD.show(in: viewController.view)
     }

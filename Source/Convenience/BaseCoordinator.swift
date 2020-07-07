@@ -12,6 +12,8 @@ import UIKit
 open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, CoordinatorNavigator,
   CoordinatorPresentable, ListControllerSizeDelegate
 {
+  // This is used to cache the sections from the presenter so that the list controller can be cleared
+  // when the view controller is not visible.
   private var updateRelay = BehaviorRelay<[ListSection]>(value: [])
   private var updateDisposable: Disposable?
 
@@ -30,6 +32,8 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
   // MARK: - CoordinatorPresentable
   public typealias CoordinatorVC = U
   public let viewController: CoordinatorVC
+
+  private var afterUpdateBlocks = [() -> Void]()
 
   // MARK: - Lifecycle
 
@@ -58,6 +62,11 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
       .disposed(by: disposeBag)
   }
 
+  open func executeAfterUpdate(_ block: @escaping () -> Void) {
+    dispatchPrecondition(condition: .onQueue(.main))
+    afterUpdateBlocks.append(block)
+  }
+
   // MARK: - ListControllerSizeDelegate
   open func listController(
     _ listController: ListController,
@@ -65,7 +74,11 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize? {
-    nil
+    RelativeCellSizingHelper.sizeOf(
+      cellModel: model,
+      listController: listController,
+      constrainedTo: sizeConstraints
+    )
   }
 
   // MARK: - Private
@@ -87,10 +100,18 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
         updateRelay
         .observeOn(MainScheduler.instance)
         .subscribe(onNext: { [weak self] sections in
-          self?.listController.update(with: sections, animated: true)
+          self?.update(with: sections)
         })
     case .viewWillDisappear:
       break
+    }
+  }
+
+  private func update(with sections: [ListSection]) {
+    listController.update(with: sections, animated: true) { [weak self] _ -> Void in
+      guard let strongSelf = self else { return }
+      strongSelf.afterUpdateBlocks.forEach { $0() }
+      strongSelf.afterUpdateBlocks.removeAll()
     }
   }
 }

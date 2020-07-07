@@ -47,6 +47,7 @@ public final class UserListPresenter: ListPresenter {
         switch usersResult {
         case .success(let users):
           let sections = [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
+          strongSelf.sections.accept(sections)
           return .loaded(sections: sections)
         case .failure(let error):
           return .failure(error: error)
