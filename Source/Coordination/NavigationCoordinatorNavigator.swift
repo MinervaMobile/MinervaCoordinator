@@ -107,7 +107,8 @@ extension NavigatorCommonImpl: Navigator {
   }
 
   public func popToRootViewController(animated: Bool) -> [UIViewController]? {
-    guard let poppedControllers = weakNavigationController?.popToRootViewController(animated: animated)
+    guard
+      let poppedControllers = weakNavigationController?.popToRootViewController(animated: animated)
     else {
       return nil
     }
@@ -119,10 +120,11 @@ extension NavigatorCommonImpl: Navigator {
     -> [UIViewController]?
   {
     guard
-      let poppedControllers = weakNavigationController?.popToViewController(
-        viewController,
-        animated: animated
-      )
+      let poppedControllers = weakNavigationController?
+        .popToViewController(
+          viewController,
+          animated: animated
+        )
     else {
       return nil
     }
@@ -131,7 +133,8 @@ extension NavigatorCommonImpl: Navigator {
   }
 
   public func popViewController(animated: Bool) -> UIViewController? {
-    guard let poppedController = weakNavigationController?.popViewController(animated: animated) else {
+    guard let poppedController = weakNavigationController?.popViewController(animated: animated)
+    else {
       return nil
     }
     runCompletion(for: poppedController)

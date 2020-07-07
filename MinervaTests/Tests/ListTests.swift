@@ -27,7 +27,7 @@ public final class ListTests: CommonSetupTestCase {
   }
 
   public func testEqualDistribution() {
-    let cellModels = createCellModels(count: 9)
+    let cellModels = FakeCellModel.createCellModels(count: 9)
     var section = ListSection(cellModels: cellModels, identifier: "Section")
     section.constraints.distribution = .equally(cellsInRow: 3)
 
@@ -40,7 +40,7 @@ public final class ListTests: CommonSetupTestCase {
   }
 
   public func testCenterCellModel() {
-    let cellModels = createCellModels(count: 9)
+    let cellModels = FakeCellModel.createCellModels(count: 9)
     let section = ListSection(cellModels: cellModels, identifier: "Section")
 
     let updateExpectation = expectation(description: "Update Expectation")
@@ -60,15 +60,21 @@ public final class ListTests: CommonSetupTestCase {
   }
 
   public func testConstraints() {
-    var section1 = ListSection(cellModels: createCellModels(count: 9), identifier: "Section1")
+    var section1 = ListSection(
+      cellModels: FakeCellModel.createCellModels(count: 9),
+      identifier: "Section1"
+    )
     section1.constraints.distribution = .equally(cellsInRow: 3)
-    var section2 = ListSection(cellModels: createCellModels(count: 9), identifier: "Section2")
+    var section2 = ListSection(
+      cellModels: FakeCellModel.createCellModels(count: 9),
+      identifier: "Section2"
+    )
     section2.constraints.distribution = .equally(cellsInRow: 3)
     XCTAssertEqual(section1.constraints.hashValue, section2.constraints.hashValue)
   }
 
   public func testProportionalDistribution() {
-    let cellModels = createCellModels(count: 9)
+    let cellModels = FakeCellModel.createCellModels(count: 9)
     var section = ListSection(cellModels: cellModels, identifier: "Section")
     section.constraints.distribution = .proportionally
 
@@ -224,7 +230,7 @@ public final class ListTests: CommonSetupTestCase {
   }
 
   public func testScrollToBottom() {
-    let cellModels = createCellModels(count: 19)
+    let cellModels = FakeCellModel.createCellModels(count: 19)
     let section = ListSection(cellModels: cellModels, identifier: "Section")
 
     let updateExpectation = expectation(description: "Update Expectation")

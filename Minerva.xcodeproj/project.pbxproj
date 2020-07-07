@@ -17,7 +17,7 @@
 		DDAB55E124A6CFD6004BB933 /* RelativeCellSizingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAB55E024A6CFD6004BB933 /* RelativeCellSizingHelper.swift */; };
 		DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */; };
 		DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */; };
-		DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */; };
+		DDBAF4232496BE8100C2818F /* NavigationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF4222496BE8100C2818F /* NavigationCoordinatorTests.swift */; };
 		DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583C24172E1400E2C81E /* UserListCellModel.swift */; };
 		DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
@@ -227,7 +227,7 @@
 		DDAB55E024A6CFD6004BB933 /* RelativeCellSizingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeCellSizingHelper.swift; sourceTree = "<group>"; };
 		DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
-		DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinationWithNCNTests.swift; sourceTree = "<group>"; };
+		DDBAF4222496BE8100C2818F /* NavigationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorTests.swift; sourceTree = "<group>"; };
 		DE9A583C24172E1400E2C81E /* UserListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellModel.swift; sourceTree = "<group>"; };
 		DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellModel.swift; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
@@ -810,13 +810,13 @@
 		F5EB49E62386C6DE0029BAAD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
-				DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */,
-				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
-				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
 				DD2C235224ABBD0D008602EE /* CommonSetupTestCase.swift */,
-				DDBAF4222496BE8100C2818F /* CoordinationWithNCNTests.swift */,
+				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
+				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
+				DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */,
 				DD0DD118249D4143003899B4 /* ListSizeControllerTests.swift */,
+				F5EB49E02385A9B00029BAAD /* ListTests.swift */,
+				DDBAF4222496BE8100C2818F /* NavigationCoordinatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1224,7 +1224,7 @@
 				F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */,
 				DD2C235324ABBD0D008602EE /* CommonSetupTestCase.swift in Sources */,
 				F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */,
-				DDBAF4232496BE8100C2818F /* CoordinationWithNCNTests.swift in Sources */,
+				DDBAF4232496BE8100C2818F /* NavigationCoordinatorTests.swift in Sources */,
 				F5EB49E32385AA5E0029BAAD /* FakeCell.swift in Sources */,
 				DDAB55D924A2B839004BB933 /* LegacyListControllerTests.swift in Sources */,
 				DDAB55DD24A52552004BB933 /* FakeSizeManager.swift in Sources */,

@@ -17,28 +17,31 @@ import UIKit
 ///
 /// This will tie the lifetime of the Coordinators to the lifetime of the presentation of the navigation controller.
 open class NavigationCoordinator: NSObject, CoordinatorNavigator, CoordinatorPresentable {
-    public let navigator: Navigator
-    public var viewController: UINavigationController { navigationController }
-    public weak var presentedCoordinator: BaseCoordinatorPresentable?
+  public let navigator: Navigator
+  public var viewController: UINavigationController { navigationController }
+  public weak var presentedCoordinator: BaseCoordinatorPresentable?
 
-    public var parent: Coordinator?
-    public var childCoordinators: [Coordinator] = []
-    private unowned let navigationController: UINavigationController
+  public var parent: Coordinator?
+  public var childCoordinators: [Coordinator] = []
+  private unowned let navigationController: UINavigationController
 
-    public init(navigationController: UINavigationController = UINavigationController()) {
-        self.navigationController = navigationController
-        self.navigator = NavigationCoordinatorNavigator(parent: nil, navigationController: navigationController)
+  public init(navigationController: UINavigationController = UINavigationController()) {
+    self.navigationController = navigationController
+    self.navigator = NavigationCoordinatorNavigator(
+      parent: nil,
+      navigationController: navigationController
+    )
 
-        super.init()
+    super.init()
 
-        // ties our lifetime to the navigation controller's lifecycle
-        objc_setAssociatedObject(
-            navigationController,
-            &associatedObjectKeyLifecycle,
-            self,
-            .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-        )
-    }
+    // ties our lifetime to the navigation controller's lifecycle
+    objc_setAssociatedObject(
+      navigationController,
+      &associatedObjectKeyLifecycle,
+      self,
+      .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+    )
+  }
 }
 
 private var associatedObjectKeyLifecycle = ""

@@ -241,12 +241,18 @@ public final class LegacyListController: NSObject, ListController {
     let indexPath = self.indexPath(for: cellModel)
     let listSection: ListSection?
     if let indexPath = indexPath {
-        listSection = listSections.at(indexPath.section)
+      listSection = listSections.at(indexPath.section)
     } else {
-        listSection = nil
+      listSection = nil
     }
 
-    return sizeController.size(for: cellModel, at: indexPath, in: listSection, with: constraints, enableSizeByDelegate: false)
+    return sizeController.size(
+      for: cellModel,
+      at: indexPath,
+      in: listSection,
+      with: constraints,
+      enableSizeByDelegate: false
+    )
   }
 
   // MARK: - Private
@@ -257,7 +263,9 @@ public final class LegacyListController: NSObject, ListController {
   }
 
   private func sectionIndexOf(_ listSection: ListSection) -> Int? {
-    guard let sectionIndex = listSections.firstIndex(where: { $0.identifier == listSection.identifier }) else {
+    guard
+      let sectionIndex = listSections.firstIndex(where: { $0.identifier == listSection.identifier })
+    else {
       assertionFailure(
         "The listSection should be in listSections"
       )

@@ -174,7 +174,13 @@ extension ListModelSectionController {
     let cellModel = wrapper.model
     let indexPath = IndexPath(item: index, section: self.section)
 
-    return sizeController.size(for: cellModel, at: indexPath, in: section, with: sizeConstraints, enableSizeByDelegate: true)
+    return sizeController.size(
+      for: cellModel,
+      at: indexPath,
+      in: section,
+      with: sizeConstraints,
+      enableSizeByDelegate: true
+    )
   }
 }
 

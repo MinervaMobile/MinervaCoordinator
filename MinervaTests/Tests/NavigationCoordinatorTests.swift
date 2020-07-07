@@ -117,9 +117,10 @@ public final class NavigationCoordinatorTests: XCTestCase {
     rootCoordinator.push(childCoordinator, animated: false)
     XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
     XCTAssertTrue(
-      navigator.navigationController!.viewControllers.contains {
-        $0 === childCoordinator.viewController
-      }
+      navigator.navigationController!.viewControllers
+        .contains {
+          $0 === childCoordinator.viewController
+        }
     )
     rootCoordinator.pop(animated: false)
     XCTAssertFalse(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
@@ -133,9 +134,10 @@ public final class NavigationCoordinatorTests: XCTestCase {
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
-          navigator.navigationController!.viewControllers.contains {
-            $0 === childCoordinator.viewController
-          }
+          navigator.navigationController!.viewControllers
+            .contains {
+              $0 === childCoordinator.viewController
+            }
         )
       }
     _ = navigator.popToRootViewController(animated: false)
@@ -151,9 +153,10 @@ public final class NavigationCoordinatorTests: XCTestCase {
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
-          navigator.navigationController!.viewControllers.contains {
-            $0 === childCoordinator.viewController
-          }
+          navigator.navigationController!.viewControllers
+            .contains {
+              $0 === childCoordinator.viewController
+            }
         )
       }
     rootCoordinator.popToCoordinator(
@@ -172,9 +175,10 @@ public final class NavigationCoordinatorTests: XCTestCase {
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
-          navigator.navigationController!.viewControllers.contains {
-            $0 === childCoordinator.viewController
-          }
+          navigator.navigationController!.viewControllers
+            .contains {
+              $0 === childCoordinator.viewController
+            }
         )
       }
     let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)

@@ -88,7 +88,7 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
     setupConstraints()
   }
 
-  public override func prepareForReuse() {
+  override public func prepareForReuse() {
     super.prepareForReuse()
     textView.delegate = nil
   }

@@ -37,6 +37,23 @@ public struct FakeCellModel: ListTypedCellModel, ListSelectableCellModel,
   public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     size
   }
+
+  public static func createCellModels(
+    count: Int,
+    idPrefix: String = UUID().uuidString + "-",
+    width: CGFloat = 75,
+    height: CGFloat = 100
+  )
+    -> [FakeCellModel]
+  {
+    (1...count)
+      .map {
+        FakeCellModel(
+          identifier: "FakeCellModel-\(idPrefix)\($0)",
+          size: .explicit(size: CGSize(width: width, height: 100))
+        )
+      }
+  }
 }
 
 public final class FakeCell: ListCollectionViewCell, ListTypedCell, ListDisplayableCell {
@@ -70,27 +87,4 @@ public final class ExpandingTextInputCellModel: TextInputCellModel {
   override public func size(constrainedTo containerSize: CGSize) -> ListCellSize {
     .relative
   }
-}
-
-public func createCellModels(count: Int, idPrefix: String = UUID().uuidString + "-") -> [FakeCellModel] {
-  (1...count)
-    .map {
-      FakeCellModel(
-        identifier: "FakeCellModel-\(idPrefix)\($0)",
-        size: .explicit(size: CGSize(width: 75, height: 100))
-      )
-    }
-}
-
-public func createCellModelsWithRelativeLastCell(count: Int, idPrefix: String = UUID().uuidString + "-") -> [ListCellModel] {
-  var cells: [ListCellModel] = (1..<count)
-    .map {
-      FakeCellModel(
-        identifier: "FakeCellModel-\(idPrefix)\($0)",
-        size: .explicit(size: CGSize(width: 50, height: 50))
-      )
-    }
-  let lastCell = ExpandingTextInputCellModel(identifier: "LastCellThatFillsWidth", placeholder: "input")
-  cells.append(lastCell)
-  return cells
 }
