@@ -33,7 +33,9 @@ public final class LegacyListControllerTests: CommonSetupTestCase {
       update2Expectation.fulfill()
     }
     wait(for: [update2Expectation], timeout: 5)
-    XCTAssertTrue(collectionVC.collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 18, section: 0)))
+    XCTAssertTrue(
+      collectionVC.collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 18, section: 0))
+    )
   }
 
   public func test_scrollToBottom() {
@@ -54,6 +56,8 @@ public final class LegacyListControllerTests: CommonSetupTestCase {
       update2Expectation.fulfill()
     }
     wait(for: [update2Expectation], timeout: 5)
-    XCTAssertTrue(collectionVC.collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 18, section: 0)))
+    XCTAssertTrue(
+      collectionVC.collectionView.indexPathsForVisibleItems.contains(IndexPath(row: 18, section: 0))
+    )
   }
 }

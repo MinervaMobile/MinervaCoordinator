@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import RxSwift
 import UIKit
 
 open class ImageCellModel: BaseListCellModel {
@@ -18,15 +19,15 @@ open class ImageCellModel: BaseListCellModel {
     trailing: 16
   )
 
-  public let image: UIImage
+  public let imageObservable: Observable<UIImage?>
   public let imageSize: CGSize
 
-  public convenience init(image: UIImage, imageSize: CGSize) {
-    self.init(identifier: "ImageCellModel", image: image, imageSize: imageSize)
+  public convenience init(imageObservable: Observable<UIImage?>, imageSize: CGSize) {
+    self.init(identifier: "ImageCellModel", imageObservable: imageObservable, imageSize: imageSize)
   }
 
-  public init(identifier: String, image: UIImage, imageSize: CGSize) {
-    self.image = image
+  public init(identifier: String, imageObservable: Observable<UIImage?>, imageSize: CGSize) {
+    self.imageObservable = imageObservable
     self.imageSize = imageSize
     super.init(identifier: identifier)
   }
@@ -35,8 +36,7 @@ open class ImageCellModel: BaseListCellModel {
 
   override open func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
-    return image == model.image
-      && imageSize == model.imageSize
+    return imageSize == model.imageSize
       && contentMode == model.contentMode
       && imageColor == model.imageColor
   }
@@ -50,7 +50,7 @@ open class ImageCellModel: BaseListCellModel {
   }
 }
 
-public final class ImageCell: BaseListCell<ImageCellModel> {
+public final class ImageCell: BaseReactiveListCell<ImageCellModel> {
 
   private let imageView: UIImageView = {
     let imageView = UIImageView()
@@ -79,12 +79,20 @@ public final class ImageCell: BaseListCell<ImageCellModel> {
 
     imageView.contentMode = model.contentMode
 
-    if let imageColor = model.imageColor {
-      imageView.image = model.image.withRenderingMode(.alwaysTemplate)
-      imageView.tintColor = imageColor
-    } else {
-      imageView.image = model.image
-    }
+    model.imageObservable
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onNext: { [weak self] image -> Void in
+          guard let strongSelf = self else { return }
+          if let imageColor = model.imageColor {
+            strongSelf.imageView.image = image?.withRenderingMode(.alwaysTemplate)
+            strongSelf.imageView.tintColor = imageColor
+          } else {
+            strongSelf.imageView.image = image
+          }
+        }
+      )
+      .disposed(by: disposeBag)
   }
 }
 

@@ -56,7 +56,7 @@ public final class SignInPresenter: ListPresenter {
 
     let logoModel = ImageCellModel(
       identifier: "logoCellModel",
-      image: Asset.Logo.image,
+      imageObservable: .just(Asset.Logo.image),
       imageSize: CGSize(width: 100.0, height: 80.0)
     )
     logoModel.directionalLayoutMargins.bottom = 60

@@ -33,7 +33,7 @@ public final class WelcomePresenter: ListPresenter {
     let topDynamicMarginModel = MarginCellModel()
 
     let logoModel = ImageCellModel(
-      image: Asset.Logo.image,
+      imageObservable: .just(Asset.Logo.image),
       imageSize: CGSize(width: 120.0, height: 120.0)
     )
     logoModel.imageColor = .black
