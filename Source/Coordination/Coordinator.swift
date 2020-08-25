@@ -56,28 +56,6 @@ extension CoordinatorNavigator {
 
   /// Presents a coordinator modally.
   /// - Parameter coordinator: The coordinator to display.
-  /// - Parameter navigator: The navigator to use for the presented view controller.
-  /// - Parameter modalPresentationStyle: The style used to present the coordinators view controller.
-  /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
-  /// - Parameter animationCompletion: The completion to call when the presentation completes.
-  public func present(
-    _ coordinator: BaseCoordinatorPresentable,
-    from navigator: Navigator,
-    modalPresentationStyle: UIModalPresentationStyle? = nil,
-    animated: Bool = true,
-    animationCompletion: AnimationCompletion? = nil
-  ) {
-    navigator.setViewControllers([coordinator.baseViewController], animated: false)
-    present(
-      coordinator,
-      modalPresentationStyle: modalPresentationStyle,
-      animated: animated,
-      animationCompletion: animationCompletion
-    )
-  }
-
-  /// Presents a coordinator modally.
-  /// - Parameter coordinator: The coordinator to display.
   /// - Parameter modalPresentationStyle: The style used to present the coordinators view controller.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.
   /// - Parameter animationCompletion: The completion to call when the presentation completes.

@@ -77,9 +77,9 @@ extension CoordinatorNavigator {
     coordinator.addCloseButton { [weak self] child in
       self?.dismiss(child, animated: true)
     }
+    coordinator.navigator.setViewControllers([coordinator.baseViewController], animated: false)
     present(
       coordinator,
-      from: coordinator.navigator,
       modalPresentationStyle: modalPresentationStyle,
       animated: animated
     )

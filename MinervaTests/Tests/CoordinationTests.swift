@@ -52,7 +52,8 @@ public final class CoordinationTests: XCTestCase {
     let navigator = BasicNavigator(parent: nil)
     let childCoordinator = FakeCoordinator()
     let presentationExpectation = expectation(description: "Presentation")
-    rootCoordinator.present(childCoordinator, from: navigator, animated: false) {
+    navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
+    rootCoordinator.present(childCoordinator, animated: false) {
       presentationExpectation.fulfill()
     }
     wait(for: [presentationExpectation], timeout: 5)
@@ -94,7 +95,8 @@ public final class CoordinationTests: XCTestCase {
     let childCoordinator = FakeCoordinator()
     let navigator = BasicNavigator(parent: rootCoordinator.navigator)
     let presentationExpectation = expectation(description: "Presentation")
-    rootCoordinator.present(childCoordinator, from: navigator, animated: false) {
+    navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
+    rootCoordinator.present(childCoordinator, animated: false) {
       presentationExpectation.fulfill()
     }
     wait(for: [presentationExpectation], timeout: 5)
