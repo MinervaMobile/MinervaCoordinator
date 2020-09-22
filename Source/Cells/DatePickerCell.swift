@@ -50,7 +50,13 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
   private var highPriorityWidthAnchor: NSLayoutConstraint?
   private var lowPriorityWidthAnchor: NSLayoutConstraint?
 
-  private let datePicker = UIDatePicker()
+  private let datePicker: UIDatePicker = {
+    let picker = UIDatePicker()
+    if #available(iOS 13.4, *) {
+      picker.preferredDatePickerStyle = .wheels
+    }
+    return picker
+  }()
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
