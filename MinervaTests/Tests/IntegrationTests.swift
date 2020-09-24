@@ -29,6 +29,8 @@ public final class IntegrationTests: XCTestCase {
     XCTAssert(coordinator.viewWillAppear)
     coordinator.viewController.viewWillDisappear(false)
     XCTAssert(coordinator.viewWillDisappear)
+    coordinator.viewController.viewDidAppear(false)
+    XCTAssert(coordinator.viewDidAppear)
     coordinator.viewController.viewDidDisappear(false)
     XCTAssert(coordinator.viewDidDisappear)
     coordinator.viewController.traitCollectionDidChange(nil)

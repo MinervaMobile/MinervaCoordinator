@@ -48,6 +48,11 @@ open class BaseViewController: UIViewController, ListViewController {
     events.accept(.viewWillDisappear(animated: animated))
   }
 
+  override open func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    events.accept(.viewDidAppear(animated: animated))
+  }
+
   override open func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     events.accept(.viewDidDisappear(animated: animated))

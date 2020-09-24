@@ -12,6 +12,7 @@ public enum ListViewControllerEvent {
   case viewDidLoad
   case viewWillAppear(animated: Bool)
   case viewWillDisappear(animated: Bool)
+  case viewDidAppear(animated: Bool)
   case viewDidDisappear(animated: Bool)
   case traitCollectionDidChange(previousTraitCollection: UITraitCollection?)
 }

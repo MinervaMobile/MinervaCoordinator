@@ -13,6 +13,7 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
   public var viewDidLoad = false
   public var viewWillAppear = false
   public var viewWillDisappear = false
+  public var viewDidAppear = false
   public var viewDidDisappear = false
   public var traitCollectionDidChange = false
 
@@ -61,6 +62,9 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
       viewWillAppear = true
     case .viewWillDisappear:
       viewWillDisappear = true
+    case .viewDidAppear:
+      viewDidAppear = true
+
     }
   }
 }

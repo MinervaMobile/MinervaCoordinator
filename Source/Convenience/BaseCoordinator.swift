@@ -104,6 +104,8 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
         })
     case .viewWillDisappear:
       break
+    case .viewDidAppear:
+      break
     }
   }
 
