@@ -197,7 +197,7 @@ public final class CatalogPresenter: ListPresenter {
 
     let model1 = ImageCellModel(
       identifier: "ImageCellModel-model1",
-      image: image,
+      imageObservable: .just(image),
       imageSize: CGSize(width: 32, height: 32)
     )
     cellModels.append(model1)

@@ -99,7 +99,7 @@ extension DataManager {
     Void, Error
   > {
     Future { promise in
-      block() { error in
+      block { error in
         if let error = error {
           promise(.failure(error))
         } else {
@@ -113,7 +113,7 @@ extension DataManager {
     T, Error
   > {
     Future { promise in
-      block() { result, error in
+      block { result, error in
         if let error = error {
           promise(.failure(error))
         } else {

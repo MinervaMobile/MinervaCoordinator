@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
-  s.version = "2.24.1"
+  s.version = "2.25.0"
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Cells', 'Convenience', 'Coordination', 'List', 'Swipe'
 
   s.requires_arc = true
-  s.swift_versions = '5.2'
+  s.swift_versions = '5.3'
 
   s.ios.deployment_target = '11.0'
   s.ios.frameworks = 'Foundation', 'UIKit'

@@ -131,7 +131,10 @@ extension WorkoutFilter {
       }
     }
     if startTime != nil || endTime != nil {
-      let workoutComponents = calendar.dateComponents([.hour, .minute, .second], from: workout.date)
+      let workoutComponents = calendar.dateComponents(
+        [.hour, .minute, .second],
+        from: workout.date
+      )
       if let startTime = self.startTime {
         if workoutComponents.compareTime(with: startTime) == .orderedAscending {
           return false

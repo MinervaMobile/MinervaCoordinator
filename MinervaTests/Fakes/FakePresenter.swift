@@ -112,7 +112,9 @@ public final class FakePresenter: ListPresenter {
 
     let horizontalCellModel = HorizontalCollectionCellModel(
       identifier: "HorizontalCollectionCellModel",
-      cellModels: [ImageCellModel(imageObservable: .just(UIImage()), imageSize: CGSize(width: 24, height: 24))],
+      cellModels: [
+        ImageCellModel(imageObservable: .just(UIImage()), imageSize: CGSize(width: 24, height: 24))
+      ],
       distribution: .entireRow,
       listController: LegacyListController()
     )!
