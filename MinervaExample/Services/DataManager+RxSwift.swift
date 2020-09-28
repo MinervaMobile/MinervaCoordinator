@@ -84,7 +84,7 @@ extension DataManager {
   ) -> Observable<Result<T, Error>> {
     Observable<Result<T, Error>>
       .create { observer in
-        let subscriptionID = block() { result, error in
+        let subscriptionID = block { result, error in
           if let error = error {
             observer.onNext(.failure(error))
           } else {
@@ -99,7 +99,7 @@ extension DataManager {
 
   private func asSingle(_ block: @escaping (@escaping (Error?) -> Void) -> Void) -> Single<Void> {
     Single.create { single in
-      block() { error in
+      block { error in
         if let error = error {
           single(.error(error))
         } else {
@@ -113,7 +113,7 @@ extension DataManager {
   private func asSingle<T>(_ block: @escaping (@escaping (T, Error?) -> Void) -> Void) -> Single<T>
   {
     Single.create { single in
-      block() { result, error in
+      block { result, error in
         if let error = error {
           single(.error(error))
         } else {

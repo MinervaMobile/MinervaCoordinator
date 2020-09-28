@@ -17,7 +17,7 @@
 #define IGLK_UNAVAILABLE(message) __attribute__((unavailable(message)))
 #endif // #ifndef IGLK_UNAVAILABLE
 
-#if IGLK_LOGGING_ENABLED
+#if defined(IGLK_LOGGING_ENABLED) && IGLK_LOGGING_ENABLED
 #define IGLKLog( s, ... ) do { NSLog( @"IGListKit: %@", [NSString stringWithFormat: (s), ##__VA_ARGS__] ); } while(0)
 #else
 #define IGLKLog( s, ... )
@@ -26,3 +26,11 @@
 #ifndef IGLK_DEBUG_DESCRIPTION_ENABLED
 #define IGLK_DEBUG_DESCRIPTION_ENABLED DEBUG
 #endif // #ifndef IGLK_DEBUG_DESCRIPTION_ENABLED
+
+#define IGLK_BLOCK_CALL_SAFE(BLOCK, ...) \
+   do { \
+       __typeof(BLOCK) ig_safe_block = (BLOCK); \
+       if (ig_safe_block) { \
+           ig_safe_block(__VA_ARGS__); \
+       } \
+   } while (NO)
