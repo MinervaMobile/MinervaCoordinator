@@ -258,4 +258,42 @@ public final class ListTests: CommonSetupTestCase {
       cellModels.count - 1
     )
   }
+
+  public func testResizableCell() {
+    let width = collectionVC.collectionView.bounds.width
+    let size1 = CGSize(width: width, height: 100)
+    let size2 = CGSize(width: width, height: 200)
+
+    let cellModel = FakeReferenceCellModel(identifier: "identifier1", size: .explicit(size: size1))
+    let section = ListSection(cellModels: [cellModel], identifier: "Section")
+
+    let updateExpectation = expectation(description: "Update Expectation")
+    listController.update(with: [section], animated: false) { finished in
+      XCTAssertTrue(finished)
+      updateExpectation.fulfill()
+    }
+    wait(for: [updateExpectation], timeout: 5)
+
+    guard let indexPath = listController.indexPath(for: cellModel),
+          let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeReferenceCell
+    else {
+      XCTFail("Missing the cell")
+      return
+    }
+
+    XCTAssertEqual(cell.bounds.size, size1)
+    XCTAssertNotNil(cell.resizableDelegate)
+
+    cellModel.size = ListCellSize.explicit(size: size2)
+    cell.resizableDelegate?.cellDidInvalidateSize(cell)
+
+    let runloopExpectation = expectation(description: "waiting a run loop")
+    DispatchQueue.main.async {
+      runloopExpectation.fulfill()
+    }
+
+    wait(for: [runloopExpectation], timeout: 5)
+
+    XCTAssertEqual(cell.bounds.size, size2)
+  }
 }

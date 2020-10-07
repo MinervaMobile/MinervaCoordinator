@@ -9,7 +9,11 @@ import IGListKit
 import UIKit
 
 internal protocol ListModelSectionControllerDelegate: AnyObject {
-
+  func sectionController(
+    _ sectionController: ListModelSectionController,
+    didInvalidateSizeAt indexPath: IndexPath
+  )
+    
   func sectionControllerCompletedMove(
     _ sectionController: ListModelSectionController,
     for cellModel: ListCellModel,
@@ -128,6 +132,9 @@ extension ListModelSectionController {
     else {
       assertionFailure("Failed to load the reuseable cell for \(cellType)")
       return MissingListCell()
+    }
+    if let cell = cell as? ListResizableCell {
+      cell.resizableDelegate = self
     }
     return cell
   }
@@ -306,6 +313,15 @@ extension ListModelSectionController: ListDisplayDelegate {
   ) {
     guard let minervaCell = cell as? ListDisplayableCell else { return }
     minervaCell.didEndDisplayingCell()
+  }
+}
+
+// MARK: - ListResizableCellDelegate
+extension ListModelSectionController: ListResizableCellDelegate {
+  func cellDidInvalidateSize(_ cell: ListResizableCell) {
+    guard let index = collectionContext?.index(for: cell, sectionController: self) else { return }
+    let indexPath = IndexPath(item: index, section: section)
+    delegate?.sectionController(self, didInvalidateSizeAt: indexPath)
   }
 }
 

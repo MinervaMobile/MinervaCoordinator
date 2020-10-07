@@ -488,6 +488,15 @@ extension LegacyListController: ListCellSizeControllerDelegate {
 
 // MARK: - ListModelSectionControllerDelegate
 extension LegacyListController: ListModelSectionControllerDelegate {
+  func sectionController(_ sectionController: ListModelSectionController, didInvalidateSizeAt indexPath: IndexPath) {
+    guard let collectionView = adapter.collectionView else { return }
+    let contextClassType = type(of: collectionView.collectionViewLayout).invalidationContextClass
+    guard let contextClass = contextClassType as? UICollectionViewLayoutInvalidationContext.Type else { return }
+    let context = contextClass.init()
+    context.invalidateItems(at: [indexPath])
+    collectionView.collectionViewLayout.invalidateLayout(with: context)
+    adapter.performUpdates(animated: false, completion: nil)
+  }
 
   internal func sectionControllerCompletedMove(
     _ sectionController: ListModelSectionController,

@@ -26,6 +26,18 @@ public protocol ListDisplayableCell: ListCell {
   func didEndDisplayingCell()
 }
 
+/// Delegate for ListResizableCell, see below.
+public protocol ListResizableCellDelegate: AnyObject {
+  /// Called when the cell's layout should be invalidated and updated
+  func cellDidInvalidateSize(_ cell: ListResizableCell)
+}
+
+/// Optional protocol that if implemented allows a cell to trigger its layout to be invalidated.
+public protocol ListResizableCell: ListCollectionViewCell {
+  /// Set at cell creation if the protocol is implemented, see delegate methods.
+  var resizableDelegate: ListResizableCellDelegate? { get set }
+}
+
 /// A convenience protocol that adds typed model information to the class.
 public protocol ListTypedCell: ListCell {
   associatedtype ModelType: ListCellModel
