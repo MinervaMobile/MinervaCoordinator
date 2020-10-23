@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CE9D3782543462600EDA062 /* NavigationCoordinatorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9D3772543462600EDA062 /* NavigationCoordinatorWrapper.swift */; };
+		0CE9D37C2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9D37B2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift */; };
 		1217733ED4ECC7B973CE3F82 /* Pods_Minerva.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506C6629BF220271BFD762E9 /* Pods_Minerva.framework */; };
 		1AC5D491252D0A2A00DCB974 /* FakeReferenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5D490252D0A2A00DCB974 /* FakeReferenceCell.swift */; };
 		2CD24A88891F518C450AD525 /* Pods_MinervaCatalog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19665C6027FF5E560AE8A1ED /* Pods_MinervaCatalog.framework */; };
@@ -209,6 +211,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0CE9D3772543462600EDA062 /* NavigationCoordinatorWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorWrapper.swift; sourceTree = "<group>"; };
+		0CE9D37B2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorWrapperTests.swift; sourceTree = "<group>"; };
 		19665C6027FF5E560AE8A1ED /* Pods_MinervaCatalog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinervaCatalog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AC5D490252D0A2A00DCB974 /* FakeReferenceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeReferenceCell.swift; sourceTree = "<group>"; };
 		2700F39BA609407D5CC8DCB8 /* Pods-MinervaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinervaTests.release.xcconfig"; path = "Target Support Files/Pods-MinervaTests/Pods-MinervaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -815,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				DD2C235224ABBD0D008602EE /* CommonSetupTestCase.swift */,
+				0CE9D37B2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift */,
 				F5EB49DE2383FC1A0029BAAD /* CoordinationTests.swift */,
 				F53EAF03237B01A200CB7FFA /* IntegrationTests.swift */,
 				DDAB55D824A2B839004BB933 /* LegacyListControllerTests.swift */,
@@ -860,6 +865,7 @@
 		F5F08AF223192C2900C249E9 /* Coordination */ = {
 			isa = PBXGroup;
 			children = (
+				0CE9D3772543462600EDA062 /* NavigationCoordinatorWrapper.swift */,
 				F5AF6430235E414A0042F342 /* BasicNavigator.swift */,
 				F5F08AF323192C4900C249E9 /* Coordinator.swift */,
 				DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */,
@@ -1236,6 +1242,7 @@
 				DDAB55DD24A52552004BB933 /* FakeSizeManager.swift in Sources */,
 				F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */,
 				DD0DD119249D4143003899B4 /* ListSizeControllerTests.swift in Sources */,
+				0CE9D37C2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,6 +1341,7 @@
 				F595F45A237DCE4E00A424E2 /* LabelAccessoryCell.swift in Sources */,
 				F595F475237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift in Sources */,
 				F5EF2DB72344FC4500A0073E /* ListViewController.swift in Sources */,
+				0CE9D3782543462600EDA062 /* NavigationCoordinatorWrapper.swift in Sources */,
 				F595F465237DCE4E00A424E2 /* SeparatorCell.swift in Sources */,
 				F595F45E237DCE4E00A424E2 /* ImageTextCardCell.swift in Sources */,
 				F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */,
