@@ -8,6 +8,7 @@ def minerva_pods
   pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit'
   pod 'IQKeyboardManagerSwift'
   pod 'MBProgressHUD'
+  pod 'PanModal'
   pod 'RxSwift'
   pod 'RxRelay'
   pod 'SwiftLint'

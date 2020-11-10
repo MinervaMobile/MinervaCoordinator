@@ -4,6 +4,7 @@ PODS:
     - IGListDiffKit (= 4.1.0)
   - IQKeyboardManagerSwift (6.5.6)
   - MBProgressHUD (1.2.0)
+  - PanModal (1.2.7)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - IGListKit (from `https://github.com/Instagram/IGListKit`)
   - IQKeyboardManagerSwift
   - MBProgressHUD
+  - PanModal
   - RxRelay
   - RxSwift
   - SwiftLint
@@ -26,6 +28,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - IQKeyboardManagerSwift
     - MBProgressHUD
+    - PanModal
     - RxRelay
     - RxSwift
     - SwiftLint
@@ -51,12 +54,13 @@ SPEC CHECKSUMS:
   IGListKit: a2345833762c4ebdf576ed6a51e35db701f0c2f0
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
   SwiftProtobuf: 4ef85479c18ca85b5482b343df9c319c62bda699
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 81334aeb706697401ad07fe9cf2fa7386a81fe8e
+PODFILE CHECKSUM: 7bec0f0400b383eae5e6be47df6fd4aebf157289
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
