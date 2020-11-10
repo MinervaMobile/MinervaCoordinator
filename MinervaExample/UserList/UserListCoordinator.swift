@@ -145,13 +145,13 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
   }
 
   private func displayUserUpdatePopup(for user: User) {
-    let navigator = BasicNavigator(parent: self.navigator)
     let coordinator = UpdateUserCoordinator(
       navigator: navigator,
       dataManager: dataManager,
       user: user
     )
-    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
+
+    presentPanModal(coordinator)
   }
 
   private func save(user: User) {

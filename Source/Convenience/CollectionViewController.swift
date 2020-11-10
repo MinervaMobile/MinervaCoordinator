@@ -15,7 +15,7 @@ open class CollectionViewController: BaseViewController {
 
   // MARK: - UIViewController
 
-  override public func viewDidLoad() {
+  override open func viewDidLoad() {
     super.viewDidLoad()
     setupViewsAndConstraints()
   }

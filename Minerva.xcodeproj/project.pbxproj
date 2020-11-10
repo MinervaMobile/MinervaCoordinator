@@ -21,6 +21,13 @@
 		DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */; };
 		DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */; };
 		DDBAF4232496BE8100C2818F /* NavigationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDBAF4222496BE8100C2818F /* NavigationCoordinatorTests.swift */; };
+		DE77355D255AAA010022B1B2 /* PanModalNavigationCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77355C255AAA010022B1B2 /* PanModalNavigationCollectionVC.swift */; };
+		DE773563255ABAAC0022B1B2 /* PanModalNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773562255ABAAC0022B1B2 /* PanModalNavigator.swift */; };
+		DE773569255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773568255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift */; };
+		DE773571255AC54E0022B1B2 /* CoordinatorNavigator+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773570255AC54E0022B1B2 /* CoordinatorNavigator+Extension.swift */; };
+		DE77357D255AD9480022B1B2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77357C255AD9480022B1B2 /* SettingsVC.swift */; };
+		DE773583255ADFC20022B1B2 /* FakePanModalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773582255ADFC20022B1B2 /* FakePanModalCoordinator.swift */; };
+		DE77358D255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77358C255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift */; };
 		DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583C24172E1400E2C81E /* UserListCellModel.swift */; };
 		DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
@@ -234,6 +241,13 @@
 		DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		DDBAF4222496BE8100C2818F /* NavigationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorTests.swift; sourceTree = "<group>"; };
+		DE77355C255AAA010022B1B2 /* PanModalNavigationCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalNavigationCollectionVC.swift; sourceTree = "<group>"; };
+		DE773562255ABAAC0022B1B2 /* PanModalNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalNavigator.swift; sourceTree = "<group>"; };
+		DE773568255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalCollectionCoordinator.swift; sourceTree = "<group>"; };
+		DE773570255AC54E0022B1B2 /* CoordinatorNavigator+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorNavigator+Extension.swift"; sourceTree = "<group>"; };
+		DE77357C255AD9480022B1B2 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		DE773582255ADFC20022B1B2 /* FakePanModalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePanModalCoordinator.swift; sourceTree = "<group>"; };
+		DE77358C255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalCoordinatorPresentable.swift; sourceTree = "<group>"; };
 		DE9A583C24172E1400E2C81E /* UserListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellModel.swift; sourceTree = "<group>"; };
 		DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellModel.swift; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
@@ -441,6 +455,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DE77355B255AA9920022B1B2 /* PanModal */ = {
+			isa = PBXGroup;
+			children = (
+				DE773570255AC54E0022B1B2 /* CoordinatorNavigator+Extension.swift */,
+				DE773568255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift */,
+				DE77358C255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift */,
+				DE77355C255AAA010022B1B2 /* PanModalNavigationCollectionVC.swift */,
+				DE773562255ABAAC0022B1B2 /* PanModalNavigator.swift */,
+			);
+			path = PanModal;
+			sourceTree = "<group>";
+		};
 		F501F894233BFF6400012C5E /* UserList */ = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +580,7 @@
 				F5587D5222502C5A004223E5 /* Info.plist */,
 				F5DA2B88226D362900BA461A /* List */,
 				F5587D5822502C5A004223E5 /* Minerva.h */,
+				DE77355B255AA9920022B1B2 /* PanModal */,
 				F595F470237DCE5F00A424E2 /* Swipe */,
 			);
 			name = Minerva;
@@ -682,6 +709,7 @@
 			children = (
 				F501F897233C016F00012C5E /* SettingsCoordinator.swift */,
 				F576F92E226E168B0015D14E /* SettingsPresenter.swift */,
+				DE77357C255AD9480022B1B2 /* SettingsVC.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -835,9 +863,10 @@
 			children = (
 				F5EB49E22385AA5E0029BAAD /* FakeCell.swift */,
 				F5EB49DC238395920029BAAD /* FakeCoordinator.swift */,
+				DE773582255ADFC20022B1B2 /* FakePanModalCoordinator.swift */,
 				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
-				DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */,
 				1AC5D490252D0A2A00DCB974 /* FakeReferenceCell.swift */,
+				DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -1241,6 +1270,7 @@
 				DDAB55D924A2B839004BB933 /* LegacyListControllerTests.swift in Sources */,
 				DDAB55DD24A52552004BB933 /* FakeSizeManager.swift in Sources */,
 				F5EB49DB2383958A0029BAAD /* FakePresenter.swift in Sources */,
+				DE773583255ADFC20022B1B2 /* FakePanModalCoordinator.swift in Sources */,
 				DD0DD119249D4143003899B4 /* ListSizeControllerTests.swift in Sources */,
 				0CE9D37C2543463E00EDA062 /* NavigationCoordinatorWrapperTests.swift in Sources */,
 			);
@@ -1299,6 +1329,7 @@
 				F5CE47C6233E561C00983F72 /* UserListRepository.swift in Sources */,
 				F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */,
 				F576F872226DEFA90015D14E /* TestUserManager.swift in Sources */,
+				DE77357D255AD9480022B1B2 /* SettingsVC.swift in Sources */,
 				F576F8C7226DF0050015D14E /* WorkoutFilter.swift in Sources */,
 				F576F8CA226DF0050015D14E /* UserAuthorization.swift in Sources */,
 				F576F908226E165E0015D14E /* UpdateFilterPresenter.swift in Sources */,
@@ -1320,6 +1351,7 @@
 			files = (
 				F595F45C237DCE4E00A424E2 /* ImageLabelBorderCell.swift in Sources */,
 				F5F08AF423192C4900C249E9 /* Coordinator.swift in Sources */,
+				DE77355D255AAA010022B1B2 /* PanModalNavigationCollectionVC.swift in Sources */,
 				F562CF11234E2A3000402122 /* LegacyListController.swift in Sources */,
 				F595F469237DCE4E00A424E2 /* TextInputCell.swift in Sources */,
 				F5DA2B9D226D367600BA461A /* ListModelSectionController.swift in Sources */,
@@ -1344,6 +1376,7 @@
 				0CE9D3782543462600EDA062 /* NavigationCoordinatorWrapper.swift in Sources */,
 				F595F465237DCE4E00A424E2 /* SeparatorCell.swift in Sources */,
 				F595F45E237DCE4E00A424E2 /* ImageTextCardCell.swift in Sources */,
+				DE773563255ABAAC0022B1B2 /* PanModalNavigator.swift in Sources */,
 				F5848577233A6673001DBF1E /* ListSectionWrapper.swift in Sources */,
 				F562CF3C2354C8C200402122 /* SwiftUICell.swift in Sources */,
 				F5EF2DB22344FC4500A0073E /* BaseCoordinator.swift in Sources */,
@@ -1358,13 +1391,16 @@
 				F5EB49E52386A0600029BAAD /* ListCellSizeController.swift in Sources */,
 				F5EF2DB52344FC4500A0073E /* ListPresenter.swift in Sources */,
 				F5DA2B9C226D367600BA461A /* ListViewLayoutAttributes.swift in Sources */,
+				DE773569255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
 				F595F45D237DCE4E00A424E2 /* SegmentedControlCell.swift in Sources */,
 				F5AF6431235E414A0042F342 /* BasicNavigator.swift in Sources */,
+				DE77358D255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift in Sources */,
 				F595F462237DCE4E00A424E2 /* BaseListCell.swift in Sources */,
 				F5EF2DB32344FC4500A0073E /* BaseViewController.swift in Sources */,
 				F595F46D237DCE4E00A424E2 /* LabelCell.swift in Sources */,
 				F5DA2B9E226D367600BA461A /* ListSection.swift in Sources */,
+				DE773571255AC54E0022B1B2 /* CoordinatorNavigator+Extension.swift in Sources */,
 				F595F46B237DCE4E00A424E2 /* TextSeparatorCell.swift in Sources */,
 				DDBAF41F24940DE600C2818F /* NavigationCoordinator.swift in Sources */,
 				F595F467237DCE4E00A424E2 /* HorizontalCollectionCell.swift in Sources */,

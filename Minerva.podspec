@@ -66,6 +66,20 @@ Pod::Spec.new do |s|
     ss.tvos.frameworks = 'Foundation', 'UIKit'
   end
 
+  s.subspec 'PanModal' do |ss|
+    ss.source_files = 'Source/PanModal/**/*.swift'
+
+    ss.dependency 'Minerva/Coordination'
+    ss.dependency 'Minerva/List'
+
+    ss.dependency 'PanModal'
+    ss.dependency 'RxRelay'
+    ss.dependency 'RxSwift'
+
+    ss.ios.deployment_target = '11.0'
+    ss.ios.frameworks = 'Foundation', 'UIKit'
+  end
+
   s.subspec 'Swipe' do |ss|
     ss.source_files = 'Source/Swipe/**/*.swift'
 

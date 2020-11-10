@@ -15,7 +15,7 @@ public protocol SettingsCoordinatorDelegate: AnyObject {
   )
 }
 
-public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, CollectionViewController>
+public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, SettingsVC>
 {
 
   public weak var delegate: SettingsCoordinatorDelegate?
@@ -29,7 +29,7 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
     self.dataManager = dataManager
 
     let presenter = SettingsPresenter(dataManager: dataManager)
-    let viewController = CollectionViewController()
+    let viewController = SettingsVC()
     let listController = LegacyListController()
     super
       .init(
@@ -44,7 +44,13 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
       .disposed(
         by: disposeBag
       )
-    viewController.title = "Settings"
+
+    viewController.actionRelay
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [weak self] in self?.handle($0) })
+      .disposed(
+        by: disposeBag
+      )
   }
 
   // MARK: - Private
@@ -89,23 +95,52 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Colle
       .disposed(by: disposeBag)
   }
 
-  private func displayUserUpdatePopup(for user: User) {
-    let navigator = BasicNavigator(parent: self.navigator)
+  private func displayUserUpdatePopup(for user: User, indexPath: IndexPath) {
+    guard let cell = viewController.collectionView.cellForItem(at: indexPath) else {
+      return
+    }
     let coordinator = UpdateUserCoordinator(
       navigator: navigator,
       dataManager: dataManager,
-      user: user
+      user: user,
+      padDisplayMode: .popover(type: .view(sourceView: cell, sourceRect: cell.bounds))
     )
-    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
+    presentPanModal(coordinator)
   }
+
+  private func displayUserUpdatePopup(for user: User, barButtonItem: UIBarButtonItem) {
+    let coordinator = UpdateUserCoordinator(
+      navigator: navigator,
+      dataManager: dataManager,
+      user: user,
+      padDisplayMode: .popover(type: .barButtonItem(item: barButtonItem))
+    )
+    presentPanModal(coordinator)
+  }
+
   private func handle(_ action: SettingsPresenter.Action) {
     switch action {
     case .deleteAccount:
       deleteUser()
     case .logout:
       logoutUser()
-    case .update(let user):
-      displayUserUpdatePopup(for: user)
+    case let .update(user, indexPath):
+      displayUserUpdatePopup(for: user, indexPath: indexPath)
+    }
+  }
+
+  private func handle(_ action: SettingsVC.Action) {
+    switch action {
+    case .editUser(let barButtonItem):
+      dataManager.user(withID: dataManager.userAuthorization.userID)
+        .observeOn(MainScheduler.instance)
+        .subscribe(
+          onSuccess: { [weak self] (user: User?) -> Void in
+            guard let strongSelf = self, let user = user else { return }
+            strongSelf.displayUserUpdatePopup(for: user, barButtonItem: barButtonItem)
+          }
+        )
+        .disposed(by: disposeBag)
     }
   }
 }

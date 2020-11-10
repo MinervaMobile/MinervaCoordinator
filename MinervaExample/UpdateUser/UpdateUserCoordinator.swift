@@ -9,7 +9,7 @@ import Minerva
 import RxSwift
 import UIKit
 
-public final class UpdateUserCoordinator: MainCoordinator<
+public final class UpdateUserCoordinator: PanModalCollectionCoordinator<
   UpdateUserPresenter, CollectionViewController
 >
 {
@@ -18,17 +18,23 @@ public final class UpdateUserCoordinator: MainCoordinator<
 
   // MARK: - Lifecycle
 
-  public init(navigator: Navigator, dataManager: DataManager, user: User) {
+  public init(
+    navigator: Navigator,
+    dataManager: DataManager,
+    user: User,
+    padDisplayMode: PanModalNavigator.PadDisplayMode = .modal
+  ) {
     self.dataManager = dataManager
     let presenter = UpdateUserPresenter(user: user)
     let viewController = CollectionViewController()
     let listController = LegacyListController()
     super
       .init(
-        navigator: navigator,
-        viewController: viewController,
+        parentNavigator: navigator,
+        collectionViewController: viewController,
         presenter: presenter,
-        listController: listController
+        listController: listController,
+        padDisplayMode: padDisplayMode
       )
     presenter.actions
       .observeOn(MainScheduler.instance)

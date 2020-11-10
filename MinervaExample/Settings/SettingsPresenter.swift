@@ -14,7 +14,7 @@ public final class SettingsPresenter: ListPresenter {
   public enum Action {
     case deleteAccount
     case logout
-    case update(user: User)
+    case update(user: User, indexPath: IndexPath)
   }
 
   private let actionsRelay = PublishRelay<Action>()
@@ -53,9 +53,9 @@ public final class SettingsPresenter: ListPresenter {
       var cellModels = [ListCellModel]()
 
       let nameCellModel = SwiftUITextCellModel(title: "Name", subtitle: user.email)
-      nameCellModel.selectionAction = { [weak self] _, _ -> Void in
+      nameCellModel.selectionAction = { [weak self] _, indexPath -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.actionsRelay.accept(.update(user: user))
+        strongSelf.actionsRelay.accept(.update(user: user, indexPath: indexPath))
       }
       cellModels.append(nameCellModel)
 
@@ -63,9 +63,9 @@ public final class SettingsPresenter: ListPresenter {
         title: "Daily Calories",
         subtitle: String(user.dailyCalories)
       )
-      caloriesCellModel.selectionAction = { [weak self] _, _ -> Void in
+      caloriesCellModel.selectionAction = { [weak self] _, indexPath -> Void in
         guard let strongSelf = self else { return }
-        strongSelf.actionsRelay.accept(.update(user: user))
+        strongSelf.actionsRelay.accept(.update(user: user, indexPath: indexPath))
       }
       cellModels.append(caloriesCellModel)
 
