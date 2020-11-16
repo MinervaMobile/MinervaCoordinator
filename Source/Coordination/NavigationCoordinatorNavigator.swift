@@ -10,10 +10,12 @@ import UIKit
 open class NavigationCoordinatorNavigator: NavigatorCommonImpl {
   public weak var navigationController: UINavigationController? { weakNavigationController }
 
-  override public init(
+  public init(
     parent: Navigator?,
-    navigationController: UINavigationController = UINavigationController()
+    navigationController: UINavigationController = UINavigationController(),
+    modalPresentationStyle: UIModalPresentationStyle
   ) {
+    navigationController.modalPresentationStyle = modalPresentationStyle
     super.init(parent: parent, navigationController: navigationController)
   }
 }

@@ -25,11 +25,15 @@ open class NavigationCoordinator: NSObject, CoordinatorNavigator, CoordinatorPre
   public var childCoordinators: [Coordinator] = []
   private unowned let navigationController: UINavigationController
 
-  public init(navigationController: UINavigationController = UINavigationController()) {
+  public init(
+    navigationController: UINavigationController = UINavigationController(),
+    modalPresentationStyle: UIModalPresentationStyle
+  ) {
     self.navigationController = navigationController
     self.navigator = NavigationCoordinatorNavigator(
       parent: nil,
-      navigationController: navigationController
+      navigationController: navigationController,
+      modalPresentationStyle: modalPresentationStyle
     )
 
     super.init()
