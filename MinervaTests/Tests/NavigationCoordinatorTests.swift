@@ -17,7 +17,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
   override public func setUp() {
     super.setUp()
-    navigator = NavigationCoordinatorNavigator(parent: nil)
+    navigator = NavigationCoordinatorNavigator(parent: nil, modalPresentationStyle: .automatic)
     rootCoordinator = FakeCoordinator(navigator: navigator)
     navigator.setViewControllers([rootCoordinator.viewController], animated: false, completion: nil)
     UIApplication.shared.windows.first?.rootViewController = navigator.navigationController
@@ -50,7 +50,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
   public func testPresentationFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let navigator = NavigationCoordinatorNavigator(parent: nil)
+    let navigator = NavigationCoordinatorNavigator(parent: nil, modalPresentationStyle: .automatic)
     let childCoordinator = FakeCoordinator()
     let presentationExpectation = expectation(description: "Presentation")
     navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
@@ -94,7 +94,10 @@ public final class NavigationCoordinatorTests: XCTestCase {
   public func testDismissalFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     let childCoordinator = FakeCoordinator()
-    let navigator = NavigationCoordinatorNavigator(parent: rootCoordinator.navigator)
+    let navigator = NavigationCoordinatorNavigator(
+      parent: rootCoordinator.navigator,
+      modalPresentationStyle: .automatic
+    )
     let presentationExpectation = expectation(description: "Presentation")
     navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
     rootCoordinator.present(childCoordinator, animated: false) {
