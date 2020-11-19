@@ -17,6 +17,8 @@ import UIKit
 ///
 /// This will tie the lifetime of the Coordinators to the lifetime of the presentation of the navigation controller.
 open class NavigationCoordinator: NSObject, CoordinatorNavigator, CoordinatorPresentable {
+  public typealias ModalPresentationStyleConfig = (UITraitCollection) -> UIModalPresentationStyle
+
   public let navigator: Navigator
   public var viewController: UINavigationController { navigationController }
   public weak var presentedCoordinator: BaseCoordinatorPresentable?
@@ -25,15 +27,16 @@ open class NavigationCoordinator: NSObject, CoordinatorNavigator, CoordinatorPre
   public var childCoordinators: [Coordinator] = []
   private unowned let navigationController: UINavigationController
 
+
   public init(
     navigationController: UINavigationController = UINavigationController(),
-    modalPresentationStyle: UIModalPresentationStyle
+    modalPresentationStyleConfig: ModalPresentationStyleConfig
   ) {
     self.navigationController = navigationController
     self.navigator = NavigationCoordinatorNavigator(
       parent: nil,
       navigationController: navigationController,
-      modalPresentationStyle: modalPresentationStyle
+      modalPresentationStyle: modalPresentationStyleConfig(navigationController.traitCollection)
     )
 
     super.init()
