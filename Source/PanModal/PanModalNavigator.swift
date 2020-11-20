@@ -28,11 +28,13 @@ open class PanModalNavigator: BasicNavigator {
       switch type {
       case let .view(sourceView, sourceRect):
         navigationController.popoverPresentationController?.sourceRect = sourceRect
-        navigationController.popoverPresentationController?.sourceView = sourceView ?? navigationController.view
+        navigationController.popoverPresentationController?.sourceView =
+          sourceView ?? navigationController.view
       case .barButtonItem(let item):
         navigationController.popoverPresentationController?.barButtonItem = item
       }
-      navigationController.popoverPresentationController?.delegate = PanModalPresentationDelegate.default
+      navigationController.popoverPresentationController?.delegate =
+        PanModalPresentationDelegate.default
     } else {
       navigationController.modalPresentationStyle = .custom
       navigationController.modalPresentationCapturesStatusBarAppearance = true

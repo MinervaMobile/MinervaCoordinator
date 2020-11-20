@@ -8,19 +8,22 @@ import UIKit
 
 /// Puts a Coordinator's VC in a navigator's navigation controller.
 public final class NavigationCoordinatorWrapper: CoordinatorPresentable {
-    public let viewController: UINavigationController
-    public weak var parent: Coordinator?
-    public var childCoordinators = [Coordinator]()
+  public let viewController: UINavigationController
+  public weak var parent: Coordinator?
+  public var childCoordinators = [Coordinator]()
 
-    private let navigator: Navigator
+  private let navigator: Navigator
 
-    public init(wrapped: (Navigator) -> BaseCoordinatorPresentable) {
-        let basicNavigator = BasicNavigator(parent: nil)
-        self.viewController = basicNavigator.navigationController
-        self.navigator = basicNavigator
+  public init(wrapped: (Navigator) -> BaseCoordinatorPresentable) {
+    let basicNavigator = BasicNavigator(parent: nil)
+    self.viewController = basicNavigator.navigationController
+    self.navigator = basicNavigator
 
-        let coordinator = wrapped(basicNavigator)
-        basicNavigator.navigationController.setViewControllers([coordinator.baseViewController], animated: false)
-        childCoordinators.append(coordinator)
-    }
+    let coordinator = wrapped(basicNavigator)
+    basicNavigator.navigationController.setViewControllers(
+      [coordinator.baseViewController],
+      animated: false
+    )
+    childCoordinators.append(coordinator)
+  }
 }

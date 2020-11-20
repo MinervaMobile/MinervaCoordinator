@@ -15,8 +15,7 @@ public protocol SettingsCoordinatorDelegate: AnyObject {
   )
 }
 
-public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, SettingsVC>
-{
+public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, SettingsVC> {
 
   public weak var delegate: SettingsCoordinatorDelegate?
   private let userManager: UserManager

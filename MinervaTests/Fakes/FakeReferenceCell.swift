@@ -28,7 +28,7 @@ public class FakeReferenceCellModel: ListTypedCellModel {
 }
 
 public final class FakeReferenceCell: ListCollectionViewCell, ListTypedCell, ListResizableCell {
-  public var resizableDelegate: ListResizableCellDelegate?
+  public weak var resizableDelegate: ListResizableCellDelegate?
 
   public func bind(model: FakeReferenceCellModel, sizing: Bool) {}
   public func bindViewModel(_ viewModel: Any) { bind(viewModel) }

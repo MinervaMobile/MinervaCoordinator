@@ -108,6 +108,7 @@ extension NavigatorCommonImpl: Navigator {
     }
   }
 
+  @discardableResult
   public func popToRootViewController(animated: Bool) -> [UIViewController]? {
     guard
       let poppedControllers = weakNavigationController?.popToRootViewController(animated: animated)

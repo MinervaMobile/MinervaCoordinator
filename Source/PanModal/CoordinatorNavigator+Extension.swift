@@ -9,7 +9,7 @@ import PanModal
 import UIKit
 
 extension CoordinatorNavigator {
- public func presentPanModal(
+  public func presentPanModal(
     _ coordinator: PanModalCoordinatorPresentable,
     animated: Bool = true,
     animationCompletion: AnimationCompletion? = nil

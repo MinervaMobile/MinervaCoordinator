@@ -275,7 +275,7 @@ public final class ListTests: CommonSetupTestCase {
     wait(for: [updateExpectation], timeout: 5)
 
     guard let indexPath = listController.indexPath(for: cellModel),
-          let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeReferenceCell
+      let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeReferenceCell
     else {
       XCTFail("Missing the cell")
       return

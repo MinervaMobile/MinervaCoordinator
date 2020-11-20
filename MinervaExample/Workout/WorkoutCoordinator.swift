@@ -6,11 +6,18 @@
 
 import Foundation
 import Minerva
+import RxRelay
 import RxSwift
 import UIKit
 
 public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
 
+  public enum Action {
+    case displayViewWorkout(workout: Workout)
+    case displayNewWorkout
+  }
+
+  public let actionRelay = PublishRelay<Action>()
   private let dataManager: DataManager
 
   // MARK: - Lifecycle
@@ -50,35 +57,13 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
 
   private func handle(action: WorkoutPresenter.Action) {
     switch action {
-    case .createWorkout(let userID):
-      displayWorkoutPopup(with: nil, forUserID: userID)
+    case .createWorkout:
+      actionRelay.accept(.displayNewWorkout)
     case .editWorkout(let workout):
-      displayWorkoutPopup(with: workout, forUserID: workout.userID)
+      actionRelay.accept(.displayViewWorkout(workout: workout))
     case .editFilter:
       displayFilterSelection()
     }
-  }
-
-  private func displayWorkoutPopup(with workout: Workout?, forUserID userID: String) {
-    let editing = workout != nil
-    let workout =
-      workout
-      ?? WorkoutProto(
-        workoutID: UUID().uuidString,
-        userID: userID,
-        text: "",
-        calories: 0,
-        date: Date()
-      )
-
-    let navigator = BasicNavigator(parent: self.navigator)
-    let coordinator = EditWorkoutCoordinator(
-      navigator: navigator,
-      dataManager: dataManager,
-      workout: workout,
-      editing: editing
-    )
-    presentWithCloseButton(coordinator, modalPresentationStyle: .safeAutomatic)
   }
 
   private func displayFilterSelection() {

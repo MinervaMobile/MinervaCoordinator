@@ -100,6 +100,15 @@ extension CoordinatorNavigator {
     presentedCoordinator = nil
   }
 
+  /// Recursively dismiss any presented coordintor and/or any child which has a presented coordinator.
+  /// - Parameter animated: Whether dismissal should be animated.
+  public func dismissAllPresentedCoordinators(animated: Bool = false) {
+    guard let presentedCoordinator = presentedCoordinator else { return }
+    dismiss(presentedCoordinator, animated: animated)
+    childCoordinators.compactMap { $0 as? CoordinatorNavigator }
+      .forEach { $0.dismissAllPresentedCoordinators(animated: animated) }
+  }
+
   /// Pushes a coordinator onto the navigators navigation controller.
   /// - Parameter coordinator: The coordinator to push onto the navigation stack.
   /// - Parameter animated: Whether or not to animate the transition of the coordinators view controller.

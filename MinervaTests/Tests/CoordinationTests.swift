@@ -66,6 +66,26 @@ public final class CoordinationTests: XCTestCase {
     XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
   }
 
+  public func testSplitViewPresentation() {
+    XCTAssertNotNil(rootCoordinator.viewController.view)
+    let navigator = BasicNavigator(parent: rootCoordinator.navigator)
+    let childCoordinator = FakeSplitViewCoordinator(navigator: navigator)
+    let presentationExpectation = expectation(description: "Presentation")
+    rootCoordinator.present(childCoordinator, animated: false) {
+      presentationExpectation.fulfill()
+    }
+    wait(for: [presentationExpectation], timeout: 5)
+
+    XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
+
+    let dismissalExpectation = expectation(description: "Dismissal")
+    rootCoordinator.dismiss(childCoordinator) {
+      dismissalExpectation.fulfill()
+    }
+    wait(for: [dismissalExpectation], timeout: 5)
+    XCTAssertTrue(rootCoordinator.childCoordinators.isEmpty)
+  }
+
   public func testPresentationFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     let navigator = BasicNavigator(parent: nil)

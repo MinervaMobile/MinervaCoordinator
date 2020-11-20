@@ -13,7 +13,7 @@ internal protocol ListModelSectionControllerDelegate: AnyObject {
     _ sectionController: ListModelSectionController,
     didInvalidateSizeAt indexPath: IndexPath
   )
-    
+
   func sectionControllerCompletedMove(
     _ sectionController: ListModelSectionController,
     for cellModel: ListCellModel,

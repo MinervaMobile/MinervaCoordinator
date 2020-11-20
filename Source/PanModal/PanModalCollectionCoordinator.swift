@@ -25,20 +25,23 @@ open class PanModalCollectionCoordinator<T: ListPresenter, U: CollectionViewCont
     padDisplayMode: PanModalNavigator.PadDisplayMode = .modal
   ) {
 
-    let navigationController = PanModalNavigationCollectionVC(rootViewController: collectionViewController)
+    let navigationController = PanModalNavigationCollectionVC(
+      rootViewController: collectionViewController
+    )
     self.panModalPresentableVC = navigationController
-    
+
     let navigator = PanModalNavigator(
       parent: parentNavigator,
       navigationController: navigationController,
       padDisplayMode: padDisplayMode
     )
 
-    super.init(
-      navigator: navigator,
-      viewController: collectionViewController,
-      presenter: presenter,
-      listController: listController
-    )
+    super
+      .init(
+        navigator: navigator,
+        viewController: collectionViewController,
+        presenter: presenter,
+        listController: listController
+      )
   }
 }

@@ -28,8 +28,17 @@
 		DE77357D255AD9480022B1B2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77357C255AD9480022B1B2 /* SettingsVC.swift */; };
 		DE773583255ADFC20022B1B2 /* FakePanModalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE773582255ADFC20022B1B2 /* FakePanModalCoordinator.swift */; };
 		DE77358D255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77358C255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift */; };
+		DE8A9ED22567B5D0002D2416 /* FakeSplitViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8A9ED12567B5D0002D2416 /* FakeSplitViewCoordinator.swift */; };
 		DE9A583D24172E1400E2C81E /* UserListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583C24172E1400E2C81E /* UserListCellModel.swift */; };
 		DE9A583F24172F4000E2C81E /* WorkoutCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */; };
+		DEFE35EF255CFA3A000CA31A /* SplitViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE35ED255CFA3A000CA31A /* SplitViewCoordinator.swift */; };
+		DEFE3604255CFB56000CA31A /* WorkoutSplitCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3603255CFB56000CA31A /* WorkoutSplitCoordinator.swift */; };
+		DEFE360A255D17B6000CA31A /* SplitViewContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3609255D17B6000CA31A /* SplitViewContainerViewController.swift */; };
+		DEFE361B255D1E9F000CA31A /* WorkoutDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE361A255D1E9F000CA31A /* WorkoutDetailsCoordinator.swift */; };
+		DEFE361F255D1EAE000CA31A /* WorkoutDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE361E255D1EAE000CA31A /* WorkoutDetailsPresenter.swift */; };
+		DEFE3623255D2311000CA31A /* SplitNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3622255D2311000CA31A /* SplitNavigator.swift */; };
+		DEFE3628255D494B000CA31A /* DefaultSplitDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3627255D494B000CA31A /* DefaultSplitDetailCoordinator.swift */; };
+		DEFE362E255D4954000CA31A /* DefaultSplitDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE362D255D4954000CA31A /* DefaultSplitDetailPresenter.swift */; };
 		F501F891233BE77200012C5E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F890233BE77200012C5E /* MainCoordinator.swift */; };
 		F501F893233BF47700012C5E /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F892233BF47700012C5E /* SignInCoordinator.swift */; };
 		F501F898233C016F00012C5E /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F501F897233C016F00012C5E /* SettingsCoordinator.swift */; };
@@ -248,8 +257,17 @@
 		DE77357C255AD9480022B1B2 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DE773582255ADFC20022B1B2 /* FakePanModalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePanModalCoordinator.swift; sourceTree = "<group>"; };
 		DE77358C255AF7B60022B1B2 /* PanModalCoordinatorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalCoordinatorPresentable.swift; sourceTree = "<group>"; };
+		DE8A9ED12567B5D0002D2416 /* FakeSplitViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSplitViewCoordinator.swift; sourceTree = "<group>"; };
 		DE9A583C24172E1400E2C81E /* UserListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellModel.swift; sourceTree = "<group>"; };
 		DE9A583E24172F4000E2C81E /* WorkoutCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCellModel.swift; sourceTree = "<group>"; };
+		DEFE35ED255CFA3A000CA31A /* SplitViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewCoordinator.swift; sourceTree = "<group>"; };
+		DEFE3603255CFB56000CA31A /* WorkoutSplitCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSplitCoordinator.swift; sourceTree = "<group>"; };
+		DEFE3609255D17B6000CA31A /* SplitViewContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainerViewController.swift; sourceTree = "<group>"; };
+		DEFE361A255D1E9F000CA31A /* WorkoutDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsCoordinator.swift; sourceTree = "<group>"; };
+		DEFE361E255D1EAE000CA31A /* WorkoutDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsPresenter.swift; sourceTree = "<group>"; };
+		DEFE3622255D2311000CA31A /* SplitNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitNavigator.swift; sourceTree = "<group>"; };
+		DEFE3627255D494B000CA31A /* DefaultSplitDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSplitDetailCoordinator.swift; sourceTree = "<group>"; };
+		DEFE362D255D4954000CA31A /* DefaultSplitDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSplitDetailPresenter.swift; sourceTree = "<group>"; };
 		F501F880233BE18800012C5E /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		F501F882233BE1BC00012C5E /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		F501F886233BE23700012C5E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -467,6 +485,42 @@
 			path = PanModal;
 			sourceTree = "<group>";
 		};
+		DEFE35E5255CFA0A000CA31A /* SplitView */ = {
+			isa = PBXGroup;
+			children = (
+				DEFE3622255D2311000CA31A /* SplitNavigator.swift */,
+				DEFE3609255D17B6000CA31A /* SplitViewContainerViewController.swift */,
+				DEFE35ED255CFA3A000CA31A /* SplitViewCoordinator.swift */,
+			);
+			path = SplitView;
+			sourceTree = "<group>";
+		};
+		DEFE3602255CFB3F000CA31A /* WorkoutSplitCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				DEFE3603255CFB56000CA31A /* WorkoutSplitCoordinator.swift */,
+			);
+			path = WorkoutSplitCoordinator;
+			sourceTree = "<group>";
+		};
+		DEFE3619255D1E83000CA31A /* WorkoutDetails */ = {
+			isa = PBXGroup;
+			children = (
+				DEFE361A255D1E9F000CA31A /* WorkoutDetailsCoordinator.swift */,
+				DEFE361E255D1EAE000CA31A /* WorkoutDetailsPresenter.swift */,
+			);
+			path = WorkoutDetails;
+			sourceTree = "<group>";
+		};
+		DEFE3626255D4924000CA31A /* DefaultSplitDetail */ = {
+			isa = PBXGroup;
+			children = (
+				DEFE3627255D494B000CA31A /* DefaultSplitDetailCoordinator.swift */,
+				DEFE362D255D4954000CA31A /* DefaultSplitDetailPresenter.swift */,
+			);
+			path = DefaultSplitDetail;
+			sourceTree = "<group>";
+		};
 		F501F894233BFF6400012C5E /* UserList */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,6 +605,7 @@
 				F576F933226E16960015D14E /* Cells */,
 				F576F945226E16970015D14E /* Core */,
 				F5C908262343C5D30038BD89 /* CreateUser */,
+				DEFE3626255D4924000CA31A /* DefaultSplitDetail */,
 				F5C908392343E3F30038BD89 /* EditWorkout */,
 				F576F8FD226DF1020015D14E /* Extensions */,
 				F576F902226E165E0015D14E /* Filter */,
@@ -567,6 +622,8 @@
 				F576F986226E16BB0015D14E /* User */,
 				F501F894233BFF6400012C5E /* UserList */,
 				F576F90B226E16820015D14E /* Workout */,
+				DEFE3619255D1E83000CA31A /* WorkoutDetails */,
+				DEFE3602255CFB3F000CA31A /* WorkoutSplitCoordinator */,
 			);
 			path = MinervaExample;
 			sourceTree = "<group>";
@@ -581,6 +638,7 @@
 				F5DA2B88226D362900BA461A /* List */,
 				F5587D5822502C5A004223E5 /* Minerva.h */,
 				DE77355B255AA9920022B1B2 /* PanModal */,
+				DEFE35E5255CFA0A000CA31A /* SplitView */,
 				F595F470237DCE5F00A424E2 /* Swipe */,
 			);
 			name = Minerva;
@@ -867,6 +925,7 @@
 				F5EB49DA2383958A0029BAAD /* FakePresenter.swift */,
 				1AC5D490252D0A2A00DCB974 /* FakeReferenceCell.swift */,
 				DDAB55DC24A52552004BB933 /* FakeSizeManager.swift */,
+				DE8A9ED12567B5D0002D2416 /* FakeSplitViewCoordinator.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -894,11 +953,11 @@
 		F5F08AF223192C2900C249E9 /* Coordination */ = {
 			isa = PBXGroup;
 			children = (
-				0CE9D3772543462600EDA062 /* NavigationCoordinatorWrapper.swift */,
 				F5AF6430235E414A0042F342 /* BasicNavigator.swift */,
 				F5F08AF323192C4900C249E9 /* Coordinator.swift */,
 				DDBAF41D24940DE600C2818F /* NavigationCoordinator.swift */,
 				DDBAF41C24940DE600C2818F /* NavigationCoordinatorNavigator.swift */,
+				0CE9D3772543462600EDA062 /* NavigationCoordinatorWrapper.swift */,
 				F5F08AF523192C9B00C249E9 /* Navigator.swift */,
 			);
 			path = Coordination;
@@ -1263,6 +1322,7 @@
 				F5EB49E12385A9B00029BAAD /* ListTests.swift in Sources */,
 				F5EB49DD238395920029BAAD /* FakeCoordinator.swift in Sources */,
 				F53EAF04237B01A200CB7FFA /* IntegrationTests.swift in Sources */,
+				DE8A9ED22567B5D0002D2416 /* FakeSplitViewCoordinator.swift in Sources */,
 				DD2C235324ABBD0D008602EE /* CommonSetupTestCase.swift in Sources */,
 				F5EB49DF2383FC1A0029BAAD /* CoordinationTests.swift in Sources */,
 				DDBAF4232496BE8100C2818F /* NavigationCoordinatorTests.swift in Sources */,
@@ -1285,10 +1345,12 @@
 				F576F89A226DF0050015D14E /* Workout.pb.swift in Sources */,
 				F576F905226E165E0015D14E /* FilterPresenter.swift in Sources */,
 				F501F89E233C0E5900012C5E /* FilterCoordinator.swift in Sources */,
+				DEFE361F255D1EAE000CA31A /* WorkoutDetailsPresenter.swift in Sources */,
 				F576F897226DF0050015D14E /* UserRole.pb.swift in Sources */,
 				F501F89A233C05E500012C5E /* UserListCoordinator.swift in Sources */,
 				F576F8BE226DF0050015D14E /* Workout.swift in Sources */,
 				F576F8C4226DF0050015D14E /* UserCredentials.swift in Sources */,
+				DEFE3628255D494B000CA31A /* DefaultSplitDetailCoordinator.swift in Sources */,
 				F5587D1322502B10004223E5 /* AppDelegate.swift in Sources */,
 				F576F924226E16820015D14E /* WorkoutVC.swift in Sources */,
 				F576F998226E16BB0015D14E /* CreateUserPresenter.swift in Sources */,
@@ -1339,9 +1401,12 @@
 				F576F992226E16BB0015D14E /* UserListVC.swift in Sources */,
 				F576F8FA226DF0B50015D14E /* SignInPresenter.swift in Sources */,
 				F576F97D226E16970015D14E /* Asset.swift in Sources */,
+				DEFE3604255CFB56000CA31A /* WorkoutSplitCoordinator.swift in Sources */,
 				F5C908252343C5CD0038BD89 /* CreateUserCoordinator.swift in Sources */,
+				DEFE362E255D4954000CA31A /* DefaultSplitDetailPresenter.swift in Sources */,
 				F576F98C226E16BB0015D14E /* UserVC.swift in Sources */,
 				F576F8C1226DF0050015D14E /* User.swift in Sources */,
+				DEFE361B255D1E9F000CA31A /* WorkoutDetailsCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,6 +1427,7 @@
 				F5DA2BA0226D367600BA461A /* ListCellModel.swift in Sources */,
 				F595F46C237DCE4E00A424E2 /* DetailedLabelCell.swift in Sources */,
 				F595F46A237DCE4E00A424E2 /* ButtonImageCell.swift in Sources */,
+				DEFE360A255D17B6000CA31A /* SplitViewContainerViewController.swift in Sources */,
 				F5DA2B9B226D367600BA461A /* ListCell.swift in Sources */,
 				F595F46E237DCE4E00A424E2 /* DatePickerCell.swift in Sources */,
 				DDBAF41E24940DE600C2818F /* NavigationCoordinatorNavigator.swift in Sources */,
@@ -1374,6 +1440,7 @@
 				F595F475237DCE8900A424E2 /* SwipeableDetailedLabelCell.swift in Sources */,
 				F5EF2DB72344FC4500A0073E /* ListViewController.swift in Sources */,
 				0CE9D3782543462600EDA062 /* NavigationCoordinatorWrapper.swift in Sources */,
+				DEFE3623255D2311000CA31A /* SplitNavigator.swift in Sources */,
 				F595F465237DCE4E00A424E2 /* SeparatorCell.swift in Sources */,
 				F595F45E237DCE4E00A424E2 /* ImageTextCardCell.swift in Sources */,
 				DE773563255ABAAC0022B1B2 /* PanModalNavigator.swift in Sources */,
@@ -1392,6 +1459,7 @@
 				F5EF2DB52344FC4500A0073E /* ListPresenter.swift in Sources */,
 				F5DA2B9C226D367600BA461A /* ListViewLayoutAttributes.swift in Sources */,
 				DE773569255ABBC90022B1B2 /* PanModalCollectionCoordinator.swift in Sources */,
+				DEFE35EF255CFA3A000CA31A /* SplitViewCoordinator.swift in Sources */,
 				F5DA2B98226D367600BA461A /* ListController.swift in Sources */,
 				F595F45D237DCE4E00A424E2 /* SegmentedControlCell.swift in Sources */,
 				F5AF6431235E414A0042F342 /* BasicNavigator.swift in Sources */,

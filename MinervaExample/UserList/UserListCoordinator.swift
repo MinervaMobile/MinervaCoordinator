@@ -173,12 +173,23 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
   }
 
   private func displayWorkoutList(forUserID userID: String, title: String) {
-    let coordinator = WorkoutCoordinator(
+    let navigator = BasicNavigator(parent: self.navigator)
+    let coordinator = WorkoutSplitCoordinator(
       navigator: navigator,
       dataManager: dataManager,
       userID: userID
     )
+
     coordinator.viewController.title = title
-    push(coordinator, animated: true)
+    coordinator.masterCoordinator.addCloseButton { [weak self, weak coordinator] _ in
+      guard let coordinator = coordinator else { return }
+      self?.dismiss(coordinator)
+    }
+    present(
+      coordinator,
+      modalPresentationStyle: .fullScreen,
+      animated: true,
+      animationCompletion: nil
+    )
   }
 }

@@ -36,16 +36,17 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
 
   override public func viewDidLoad() {
     super.viewDidLoad()
-    observer = rootViewController?.collectionView.observe(\UICollectionView.contentSize, options: [NSKeyValueObservingOptions.new]) {
-      [weak self] _, change in
-      guard let strongSelf = self, let contentSize = change.newValue, contentSize != .zero,
-        contentSize != change.oldValue
-      else {
-        return
+    observer = rootViewController?.collectionView
+      .observe(\UICollectionView.contentSize, options: [NSKeyValueObservingOptions.new]) {
+        [weak self] _, change in
+        guard let strongSelf = self, let contentSize = change.newValue, contentSize != .zero,
+          contentSize != change.oldValue
+        else {
+          return
+        }
+        strongSelf.panModalSetNeedsLayoutUpdate()
+        strongSelf.panModalTransition(to: .shortForm)
       }
-      strongSelf.panModalSetNeedsLayoutUpdate()
-      strongSelf.panModalTransition(to: .shortForm)
-    }
 
     NotificationCenter.default.addObserver(
       self,
@@ -63,7 +64,9 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
 
   @objc
   private func keyboardWillShow(notification: NSNotification) {
-    guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+    guard
+      let keyboardSize =
+        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
     else {
       return
     }
@@ -103,9 +106,11 @@ extension PanModalNavigationCollectionVC {
   }
 
   public var shortFormHeight: PanModalHeight {
-    let height = rootViewController?.collectionView.collectionViewLayout.collectionViewContentSize.height ?? 0
+    let height =
+      rootViewController?.collectionView.collectionViewLayout.collectionViewContentSize.height ?? 0
     let inset = rootViewController?.view.safeAreaInsets.bottom ?? 0 + keyboardHeight
-    return .contentHeight(height + inset)
+    let navigationBarHeight = navigationBar.frame.height
+    return .contentHeight(height + inset + navigationBarHeight)
   }
 
   public var longFormHeight: PanModalHeight {

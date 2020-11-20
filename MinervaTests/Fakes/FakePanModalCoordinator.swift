@@ -8,7 +8,10 @@ import Foundation
 import Minerva
 import RxSwift
 
-public final class FakePanModalCoordinator: PanModalCollectionCoordinator<FakePresenter, CollectionViewController> {
+public final class FakePanModalCoordinator: PanModalCollectionCoordinator<
+  FakePresenter, CollectionViewController
+>
+{
 
   public var viewDidLoad = false
   public var viewWillAppear = false
