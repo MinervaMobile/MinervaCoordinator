@@ -8,12 +8,13 @@ import Foundation
 import PanModal
 import UIKit
 
-open class PanModalCollectionCoordinator<T: ListPresenter, U: CollectionViewController>: BaseCoordinator<T, U>, PanModalCoordinatorPresentable
+open class PanModalCollectionCoordinator<T: ListPresenter, U: ListViewController>: BaseCoordinator<T, U>, PanModalCoordinatorPresentable
 {
 
   // MARK: - PanModalCoordinatorPresentable
 
   public let panModalPresentableVC: UIViewController & PanModalPresentable
+  public let navigationController: PanModalNavigationCollectionVC
 
   // MARK: - Lifecycle
 
@@ -28,6 +29,7 @@ open class PanModalCollectionCoordinator<T: ListPresenter, U: CollectionViewCont
     let navigationController = PanModalNavigationCollectionVC(
       rootViewController: collectionViewController
     )
+    self.navigationController = navigationController
     self.panModalPresentableVC = navigationController
 
     let navigator = PanModalNavigator(

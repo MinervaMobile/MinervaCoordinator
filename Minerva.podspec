@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
-  s.version = "2.25.0"
+  s.version = "2.26.0"
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.source = { :git => "https://github.com/OptimizeFitness/Minerva.git", :tag => s.version }
 
-  s.default_subspecs = 'Cells', 'Convenience', 'Coordination', 'List', 'Swipe'
+  s.default_subspecs = 'Cells', 'Convenience', 'Coordination', 'List', 'PanModal', 'SplitView', 'Swipe'
 
   s.requires_arc = true
   s.swift_versions = '5.3'
@@ -73,6 +73,19 @@ Pod::Spec.new do |s|
     ss.dependency 'Minerva/List'
 
     ss.dependency 'PanModal'
+    ss.dependency 'RxRelay'
+    ss.dependency 'RxSwift'
+
+    ss.ios.deployment_target = '11.0'
+    ss.ios.frameworks = 'Foundation', 'UIKit'
+  end
+
+  s.subspec 'SplitView' do |ss|
+    ss.source_files = 'Source/SplitView/**/*.swift'
+
+    ss.dependency 'Minerva/Coordination'
+    ss.dependency 'Minerva/List'
+
     ss.dependency 'RxRelay'
     ss.dependency 'RxSwift'
 

@@ -20,11 +20,11 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
   private var keyboardHeight: CGFloat = 0
   private var observer: NSKeyValueObservation?
 
-  public weak var rootViewController: CollectionViewController?
+  public weak var rootViewController: ListViewController?
 
   public let dismissActionRelay = PublishRelay<Action>()
 
-  public init(rootViewController: CollectionViewController) {
+  public init(rootViewController: ListViewController) {
     self.rootViewController = rootViewController
     super.init(rootViewController: rootViewController)
   }
