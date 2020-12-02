@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, WorkoutVC> {
-
   public enum Action {
     case displayViewWorkout(workout: Workout)
     case displayNewWorkout
@@ -59,7 +58,7 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
     switch action {
     case .createWorkout:
       actionRelay.accept(.displayNewWorkout)
-    case .editWorkout(let workout):
+    case let .editWorkout(workout):
       actionRelay.accept(.displayViewWorkout(workout: workout))
     case .editFilter:
       displayFilterSelection()
@@ -75,6 +74,7 @@ public final class WorkoutCoordinator: MainCoordinator<WorkoutPresenter, Workout
 }
 
 // MARK: - FilterCoordinatorDelegate
+
 extension WorkoutCoordinator: FilterCoordinatorDelegate {
   public func filterCoordinator(
     _ filterCoordinator: FilterCoordinator,

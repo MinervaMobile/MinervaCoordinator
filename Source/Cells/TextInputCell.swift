@@ -28,6 +28,7 @@ open class TextInputCellModel: BaseListCellModel {
   fileprivate var attributedPlaceholder: NSAttributedString {
     NSAttributedString(string: placeholder, font: font, fontColor: placeholderTextColor)
   }
+
   public var bottomBorderColor = BehaviorSubject<UIColor?>(value: nil)
 
   public var becomesFirstResponder = false
@@ -82,6 +83,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
     textField.adjustsFontForContentSizeCategory = true
     return textField
   }()
+
   private let bottomBorder: UIView = {
     let bottomBorder = UIView()
     return bottomBorder
@@ -141,6 +143,7 @@ public final class TextInputCell: BaseReactiveListCell<TextInputCellModel> {
 }
 
 // MARK: - Constraints
+
 extension TextInputCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

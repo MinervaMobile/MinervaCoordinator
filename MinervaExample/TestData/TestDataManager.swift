@@ -32,10 +32,10 @@ public final class TestDataManager {
 }
 
 // MARK: - DataManager
-extension TestDataManager: DataManager {
 
+extension TestDataManager: DataManager {
   public func loadUsers(completion: @escaping UsersCompletion) {
-    self.queue.async {
+    queue.async {
       guard self.userAuthorization.role.userEditor else {
         completion([], SystemError.unauthorized)
         return
@@ -43,8 +43,9 @@ extension TestDataManager: DataManager {
       completion(Array(self.testData.idToUserMap.values), nil)
     }
   }
+
   public func loadUser(withID userID: String, completion: @escaping UserCompletion) {
-    self.queue.async {
+    queue.async {
       guard userID == self.userAuthorization.userID || self.userAuthorization.role.userEditor else {
         completion(nil, SystemError.unauthorized)
         return
@@ -52,8 +53,9 @@ extension TestDataManager: DataManager {
       completion(self.testData.idToUserMap[userID], nil)
     }
   }
+
   public func update(user: User, completion: @escaping Completion) {
-    self.queue.async {
+    queue.async {
       guard user.userID == self.userAuthorization.userID || self.userAuthorization.role.userEditor
       else {
         completion(SystemError.unauthorized)
@@ -89,7 +91,7 @@ extension TestDataManager: DataManager {
     role: UserRole,
     completion: @escaping Completion
   ) {
-    self.queue.async {
+    queue.async {
       guard self.userAuthorization.role.userEditor else {
         completion(SystemError.unauthorized)
         return
@@ -125,7 +127,7 @@ extension TestDataManager: DataManager {
   }
 
   public func loadWorkouts(forUserID userID: String, completion: @escaping WorkoutsCompletion) {
-    self.queue.async {
+    queue.async {
       guard userID == self.userAuthorization.userID || self.userAuthorization.role == .admin else {
         completion([], SystemError.unauthorized)
         return
@@ -137,7 +139,7 @@ extension TestDataManager: DataManager {
   }
 
   public func store(workout: Workout, completion: @escaping Completion) {
-    self.queue.async {
+    queue.async {
       guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin
       else {
         completion(SystemError.unauthorized)
@@ -152,7 +154,7 @@ extension TestDataManager: DataManager {
   }
 
   public func delete(workout: Workout, completion: @escaping Completion) {
-    self.queue.async {
+    queue.async {
       guard workout.userID == self.userAuthorization.userID || self.userAuthorization.role == .admin
       else {
         completion(SystemError.unauthorized)
@@ -167,7 +169,7 @@ extension TestDataManager: DataManager {
   }
 
   public func loadImage(forWorkoutID workoutID: String, completion: @escaping ImageCompletion) {
-    self.queue.asyncAfter(deadline: .now() + Double.random(in: 1...5)) {
+    queue.asyncAfter(deadline: .now() + Double.random(in: 1...5)) {
       completion(Asset.Logo.image, nil)
     }
   }
@@ -217,6 +219,7 @@ extension TestDataManager: DataManager {
 }
 
 // MARK: - Private
+
 extension TestDataManager {
   private func notifyForUserChanges() {
     dispatchPrecondition(condition: .onQueue(queue))
@@ -233,6 +236,7 @@ extension TestDataManager {
       }
     }
   }
+
   private func notifyForWorkoutChanges(userID: String) {
     dispatchPrecondition(condition: .onQueue(queue))
     guard let subscriptionIDs = workoutUserIDToSubscriptions[userID] else {
@@ -247,7 +251,7 @@ extension TestDataManager {
     subscriptions: [Subscription<WorkoutsCompletion>]
   ) {
     dispatchPrecondition(condition: .onQueue(queue))
-    let workoutMap = self.testData.idToWorkoutIDMap[userID] ?? [:]
+    let workoutMap = testData.idToWorkoutIDMap[userID] ?? [:]
     let workouts = Array(workoutMap.values)
     DispatchQueue.main.async {
       subscriptions.forEach {

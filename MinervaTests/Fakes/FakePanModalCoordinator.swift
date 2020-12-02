@@ -10,9 +10,7 @@ import RxSwift
 
 public final class FakePanModalCoordinator: PanModalCollectionCoordinator<
   FakePresenter, CollectionViewController
->
-{
-
+> {
   public var viewDidLoad = false
   public var viewWillAppear = false
   public var viewWillDisappear = false
@@ -66,7 +64,6 @@ public final class FakePanModalCoordinator: PanModalCollectionCoordinator<
       viewWillDisappear = true
     case .viewDidAppear:
       viewDidAppear = true
-
     }
   }
 }

@@ -16,15 +16,18 @@ public enum LoadingHUD {
       LoadingHUD.hide(from: view)
     }
   }
+
   public static func show(in view: UIView?) {
     LoadingHUD.show(in: view, withGraceTime: 0)
   }
+
   public static func hide(from view: UIView?) {
     guard let view = view else {
       return
     }
     MBProgressHUD.hide(for: view, animated: true)
   }
+
   public static func show(in view: UIView?, withGraceTime graceTime: TimeInterval) {
     guard let view = view, MBProgressHUD.forView(view) == nil else {
       return

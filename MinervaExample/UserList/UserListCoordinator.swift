@@ -16,7 +16,6 @@ public protocol UserListCoordinatorDelegate: AnyObject {
 }
 
 public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserListVC> {
-
   public weak var delegate: UserListCoordinatorDelegate?
   private let userManager: UserManager
   private let dataManager: DataManager
@@ -68,7 +67,7 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
 
   private func handle(_ state: UserListPresenter.State) {
     switch state {
-    case .failure(let error):
+    case let .failure(error):
       LoadingHUD.hide(from: viewController.view)
       viewController.alert(error, title: "Failed to load")
     case .loaded:
@@ -80,11 +79,11 @@ public final class UserListCoordinator: MainCoordinator<UserListPresenter, UserL
 
   private func handle(_ action: UserListPresenter.Action) {
     switch action {
-    case .delete(let user):
+    case let .delete(user):
       deleteUser(withID: user.userID)
-    case .edit(let user):
+    case let .edit(user):
       displayUserUpdatePopup(for: user)
-    case .view(let user):
+    case let .view(user):
       displayWorkoutList(forUserID: user.userID, title: user.email)
     }
   }

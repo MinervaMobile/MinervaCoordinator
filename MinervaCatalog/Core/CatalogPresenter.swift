@@ -35,7 +35,7 @@ public final class CatalogPresenter: ListPresenter {
       createTextSeparatorCellModelSection(),
       createTextViewCellModelSection(),
       createSwipeableDetailedLabelCellModelSection(),
-      createSwipeableLabelCellModelSection()
+      createSwipeableLabelCellModelSection(),
     ]
   )
 
@@ -85,14 +85,14 @@ public final class CatalogPresenter: ListPresenter {
       string: "Title",
       attributes: [
         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3),
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     let details = NSAttributedString(
       string: "Details",
       attributes: [
         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
-        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel,
       ]
     )
 
@@ -163,14 +163,14 @@ public final class CatalogPresenter: ListPresenter {
       string: "attributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     let selectedAttributedText = NSAttributedString(
       string: "selectedAttributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel,
       ]
     )
     let image = UIImage(systemName: "trash")!
@@ -230,7 +230,7 @@ public final class CatalogPresenter: ListPresenter {
       string: "attributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
 
@@ -253,7 +253,7 @@ public final class CatalogPresenter: ListPresenter {
       string: "attributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
 
@@ -276,7 +276,7 @@ public final class CatalogPresenter: ListPresenter {
       string: "attributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
 
@@ -298,7 +298,7 @@ public final class CatalogPresenter: ListPresenter {
       string: "attributedText",
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
 
@@ -330,7 +330,7 @@ public final class CatalogPresenter: ListPresenter {
       string: text,
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     let image = UIImage(systemName: "trash")!
@@ -364,7 +364,7 @@ public final class CatalogPresenter: ListPresenter {
       string: text,
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     let options = PickerDataOptions(
@@ -380,7 +380,7 @@ public final class CatalogPresenter: ListPresenter {
           string: " \($0) ",
           attributes: [
             NSAttributedString.Key.font: font,
-            NSAttributedString.Key.foregroundColor: UIColor.label
+            NSAttributedString.Key.foregroundColor: UIColor.label,
           ]
         )
       }
@@ -503,14 +503,14 @@ public final class CatalogPresenter: ListPresenter {
       string: "Title",
       attributes: [
         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3),
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     let details = NSAttributedString(
       string: "Details",
       attributes: [
         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
-        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+        NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel,
       ]
     )
     var cellModels = [ListCellModel]()
@@ -530,7 +530,7 @@ public final class CatalogPresenter: ListPresenter {
       string: "Title",
       attributes: [
         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3),
-        NSAttributedString.Key.foregroundColor: UIColor.label
+        NSAttributedString.Key.foregroundColor: UIColor.label,
       ]
     )
     var cellModels = [ListCellModel]()

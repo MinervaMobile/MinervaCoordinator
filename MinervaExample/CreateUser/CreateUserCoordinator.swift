@@ -11,9 +11,7 @@ import UIKit
 
 public final class CreateUserCoordinator: MainCoordinator<
   CreateUserPresenter, CollectionViewController
->
-{
-
+> {
   private let dataManager: DataManager
 
   // MARK: - Lifecycle
@@ -64,6 +62,7 @@ public final class CreateUserCoordinator: MainCoordinator<
     )
     .disposed(by: disposeBag)
   }
+
   private func handle(_ action: CreateUserPresenter.Action) {
     switch action {
     case let .create(email, password, dailyCalories, role):

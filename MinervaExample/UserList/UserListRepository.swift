@@ -8,7 +8,6 @@ import Foundation
 import RxSwift
 
 public class UserListRepository {
-
   private let dataManager: DataManager
   public let users: Observable<Result<[User], Error>>
 

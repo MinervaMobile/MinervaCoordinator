@@ -62,7 +62,6 @@ open class ImageTextCardCellModel: BaseListCellModel {
 }
 
 public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellModel> {
-
   public var imageHeightConstraint: NSLayoutConstraint?
   public var imageWidthConstraint: NSLayoutConstraint?
   private let imageView: UIImageView = {
@@ -85,7 +84,7 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
     super.init(frame: frame)
     contentView.addSubview(imageView)
     contentView.addSubview(label)
-    self.setupConstraints()
+    setupConstraints()
   }
 
   override public func prepareForReuse() {
@@ -122,6 +121,7 @@ public final class ImageTextCardCell: BaseReactiveListCell<ImageTextCardCellMode
 }
 
 // MARK: - Constraints
+
 extension ImageTextCardCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

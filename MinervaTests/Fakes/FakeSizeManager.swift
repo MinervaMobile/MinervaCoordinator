@@ -8,6 +8,7 @@ import Foundation
 import Minerva
 
 // MARK: - ListControllerSizeDelegate
+
 public final class FakeSizeManager: ListControllerSizeDelegate {
   public var handledSizeRequest = false
 

@@ -9,7 +9,6 @@ import RxSwift
 import UIKit
 
 open class ButtonImageCellModel: BaseListCellModel {
-
   public static let imageMargin: CGFloat = 4.0
 
   public let iconImage: Observable<UIImage?>
@@ -153,8 +152,8 @@ public final class ButtonImageCell: BaseReactiveListCell<ButtonImageCellModel> {
 }
 
 // MARK: - Constraints
-extension ButtonImageCell {
 
+extension ButtonImageCell {
   private func remakeConstraints(with model: ButtonImageCellModel) {
     imageWidthConstraint?.constant = model.imageSize.width
     imageHeightConstraint?.constant = model.imageSize.height

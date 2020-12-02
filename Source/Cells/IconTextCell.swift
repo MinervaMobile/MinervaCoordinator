@@ -98,6 +98,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     label.adjustsFontForContentSizeCategory = true
     return label
   }()
+
   private var imageWidthConstraint: NSLayoutConstraint?
   private var imageHeightConstraint: NSLayoutConstraint?
 
@@ -126,12 +127,12 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
     imageWidthConstraint?.constant = model.imageSize.width
     imageHeightConstraint?.constant = model.imageSize.height
 
-    self.label.numberOfLines = model.numberOfLines
+    label.numberOfLines = model.numberOfLines
     if let attributedText = model.attributedText {
-      self.label.attributedText = attributedText
+      label.attributedText = attributedText
     } else {
-      self.label.text = model.text
-      self.label.font = model.font
+      label.text = model.text
+      label.font = model.font
     }
 
     labelLeadingConstraint?.constant = model.labelLeadingMargin
@@ -168,7 +169,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
       label.textColor = model.textColor
     }
 
-    self.backgroundView?.backgroundColor = model.backgroundColor
+    backgroundView?.backgroundColor = model.backgroundColor
 
     model.iconImage
       .observeOn(MainScheduler.instance)
@@ -180,6 +181,7 @@ public final class IconTextCell: BaseReactiveListCell<IconTextCellModel> {
 }
 
 // MARK: - Constraints
+
 extension IconTextCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

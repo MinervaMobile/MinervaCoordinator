@@ -8,7 +8,6 @@ import Foundation
 import UIKit
 
 open class MarginCellModel: BaseListCellModel {
-
   public var backgroundColor: UIColor?
   public let cellSize: ListCellSize
 
@@ -45,12 +44,11 @@ open class MarginCellModel: BaseListCellModel {
 }
 
 public final class MarginCell: BaseListCell<MarginCellModel> {
-
   override public func bind(model: MarginCellModel, sizing: Bool) {
     super.bind(model: model, sizing: sizing)
 
     guard !sizing else { return }
 
-    self.contentView.backgroundColor = model.backgroundColor
+    contentView.backgroundColor = model.backgroundColor
   }
 }

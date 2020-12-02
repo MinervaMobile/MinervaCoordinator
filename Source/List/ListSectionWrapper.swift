@@ -21,6 +21,7 @@ internal class ListSectionWrapper: NSObject {
 }
 
 // MARK: - ListDiffable
+
 extension ListSectionWrapper: ListDiffable {
   internal func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
     guard let wrapper = object as? ListSectionWrapper else {

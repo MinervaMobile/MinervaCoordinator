@@ -33,7 +33,6 @@ open class SwipeableLabelCellModel: SwipeableCellModel {
 }
 
 public final class SwipeableLabelCell: SwipeableCell<SwipeableLabelCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -52,11 +51,12 @@ public final class SwipeableLabelCell: SwipeableCell<SwipeableLabelCellModel> {
     label.attributedText = model.attributedText
 
     guard !sizing else { return }
-    self.delegate = model
+    delegate = model
   }
 }
 
 // MARK: - Constraints
+
 extension SwipeableLabelCell {
   private func setupConstraints() {
     label.anchor(to: containerView)
@@ -66,6 +66,7 @@ extension SwipeableLabelCell {
 }
 
 // MARK: - SwipeCollectionViewCellDelegate
+
 extension SwipeableLabelCellModel: SwipeCollectionViewCellDelegate {
   public func collectionView(
     _ collectionView: UICollectionView,

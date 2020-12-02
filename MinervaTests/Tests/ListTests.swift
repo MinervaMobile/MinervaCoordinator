@@ -10,7 +10,6 @@ import RxSwift
 import XCTest
 
 public final class ListTests: CommonSetupTestCase {
-
   public func testDynamicSizing() {
     let sizeManager = FakeSizeManager()
     listController.sizeDelegate = sizeManager
@@ -158,7 +157,8 @@ public final class ListTests: CommonSetupTestCase {
       updateExpectation.fulfill()
     }
     wait(for: [updateExpectation], timeout: 5)
-    guard let indexPath = listController.indexPath(for: cellModel),
+    guard
+      let indexPath = listController.indexPath(for: cellModel),
       let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeCell
     else {
       XCTFail("Missing the cell")
@@ -241,7 +241,7 @@ public final class ListTests: CommonSetupTestCase {
     wait(for: [updateExpectation], timeout: 5)
 
     XCTAssertNotEqual(
-      collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(),
+      collectionVC.collectionView.indexPathsForVisibleItems.map(\.row).max(),
       cellModels.count - 1
     )
     listController.scroll(to: .bottom, animated: false)
@@ -254,7 +254,7 @@ public final class ListTests: CommonSetupTestCase {
     wait(for: [updateExpectation2], timeout: 5)
 
     XCTAssertEqual(
-      collectionVC.collectionView.indexPathsForVisibleItems.map { $0.row }.max(),
+      collectionVC.collectionView.indexPathsForVisibleItems.map(\.row).max(),
       cellModels.count - 1
     )
   }
@@ -274,7 +274,8 @@ public final class ListTests: CommonSetupTestCase {
     }
     wait(for: [updateExpectation], timeout: 5)
 
-    guard let indexPath = listController.indexPath(for: cellModel),
+    guard
+      let indexPath = listController.indexPath(for: cellModel),
       let cell = collectionVC.collectionView.cellForItem(at: indexPath) as? FakeReferenceCell
     else {
       XCTFail("Missing the cell")

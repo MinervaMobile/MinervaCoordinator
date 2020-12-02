@@ -8,7 +8,6 @@ import Foundation
 import UIKit
 
 open class ImageButtonCardCellModel: BaseListCellModel {
-
   fileprivate static let labelMargin: CGFloat = 15
 
   public var numberOfLines = 0
@@ -78,7 +77,6 @@ open class ImageButtonCardCellModel: BaseListCellModel {
 }
 
 public final class ImageButtonCardCell: BaseListCell<ImageButtonCardCellModel> {
-
   private let buttonContainerView = UIView()
 
   private let label: UILabel = {
@@ -86,16 +84,18 @@ public final class ImageButtonCardCell: BaseListCell<ImageButtonCardCellModel> {
     label.adjustsFontForContentSizeCategory = true
     return label
   }()
+
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
   }()
+
   private let imageWidthConstraint: NSLayoutConstraint
   private let imageHeightConstraint: NSLayoutConstraint
 
   override public init(frame: CGRect) {
-    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-    imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
+    self.imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: frame)
 
     contentView.addSubview(buttonContainerView)
@@ -135,6 +135,7 @@ public final class ImageButtonCardCell: BaseListCell<ImageButtonCardCellModel> {
 }
 
 // MARK: - Constraints
+
 extension ImageButtonCardCell {
   private func setupConstraints() {
     buttonContainerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)

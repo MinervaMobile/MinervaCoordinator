@@ -26,7 +26,7 @@ open class NavigationCoordinator: NSObject, CoordinatorNavigator, CoordinatorPre
   private unowned let navigationController: UINavigationController
 
   public init(
-    navigationController: UINavigationController = UINavigationController(),
+    navigationController: UINavigationController,
     modalPresentationStyle: UIModalPresentationStyle
   ) {
     self.navigationController = navigationController

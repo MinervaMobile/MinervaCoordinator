@@ -11,7 +11,6 @@ import SwipeCellKit
 import UIKit
 
 open class SwipeableCellModel: BaseListCellModel {
-
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
     leading: 16,
@@ -40,14 +39,15 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
 
   override open var isHighlighted: Bool {
     didSet {
-      guard let highlightModel = model as? ListHighlightableCellModelWrapper,
+      guard
+        let highlightModel = model as? ListHighlightableCellModelWrapper,
         highlightModel.highlightEnabled
       else {
-        self.highlightView.isHidden = true
+        highlightView.isHidden = true
         return
       }
 
-      self.highlightView.isHidden = !self.isHighlighted
+      highlightView.isHidden = !isHighlighted
     }
   }
 
@@ -72,7 +72,7 @@ open class SwipeableCell<CellModelType: SwipeableCellModel>: SwipeCollectionView
       return
     }
     if let animation = attributes.animationGroup {
-      self.layer.add(animation, forKey: nil)
+      layer.add(animation, forKey: nil)
     }
   }
 

@@ -14,6 +14,7 @@ public final class TestDataManagerFactory: DataManagerFactory {
   }
 
   // MARK: - DataManagerFactory
+
   public func createDataManager(for userAuthorization: UserAuthorization, userManager: UserManager)
     -> DataManager
   {

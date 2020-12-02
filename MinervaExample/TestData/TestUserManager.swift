@@ -8,7 +8,6 @@ import Foundation
 import RxSwift
 
 public final class TestUserManager {
-
   private var activeUser: UserAuthorization?
   private let testData: TestData
   private let dataManagerFactory: DataManagerFactory
@@ -16,7 +15,7 @@ public final class TestUserManager {
   public init(testData: TestData, dataManagerFactory: DataManagerFactory) {
     self.testData = testData
     self.dataManagerFactory = dataManagerFactory
-    activeUser = testData.emailToAuthorizationMap["a@a.com"]
+    self.activeUser = testData.emailToAuthorizationMap["a@a.com"]
   }
 }
 
@@ -54,7 +53,8 @@ extension TestUserManager: UserManager {
     guard email.isEmail else {
       return .error(SystemError.invalidEmail)
     }
-    guard let authorization = testData.emailToAuthorizationMap[email],
+    guard
+      let authorization = testData.emailToAuthorizationMap[email],
       let actualPassword = testData.emailToPasswordMap[email]
     else {
       return .error(SystemError.doesNotExist)

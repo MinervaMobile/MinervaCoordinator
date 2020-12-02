@@ -49,7 +49,7 @@ public final class WelcomePresenter: ListPresenter {
     paragraphStyle.lineSpacing = 20
     let attributedString = NSAttributedString(
       string:
-        "Quickly log your calorie intake for each workout and track your calories over time. Easily see when you hit and miss your daily calorie goal.",
+      "Quickly log your calorie intake for each workout and track your calories over time. Easily see when you hit and miss your daily calorie goal.",
       font: .subheadline,
       fontColor: .black
     )
@@ -97,12 +97,11 @@ public final class WelcomePresenter: ListPresenter {
       paragraphCellModel,
       newAccountModel,
       existingAccountModel,
-      bottomDynamicMarginModel
+      bottomDynamicMarginModel,
     ]
 
     let section = ListSection(cellModels: cellModels, identifier: "SECTION")
 
     return section
   }
-
 }

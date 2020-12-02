@@ -143,6 +143,7 @@ public final class LabelCell: BaseListCell<LabelCellModel> {
 }
 
 // MARK: - Constraints
+
 extension LabelCell {
   private func setupConstraints() {
     labelBackgroundView.anchor(to: label)

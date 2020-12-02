@@ -27,6 +27,7 @@ public final class WorkoutDetailsPresenter: ListPresenter {
       workoutSubject.onNext(workout)
     }
   }
+
   private var workoutSubject: BehaviorSubject<WorkoutProto>
 
   // MARK: - Lifecycle
@@ -37,8 +38,8 @@ public final class WorkoutDetailsPresenter: ListPresenter {
     workoutSubject.map({ [weak self] workout -> [ListSection] in
       self?.createSection(with: workout) ?? []
     })
-    .bind(to: sections)
-    .disposed(by: disposeBag)
+      .bind(to: sections)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Private
@@ -50,7 +51,6 @@ public final class WorkoutDetailsPresenter: ListPresenter {
   }
 
   private func loadCellModels(with workout: WorkoutProto) -> [ListCellModel] {
-
     let titleModel = LabelCellModel(text: workout.text, font: .headline)
     titleModel.textAlignment = .center
     titleModel.directionalLayoutMargins.top = 12
@@ -77,7 +77,7 @@ public final class WorkoutDetailsPresenter: ListPresenter {
     return [
       titleModel,
       detailsModel,
-      editModel
+      editModel,
     ]
   }
 }

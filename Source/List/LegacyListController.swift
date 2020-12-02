@@ -30,21 +30,21 @@ public final class LegacyListController: NSObject, ListController {
   public weak var sizeDelegate: ListControllerSizeDelegate?
 
   public weak var scrollViewDelegate: UIScrollViewDelegate? {
-    get { self.adapter.scrollViewDelegate }
-    set { self.adapter.scrollViewDelegate = newValue }
+    get { adapter.scrollViewDelegate }
+    set { adapter.scrollViewDelegate = newValue }
   }
 
   public weak var viewController: UIViewController? {
-    get { self.adapter.viewController }
-    set { self.adapter.viewController = newValue }
+    get { adapter.viewController }
+    set { adapter.viewController = newValue }
   }
 
   public var collectionView: UICollectionView? {
-    get { self.adapter.collectionView }
-    set { self.adapter.collectionView = newValue }
+    get { adapter.collectionView }
+    set { adapter.collectionView = newValue }
   }
 
-  public var listSections: [ListSection] { listSectionWrappers.map { $0.section } }
+  public var listSections: [ListSection] { listSectionWrappers.map(\.section) }
 
   private let adapter: ListAdapter
   private var noLongerDisplayingCells = false
@@ -61,9 +61,9 @@ public final class LegacyListController: NSObject, ListController {
     let updater = ListAdapterUpdater()
     self.adapter = ListAdapter(updater: updater, viewController: nil)
     super.init()
-    self.sizeController.delegate = self
-    self.adapter.dataSource = self
-    self.adapter.moveDelegate = self
+    sizeController.delegate = self
+    adapter.dataSource = self
+    adapter.moveDelegate = self
   }
 
   // MARK: - Public
@@ -97,7 +97,7 @@ public final class LegacyListController: NSObject, ListController {
     dispatchPrecondition(condition: .onQueue(.main))
     for (sectionIndex, section) in listSections.enumerated() {
       for (rowIndex, model) in section.cellModels.enumerated() {
-        if cellModel.identifier == model.identifier && cellModel.identical(to: model) {
+        if cellModel.identifier == model.identifier, cellModel.identical(to: model) {
           return IndexPath(item: rowIndex, section: sectionIndex)
         }
       }
@@ -107,7 +107,8 @@ public final class LegacyListController: NSObject, ListController {
 
   public var centerCellModel: ListCellModel? {
     dispatchPrecondition(condition: .onQueue(.main))
-    guard let indexPath = adapter.collectionView?.centerCellIndexPath,
+    guard
+      let indexPath = adapter.collectionView?.centerCellIndexPath,
       let cellModel = cellModel(at: indexPath)
     else {
       return nil
@@ -222,7 +223,7 @@ public final class LegacyListController: NSObject, ListController {
       didEndDisplaying(enqueueIfNeeded: false)
     case .invalidateLayout:
       invalidateLayout(enqueueIfNeeded: false)
-    case .reloadData(let completion):
+    case let .reloadData(completion):
       reloadData(completion: completion, enqueueIfNeeded: false)
     case let .scroll(scrollPosition, animated):
       scroll(to: scrollPosition, animated: animated, enqueueIfNeeded: false)
@@ -274,7 +275,7 @@ public final class LegacyListController: NSObject, ListController {
       return
     }
     #if DEBUG
-    var identifiers = [String: ListCellModel]()  // Should be unique across ListSections in the same UICollectionView.
+    var identifiers = [String: ListCellModel]() // Should be unique across ListSections in the same UICollectionView.
     for section in listSections {
       for cellModel in section.cellModels {
         let identifier = cellModel.identifier
@@ -319,6 +320,7 @@ public final class LegacyListController: NSObject, ListController {
     endDisplayingVisibleCells()
     noLongerDisplayingCells = true
   }
+
   private func willDisplay(enqueueIfNeeded: Bool) {
     guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
       actionQueue.append(.willDisplay)
@@ -332,6 +334,7 @@ public final class LegacyListController: NSObject, ListController {
     visibleCells.compactMap { $0 as? ListDisplayableCell }.forEach { $0.willDisplayCell() }
     noLongerDisplayingCells = false
   }
+
   private func invalidateLayout(enqueueIfNeeded: Bool) {
     guard !enqueueIfNeeded || (actionQueue.isEmpty && !updating) else {
       actionQueue.append(.invalidateLayout)
@@ -403,7 +406,7 @@ public final class LegacyListController: NSObject, ListController {
       processActionQueue()
       return
     }
-    let cellModels = listSections.flatMap { $0.cellModels }
+    let cellModels = listSections.flatMap(\.cellModels)
     guard !cellModels.isEmpty else {
       processActionQueue()
       return
@@ -435,6 +438,7 @@ public final class LegacyListController: NSObject, ListController {
 }
 
 // MARK: - ListAdapterDataSource
+
 extension LegacyListController: ListAdapterDataSource {
   public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
     listSectionWrappers
@@ -453,6 +457,7 @@ extension LegacyListController: ListAdapterDataSource {
 }
 
 // MARK: - ListAdapterMoveDelegate
+
 extension LegacyListController: ListAdapterMoveDelegate {
   public func listAdapter(
     _ listAdapter: ListAdapter,
@@ -464,11 +469,12 @@ extension LegacyListController: ListAdapterMoveDelegate {
       assertionFailure("Invalid object types \(objects)")
       return
     }
-    self.listSectionWrappers = sections
+    listSectionWrappers = sections
   }
 }
 
 // MARK: - ListCellSizeControllerDelegate
+
 extension LegacyListController: ListCellSizeControllerDelegate {
   internal func sizeController(
     _ sizeController: ListCellSizeController,
@@ -487,13 +493,14 @@ extension LegacyListController: ListCellSizeControllerDelegate {
 }
 
 // MARK: - ListModelSectionControllerDelegate
+
 extension LegacyListController: ListModelSectionControllerDelegate {
-  func sectionController(
+  internal func sectionController(
     _ sectionController: ListModelSectionController,
     didInvalidateSizeAt indexPath: IndexPath
   ) {
     guard let collectionView = adapter.collectionView else { return }
-    let contextClassType = type(of: collectionView.collectionViewLayout).invalidationContextClass
+    let contextClassType: AnyClass = type(of: collectionView.collectionViewLayout).invalidationContextClass
     guard let contextClass = contextClassType as? UICollectionViewLayoutInvalidationContext.Type
     else { return }
     let context = contextClass.init()

@@ -38,6 +38,7 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
         )
     }
   }
+
   public var imageObservable: Observable<UIImage?>? {
     didSet {
       imageObservable?
@@ -51,7 +52,8 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
 
   private var disposeBag = DisposeBag()
 
-  @Published public var image: UIImage?
+  @Published
+  public var image: UIImage?
 
   public init(
     title: String,
@@ -65,6 +67,7 @@ public final class SwiftUITextCellModel: BaseListCellModel, ObservableObject,
   }
 
   // MARK: - BaseListCellModel
+
   override public var identifier: String { title }
 
   override public func identical(to model: ListCellModel) -> Bool {
@@ -96,7 +99,8 @@ public final class SwiftUITextCell: UICollectionViewCell, SwiftUICell {
 
 @available(iOS 13.0, *)
 public struct SwiftUITextView: View {
-  @ObservedObject public var model: SwiftUITextCellModel
+  @ObservedObject
+  public var model: SwiftUITextCellModel
 
   public var body: some View {
     ZStack {
@@ -159,6 +163,7 @@ public struct SwiftUITextViewPreviews: PreviewProvider {
       SwiftUITextView(model: SwiftUITextCellModel(title: "Hello World!!!"))
     }
   }
+
   public static var previews: some View {
     Group {
       cells

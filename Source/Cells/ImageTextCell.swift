@@ -46,7 +46,6 @@ open class ImageTextCellModel: BaseListCellModel {
 }
 
 public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.textAlignment = .left
@@ -96,6 +95,7 @@ public final class ImageTextCell: BaseReactiveListCell<ImageTextCellModel> {
 }
 
 // MARK: - Constraints
+
 extension ImageTextCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

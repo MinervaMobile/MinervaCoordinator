@@ -28,6 +28,7 @@ open class SplitViewCoordinator<T: SplitChildCoordinator, U: SplitChildCoordinat
   public var splitViewController: UISplitViewController {
     viewController.splitVC
   }
+
   public let navigator: Navigator
 
   public var presentedCoordinator: BaseCoordinatorPresentable?
@@ -69,10 +70,10 @@ open class SplitViewCoordinator<T: SplitChildCoordinator, U: SplitChildCoordinat
       detailNavigator: detailNavigator
     )
 
-    masterCoordinator = masterCoordinatorCreator(masterNavigator)
-    defaultDetailCoordinator = detailCoordinatorCreator(detailNavigator)
+    self.masterCoordinator = masterCoordinatorCreator(masterNavigator)
+    self.defaultDetailCoordinator = detailCoordinatorCreator(detailNavigator)
     splitViewController.delegate = self
-    displayedDetailCoordinator = defaultDetailCoordinator
+    self.displayedDetailCoordinator = defaultDetailCoordinator
 
     masterNavigator.setViewControllers([masterCoordinator.baseViewController], animated: false)
     detailNavigator.setViewControllers(
@@ -81,11 +82,12 @@ open class SplitViewCoordinator<T: SplitChildCoordinator, U: SplitChildCoordinat
     )
 
     splitViewController.viewControllers = [
-      masterNavigator.navigationController, detailNavigator.navigationController
+      masterNavigator.navigationController, detailNavigator.navigationController,
     ]
   }
 
   // MARK: - UISplitViewControllerDelegate
+
   public func splitViewController(
     _ splitViewController: UISplitViewController,
     collapseSecondary secondaryViewController: UIViewController,

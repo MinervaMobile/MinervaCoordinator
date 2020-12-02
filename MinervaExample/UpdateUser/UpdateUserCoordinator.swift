@@ -11,9 +11,7 @@ import UIKit
 
 public final class UpdateUserCoordinator: PanModalCollectionCoordinator<
   UpdateUserPresenter, CollectionViewController
->
-{
-
+> {
   private let dataManager: DataManager
 
   // MARK: - Lifecycle
@@ -66,7 +64,7 @@ public final class UpdateUserCoordinator: PanModalCollectionCoordinator<
 
   private func handle(_ action: UpdateUserPresenter.Action) {
     switch action {
-    case .save(let user):
+    case let .save(user):
       save(user: user)
     }
   }

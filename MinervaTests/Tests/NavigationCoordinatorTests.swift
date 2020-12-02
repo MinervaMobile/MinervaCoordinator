@@ -11,13 +11,16 @@ import XCTest
 
 /// Same as CoordinationTests, but navigator is a NavigationCoordinatorNavigator instead of a BasicNavigator.
 public final class NavigationCoordinatorTests: XCTestCase {
-
   private var rootCoordinator: FakeCoordinator!
   private var navigator: NavigationCoordinatorNavigator!
 
   override public func setUp() {
     super.setUp()
-    navigator = NavigationCoordinatorNavigator(parent: nil, modalPresentationStyle: .automatic)
+    navigator = NavigationCoordinatorNavigator(
+      parent: nil,
+      navigationController: UINavigationController(),
+      modalPresentationStyle: .automatic
+    )
     rootCoordinator = FakeCoordinator(navigator: navigator)
     navigator.setViewControllers([rootCoordinator.viewController], animated: false, completion: nil)
     UIApplication.shared.windows.first?.rootViewController = navigator.navigationController
@@ -50,7 +53,11 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
   public func testPresentationFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let navigator = NavigationCoordinatorNavigator(parent: nil, modalPresentationStyle: .automatic)
+    let navigator = NavigationCoordinatorNavigator(
+      parent: nil,
+      navigationController: UINavigationController(),
+      modalPresentationStyle: .automatic
+    )
     let childCoordinator = FakeCoordinator()
     let presentationExpectation = expectation(description: "Presentation")
     navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
@@ -88,7 +95,6 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
     XCTAssertEqual(navigator.navigationController!.presentedViewController, vcA)
     XCTAssertEqual(vcA.presentedViewController, vcB)
-
   }
 
   public func testDismissalFromNavigator() {
@@ -96,6 +102,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
     let childCoordinator = FakeCoordinator()
     let navigator = NavigationCoordinatorNavigator(
       parent: rootCoordinator.navigator,
+      navigationController: UINavigationController(),
       modalPresentationStyle: .automatic
     )
     let presentationExpectation = expectation(description: "Presentation")
@@ -192,5 +199,4 @@ public final class NavigationCoordinatorTests: XCTestCase {
     XCTAssertEqual(rootCoordinator.childCoordinators.count, 1)
     XCTAssertTrue(rootCoordinator.childCoordinators[0] === childCoordinator)
   }
-
 }

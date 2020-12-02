@@ -31,7 +31,6 @@ extension UserAuthorization {
 }
 
 extension UserAuthorizationProto: UserAuthorization {
-
   public init(
     userID: String,
     accessToken: String,

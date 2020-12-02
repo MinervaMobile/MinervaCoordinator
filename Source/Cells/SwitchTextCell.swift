@@ -82,7 +82,6 @@ open class SwitchTextCellModel: BaseListCellModel {
 }
 
 public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -103,7 +102,7 @@ public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
     contentView.addSubview(switchButton)
     backgroundView = UIView()
     setupConstraints()
-    switchButton.addTarget(self, action: #selector(self.toggleSwitch), for: .valueChanged)
+    switchButton.addTarget(self, action: #selector(toggleSwitch), for: .valueChanged)
   }
 
   override public func bind(model: SwitchTextCellModel, sizing: Bool) {
@@ -123,6 +122,7 @@ public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
 
     backgroundView?.backgroundColor = model.backgroundColor
   }
+
   @objc
   private func toggleSwitch(_ sender: UISwitch) {
     guard let model = model else {
@@ -133,6 +133,7 @@ public final class SwitchTextCell: BaseListCell<SwitchTextCellModel> {
 }
 
 // MARK: - Constraints
+
 extension SwitchTextCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

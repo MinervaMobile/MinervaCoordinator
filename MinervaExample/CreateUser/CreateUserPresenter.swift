@@ -71,7 +71,7 @@ public final class CreateUserPresenter: ListPresenter {
       createRoleCellModel(),
       MarginCellModel(identifier: "roleMarginModel", height: 12),
       doneModel,
-      MarginCellModel(identifier: "doneMarginModel")
+      MarginCellModel(identifier: "doneMarginModel"),
     ]
   }
 

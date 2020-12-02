@@ -9,7 +9,6 @@ import IGListKit
 import UIKit
 
 public final class HorizontalCollectionCellModel: BaseListCellModel {
-
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
     top: 8,
     leading: 16,
@@ -28,6 +27,7 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     get { section.constraints.minimumInteritemSpacing }
     set { section.constraints.minimumInteritemSpacing = newValue }
   }
+
   public var backgroundColor: UIColor?
 
   private let listController: ListController
@@ -43,8 +43,8 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
     self.listController = listController
     self.section = ListSection(cellModels: cellModels, identifier: "\(identifier)-section")
     super.init(identifier: identifier)
-    self.section.constraints.distribution = distribution
-    self.section.constraints.scrollDirection = .horizontal
+    section.constraints.distribution = distribution
+    section.constraints.scrollDirection = .horizontal
   }
 
   // MARK: - BaseListCellModel
@@ -52,12 +52,12 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
   override public func identical(to model: ListCellModel) -> Bool {
     guard let model = model as? Self, super.identical(to: model) else { return false }
     guard
-      section == model.section
-        && isScrollEnabled == model.isScrollEnabled
-        && listController === model.listController
-        && backgroundColor == model.backgroundColor
-        && directionalLayoutMargins == model.directionalLayoutMargins
-        && listAccessibilityIdentifier == model.listAccessibilityIdentifier
+      section == model.section,
+      isScrollEnabled == model.isScrollEnabled,
+      listController === model.listController,
+      backgroundColor == model.backgroundColor,
+      directionalLayoutMargins == model.directionalLayoutMargins,
+      listAccessibilityIdentifier == model.listAccessibilityIdentifier
     else {
       return false
     }
@@ -90,7 +90,6 @@ public final class HorizontalCollectionCellModel: BaseListCellModel {
 }
 
 public final class HorizontalCollectionCell: BaseListCell<HorizontalCollectionCellModel> {
-
   private let collectionView: UICollectionView = {
     var layout = ListViewLayout(
       stickyHeaders: false,
@@ -141,6 +140,7 @@ public final class HorizontalCollectionCell: BaseListCell<HorizontalCollectionCe
 }
 
 // MARK: - Constraints
+
 extension HorizontalCollectionCell {
   private func setupConstraints() {
     collectionView.anchor(
@@ -154,7 +154,6 @@ extension HorizontalCollectionCell {
 }
 
 extension HorizontalCollectionCell: UICollectionViewDataSource {
-
   public func numberOfSections(in collectionView: UICollectionView) -> Int { 0 }
 
   public func collectionView(

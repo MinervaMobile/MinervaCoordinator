@@ -18,6 +18,7 @@ open class BaseListCellModel: ListCellModel {
   }
 
   // MARK: - ListCellModel
+
   open var identifier: String { cellIdentifier ?? typeIdentifier }
   open var cellType: ListCollectionViewCell.Type { cellTypeFromModelName }
 
@@ -26,6 +27,7 @@ open class BaseListCellModel: ListCellModel {
     return identifier == model.identifier
       && accessibilityIdentifier == model.accessibilityIdentifier
   }
+
   open func size(
     constrainedTo containerSize: CGSize
   ) -> ListCellSize {
@@ -44,7 +46,8 @@ open class BaseListCell<CellModelType: BaseListCellModel>: ListCollectionViewCel
 
   override open var isHighlighted: Bool {
     didSet {
-      guard let highlightModel = model as? ListHighlightableCellModelWrapper,
+      guard
+        let highlightModel = model as? ListHighlightableCellModelWrapper,
         highlightModel.highlightEnabled
       else {
         self.highlightView.isHidden = true
@@ -72,7 +75,7 @@ open class BaseListCell<CellModelType: BaseListCellModel>: ListCollectionViewCel
       return
     }
     if let animation = attributes.animationGroup {
-      self.layer.add(animation, forKey: nil)
+      layer.add(animation, forKey: nil)
     }
   }
 
@@ -119,6 +122,7 @@ open class BaseReactiveListCell<CellModelType: BaseListCellModel>: BaseListCell<
     super.prepareForReuse()
     disposeBag = DisposeBag()
   }
+
   override open func bind(model: CellModelType, sizing: Bool) {
     disposeBag = DisposeBag()
     super.bind(model: model, sizing: sizing)

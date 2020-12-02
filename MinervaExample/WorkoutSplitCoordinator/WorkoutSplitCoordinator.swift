@@ -5,8 +5,7 @@ import UIKit
 
 public final class WorkoutSplitCoordinator: SplitViewCoordinator<
   WorkoutCoordinator, DefaultSplitDetailCoordinator
->
-{
+> {
   private let disposeBag = DisposeBag()
   private let dataManager: DataManager
   private let userID: String
@@ -45,13 +44,13 @@ public final class WorkoutSplitCoordinator: SplitViewCoordinator<
     let editing = workout != nil
     let workout =
       workout
-      ?? WorkoutProto(
-        workoutID: UUID().uuidString,
-        userID: userID,
-        text: "",
-        calories: 0,
-        date: Date()
-      )
+        ?? WorkoutProto(
+          workoutID: UUID().uuidString,
+          userID: userID,
+          text: "",
+          calories: 0,
+          date: Date()
+        )
     return EditWorkoutCoordinator(
       navigator: splitNavigator,
       dataManager: dataManager,
@@ -74,7 +73,7 @@ public final class WorkoutSplitCoordinator: SplitViewCoordinator<
     case .displayNewWorkout:
       let coordinator = createEditWorkoutCoordinator(with: nil)
       setDetailCoordinator(coordinator)
-    case .displayViewWorkout(let workout):
+    case let .displayViewWorkout(workout):
       let coordinator = createWorkoutDetailsCoordinator(with: workout)
       setDetailCoordinator(coordinator)
     }

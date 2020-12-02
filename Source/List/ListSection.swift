@@ -9,7 +9,6 @@ import UIKit
 
 /// Represents a section in the collection view.
 public struct ListSection {
-
   /// How the cells should be arranged in the collection view
   public enum Distribution: Hashable {
     /// Cells should take up the entire row and during sizing are constrained to the entire
@@ -68,6 +67,7 @@ public struct ListSection {
 }
 
 // MARK: - CustomStringConvertible
+
 extension ListSection: CustomStringConvertible {
   public var description: String {
     "[\(type(of: self)) identifier=\(identifier) constraints=\(constraints) header=\(headerModel.debugDescription) footer=\(footerModel.debugDescription) models=\(cellModels)]"
@@ -75,8 +75,8 @@ extension ListSection: CustomStringConvertible {
 }
 
 // MARK: - Equatable
-extension ListSection: Equatable {
 
+extension ListSection: Equatable {
   private static func areEqual(_ leftModel: ListCellModel?, _ rightModel: ListCellModel?) -> Bool {
     guard let left = leftModel else { return rightModel == nil }
     guard let right = rightModel else { return false }

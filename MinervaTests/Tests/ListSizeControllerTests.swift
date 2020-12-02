@@ -60,9 +60,7 @@ public final class ListSizeControllerTests: CommonSetupTestCase {
     XCTAssertEqual(size, CGSize(width: collectionVC.view.frame.width, height: 1_000))
   }
 
-  public func testSectionSizing_verticalScrolling_proportionalDistributionWithLastCellFillingWidth()
-  {
-
+  public func testSectionSizing_verticalScrolling_proportionalDistributionWithLastCellFillingWidth() {
     func runTest(
       totalCells: Int,
       minimumWidth: CGFloat,
@@ -327,5 +325,4 @@ public final class ListSizeControllerTests: CommonSetupTestCase {
     cells.append(lastCell)
     return cells
   }
-
 }

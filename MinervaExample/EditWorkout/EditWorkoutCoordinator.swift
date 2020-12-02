@@ -11,9 +11,7 @@ import UIKit
 
 public final class EditWorkoutCoordinator: MainCoordinator<
   EditWorkoutPresenter, CollectionViewController
->
-{
-
+> {
   private let dataManager: DataManager
 
   // MARK: - Lifecycle
@@ -59,9 +57,10 @@ public final class EditWorkoutCoordinator: MainCoordinator<
       )
       .disposed(by: disposeBag)
   }
+
   private func handle(_ action: EditWorkoutPresenter.Action) {
     switch action {
-    case .save(let workout):
+    case let .save(workout):
       save(workout: workout)
     }
   }

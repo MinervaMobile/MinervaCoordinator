@@ -9,7 +9,6 @@ import RxSwift
 import XCTest
 
 public final class IntegrationTests: XCTestCase {
-
   private var coordinator: FakeCoordinator!
 
   override public func setUp() {
@@ -60,7 +59,7 @@ public final class IntegrationTests: XCTestCase {
   public func testReloadAfterReorder() {
     var sections = coordinator.presenter.listSections
     let updateExpectation1 = expectation(description: "1st Update Expectation")
-    self.coordinator.listController.update(with: sections, animated: false) { finished in
+    coordinator.listController.update(with: sections, animated: false) { finished in
       XCTAssert(finished)
       updateExpectation1.fulfill()
     }
@@ -73,7 +72,7 @@ public final class IntegrationTests: XCTestCase {
     }
 
     let updateExpectation2 = expectation(description: "2nd Update Expectation")
-    self.coordinator.listController.update(with: sections, animated: false) { finished in
+    coordinator.listController.update(with: sections, animated: false) { finished in
       XCTAssert(finished)
       updateExpectation2.fulfill()
     }

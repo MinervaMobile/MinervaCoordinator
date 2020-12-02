@@ -42,7 +42,6 @@ extension Workout {
 }
 
 extension WorkoutProto: Workout {
-
   public init(
     workoutID: String,
     userID: String,

@@ -9,7 +9,6 @@ import UIKit
 
 /// Sizing information to help size individual cells.
 public struct ListSizeConstraints: Hashable {
-
   /// The overall size for the container the cell is in.
   public let containerSize: CGSize
   /// The constraints for the section containing the model.
@@ -29,7 +28,7 @@ public struct ListSizeConstraints: Hashable {
   /// The container size adjusted for the insets, distribution, minimumInteritemSpacing, and scroll direction.
   public var adjustedContainerSize: CGSize {
     let insetSize = containerSize.adjust(for: inset)
-    guard case .equally(let cellsInRow) = distribution else {
+    guard case let .equally(cellsInRow) = distribution else {
       return insetSize
     }
     let rowWidth = insetSize.width
@@ -38,12 +37,12 @@ public struct ListSizeConstraints: Hashable {
     if scrollDirection == .vertical {
       let equalCellWidth =
         (rowWidth / CGFloat(cellsInRow))
-        - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+          - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
       maxSize = CGSize(width: equalCellWidth, height: rowHeight)
     } else {
       let equalCellHeight =
         (rowHeight / CGFloat(cellsInRow))
-        - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
+          - (minimumInteritemSpacing * CGFloat(cellsInRow - 1) / CGFloat(cellsInRow))
       maxSize = CGSize(width: rowWidth, height: equalCellHeight)
     }
     return maxSize
@@ -52,15 +51,19 @@ public struct ListSizeConstraints: Hashable {
   public var inset: UIEdgeInsets {
     sectionConstraints.inset
   }
+
   public var minimumLineSpacing: CGFloat {
     sectionConstraints.minimumLineSpacing
   }
+
   public var minimumInteritemSpacing: CGFloat {
     sectionConstraints.minimumInteritemSpacing
   }
+
   public var distribution: ListSection.Distribution {
     sectionConstraints.distribution
   }
+
   public var scrollDirection: UICollectionView.ScrollDirection {
     sectionConstraints.scrollDirection
   }

@@ -9,7 +9,6 @@ import RxSwift
 import UIKit
 
 open class ImageLabelBorderCellModel: BaseListCellModel {
-
   fileprivate static let labelMargin: CGFloat = 15
 
   public var isSelected = false
@@ -85,24 +84,25 @@ open class ImageLabelBorderCellModel: BaseListCellModel {
 }
 
 public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
     return label
   }()
+
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
   }()
+
   private let buttonContainerView = UIView()
 
   private let imageWidthConstraint: NSLayoutConstraint
   private let imageHeightConstraint: NSLayoutConstraint
 
   override public init(frame: CGRect) {
-    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-    imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
+    self.imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    self.imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
     super.init(frame: frame)
 
     contentView.addSubview(buttonContainerView)
@@ -150,9 +150,9 @@ public final class ImageLabelBorderCell: BaseReactiveListCell<ImageLabelBorderCe
 }
 
 // MARK: - Constraints
+
 extension ImageLabelBorderCell {
   private func setupConstraints() {
-
     buttonContainerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
 
     imageView.bottomAnchor

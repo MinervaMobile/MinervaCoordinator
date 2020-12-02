@@ -32,7 +32,7 @@ public class SplitNavigator: NSObject {
   public init(masterNavigator: BasicNavigator, detailNavigator: BasicNavigator) {
     self.masterNavigator = masterNavigator
     self.detailNavigator = detailNavigator
-    activeNavigatorType = .detail
+    self.activeNavigatorType = .detail
   }
 
   /// Sets activeDetailNavigator to point to the masterNavigator.
@@ -74,6 +74,7 @@ public class SplitNavigator: NSObject {
 }
 
 // MARK: - NavigatorType
+
 extension SplitNavigator: Navigator {
   public func setViewControllers(
     _ viewControllers: [UIViewController],

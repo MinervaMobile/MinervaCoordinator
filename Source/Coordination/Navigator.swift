@@ -8,8 +8,7 @@ import Foundation
 import UIKit
 
 /// Manages the presentation of view controllers both modally and through a navigation controller.
-public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigationControllerDelegate
-{
+public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigationControllerDelegate {
   /// The block to use when a view controller is removed from the navigation controller.
   typealias RemovalCompletion = (UIViewController) -> Void
   /// The block to execute after the presentation finishes.
@@ -72,7 +71,6 @@ public protocol Navigator: UIAdaptivePresentationControllerDelegate, UINavigatio
 }
 
 extension Navigator {
-
   /// Displays a view controller modally.
   /// - Parameter viewController: The view controller to display.
   /// - Parameter animated: Whether or not to animate the transition.

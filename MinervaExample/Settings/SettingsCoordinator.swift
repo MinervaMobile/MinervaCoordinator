@@ -16,7 +16,6 @@ public protocol SettingsCoordinatorDelegate: AnyObject {
 }
 
 public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, SettingsVC> {
-
   public weak var delegate: SettingsCoordinatorDelegate?
   private let userManager: UserManager
   private let dataManager: DataManager
@@ -130,7 +129,7 @@ public final class SettingsCoordinator: MainCoordinator<SettingsPresenter, Setti
 
   private func handle(_ action: SettingsVC.Action) {
     switch action {
-    case .editUser(let barButtonItem):
+    case let .editUser(barButtonItem):
       dataManager.user(withID: dataManager.userAuthorization.userID)
         .observeOn(MainScheduler.instance)
         .subscribe(

@@ -46,7 +46,6 @@ open class DatePickerCellModel: BaseListCellModel {
 }
 
 public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
-
   private var highPriorityWidthAnchor: NSLayoutConstraint?
   private var lowPriorityWidthAnchor: NSLayoutConstraint?
 
@@ -60,13 +59,13 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
 
   override public init(frame: CGRect) {
     super.init(frame: frame)
-    self.datePicker.addTarget(
+    datePicker.addTarget(
       self,
-      action: #selector(self.dateDidChange(_:)),
+      action: #selector(dateDidChange(_:)),
       for: .valueChanged
     )
-    self.contentView.addSubview(self.datePicker)
-    self.setupConstraints()
+    contentView.addSubview(datePicker)
+    setupConstraints()
     self.backgroundView = UIView()
   }
 
@@ -88,7 +87,7 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
 
     guard !sizing else { return }
 
-    self.backgroundView?.backgroundColor = model.backgroundColor
+    backgroundView?.backgroundColor = model.backgroundColor
     datePicker.setDate(model.startDate, animated: false)
     datePicker.datePickerMode = model.mode
     datePicker.accessibilityIdentifier = model.pickerAccessibilityIdentifier
@@ -96,6 +95,7 @@ public final class DatePickerCell: BaseListCell<DatePickerCellModel> {
 }
 
 // MARK: - Constraints
+
 extension DatePickerCell {
   private func updateConstraints(with model: DatePickerCellModel) {
     highPriorityWidthAnchor?.constant = model.maxControlWidth

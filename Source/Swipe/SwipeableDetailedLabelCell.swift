@@ -28,7 +28,6 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
     self.attributedText = attributedText
     self.detailsText = detailsText
     super.init(identifier: identifier)
-
   }
 
   // MARK: - BaseListCellModel
@@ -42,12 +41,12 @@ open class SwipeableDetailedLabelCellModel: SwipeableCellModel, ListSelectableCe
   }
 
   // MARK: - ListSelectableCellModel
+
   public typealias SelectableModelType = SwipeableDetailedLabelCellModel
   public var selectionAction: SelectionAction?
 }
 
 public final class SwipeableDetailedLabelCell: SwipeableCell<SwipeableDetailedLabelCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -75,11 +74,12 @@ public final class SwipeableDetailedLabelCell: SwipeableCell<SwipeableDetailedLa
     detailedLabel.attributedText = model.detailsText
 
     guard !sizing else { return }
-    self.delegate = model
+    delegate = model
   }
 }
 
 // MARK: - Constraints
+
 extension SwipeableDetailedLabelCell {
   private func setupConstraints() {
     label.anchor(
@@ -107,6 +107,7 @@ extension SwipeableDetailedLabelCell {
 }
 
 // MARK: - SwipeCollectionViewCellDelegate
+
 extension SwipeableDetailedLabelCellModel: SwipeCollectionViewCellDelegate {
   public func collectionView(
     _ collectionView: UICollectionView,

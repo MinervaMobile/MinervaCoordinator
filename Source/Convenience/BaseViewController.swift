@@ -33,6 +33,7 @@ open class BaseViewController: UIViewController, ListViewController {
   }
 
   // MARK: - UIViewController
+
   override open func viewDidLoad() {
     super.viewDidLoad()
     events.accept(.viewDidLoad)

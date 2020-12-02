@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 public final class UserListVC: BaseViewController {
-
   public enum Action {
     case createUser
   }

@@ -57,13 +57,13 @@ open class DetailedLabelCellModel: BaseListCellModel {
 }
 
 public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
     label.numberOfLines = 0
     return label
   }()
+
   private let detailedLabel: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -91,6 +91,7 @@ public final class DetailedLabelCell: BaseListCell<DetailedLabelCellModel> {
 }
 
 // MARK: - Constraints
+
 extension DetailedLabelCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

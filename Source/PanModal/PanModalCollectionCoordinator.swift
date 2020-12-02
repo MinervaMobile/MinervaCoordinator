@@ -8,9 +8,9 @@ import Foundation
 import PanModal
 import UIKit
 
-open class PanModalCollectionCoordinator<T: ListPresenter, U: ListViewController>: BaseCoordinator<T, U>, PanModalCoordinatorPresentable
+open class PanModalCollectionCoordinator<T: ListPresenter, U: ListViewController>: BaseCoordinator<T, U>,
+  PanModalCoordinatorPresentable
 {
-
   // MARK: - PanModalCoordinatorPresentable
 
   public let panModalPresentableVC: UIViewController & PanModalPresentable
@@ -25,7 +25,6 @@ open class PanModalCollectionCoordinator<T: ListPresenter, U: ListViewController
     listController: ListController,
     padDisplayMode: PanModalNavigator.PadDisplayMode = .modal
   ) {
-
     let navigationController = PanModalNavigationCollectionVC(
       rootViewController: collectionViewController
     )

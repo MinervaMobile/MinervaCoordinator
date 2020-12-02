@@ -99,7 +99,7 @@ public final class FakePresenter: ListPresenter {
         attributedText: attrText,
         detailsText: attrText
       ),
-      SwipeableLabelCellModel(identifier: "SwipeableLabelCellModel", attributedText: attrText)
+      SwipeableLabelCellModel(identifier: "SwipeableLabelCellModel", attributedText: attrText),
     ]
     return cellModels
   }()
@@ -113,7 +113,7 @@ public final class FakePresenter: ListPresenter {
     let horizontalCellModel = HorizontalCollectionCellModel(
       identifier: "HorizontalCollectionCellModel",
       cellModels: [
-        ImageCellModel(imageObservable: .just(UIImage()), imageSize: CGSize(width: 24, height: 24))
+        ImageCellModel(imageObservable: .just(UIImage()), imageSize: CGSize(width: 24, height: 24)),
       ],
       distribution: .entireRow,
       listController: LegacyListController()
@@ -123,7 +123,7 @@ public final class FakePresenter: ListPresenter {
       identifier: "HorizontalSection"
     )
     horizontalSection.constraints.scrollDirection = .horizontal
-    listSections = [mainSection, horizontalSection]
-    sections = BehaviorRelay<[ListSection]>(value: listSections)
+    self.listSections = [mainSection, horizontalSection]
+    self.sections = BehaviorRelay<[ListSection]>(value: listSections)
   }
 }

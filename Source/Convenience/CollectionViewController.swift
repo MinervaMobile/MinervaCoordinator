@@ -8,7 +8,6 @@ import Foundation
 import UIKit
 
 open class CollectionViewController: BaseViewController {
-
   public var hideNavigationBar: Bool = false
   public var backgroundImage: UIImage?
   public var backgroundColor: UIColor = .white

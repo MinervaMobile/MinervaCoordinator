@@ -89,7 +89,7 @@ public final class SignInPresenter: ListPresenter {
       passwordModel,
       passwordMarginModel,
       signInButtonModel,
-      bottomDynamicMarginModel
+      bottomDynamicMarginModel,
     ]
 
     return ListSection(cellModels: cellModels, identifier: "SignInPresenterSection")
@@ -97,7 +97,7 @@ public final class SignInPresenter: ListPresenter {
 
   private func handleContinueButtonPress() {
     if let email = self.email, let password = self.password {
-      actionsRelay.accept(.signIn(email: email, password: password, mode: self.mode))
+      actionsRelay.accept(.signIn(email: email, password: password, mode: mode))
     } else {
       actionsRelay.accept(.invalidInput)
     }

@@ -12,6 +12,7 @@ public enum ProtoExtensions {}
 public enum ProtoError: Error {
   case parseError
 }
+
 extension Message {
   public init?(dictionary: [String: Any]) {
     do {
@@ -35,7 +36,7 @@ extension Message {
     do {
       var options = JSONEncodingOptions()
       options.alwaysPrintEnumsAsInts = true
-      let data = try self.jsonUTF8Data(options: options)
+      let data = try jsonUTF8Data(options: options)
       let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
       guard let dictionary = json as? [String: Any] else {
         assertionFailure("PROTO FAILURE: Failed to convert the json to a dictionary \(json)")
@@ -51,7 +52,7 @@ extension Message {
   public func asDictionary() throws -> [String: Any] {
     var options = JSONEncodingOptions()
     options.alwaysPrintEnumsAsInts = true
-    let data = try self.jsonUTF8Data(options: options)
+    let data = try jsonUTF8Data(options: options)
     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
     guard let dictionary = json as? [String: Any] else {
       throw ProtoError.parseError
@@ -62,6 +63,6 @@ extension Message {
   public func asJSONString() throws -> String {
     var options = JSONEncodingOptions()
     options.alwaysPrintEnumsAsInts = true
-    return try self.jsonString(options: options)
+    return try jsonString(options: options)
   }
 }

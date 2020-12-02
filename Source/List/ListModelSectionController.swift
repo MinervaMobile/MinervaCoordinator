@@ -52,12 +52,12 @@ internal final class ListModelSectionController: ListBindingSectionController<Li
   }
 
   internal var sizeConstraints: ListSizeConstraints? {
-    guard let containerSize = self.collectionContext?.insetContainerSize else {
+    guard let containerSize = collectionContext?.insetContainerSize else {
       assertionFailure("The container size should exist.")
       return nil
     }
 
-    guard let section = self.object?.section else {
+    guard let section = object?.section else {
       assertionFailure("List Section model should exist")
       return nil
     }
@@ -71,32 +71,32 @@ internal final class ListModelSectionController: ListBindingSectionController<Li
 }
 
 // MARK: - ListBindingSectionController
-extension ListModelSectionController {
 
+extension ListModelSectionController {
   override internal func didUpdate(to object: Any) {
     super.didUpdate(to: object)
     guard let sectionWrapper = object as? ListSectionWrapper else {
       assertionFailure("Unknown object type \(object)")
       return
     }
-    self.inset = sectionWrapper.section.constraints.inset
-    self.minimumLineSpacing = sectionWrapper.section.constraints.minimumLineSpacing
-    self.minimumInteritemSpacing = sectionWrapper.section.constraints.minimumInteritemSpacing
+    inset = sectionWrapper.section.constraints.inset
+    minimumLineSpacing = sectionWrapper.section.constraints.minimumLineSpacing
+    minimumInteritemSpacing = sectionWrapper.section.constraints.minimumInteritemSpacing
   }
 
   override internal func canMoveItem(at index: Int) -> Bool {
-    guard let section = self.object?.section else { return false }
+    guard let section = object?.section else { return false }
     return (section.cellModels[index] as? ListReorderableCellModel)?.reorderable ?? false
   }
 
   override internal func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
     super.moveObject(from: sourceIndex, to: destinationIndex)
-    guard let wrapper = self.object else { return }
+    guard let wrapper = object else { return }
 
     let cellModel = wrapper.section.cellModels.remove(at: sourceIndex)
     wrapper.section.cellModels.insert(cellModel, at: destinationIndex)
 
-    self.delegate?
+    delegate?
       .sectionControllerCompletedMove(
         self,
         for: cellModel,
@@ -107,8 +107,8 @@ extension ListModelSectionController {
 }
 
 // MARK: - Private
-extension ListModelSectionController {
 
+extension ListModelSectionController {
   private func cell(for viewModel: Any, index: Int) -> ListCollectionViewCell {
     guard let wrapper = viewModel as? ListCellModelWrapper else {
       assertionFailure("Unsupported view model type \(viewModel)")
@@ -173,7 +173,7 @@ extension ListModelSectionController {
       return super.sizeForItem(at: index)
     }
 
-    guard let section = self.object?.section else {
+    guard let section = object?.section else {
       assertionFailure("List Section model should exist")
       return super.sizeForItem(at: index)
     }
@@ -192,6 +192,7 @@ extension ListModelSectionController {
 }
 
 // MARK: - ListBindingSectionControllerDataSource
+
 extension ListModelSectionController: ListBindingSectionControllerDataSource {
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
@@ -215,7 +216,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
     at index: Int
   ) -> CGSize {
     let size = determineSize(for: viewModel, at: index)
-    guard size.height > 0 && size.width > 0 else {
+    guard size.height > 0, size.width > 0 else {
       assertionFailure(
         "Height and width must be > 0 or the cell shouldn't exist \(size) for \(viewModel)"
       )
@@ -226,6 +227,7 @@ extension ListModelSectionController: ListBindingSectionControllerDataSource {
 }
 
 // MARK: - ListBindingSectionControllerSelectionDelegate
+
 extension ListModelSectionController: ListBindingSectionControllerSelectionDelegate {
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
@@ -236,7 +238,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       assertionFailure("Unsupported view model type \(viewModel)")
       return
     }
-    let indexPath = IndexPath(item: index, section: self.section)
+    let indexPath = IndexPath(item: index, section: section)
     if let model = wrapper.model as? ListSelectableCellModelWrapper {
       model.selected(at: indexPath)
     } else {
@@ -248,6 +250,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
         )
     }
   }
+
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didDeselectItemAt index: Int,
@@ -262,11 +265,12 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       assertionFailure("Unsupported view model type \(viewModel)")
       return
     }
-    let indexPath = IndexPath(item: index, section: self.section)
+    let indexPath = IndexPath(item: index, section: section)
     if let model = wrapper.model as? ListHighlightableCellModelWrapper {
       model.highlighted(at: indexPath)
     }
   }
+
   internal func sectionController(
     _ sectionController: ListBindingSectionController<ListDiffable>,
     didUnhighlightItemAt index: Int,
@@ -276,7 +280,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
       assertionFailure("Unsupported view model type \(viewModel)")
       return
     }
-    let indexPath = IndexPath(item: index, section: self.section)
+    let indexPath = IndexPath(item: index, section: section)
     if let model = wrapper.model as? ListHighlightableCellModelWrapper {
       model.unhighlighted(at: indexPath)
     }
@@ -284,6 +288,7 @@ extension ListModelSectionController: ListBindingSectionControllerSelectionDeleg
 }
 
 // MARK: - ListDisplayDelegate
+
 extension ListModelSectionController: ListDisplayDelegate {
   internal func listAdapter(
     _ listAdapter: ListAdapter,
@@ -317,8 +322,9 @@ extension ListModelSectionController: ListDisplayDelegate {
 }
 
 // MARK: - ListResizableCellDelegate
+
 extension ListModelSectionController: ListResizableCellDelegate {
-  func cellDidInvalidateSize(_ cell: ListResizableCell) {
+  internal func cellDidInvalidateSize(_ cell: ListResizableCell) {
     guard let index = collectionContext?.index(for: cell, sectionController: self) else { return }
     let indexPath = IndexPath(item: index, section: section)
     delegate?.sectionController(self, didInvalidateSizeAt: indexPath)
@@ -326,14 +332,14 @@ extension ListModelSectionController: ListResizableCellDelegate {
 }
 
 // MARK: - ListSupplementaryViewSource
-extension ListModelSectionController: ListSupplementaryViewSource {
 
+extension ListModelSectionController: ListSupplementaryViewSource {
   internal func supportedElementKinds() -> [String] {
     var elementKinds = [String]()
-    if self.object?.section.headerModel != nil {
+    if object?.section.headerModel != nil {
       elementKinds.append(UICollectionView.elementKindSectionHeader)
     }
-    if self.object?.section.footerModel != nil {
+    if object?.section.footerModel != nil {
       elementKinds.append(UICollectionView.elementKindSectionFooter)
     }
     return elementKinds
@@ -345,9 +351,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
-      model = self.object?.section.headerModel
+      model = object?.section.headerModel
     case UICollectionView.elementKindSectionFooter:
-      model = self.object?.section.footerModel
+      model = object?.section.footerModel
     default:
       assertionFailure("Unsupported Supplementary view type")
       model = nil
@@ -357,7 +363,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
       return UICollectionViewCell()
     }
 
-    let cell = self.supplementaryView(for: cellModel, index: index, elementKind: elementKind)
+    let cell = supplementaryView(for: cellModel, index: index, elementKind: elementKind)
     cell.bindViewModel(ListCellModelWrapper(model: cellModel))
     return cell
   }
@@ -366,9 +372,9 @@ extension ListModelSectionController: ListSupplementaryViewSource {
     let model: ListCellModel?
     switch elementKind {
     case UICollectionView.elementKindSectionHeader:
-      model = self.object?.section.headerModel
+      model = object?.section.headerModel
     case UICollectionView.elementKindSectionFooter:
-      model = self.object?.section.footerModel
+      model = object?.section.footerModel
     default:
       assertionFailure("Unsupported Supplementary view type")
       model = nil
@@ -388,6 +394,7 @@ extension ListModelSectionController: ListSupplementaryViewSource {
 }
 
 // MARK: - IGListTransitionDelegate
+
 extension ListModelSectionController: IGListTransitionDelegate {
   internal func listAdapter(
     _ listAdapter: ListAdapter,
@@ -396,25 +403,27 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes,
-      let section = self.object?.section
+    guard
+      let animationAttributes = attributes as? ListViewLayoutAttributes,
+      let section = object?.section
     else {
       return attributes
     }
 
     guard
       let customAttributes = delegate?
-        .sectionController(
-          self,
-          initialLayoutAttributes: animationAttributes,
-          for: section,
-          at: indexPath
-        )
+      .sectionController(
+        self,
+        initialLayoutAttributes: animationAttributes,
+        for: section,
+        at: indexPath
+      )
     else {
       return attributes
     }
     return customAttributes
   }
+
   internal func listAdapter(
     _ listAdapter: ListAdapter,
     customizedFinalLayoutAttributes attributes: UICollectionViewLayoutAttributes,
@@ -422,19 +431,20 @@ extension ListModelSectionController: IGListTransitionDelegate {
     at index: Int
   ) -> UICollectionViewLayoutAttributes {
     let indexPath = IndexPath(item: index, section: sectionController.section)
-    guard let animationAttributes = attributes as? ListViewLayoutAttributes,
-      let section = self.object?.section
+    guard
+      let animationAttributes = attributes as? ListViewLayoutAttributes,
+      let section = object?.section
     else {
       return attributes
     }
     guard
       let customAttributes = delegate?
-        .sectionController(
-          self,
-          finalLayoutAttributes: animationAttributes,
-          for: section,
-          at: indexPath
-        )
+      .sectionController(
+        self,
+        finalLayoutAttributes: animationAttributes,
+        for: section,
+        at: indexPath
+      )
     else {
       return attributes
     }

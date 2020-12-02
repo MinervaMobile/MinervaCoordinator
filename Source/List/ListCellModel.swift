@@ -99,7 +99,6 @@ public protocol ListSelectableCellModelWrapper {
 /// If a cell is selectable it should conform to this protocol and set a block to be
 /// called when selected. Headers and Footers can not be selected using this protocol.
 public protocol ListSelectableCellModel: ListSelectableCellModelWrapper {
-
   associatedtype SelectableModelType: ListCellModel
   typealias SelectionAction = (_ cellModel: SelectableModelType, _ indexPath: IndexPath) -> Void
 
@@ -131,7 +130,6 @@ public protocol ListHighlightableCellModelWrapper {
 
 /// A protocol that models can conform to for cell highlighting.
 public protocol ListHighlightableCellModel: ListHighlightableCellModelWrapper {
-
   associatedtype HighlightableModelType: ListCellModel
   typealias HighlightAction = (_ cellModel: HighlightableModelType, _ indexPath: IndexPath) -> Void
 
@@ -148,6 +146,7 @@ extension ListHighlightableCellModel {
     }
     highlightedAction?(model, indexPath)
   }
+
   public func unhighlighted(at indexPath: IndexPath) {
     guard let model = self as? HighlightableModelType else {
       assertionFailure("Invalid model type \(self) for \(HighlightableModelType.self)")
@@ -167,7 +166,6 @@ public protocol ListTypedCellModel: ListCellModel {
 }
 
 extension ListTypedCellModel {
-
   public var cellType: ListCollectionViewCell.Type { CellType.self }
 
   public func identical(to other: ListCellModel) -> Bool {

@@ -10,11 +10,11 @@ private enum FoundationExtensions {}
 
 extension Array {
   public var isNotEmpty: Bool {
-    !self.isEmpty
+    !isEmpty
   }
 
   public func at(_ index: Int) -> Element? {
-    guard index >= 0, index < self.count else {
+    guard index >= 0, index < count else {
       return nil
     }
     return self[index]
@@ -22,12 +22,12 @@ extension Array {
 }
 
 extension DateComponents {
-
   public func compareTime(with date: Date, calendar: Calendar = Calendar.current)
     -> ComparisonResult
   {
     let otherComponents = calendar.dateComponents([.hour, .minute, .second], from: date)
-    guard let firstHour = hour,
+    guard
+      let firstHour = hour,
       let secondHour = otherComponents.hour,
       let firstMinutes = minute,
       let secondMinutes = otherComponents.minute,
@@ -58,18 +58,21 @@ extension DateFormatter {
     formatter.timeStyle = .none
     return formatter
   }()
+
   public static let timeOnlyFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .none
     formatter.timeStyle = .short
     return formatter
   }()
+
   public static let dateAndTimeFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
     formatter.timeStyle = .short
     return formatter
   }()
+
   public static let RFC3339DateFormatter: DateFormatter = {
     let RFC3339DateFormatter = DateFormatter()
     RFC3339DateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -90,6 +93,7 @@ extension Sequence {
     }
     return categories
   }
+
   public func asMap<T>(converter: @escaping (Iterator.Element) -> T) -> [T: Iterator.Element] {
     var map: [T: Iterator.Element] = [:]
     for element in self {

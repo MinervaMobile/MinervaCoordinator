@@ -17,7 +17,6 @@ public protocol FilterCoordinatorDelegate: AnyObject {
 }
 
 public final class FilterCoordinator: MainCoordinator<FilterPresenter, CollectionViewController> {
-
   public weak var delegate: FilterCoordinatorDelegate?
 
   // MARK: - Lifecycle
@@ -48,6 +47,7 @@ public final class FilterCoordinator: MainCoordinator<FilterPresenter, Collectio
     coordinator.delegate = self
     push(coordinator, animated: true)
   }
+
   private func handle(_ action: FilterPresenter.Action) {
     switch action {
     case let .edit(filter, type):
@@ -57,6 +57,7 @@ public final class FilterCoordinator: MainCoordinator<FilterPresenter, Collectio
 }
 
 // MARK: - UpdateFilterPresenterDelegate
+
 extension FilterCoordinator: UpdateFilterCoordinatorDelegate {
   public func updateFilterCoordinator(
     _ updateFilterCoordinator: UpdateFilterCoordinator,

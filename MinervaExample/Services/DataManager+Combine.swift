@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension DataManager {
-
   public func combineUsers() -> Future<[User], Error> {
     asSingle(loadUsers(completion:))
   }

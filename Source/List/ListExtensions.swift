@@ -17,9 +17,8 @@ extension Array {
 }
 
 extension Collection {
-
   internal func element(at index: Self.Index) -> Self.Iterator.Element? {
-    guard index >= startIndex && index < endIndex else {
+    guard index >= startIndex, index < endIndex else {
       return nil
     }
     return self[index]
@@ -61,7 +60,8 @@ extension UICollectionView {
   internal var centerCellIndexPath: IndexPath? { indexPathForItem(at: centerPoint) }
 
   internal func isIndexPathAvailable(_ indexPath: IndexPath) -> Bool {
-    guard dataSource != nil,
+    guard
+      dataSource != nil,
       indexPath.section < numberOfSections,
       indexPath.item < numberOfItems(inSection: indexPath.section)
     else {

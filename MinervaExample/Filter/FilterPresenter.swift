@@ -55,5 +55,4 @@ public final class FilterPresenter: ListPresenter {
     let section = ListSection(cellModels: cellModels, identifier: "SECTION")
     return [section]
   }
-
 }

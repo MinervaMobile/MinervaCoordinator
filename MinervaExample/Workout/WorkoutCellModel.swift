@@ -3,7 +3,6 @@ import Minerva
 import UIKit
 
 public final class WorkoutCellModel: SwipeableLabelCellModel, ListSelectableCellModel {
-
   public let workout: Workout
 
   public init(workout: Workout) {
@@ -27,6 +26,7 @@ public final class WorkoutCellModel: SwipeableLabelCellModel, ListSelectableCell
   }
 
   // MARK: - ListSelectableCellModel
+
   public typealias SelectableModelType = WorkoutCellModel
   public var selectionAction: SelectionAction?
 }

@@ -23,12 +23,12 @@ public class WorkoutRepository {
     self.user = dataManager.observeUsers()
       .compactMap { changeResult -> Result<User, Error>? in
         switch changeResult {
-        case .success(let users):
+        case let .success(users):
           guard let user = users.first(where: { $0.userID == userID }) else {
             return nil
           }
           return .success(user)
-        case .failure(let error):
+        case let .failure(error):
           return .failure(error)
         }
       }
@@ -37,6 +37,7 @@ public class WorkoutRepository {
   public func image(forWorkoutID workoutID: String) -> Observable<UIImage?> {
     dataManager.image(forWorkoutID: workoutID).asObservable()
   }
+
   public func delete(_ workout: Workout) -> Single<Void> {
     dataManager.delete(workout)
   }

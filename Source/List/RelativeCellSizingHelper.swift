@@ -19,10 +19,10 @@ public enum RelativeCellSizingHelper {
     let minHeight: CGFloat = 1
     let dynamicHeight = listController.listSections.reduce(collectionViewBounds.height) {
       sum,
-      section -> CGFloat in
+        section -> CGFloat in
       sum - listController.size(of: section, containerSize: collectionViewBounds).height
     }
-    let cellModels = listController.listSections.flatMap { $0.cellModels }
+    let cellModels = listController.listSections.flatMap(\.cellModels)
     let marginCellCount = cellModels.reduce(0) { count, model -> Int in
       guard case .relative = model.size(constrainedTo: .zero), include(model) else { return count }
       return count + 1

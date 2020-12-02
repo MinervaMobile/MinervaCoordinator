@@ -18,7 +18,6 @@ public protocol WelcomeCoordinatorDelegate: AnyObject {
 
 /// Manages the user flows for logging in and creating new accounts
 public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, CollectionViewController> {
-
   public weak var delegate: WelcomeCoordinatorDelegate?
   private let userManager: UserManager
 
@@ -52,6 +51,7 @@ public final class WelcomeCoordinator: MainCoordinator<WelcomePresenter, Collect
     coordinator.delegate = self
     push(coordinator, animated: true)
   }
+
   private func handle(_ action: WelcomePresenter.Action) {
     switch action {
     case .login: displaySignInVC(mode: .login)

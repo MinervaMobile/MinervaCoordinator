@@ -10,7 +10,6 @@ import UIKit
 
 /// Manages the collection view state and updating the collection view to the provided ListSection's.
 public protocol ListController: AnyObject {
-
   /// A block to be called when a method completes.  True if finished successfully.
   typealias Completion = (Bool) -> Void
 
@@ -105,7 +104,6 @@ public protocol ListController: AnyObject {
 }
 
 extension ListController {
-
   /// Reloads all cells on the collection view with the previously set [ListSection]
   public func reloadData() {
     reloadData(completion: nil)

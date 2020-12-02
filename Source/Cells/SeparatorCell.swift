@@ -10,9 +10,9 @@ import UIKit
 open class SeparatorCellModel: BaseListCellModel {
   public static func id(for location: Location) -> String {
     switch location {
-    case .bottom(let cellModelID):
+    case let .bottom(cellModelID):
       return "Separator-Bottom-\(cellModelID)"
-    case .top(let cellModelID):
+    case let .top(cellModelID):
       return "Separator-Top-\(cellModelID)"
     }
   }
@@ -74,7 +74,6 @@ open class SeparatorCellModel: BaseListCellModel {
 }
 
 public final class SeparatorCell: BaseListCell<SeparatorCellModel> {
-
   private let separator = UIView()
   private var heightConstraint: NSLayoutConstraint?
   private var leadingConstraint: NSLayoutConstraint?
@@ -108,6 +107,7 @@ public final class SeparatorCell: BaseListCell<SeparatorCellModel> {
 }
 
 // MARK: - Constraints
+
 extension SeparatorCell {
   private func remakeConstraints(with model: SeparatorCellModel) {
     let layoutGuide = contentView.layoutMarginsGuide

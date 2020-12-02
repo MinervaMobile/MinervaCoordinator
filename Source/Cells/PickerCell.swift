@@ -30,15 +30,14 @@ open class PickerCellModel: BaseListCellModel {
   fileprivate let helper: PickerCellModelHelper
 
   public
-    init(
-      identifier: String,
-      pickerDataComponents: [PickerDataComponent],
-      changedValue: @escaping Action
-    )
-  {
+  init(
+    identifier: String,
+    pickerDataComponents: [PickerDataComponent],
+    changedValue: @escaping Action
+  ) {
     self.helper = PickerCellModelHelper(pickerDataComponents: pickerDataComponents)
     super.init(identifier: identifier)
-    self.helper.changedValue = { [weak self] pickerView, row, component in
+    helper.changedValue = { [weak self] pickerView, row, component in
       guard let strongSelf = self else { return }
       changedValue(strongSelf, pickerView, row, component)
     }
@@ -56,11 +55,10 @@ open class PickerCellModel: BaseListCellModel {
 }
 
 public final class PickerCell: BaseListCell<PickerCellModel> {
-
   private let pickerView: UIPickerView
 
   override public init(frame: CGRect) {
-    pickerView = UIPickerView(frame: .zero)
+    self.pickerView = UIPickerView(frame: .zero)
     super.init(frame: frame)
     contentView.addSubview(pickerView)
     pickerView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
@@ -100,13 +98,13 @@ private class PickerCellModelHelper: NSObject {
 }
 
 // MARK: - UIPickerViewDataSource
+
 extension PickerCellModelHelper: UIPickerViewDataSource {
   public func numberOfComponents(in pickerView: UIPickerView) -> Int {
     pickerDataComponents.count
   }
 
-  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-  {
+  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     guard let rowCount = pickerDataComponents.element(at: component)?.data.count else {
       assertionFailure("Data should exist for component \(component)")
       return 0
@@ -116,6 +114,7 @@ extension PickerCellModelHelper: UIPickerViewDataSource {
 }
 
 // MARK: - UIPickerViewDelegate
+
 extension PickerCellModelHelper: UIPickerViewDelegate {
   public func pickerView(
     _ pickerView: UIPickerView,
@@ -126,7 +125,8 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
 
-    guard let componentData = pickerDataComponents.element(at: component),
+    guard
+      let componentData = pickerDataComponents.element(at: component),
       let rowData = componentData.data.element(at: row)
     else {
       assertionFailure("Data should exist for component \(component) row \(row)")
@@ -170,7 +170,7 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
       let textWidth = rowData.text.width(constraintedToHeight: pickerView.bounds.height)
       let width =
         textWidth + (rowData.imageData?.imageMargin ?? 0)
-        + (rowData.imageData?.imageSize.width ?? 0)
+          + (rowData.imageData?.imageSize.width ?? 0)
       return max(maxWidth, width)
     }
 
@@ -197,11 +197,12 @@ extension PickerCellModelHelper: UIPickerViewDelegate {
       max($0, $1.text.height(constraintedToWidth: pickerView.frame.width))
     }
     let maxImageHeight = componentData.data.reduce(0) {
-      max($0, ($1.imageData?.imageSize.height ?? 0))
+      max($0, $1.imageData?.imageSize.height ?? 0)
     }
 
     return max(maxTextHeight, maxImageHeight) + componentData.verticalMargin * 2
   }
+
   public func pickerView(
     _ pickerView: UIPickerView,
     didSelectRow row: Int,

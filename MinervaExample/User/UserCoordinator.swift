@@ -14,7 +14,6 @@ public protocol UserCoordinatorDelegate: AnyObject {
 
 /// Manages the user flows when a user is logged in.
 public final class UserCoordinator: NSObject, CoordinatorNavigator {
-
   public weak var delegate: UserCoordinatorDelegate?
 
   private let userManager: UserManager
@@ -31,6 +30,7 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
   )
 
   // MARK: - CoordinatorNavigator
+
   public weak var parent: Coordinator?
   public weak var presentedCoordinator: BaseCoordinatorPresentable?
   public var childCoordinators = [Coordinator]()
@@ -48,7 +48,7 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
       navigationController: navigator.navigationController
     )
     super.init()
-    self.userVC.delegate = self
+    userVC.delegate = self
     displayWorkoutList()
   }
 
@@ -82,10 +82,10 @@ public final class UserCoordinator: NSObject, CoordinatorNavigator {
     coordinator.delegate = self
     setRootCoordinator(coordinator, animated: false)
   }
-
 }
 
 // MARK: - SettingsCoordinatorDelegate
+
 extension UserCoordinator: SettingsCoordinatorDelegate {
   public func settingsCoordinatorLogoutCurrentUser(_ settingsCoordinator: SettingsCoordinator) {
     delegate?.userCoordinatorLogoutCurrentUser(self)
@@ -93,6 +93,7 @@ extension UserCoordinator: SettingsCoordinatorDelegate {
 }
 
 // MARK: - UserListCoordinatorDelegate
+
 extension UserCoordinator: UserListCoordinatorDelegate {
   public func userListCoordinatorLogoutCurrentUser(_ userListCoordinator: UserListCoordinator) {
     delegate?.userCoordinatorLogoutCurrentUser(self)
@@ -100,6 +101,7 @@ extension UserCoordinator: UserListCoordinatorDelegate {
 }
 
 // MARK: - UserVCDelegate
+
 extension UserCoordinator: UserVCDelegate {
   public func userVC(_ userVC: UserVC, selected tab: UserVC.Tab) {
     switch tab {

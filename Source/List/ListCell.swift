@@ -12,14 +12,13 @@ import UIKit
 public typealias ListCollectionViewCell = UICollectionViewCell & ListCell
 
 /// The cell that will be bound to a ListCellModel
-/// TODO: Remove this dependency on IGListKit's ListBindable
+// TODO: Remove this dependency on IGListKit's ListBindable
 public protocol ListCell: ListBindable {
   func bind(cellModel: ListCellModel, sizing: Bool)
 }
 
 /// Optional protocol that if implemented by a ListCell to better manage a cell's state change.
 public protocol ListDisplayableCell: ListCell {
-
   /// Called when the cell is about to be viewable
   func willDisplayCell()
   /// Called when a cell is no longer viewable

@@ -31,7 +31,6 @@ extension User {
 }
 
 extension UserProto: User {
-
   public init(
     userID: String,
     email: String,

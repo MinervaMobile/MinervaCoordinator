@@ -8,7 +8,6 @@ import Foundation
 import RxSwift
 
 public protocol UserManager {
-
   /// The cached user, if there is one
   func activateCachedUser() -> DataManager?
 

@@ -10,7 +10,6 @@ import RxSwift
 import UIKit
 
 public final class WorkoutVC: BaseViewController {
-
   private let addButton: UIButton = {
     let addButton = UIButton(frame: .zero)
     addButton.setImage(Asset.Add.image.withRenderingMode(.alwaysTemplate), for: .normal)

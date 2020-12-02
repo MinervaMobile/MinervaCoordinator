@@ -9,7 +9,6 @@ import Minerva
 import RxSwift
 
 public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionViewController> {
-
   public var viewDidLoad = false
   public var viewWillAppear = false
   public var viewWillDisappear = false
@@ -64,7 +63,6 @@ public final class FakeCoordinator: BaseCoordinator<FakePresenter, CollectionVie
       viewWillDisappear = true
     case .viewDidAppear:
       viewDidAppear = true
-
     }
   }
 }

@@ -29,7 +29,6 @@ extension UserCredentials {
 }
 
 extension UserCredentialsProto: UserCredentials {
-
   public init(
     email: String,
     password: String

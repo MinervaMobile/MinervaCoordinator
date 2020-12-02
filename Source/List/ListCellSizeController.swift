@@ -9,14 +9,12 @@ import IGListKit
 import UIKit
 
 internal protocol ListCellSizeControllerDelegate: AnyObject {
-
   func sizeController(
     _ sizeController: ListCellSizeController,
     sizeFor model: ListCellModel,
     at indexPath: IndexPath,
     constrainedTo sizeConstraints: ListSizeConstraints
   ) -> CGSize?
-
 }
 
 internal final class ListCellSizeController {
@@ -25,8 +23,7 @@ internal final class ListCellSizeController {
 
   private var cachedCells = [CellType: ListCollectionViewCell]()
 
-  internal init() {
-  }
+  internal init() {}
 
   internal func clearCache() {
     cachedCells.removeAll()
@@ -40,7 +37,7 @@ internal final class ListCellSizeController {
     switch size {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
-    case .explicit(let size):
+    case let .explicit(size):
       return size
     case .relative:
       assertionFailure("Relative sizing is not supported for supplementary views")
@@ -59,7 +56,7 @@ internal final class ListCellSizeController {
     switch cellSize {
     case .autolayout:
       return autolayoutSize(for: cellModel, constrainedTo: sizeConstraints)
-    case .explicit(let size):
+    case let .explicit(size):
       return size
     case .relative:
       guard
@@ -74,7 +71,8 @@ internal final class ListCellSizeController {
 
       // Handle the last cell when distribution is .proportionallyWithLastCellFillingWidth and cell opts in to .relative
       let isLastCell = (section.cellModels.count == indexPath.item + 1)
-      if case .proportionallyWithLastCellFillingWidth(let minimumWidth) = sizeConstraints
+      if
+        case let .proportionallyWithLastCellFillingWidth(minimumWidth) = sizeConstraints
         .distribution, isLastCell
       {
         let remainingWidth = remainingRowWidthForCell(
@@ -86,7 +84,7 @@ internal final class ListCellSizeController {
         // If there isn't enough remainingWidth, size for a new row.
         let sizingWidth =
           remainingWidth >= minimumWidth
-          ? remainingWidth : sizeConstraints.adjustedContainerSize.width
+            ? remainingWidth : sizeConstraints.adjustedContainerSize.width
 
         let sizeToFill = CGSize(
           width: sizingWidth,
@@ -98,13 +96,13 @@ internal final class ListCellSizeController {
       guard enableSizeByDelegate else { return .zero }
 
       guard
-        let size = self.delegate?
-          .sizeController(
-            self,
-            sizeFor: cellModel,
-            at: indexPath,
-            constrainedTo: sizeConstraints
-          )
+        let size = delegate?
+        .sizeController(
+          self,
+          sizeFor: cellModel,
+          at: indexPath,
+          constrainedTo: sizeConstraints
+        )
       else {
         assertionFailure(
           "The section controller delegate should provide a size for relative cell sizes."
@@ -184,7 +182,7 @@ internal final class ListCellSizeController {
         )
         return CGSize(width: width, height: adjustedContainerSize.height)
       }
-    case .equally(let cellsInRow):
+    case let .equally(cellsInRow):
       guard isVertical else { fatalError("Horizontal is not yet supported") }
       var rowHeight: CGFloat = 0
       for (index, model) in listSection.cellModels.enumerated() {
@@ -313,7 +311,6 @@ internal final class ListCellSizeController {
         return CGSize(width: size.width, height: min(size.height, adjustedContainerSize.height))
       }
     }
-
   }
 
   private func autolayoutSize(
@@ -350,7 +347,7 @@ internal final class ListCellSizeController {
     let adjustedContainerSize = sizeConstraints.adjustedContainerSize
     let modelSize = model.size(constrainedTo: adjustedContainerSize)
 
-    guard case .explicit(let size) = modelSize else {
+    guard case let .explicit(size) = modelSize else {
       return modelSize
     }
 

@@ -14,6 +14,7 @@ public final class LifecycleCoordinator {
   private let userManager: UserManager
 
   // MARK: - Coordinator
+
   public var activeCoordinator: Coordinator?
 
   // MARK: - Lifecycle
@@ -57,6 +58,7 @@ public final class LifecycleCoordinator {
 }
 
 // MARK: - WelcomeCoordinatorDelegate
+
 extension LifecycleCoordinator: WelcomeCoordinatorDelegate {
   public func onboardingCoordinator(
     _ onboardingCoordinator: WelcomeCoordinator,
@@ -67,6 +69,7 @@ extension LifecycleCoordinator: WelcomeCoordinatorDelegate {
 }
 
 // MARK: - UserCoordinatorDelegate
+
 extension LifecycleCoordinator: UserCoordinatorDelegate {
   public func userCoordinatorLogoutCurrentUser(_ userCoordinator: UserCoordinator) {
     launchWelcomeCoordinator(animated: true)

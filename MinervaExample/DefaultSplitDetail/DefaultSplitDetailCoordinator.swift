@@ -11,9 +11,7 @@ import UIKit
 
 public final class DefaultSplitDetailCoordinator: MainCoordinator<
   DefaultSplitDetailPresenter, CollectionViewController
->
-{
-
+> {
   // MARK: - Lifecycle
 
   public init(navigator: Navigator) {

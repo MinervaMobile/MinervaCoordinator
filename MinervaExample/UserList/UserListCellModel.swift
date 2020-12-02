@@ -3,7 +3,6 @@ import Minerva
 import UIKit
 
 public final class UserListCellModel: SwipeableLabelCellModel, ListSelectableCellModel {
-
   public let user: User
 
   public init(user: User) {
@@ -31,6 +30,7 @@ public final class UserListCellModel: SwipeableLabelCellModel, ListSelectableCel
   }
 
   // MARK: - ListSelectableCellModel
+
   public typealias SelectableModelType = UserListCellModel
   public var selectionAction: SelectionAction?
 }

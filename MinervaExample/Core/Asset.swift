@@ -7,7 +7,6 @@
 import UIKit.UIImage
 
 public enum Asset: String {
-
   case Add = "add"
   case Disclosure = "disclosure"
   case Filter = "filter"
@@ -18,8 +17,8 @@ public enum Asset: String {
 
   public var image: UIImage {
     let bundle = Bundle(for: ImageBundleToken.self)
-    guard let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil) else {
-      assertionFailure("Missing image for \(self.rawValue)")
+    guard let image = UIImage(named: rawValue, in: bundle, compatibleWith: nil) else {
+      assertionFailure("Missing image for \(rawValue)")
       return UIImage()
     }
     return image

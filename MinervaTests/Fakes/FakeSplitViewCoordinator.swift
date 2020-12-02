@@ -8,8 +8,7 @@ import Foundation
 import Minerva
 import RxSwift
 
-public final class FakeSplitViewCoordinator: SplitViewCoordinator<FakeCoordinator, FakeCoordinator>
-{
+public final class FakeSplitViewCoordinator: SplitViewCoordinator<FakeCoordinator, FakeCoordinator> {
   public init(navigator: Navigator) {
     super
       .init(
@@ -21,6 +20,5 @@ public final class FakeSplitViewCoordinator: SplitViewCoordinator<FakeCoordinato
           FakeCoordinator(navigator: detailNavigator)
         }
       )
-
   }
 }

@@ -73,7 +73,6 @@ open class LabelAccessoryCellModel: BaseListCellModel {
 }
 
 public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
@@ -154,7 +153,7 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
     detailsLabel.attributedText = model.descriptionText
     let detailsPriority: UILayoutPriority =
       model.detailsTextResistCompression
-      ? .required : .defaultHigh
+        ? .required : .defaultHigh
     detailsLabel.setContentCompressionResistancePriority(detailsPriority, for: .horizontal)
 
     contentView.directionalLayoutMargins = model.directionalLayoutMargins
@@ -186,8 +185,8 @@ public final class LabelAccessoryCell: BaseReactiveListCell<LabelAccessoryCellMo
 }
 
 // MARK: - Constraints
-extension LabelAccessoryCell {
 
+extension LabelAccessoryCell {
   private func remakeConstraints(with model: LabelAccessoryCellModel) {
     if model.accessoryImage != nil {
       accessoryImageWidthHeightConstraint?.constant = model.accessoryImageWidthHeight

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Minerva"
-  s.version = "2.26.0"
+  s.version = "2.26.1"
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift MVVM + Coordinator Framework"
@@ -69,6 +69,7 @@ Pod::Spec.new do |s|
   s.subspec 'PanModal' do |ss|
     ss.source_files = 'Source/PanModal/**/*.swift'
 
+    ss.dependency 'Minerva/Convenience'
     ss.dependency 'Minerva/Coordination'
     ss.dependency 'Minerva/List'
 

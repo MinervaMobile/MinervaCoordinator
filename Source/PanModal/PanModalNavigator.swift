@@ -13,24 +13,26 @@ open class PanModalNavigator: BasicNavigator {
     case view(sourceView: UIView?, sourceRect: CGRect)
     case barButtonItem(item: UIBarButtonItem)
   }
+
   public enum PadDisplayMode {
     case popover(type: PadDisplayPopoverType)
     case modal
   }
+
   public init(
     parent: Navigator?,
     navigationController: UINavigationController & PanModalPresentable,
     padDisplayMode: PadDisplayMode
   ) {
     // Set this here so we are able to present PanModal without using convenience method
-    if UIDevice.current.userInterfaceIdiom == .pad, case .popover(let type) = padDisplayMode {
+    if UIDevice.current.userInterfaceIdiom == .pad, case let .popover(type) = padDisplayMode {
       navigationController.modalPresentationStyle = .popover
       switch type {
       case let .view(sourceView, sourceRect):
         navigationController.popoverPresentationController?.sourceRect = sourceRect
         navigationController.popoverPresentationController?.sourceView =
           sourceView ?? navigationController.view
-      case .barButtonItem(let item):
+      case let .barButtonItem(item):
         navigationController.popoverPresentationController?.barButtonItem = item
       }
       navigationController.popoverPresentationController?.delegate =

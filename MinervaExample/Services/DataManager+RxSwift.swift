@@ -9,7 +9,6 @@ import RxSwift
 import UIKit
 
 extension DataManager {
-
   public func users() -> Single<[User]> {
     asSingle(loadUsers(completion:))
   }
@@ -110,8 +109,7 @@ extension DataManager {
     }
   }
 
-  private func asSingle<T>(_ block: @escaping (@escaping (T, Error?) -> Void) -> Void) -> Single<T>
-  {
+  private func asSingle<T>(_ block: @escaping (@escaping (T, Error?) -> Void) -> Void) -> Single<T> {
     Single.create { single in
       block { result, error in
         if let error = error {

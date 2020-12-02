@@ -10,7 +10,6 @@ import RxSwift
 import XCTest
 
 public final class CoordinationTests: XCTestCase {
-
   private var rootCoordinator: FakeCoordinator!
   private var navigator: BasicNavigator!
 
@@ -126,7 +125,6 @@ public final class CoordinationTests: XCTestCase {
 
     XCTAssertEqual(navigator.navigationController.presentedViewController, vcA)
     XCTAssertEqual(vcA.presentedViewController, vcB)
-
   }
 
   public func testDismissalFromNavigator() {
@@ -223,5 +221,4 @@ public final class CoordinationTests: XCTestCase {
     XCTAssertEqual(rootCoordinator.childCoordinators.count, 1)
     XCTAssertTrue(rootCoordinator.childCoordinators[0] === childCoordinator)
   }
-
 }

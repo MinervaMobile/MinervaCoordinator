@@ -23,7 +23,7 @@ public enum SystemError: LocalizedError {
     case .doesNotExist: return "User does not exist"
     case .invalidEmail: return "The email you entered is not valid"
     case .invalidEmailAndPassword: return "Invalid email or password combination"
-    case .networkError(let statusCode): return "Network Error: \(statusCode)"
+    case let .networkError(statusCode): return "Network Error: \(statusCode)"
     case .unauthorized: return "Not Authorized"
     case .unknown: return "Unknown error"
     }

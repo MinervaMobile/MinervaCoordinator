@@ -15,13 +15,14 @@ extension NSAttributedString {
       string: string,
       attributes: [
         NSAttributedString.Key.font: font,
-        NSAttributedString.Key.foregroundColor: fontColor
+        NSAttributedString.Key.foregroundColor: fontColor,
       ]
     )
   }
+
   internal func height(constraintedToWidth width: CGFloat) -> CGFloat {
     let size = CGSize(width: width, height: .greatestFiniteMagnitude)
-    let rect = self.boundingRect(
+    let rect = boundingRect(
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       context: nil
@@ -29,9 +30,10 @@ extension NSAttributedString {
     let height = rect.size.height
     return ceil(height)
   }
+
   internal func width(constraintedToHeight height: CGFloat) -> CGFloat {
     let size = CGSize(width: .greatestFiniteMagnitude, height: height)
-    let rect = self.boundingRect(
+    let rect = boundingRect(
       with: size,
       options: [.usesFontLeading, .usesLineFragmentOrigin],
       context: nil
@@ -55,6 +57,7 @@ extension String {
     let height = rect.size.height
     return ceil(height)
   }
+
   internal func width(constraintedToHeight height: CGFloat, font: UIFont) -> CGFloat {
     let string = self as NSString
     let size = CGSize(width: .greatestFiniteMagnitude, height: height)

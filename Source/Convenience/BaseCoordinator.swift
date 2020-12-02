@@ -22,14 +22,17 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
   public let disposeBag = DisposeBag()
 
   // MARK: - Coordinator
+
   public weak var parent: Coordinator?
   public var childCoordinators = [Coordinator]()
 
   // MARK: - CoordinatorNavigator
+
   public let navigator: Navigator
   public weak var presentedCoordinator: BaseCoordinatorPresentable?
 
   // MARK: - CoordinatorPresentable
+
   public typealias CoordinatorVC = U
   public let viewController: CoordinatorVC
 
@@ -68,6 +71,7 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
   }
 
   // MARK: - ListControllerSizeDelegate
+
   open func listController(
     _ listController: ListController,
     sizeFor model: ListCellModel,
@@ -98,10 +102,10 @@ open class BaseCoordinator<T: ListPresenter, U: ListViewController>: NSObject, C
       updateDisposable?.dispose()
       updateDisposable =
         updateRelay
-        .observeOn(MainScheduler.instance)
-        .subscribe(onNext: { [weak self] sections in
-          self?.update(with: sections)
-        })
+          .observeOn(MainScheduler.instance)
+          .subscribe(onNext: { [weak self] sections in
+            self?.update(with: sections)
+          })
     case .viewWillDisappear:
       break
     case .viewDidAppear:

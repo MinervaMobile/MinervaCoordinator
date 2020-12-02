@@ -50,7 +50,6 @@ public final class UpdateFilterPresenter: ListPresenter {
   }
 
   private func loadCellModels() -> [ListCellModel] {
-
     let cancelModel = SelectableLabelCellModel(
       identifier: "cancelModel",
       text: "Remove",
@@ -92,7 +91,7 @@ public final class UpdateFilterPresenter: ListPresenter {
       doneModel,
       MarginCellModel(identifier: "doneMarginModel", height: 12),
       cancelModel,
-      MarginCellModel(identifier: "cancelMarginModel", height: 12)
+      MarginCellModel(identifier: "cancelMarginModel", height: 12),
     ]
   }
 

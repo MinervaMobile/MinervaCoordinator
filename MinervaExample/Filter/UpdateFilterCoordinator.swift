@@ -18,9 +18,7 @@ public protocol UpdateFilterCoordinatorDelegate: AnyObject {
 
 public final class UpdateFilterCoordinator: MainCoordinator<
   UpdateFilterPresenter, CollectionViewController
->
-{
-
+> {
   public weak var delegate: UpdateFilterCoordinatorDelegate?
 
   // MARK: - Lifecycle
@@ -45,9 +43,10 @@ public final class UpdateFilterCoordinator: MainCoordinator<
   }
 
   // MARK: - Private
+
   private func handle(_ action: UpdateFilterPresenter.Action) {
     switch action {
-    case .update(let filter):
+    case let .update(filter):
       delegate?.updateFilterCoordinator(self, updatedFilter: filter)
     }
   }

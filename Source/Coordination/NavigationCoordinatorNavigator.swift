@@ -12,7 +12,7 @@ open class NavigationCoordinatorNavigator: NavigatorCommonImpl {
 
   public init(
     parent: Navigator?,
-    navigationController: UINavigationController = UINavigationController(),
+    navigationController: UINavigationController,
     modalPresentationStyle: UIModalPresentationStyle
   ) {
     navigationController.modalPresentationStyle = modalPresentationStyle
@@ -21,7 +21,6 @@ open class NavigationCoordinatorNavigator: NavigatorCommonImpl {
 }
 
 open class NavigatorCommonImpl: NSObject {
-
   private final class RemovalCompletionBox {
     let completion: Navigator.RemovalCompletion
 
@@ -56,6 +55,7 @@ open class NavigatorCommonImpl: NSObject {
 }
 
 // MARK: - NavigatorType
+
 extension NavigatorCommonImpl: Navigator {
   public func present(
     _ viewController: UIViewController,
@@ -124,10 +124,10 @@ extension NavigatorCommonImpl: Navigator {
   {
     guard
       let poppedControllers = weakNavigationController?
-        .popToViewController(
-          viewController,
-          animated: animated
-        )
+      .popToViewController(
+        viewController,
+        animated: animated
+      )
     else {
       return nil
     }
@@ -174,12 +174,11 @@ extension NavigatorCommonImpl: Navigator {
         runCompletion(for: viewController)
       }
   }
-
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
-extension NavigatorCommonImpl {
 
+extension NavigatorCommonImpl {
   // Handles iOS 13 Swipe to dismiss of modals.
   public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
     let dismissingViewController = presentationController.presentedViewController
@@ -203,8 +202,8 @@ extension NavigatorCommonImpl {
 }
 
 // MARK: - UINavigationControllerDelegate
-extension NavigatorCommonImpl {
 
+extension NavigatorCommonImpl {
   // Handles when a user swipes to go back or taps the back button in the navigation bar.
   public func navigationController(
     _ navigationController: UINavigationController,
@@ -213,9 +212,9 @@ extension NavigatorCommonImpl {
   ) {
     guard
       let poppingViewController = navigationController.transitionCoordinator?
-        .viewController(
-          forKey: .from
-        )
+      .viewController(
+        forKey: .from
+      )
     else {
       return
     }

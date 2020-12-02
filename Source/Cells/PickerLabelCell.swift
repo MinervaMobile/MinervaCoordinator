@@ -34,7 +34,7 @@ open class PickerLabelCellModel: BaseListCellModel {
   public init(identifier: String, pickerData: PickerData, changedValue: Action?) {
     self.helper = PickerLabelCellModelHelper(pickerData: pickerData)
     super.init(identifier: identifier)
-    self.helper.changedValue = { [weak self] pickerView, row, component in
+    helper.changedValue = { [weak self] pickerView, row, component in
       guard let strongSelf = self else { return }
       changedValue?(strongSelf, pickerView, row, component)
     }
@@ -59,7 +59,6 @@ open class PickerLabelCellModel: BaseListCellModel {
 }
 
 public final class PickerLabelCell: BaseListCell<PickerLabelCellModel> {
-
   private weak var labelLeadingConstraint: NSLayoutConstraint?
   private weak var labelWidthConstraint: NSLayoutConstraint?
   private weak var pickerWidthConstraint: NSLayoutConstraint?
@@ -132,19 +131,21 @@ private class PickerLabelCellModelHelper: NSObject {
     self.pickerData = pickerData
   }
 }
+
 // MARK: - UIPickerViewDataSource
+
 extension PickerLabelCellModelHelper: UIPickerViewDataSource {
   public func numberOfComponents(in pickerView: UIPickerView) -> Int {
     1
   }
 
-  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-  {
+  public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     pickerData.data.count
   }
 }
 
 // MARK: - UIPickerViewDelegate
+
 extension PickerLabelCellModelHelper: UIPickerViewDelegate {
   public func pickerView(
     _ pickerView: UIPickerView,
@@ -164,7 +165,7 @@ extension PickerLabelCellModelHelper: UIPickerViewDelegate {
     didSelectRow row: Int,
     inComponent component: Int
   ) {
-    self.changedValue?(pickerView, row, component)
+    changedValue?(pickerView, row, component)
   }
 
   public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -178,8 +179,8 @@ extension PickerLabelCellModelHelper: UIPickerViewDelegate {
 }
 
 // MARK: - Constraints
-extension PickerLabelCell {
 
+extension PickerLabelCell {
   private func remakeConstraints(with model: PickerLabelCellModel) {
     let data = model.helper.pickerData
     centerXConstraint?.isActive = false
@@ -189,10 +190,10 @@ extension PickerLabelCell {
     switch model.cellAlignment {
     case .center:
       centerXConstraint?.isActive = true
-    case .left(let leftMargin):
+    case let .left(leftMargin):
       leadingConstraint?.constant = leftMargin
       leadingConstraint?.isActive = true
-    case .right(let rightMargin):
+    case let .right(rightMargin):
       trailingConstraint?.constant = -rightMargin
       trailingConstraint?.isActive = true
     }
@@ -204,9 +205,9 @@ extension PickerLabelCell {
       + (data.options?.rowMargin ?? 8)
     let labelWidth =
       data.options?.label?
-      .width(
-        constraintedToHeight: CGFloat.greatestFiniteMagnitude
-      ) ?? 0
+        .width(
+          constraintedToHeight: CGFloat.greatestFiniteMagnitude
+        ) ?? 0
 
     labelWidthConstraint?.constant = labelWidth
     pickerWidthConstraint?.constant = pickerWidth

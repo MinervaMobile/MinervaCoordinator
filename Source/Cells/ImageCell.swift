@@ -9,7 +9,6 @@ import RxSwift
 import UIKit
 
 open class ImageCellModel: BaseListCellModel {
-
   public var imageColor: UIColor?
   public var contentMode: UIView.ContentMode = .scaleAspectFit
   public var directionalLayoutMargins = NSDirectionalEdgeInsets(
@@ -45,21 +44,21 @@ open class ImageCellModel: BaseListCellModel {
     let width = containerSize.width
     let cellHeight =
       imageSize.height + directionalLayoutMargins.top
-      + directionalLayoutMargins.bottom
+        + directionalLayoutMargins.bottom
     return .explicit(size: CGSize(width: width, height: cellHeight))
   }
 }
 
 public final class ImageCell: BaseReactiveListCell<ImageCellModel> {
-
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
   }()
+
   private let imageWidthConstraint: NSLayoutConstraint
 
   override public init(frame: CGRect) {
-    imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
+    self.imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
     super.init(frame: frame)
     contentView.addSubview(imageView)
     setupConstraints()
@@ -97,6 +96,7 @@ public final class ImageCell: BaseReactiveListCell<ImageCellModel> {
 }
 
 // MARK: - Constraints
+
 extension ImageCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide

@@ -7,7 +7,6 @@
 import Foundation
 
 public final class TestData {
-
   public var emailToPasswordMap = [String: String]()
   public var emailToAuthorizationMap = [String: UserAuthorization]()
   public var idToAuthorizationMap = [String: UserAuthorization]()
@@ -78,6 +77,7 @@ public final class TestData {
     idToWorkoutIDMap[testUser.userID] = randomWorkouts(forUserID: testUserAuthorization.userID)
       .asMap { $0.workoutID }
   }
+
   private func randomWorkouts(forUserID userID: String) -> [Workout] {
     var workouts = [Workout]()
     for workoutNumber in 1...50 {

@@ -9,7 +9,6 @@ import Minerva
 import UIKit
 
 public class MainCoordinator<T: ListPresenter, U: ListViewController>: BaseCoordinator<T, U> {
-
   public typealias DismissBlock = (BaseCoordinatorPresentable) -> Void
 
   private var dismissBlock: DismissBlock?

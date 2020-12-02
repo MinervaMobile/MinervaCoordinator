@@ -17,7 +17,6 @@ public protocol SignInCoordinatorDelegate: AnyObject {
 }
 
 public final class SignInCoordinator: MainCoordinator<SignInPresenter, CollectionViewController> {
-
   public weak var delegate: SignInCoordinatorDelegate?
   private let userManager: UserManager
 
@@ -89,6 +88,7 @@ public final class SignInCoordinator: MainCoordinator<SignInPresenter, Collectio
       )
       .disposed(by: disposeBag)
   }
+
   private func handle(_ action: SignInPresenter.Action) {
     switch action {
     case let .signIn(email, password, mode):

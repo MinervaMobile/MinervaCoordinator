@@ -11,7 +11,6 @@ public final class SelectableLabelCellModel: LabelCellModel, ListSelectableCellM
 }
 
 public final class HighlightableLabelCellModel: LabelCellModel, ListHighlightableCellModel {
-
   public typealias HighlightableModelType = HighlightableLabelCellModel
   public var highlightEnabled: Bool = true
   public var highlightColor: UIColor?
@@ -20,11 +19,9 @@ public final class HighlightableLabelCellModel: LabelCellModel, ListHighlightabl
   public var unhighlightedAction: HighlightAction?
 
   override public var cellType: ListCollectionViewCell.Type { LabelCell.self }
-
 }
 
 public final class HighlightableIconTextCellModel: IconTextCellModel, ListHighlightableCellModel {
-
   public typealias HighlightableModelType = HighlightableIconTextCellModel
   public var highlightEnabled: Bool = true
   public var highlightColor: UIColor?
@@ -33,5 +30,4 @@ public final class HighlightableIconTextCellModel: IconTextCellModel, ListHighli
   public var unhighlightedAction: HighlightAction?
 
   override public var cellType: ListCollectionViewCell.Type { IconTextCell.self }
-
 }

@@ -14,6 +14,7 @@ extension UserRole: CustomStringConvertible {
     case .userManager: return "User Manager"
     }
   }
+
   public var userEditor: Bool {
     switch self {
     case .admin, .userManager: return true

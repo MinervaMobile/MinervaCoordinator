@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 public final class DefaultSplitDetailPresenter: ListPresenter {
-
   public var sections = BehaviorRelay<[ListSection]>(value: [])
 
   private let disposeBag = DisposeBag()
@@ -34,14 +33,13 @@ public final class DefaultSplitDetailPresenter: ListPresenter {
   }
 
   private func loadCellModels() -> [ListCellModel] {
-
     let text = "Select an action on the left"
     let textModel = LabelCellModel(text: text, font: .headline)
     textModel.textAlignment = .center
     textModel.directionalLayoutMargins.top = 48
 
     return [
-      textModel
+      textModel,
     ]
   }
 }

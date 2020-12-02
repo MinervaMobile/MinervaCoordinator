@@ -39,7 +39,8 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
     observer = rootViewController?.collectionView
       .observe(\UICollectionView.contentSize, options: [NSKeyValueObservingOptions.new]) {
         [weak self] _, change in
-        guard let strongSelf = self, let contentSize = change.newValue, contentSize != .zero,
+        guard
+          let strongSelf = self, let contentSize = change.newValue, contentSize != .zero,
           contentSize != change.oldValue
         else {
           return
@@ -66,7 +67,7 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
   private func keyboardWillShow(notification: NSNotification) {
     guard
       let keyboardSize =
-        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+      (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
     else {
       return
     }
@@ -79,6 +80,7 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
     keyboardHeight = 0
     panModalSetNeedsLayoutUpdate()
   }
+
   // MARK: - PanModalPresentable
 
   public func panModalWillDismiss() {
@@ -96,10 +98,10 @@ open class PanModalNavigationCollectionVC: UINavigationController, PanModalPrese
   public var allowsTapToDismiss: Bool {
     allowTapToDismiss
   }
-
 }
 
 // MARK: - PanModalPresentable
+
 extension PanModalNavigationCollectionVC {
   public var panScrollable: UIScrollView? {
     (topViewController as? PanModalPresentable)?.panScrollable
@@ -119,6 +121,7 @@ extension PanModalNavigationCollectionVC {
 }
 
 // MARK: - PanModalPresentable
+
 extension ListViewController {
   public var panScrollable: UIScrollView? {
     collectionView

@@ -10,7 +10,6 @@ import SwiftProtobuf
 public typealias FilterType = WorkoutFilterProto.FilterType
 
 extension FilterType: CustomStringConvertible {
-
   public var description: String {
     switch self {
     case .endDate: return "End Date"
@@ -22,12 +21,10 @@ extension FilterType: CustomStringConvertible {
 }
 
 public protocol WorkoutFilter: CustomStringConvertible {
-
   var startDate: Date? { get }
   var endDate: Date? { get }
   var startTime: Date? { get }
   var endTime: Date? { get }
-
 }
 
 extension WorkoutFilter {
@@ -62,7 +59,7 @@ extension WorkoutFilter {
       text += "until "
       text += DateFormatter.dateOnlyFormatter.string(from: endDate)
     }
-    if (startDate != nil || endDate != nil) && (startTime != nil || endTime != nil) {
+    if startDate != nil || endDate != nil, startTime != nil || endTime != nil {
       text += ",\n"
     }
     if let startTime = startTime {
@@ -151,7 +148,6 @@ extension WorkoutFilter {
 }
 
 extension WorkoutFilterProto: WorkoutFilter {
-
   public init(
     startDate: Date?,
     endDate: Date?,
@@ -168,7 +164,7 @@ extension WorkoutFilterProto: WorkoutFilter {
     get { hasStartDateTimestamp ? startDateTimestamp.date : nil }
     set {
       if let date = newValue {
-        self.startDateTimestamp = Google_Protobuf_Timestamp(date: date)
+        startDateTimestamp = Google_Protobuf_Timestamp(date: date)
       } else {
         clearStartDateTimestamp()
       }
@@ -179,7 +175,7 @@ extension WorkoutFilterProto: WorkoutFilter {
     get { hasEndDateTimestamp ? endDateTimestamp.date : nil }
     set {
       if let date = newValue {
-        self.endDateTimestamp = Google_Protobuf_Timestamp(date: date)
+        endDateTimestamp = Google_Protobuf_Timestamp(date: date)
       } else {
         clearEndDateTimestamp()
       }
@@ -190,7 +186,7 @@ extension WorkoutFilterProto: WorkoutFilter {
     get { hasStartTimeTimestamp ? startTimeTimestamp.date : nil }
     set {
       if let date = newValue {
-        self.startTimeTimestamp = Google_Protobuf_Timestamp(date: date)
+        startTimeTimestamp = Google_Protobuf_Timestamp(date: date)
       } else {
         clearStartTimeTimestamp()
       }
@@ -201,7 +197,7 @@ extension WorkoutFilterProto: WorkoutFilter {
     get { hasEndTimeTimestamp ? endTimeTimestamp.date : nil }
     set {
       if let date = newValue {
-        self.endTimeTimestamp = Google_Protobuf_Timestamp(date: date)
+        endTimeTimestamp = Google_Protobuf_Timestamp(date: date)
       } else {
         clearEndTimeTimestamp()
       }

@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 public final class SettingsVC: CollectionViewController {
-
   public enum Action {
     case editUser(barButtonItem: UIBarButtonItem)
   }
@@ -30,5 +29,4 @@ public final class SettingsVC: CollectionViewController {
     }
     navigationItem.rightBarButtonItem?.tintColor = .selectable
   }
-
 }

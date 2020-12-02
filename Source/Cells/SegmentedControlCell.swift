@@ -56,7 +56,6 @@ open class SegmentedControlCellModel: BaseListCellModel {
 }
 
 public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel> {
-
   private let segmentedControl = UISegmentedControl(frame: .zero)
 
   override public init(frame: CGRect) {
@@ -94,11 +93,11 @@ public final class SegmentedControlCell: BaseListCell<SegmentedControlCellModel>
 }
 
 // MARK: - Constraints
+
 extension SegmentedControlCell {
   private func setupConstraints() {
-
     segmentedControl.anchorTo(layoutGuide: contentView.layoutMarginsGuide)
-    self.segmentedControl.addTarget(
+    segmentedControl.addTarget(
       self,
       action: #selector(pressedSegmentedControl),
       for: .valueChanged

@@ -9,7 +9,6 @@ import RxSwift
 import XCTest
 
 public final class LegacyListControllerTests: CommonSetupTestCase {
-
   public func test_noIndexForModelNotInSections() {
     let cellModel = FakeCellModel(identifier: "fake", size: .autolayout)
     XCTAssertNil(listController.indexPath(for: cellModel))

@@ -12,7 +12,6 @@ public protocol UserVCDelegate: AnyObject {
 }
 
 public final class UserVC: UIViewController {
-
   public enum Tab: Int {
     case workouts = 1
     case users = 2
@@ -50,7 +49,7 @@ public final class UserVC: UIViewController {
       [
         .workouts: item(for: .workouts),
         .users: item(for: .users),
-        .settings: item(for: .settings)
+        .settings: item(for: .settings),
       ]
     }()
   }
@@ -100,13 +99,13 @@ public final class UserVC: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    self.tabBar.setItems(
-      Tab.tabs(for: userAuthorization.role).compactMap { $0.item },
+    tabBar.setItems(
+      Tab.tabs(for: userAuthorization.role).compactMap(\.item),
       animated: false
     )
-    self.tabBar.delegate = self
-    self.setupConstraints()
-    self.change(to: tab)
+    tabBar.delegate = self
+    setupConstraints()
+    change(to: tab)
   }
 
   override public func viewDidLayoutSubviews() {
@@ -168,6 +167,7 @@ public final class UserVC: UIViewController {
 }
 
 // MARK: - UITabBarDelegate
+
 extension UserVC: UITabBarDelegate {
   public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     guard let tab = Tab(rawValue: item.tag) else {

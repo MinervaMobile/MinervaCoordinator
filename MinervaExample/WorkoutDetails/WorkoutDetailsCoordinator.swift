@@ -11,9 +11,7 @@ import UIKit
 
 public final class WorkoutDetailsCoordinator: MainCoordinator<
   WorkoutDetailsPresenter, CollectionViewController
->
-{
-
+> {
   private let dataManager: DataManager
 
   // MARK: - Lifecycle
@@ -50,9 +48,10 @@ public final class WorkoutDetailsCoordinator: MainCoordinator<
     )
     push(coordinator)
   }
+
   private func handle(_ action: WorkoutDetailsPresenter.Action) {
     switch action {
-    case .edit(let workout):
+    case let .edit(workout):
       edit(workout: workout)
     }
   }

@@ -111,5 +111,4 @@ public final class SettingsPresenter: ListPresenter {
 
     return sections
   }
-
 }

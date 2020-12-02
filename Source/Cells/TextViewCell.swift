@@ -72,7 +72,6 @@ open class TextViewCellModel: BaseListCellModel {
 }
 
 public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
-
   private let textView: UITextView = {
     let textView = UITextView()
     textView.adjustsFontForContentSizeCategory = true
@@ -132,6 +131,7 @@ public final class TextViewCell: BaseReactiveListCell<TextViewCellModel> {
 }
 
 // MARK: - UITextViewDelegate
+
 extension TextViewCell: UITextViewDelegate {
   public func textViewDidChange(_ textView: UITextView) {
     guard let model = model else {
@@ -174,6 +174,7 @@ extension TextViewCell: UITextViewDelegate {
 }
 
 // MARK: - Constraints
+
 extension TextViewCell {
   private func setupConstraints() {
     textView.anchorTo(layoutGuide: contentView.layoutMarginsGuide)

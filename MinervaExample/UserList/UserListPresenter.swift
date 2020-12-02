@@ -19,6 +19,7 @@ public final class UserListPresenter: ListPresenter {
     case edit(user: User)
     case view(user: User)
   }
+
   public enum State {
     case loading
     case failure(error: Error)
@@ -39,17 +40,17 @@ public final class UserListPresenter: ListPresenter {
     self.repository = repository
     self.actionsRelay = PublishRelay()
     self.state = Observable.just(.loading)
-    self.state = self.state.concat(
+    self.state = state.concat(
       repository.users.map { [weak self] usersResult -> State in
         guard let strongSelf = self else {
           return .failure(error: SystemError.cancelled)
         }
         switch usersResult {
-        case .success(let users):
+        case let .success(users):
           let sections = [strongSelf.createSection(with: users.sorted { $0.email < $1.email })]
           strongSelf.sections.accept(sections)
           return .loaded(sections: sections)
-        case .failure(let error):
+        case let .failure(error):
           return .failure(error: error)
         }
       }
@@ -85,5 +86,4 @@ public final class UserListPresenter: ListPresenter {
     }
     return cellModel
   }
-
 }

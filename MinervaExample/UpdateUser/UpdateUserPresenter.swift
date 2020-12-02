@@ -30,6 +30,7 @@ public final class UpdateUserPresenter: ListPresenter {
       userSubject.onNext(user)
     }
   }
+
   private let userSubject: BehaviorSubject<UserProto>
 
   // MARK: - Lifecycle
@@ -68,7 +69,7 @@ public final class UpdateUserPresenter: ListPresenter {
       createCaloriesCellModel(),
       MarginCellModel(identifier: "caloriesMarginModel", height: 12),
       doneModel,
-      MarginCellModel(identifier: "doneMarginModel", height: 12)
+      MarginCellModel(identifier: "doneMarginModel", height: 12),
     ]
   }
 

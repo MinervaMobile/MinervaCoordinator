@@ -44,6 +44,10 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 `IGListKit` is built and maintained with &#10084;&#65039; by [Instagram engineering](https://engineering.instagram.com/).
 We use the open source version `master` branch in the Instagram app.
 
+## Multilingual translation
+
+[Chinese README](README.zh.md)
+
 ## Requirements
 
 - Xcode 9.0+

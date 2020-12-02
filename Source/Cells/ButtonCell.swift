@@ -90,7 +90,6 @@ open class ButtonCellModel: BaseListCellModel {
 }
 
 public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
-
   private let button: UIButton = {
     let button = UIButton()
     button.titleLabel?.adjustsFontForContentSizeCategory = true
@@ -150,7 +149,7 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
     button.isSelected = model.isSelected
     let borderColor =
       model.isSelected
-      ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
+        ? model.selectedBorderColor?.cgColor : model.borderColor?.cgColor
     button.layer.borderColor = borderColor
   }
 
@@ -162,6 +161,7 @@ public final class ButtonCell: BaseReactiveListCell<ButtonCellModel> {
 }
 
 // MARK: - Constraints
+
 extension ButtonCell {
   private func setupConstraints() {
     button.anchorTo(layoutGuide: contentView.layoutMarginsGuide)

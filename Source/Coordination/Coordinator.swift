@@ -69,7 +69,7 @@ extension CoordinatorNavigator {
     presentedCoordinator = coordinator
     let viewController =
       coordinator.baseViewController.navigationController
-      ?? coordinator.baseViewController
+        ?? coordinator.baseViewController
     if let modalPresentationStyle = modalPresentationStyle {
       viewController.modalPresentationStyle = modalPresentationStyle
     }
@@ -95,7 +95,7 @@ extension CoordinatorNavigator {
   ) {
     let viewController =
       coordinator.baseViewController.navigationController
-      ?? coordinator.baseViewController
+        ?? coordinator.baseViewController
     navigator.dismiss(viewController, animated: animated, animationCompletion: animationCompletion)
     presentedCoordinator = nil
   }
@@ -128,7 +128,7 @@ extension CoordinatorNavigator {
     coordinators.forEach { addChild($0) }
     let weakCoordinators = coordinators.map({ WeakBaseCoordinatorPresentable($0) })
     navigator.setViewControllers(
-      coordinators.map { $0.baseViewController },
+      coordinators.map(\.baseViewController),
       animated: animated
     ) { [weak self] viewController in
       let weakCoordinator = weakCoordinators.first {

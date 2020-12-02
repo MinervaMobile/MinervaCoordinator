@@ -11,7 +11,6 @@ import RxSwift
 import UIKit
 
 public final class WorkoutPresenter: ListPresenter {
-
   public enum Action {
     case createWorkout(userID: String)
     case editFilter
@@ -108,7 +107,7 @@ public final class WorkoutPresenter: ListPresenter {
       .subscribe { [weak self] event in
         guard let strongSelf = self else { return }
         switch event {
-        case .error(let error):
+        case let .error(error):
           strongSelf.errorSubject.onNext(error)
         case .success:
           break
@@ -127,18 +126,18 @@ public final class WorkoutPresenter: ListPresenter {
   ) {
     let user: User
     switch userResult {
-    case .success(let u):
+    case let .success(u):
       user = u
-    case .failure(let error):
+    case let .failure(error):
       transientStateSubject.onNext(TransientState(error: error))
       return
     }
 
     let workouts: [Workout]
     switch workoutsResult {
-    case .success(let w):
+    case let .success(w):
       workouts = w
-    case .failure(let error):
+    case let .failure(error):
       transientStateSubject.onNext(TransientState(error: error))
       return
     }
@@ -207,7 +206,7 @@ public final class WorkoutPresenter: ListPresenter {
     var cellModels = [ListCellModel]()
     let workoutBackgroundColor =
       failure
-      ? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
+        ? UIColor(red: 255, green: 179, blue: 179) : UIColor(red: 179, green: 255, blue: 179)
     let sortedWorkoutsForDate = workouts.sorted { $0.date > $1.date }
     for workout in sortedWorkoutsForDate {
       let workoutCellModel = createWorkoutCellModel(for: workout)
@@ -243,5 +242,4 @@ public final class WorkoutPresenter: ListPresenter {
     }
     return cellModel
   }
-
 }

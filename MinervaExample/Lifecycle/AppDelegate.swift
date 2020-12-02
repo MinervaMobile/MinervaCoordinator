@@ -10,7 +10,6 @@ import UIKit
 
 @UIApplicationMain
 public final class AppDelegate: UIResponder, UIApplicationDelegate {
-
   private var lifecycleCoordinator: LifecycleCoordinator?
 
   public func application(
@@ -31,5 +30,4 @@ public final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     return true
   }
-
 }

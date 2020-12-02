@@ -3,60 +3,115 @@ excluded:
   - Pods
 
 blacklist_rules:
+  # Swift type system doesn't allow wrapping the .map { $0 } easily
   - array_init
+  # Does not play well with SwiftFormat
+  - attributes
+  # Does not play well with SwiftUI
   - closure_end_indentation
+  # Does not play well with swift-format
   - closure_parameter_position
+  # We like the shorthand 1-liners
   - conditional_returns_on_newline
+  # Fix errors
   - cyclomatic_complexity
+  # Sometimes we want this (our protos)
   - discouraged_optional_boolean
+  # Apple overrides trigger this
   - discouraged_optional_collection
-  - empty_parentheses_with_trailing_closure
+  # Fix warnings then enable
   - explicit_enum_raw_value
+  # We like the shorthand without self.
   - explicit_self
+  # We like the shorthand where the type is inferred
   - explicit_type_interface
+  # We like the default access modifier (same as class)
   - extension_access_modifier
+  # Doesn't work
   - file_header
+  # Fix this then enable
   - file_types_order
+  # Doesn't work with realm results queries where a filter needs to be first
   - first_where
+  # Used to work around the poor swift generic type system
   - force_cast
+  # This should be enabled, but there is a lot of cleanup required
   - force_unwrapping
+  # This should be enabled, but there is a lot of cleanup required
   - function_parameter_count
+  # Need to cleanup the notification names and set the min to 2
   - identifier_name
+  # Lots of cleanup
   - implicitly_unwrapped_optional
+  # Does not play well with SwiftFormat
+  - let_var_whitespace
+  # Add missing docs
   - missing_docs
+  # Fix the warnings then enable this
   - multiline_arguments_brackets
+  # Fix the warnings then enable this
   - multiline_function_chains
+  # We like extensions in the same file
   - no_grouping_extension
+  # Weird limitation
   - notification_center_detachment
+  # We need to use localized strings to support this
   - nslocalizedstring_key
+  # We need to support localized strings
   - nslocalizedstring_require_bundle
+  # We dont like literals
   - object_literal
+  # Opening brace does not play well with implicit returns and closures
   - opening_brace
+  # Against swift style
   - prefixed_toplevel_constant
+  # Remove all IB code
   - prohibited_interface_builder
+  # Quick is unsupported
   - quick_discouraged_call
+  # Quick is unsupported
   - quick_discouraged_focused_test
+  # Quick is unsupported
   - quick_discouraged_pending_test
+  # Turn on and fix readability
   - reduce_into
+  # We are explicit with enum values
   - redundant_string_enum_value
+  # Who would want this?
   - required_deinit
+  # Turn on?
   - static_operator
+  # Fix the warnings then enable this
   - strict_fileprivate
+  # We dont use IB
   - strong_iboutlet
+  # Fix warnings and enable this
   - switch_case_on_newline
+  # Have a better TODO policy then enable this
   - todo
+  # Doesn't work with RxSwift
   - trailing_closure
+  # we like a trailing comma
+  - trailing_comma
+  # Fix this then enable
   - type_contents_order
+  # Overridding vars cause problems with this?
   - unused_setter_value
+  # We don't use IB
   - valid_ibinspectable
+  # Don't like it
   - vertical_whitespace_between_cases
+  # Don't like it
   - vertical_whitespace_closing_braces
+  # Don't like it
   - vertical_whitespace_opening_braces
+  # Doesn't work
+  - void_function_in_ternary
+  # Don't like it
   - yoda_condition
 
 whitelist_rules:
   - anyobject_protocol
-  - attributes
   - block_based_kvo
   - class_delegate_protocol
   - closing_brace
@@ -66,6 +121,7 @@ whitelist_rules:
   - colon
   - comma
   - compiler_protocol_init
+  - computed_accessors_order  
   - contains_over_filter_count
   - contains_over_filter_is_empty
   - contains_over_first_not_nil
@@ -83,6 +139,7 @@ whitelist_rules:
   - empty_count
   - empty_enum_arguments
   - empty_parameters
+  - empty_parentheses_with_trailing_closure
   - empty_string
   - empty_xctest_method
   - explicit_acl
@@ -98,6 +155,7 @@ whitelist_rules:
   - function_body_length
   - function_default_parameter_at_end
   - generic_type_name
+  - ibinspectable_in_extension
   - identical_operands
   - implicit_getter
   - implicit_return
@@ -114,7 +172,6 @@ whitelist_rules:
   - legacy_multiple
   - legacy_nsgeometry_functions
   - legacy_random
-  - let_var_whitespace
   - line_length
   - literal_expression_end_indentation
   - lower_acl_than_parent
@@ -139,6 +196,7 @@ whitelist_rules:
   - override_in_extension
   - pattern_matching_keywords
   - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
   - private_action
   - private_outlet
   - private_over_fileprivate
@@ -168,7 +226,6 @@ whitelist_rules:
   - switch_case_alignment
   - syntactic_sugar
   - toggle_bool
-  - trailing_comma
   - trailing_newline
   - trailing_semicolon
   - trailing_whitespace
@@ -177,6 +234,7 @@ whitelist_rules:
   - type_name
   - unavailable_function
   - unneeded_break_in_switch
+  - unneeded_notification_center_removal
   - unneeded_parentheses_in_closure_argument
   - unowned_variable_capture
   - untyped_error_in_catch
@@ -190,28 +248,30 @@ whitelist_rules:
   - vertical_parameter_alignment
   - vertical_parameter_alignment_on_call
   - vertical_whitespace
-  - void_function_in_ternary
   - void_return
   - weak_delegate
   - xct_specific_matcher
   - xctfail_message
 
 closure_body_length:
-  warning: 100
-  error: 100
+  warning: 110
+  error: 110
 
 file_length:
   warning: 1000
   error: 1000
 
 function_body_length:
-  warning: 150
-  error: 150
+  warning: 170
+  error: 170
 
 line_length:
-  warning: 500
-  error: 500
+  warning: 200
+  error: 200
 
 type_body_length:
-  warning: 500
-  error: 500
+  warning: 530
+  error: 530
+
+unused_import:
+  require_explicit_imports: true

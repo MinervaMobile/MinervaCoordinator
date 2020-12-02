@@ -46,12 +46,12 @@ open class TextSeparatorCellModel: BaseListCellModel {
 }
 
 public final class TextSeparatorCell: BaseListCell<TextSeparatorCellModel> {
-
   private let label: UILabel = {
     let label = UILabel()
     label.adjustsFontForContentSizeCategory = true
     return label
   }()
+
   private let leftLineView = UIView()
   private let rightLineView = UIView()
 
@@ -78,6 +78,7 @@ public final class TextSeparatorCell: BaseListCell<TextSeparatorCellModel> {
 }
 
 // MARK: - Constraints
+
 extension TextSeparatorCell {
   private func setupConstraints() {
     let layoutGuide = contentView.layoutMarginsGuide
