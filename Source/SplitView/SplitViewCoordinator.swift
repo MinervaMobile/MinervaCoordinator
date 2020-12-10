@@ -39,8 +39,8 @@ open class SplitViewCoordinator<T: SplitChildCoordinator, U: SplitChildCoordinat
   public let masterCoordinator: T
   public let defaultDetailCoordinator: U
 
-  private var displayedDetailCoordinator: SplitChildCoordinator?
-
+  public private(set) var displayedDetailCoordinator: SplitChildCoordinator?
+  
   private var masterNavigator: BasicNavigator {
     splitNavigator.masterNavigator
   }
