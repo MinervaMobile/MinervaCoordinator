@@ -7,9 +7,10 @@
 import Foundation
 import IGListKit
 import UIKit
+import SwipeCellKit
 
 /// The required class type and protocol for each Cell in Minerva.
-public typealias ListCollectionViewCell = UICollectionViewCell & ListCell
+public typealias ListCollectionViewCell = SwipeCollectionViewCell & ListCell
 
 /// The cell that will be bound to a ListCellModel
 // TODO: Remove this dependency on IGListKit's ListBindable
