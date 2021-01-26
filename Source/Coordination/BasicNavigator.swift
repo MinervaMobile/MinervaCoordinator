@@ -20,8 +20,6 @@ open class BasicNavigator: NavigatorCommonImpl {
   }
 
   deinit {
-    DispatchQueue.main.async {
-      navigationController.setViewControllers([], animated: false)
-    }
+    navigationController.setViewControllers([], animated: false)
   }
 }
