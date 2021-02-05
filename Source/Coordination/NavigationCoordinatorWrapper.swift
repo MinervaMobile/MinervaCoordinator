@@ -14,8 +14,10 @@ public final class NavigationCoordinatorWrapper: CoordinatorPresentable {
 
   private let navigator: Navigator
 
-  public init(wrapped: (Navigator) -> BaseCoordinatorPresentable) {
-    let basicNavigator = BasicNavigator(parent: nil)
+  public init(wrapped: (Navigator) -> BaseCoordinatorPresentable,
+              navigationController: UINavigationController = UINavigationController()) {
+    let basicNavigator = BasicNavigator(parent: nil,
+                                        navigationController: navigationController)
     self.viewController = basicNavigator.navigationController
     self.navigator = basicNavigator
 
