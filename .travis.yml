@@ -10,6 +10,6 @@ jobs:
         - brew install xcodegen
         - gem install slather
       script:
-        - set -o pipefail && xcodebuild -workspace Minerva.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 12 Pro Max,OS=14.1' build test | xcpretty
+        - set -o pipefail && xcodebuild -workspace Minerva.xcworkspace -scheme Minerva -destination 'platform=iOS Simulator,name=iPhone 12 Pro Max,OS=14.2' build test | xcpretty
         - slather
         - bash <(curl -s https://codecov.io/bash)
