@@ -8,20 +8,12 @@ def minerva_pods
   pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit'
   pod 'IQKeyboardManagerSwift'
   pod 'MBProgressHUD'
-  pod 'PanModal'
   pod 'RxSwift'
   pod 'RxRelay'
   pod 'SwiftLint'
-  pod 'SwiftProtobuf'
-  pod 'SwipeCellKit'
 end
 
 target 'Minerva' do
-  platform :ios, '11.0'
-  minerva_pods
-end
-
-target 'MinervaCatalog' do
   platform :ios, '11.0'
   minerva_pods
 end

@@ -21,17 +21,32 @@ public final class NavigationCoordinatorWrapperTests: XCTestCase {
 
     XCTAssertEqual(wrapped.viewController.viewControllers.first?.view.tag, tag)
   }
+}
 
-  private final class TestCoordinator: CoordinatorPresentable, CoordinatorNavigator {
-    var navigator: Navigator
-    weak var presentedCoordinator: BaseCoordinatorPresentable?
-    var viewController: UIViewController
-    weak var parent: Coordinator?
-    var childCoordinators = [Coordinator]()
+public final class TestCoordinatorPresentable: CoordinatorPresentable {
+  public var viewController: UIViewController
+  public weak var parent: Coordinator?
+  public var childCoordinators = [Coordinator]()
 
-    init(viewController: UIViewController, navigator: Navigator) {
-      self.viewController = viewController
-      self.navigator = navigator
-    }
+  public init(
+    viewController: UIViewController = UIViewController()
+  ) {
+    self.viewController = viewController
+  }
+}
+
+public final class TestCoordinator: CoordinatorPresentable, CoordinatorNavigator {
+  public var navigator: Navigator
+  public weak var presentedCoordinator: BaseCoordinatorPresentable?
+  public var viewController: UIViewController
+  public weak var parent: Coordinator?
+  public var childCoordinators = [Coordinator]()
+
+  public init(
+    viewController: UIViewController = UIViewController(),
+    navigator: Navigator = BasicNavigator(parent: nil)
+  ) {
+    self.viewController = viewController
+    self.navigator = navigator
   }
 }

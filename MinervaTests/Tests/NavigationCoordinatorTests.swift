@@ -11,30 +11,37 @@ import XCTest
 
 /// Same as CoordinationTests, but navigator is a NavigationCoordinatorNavigator instead of a BasicNavigator.
 public final class NavigationCoordinatorTests: XCTestCase {
-  private var rootCoordinator: FakeCoordinator!
+  private var rootCoordinator: TestCoordinator!
   private var navigator: NavigationCoordinatorNavigator!
+  private var navigationController: UINavigationController!
+  private var window: UIWindow!
 
   override public func setUp() {
     super.setUp()
+    navigationController = UINavigationController()
     navigator = NavigationCoordinatorNavigator(
       parent: nil,
-      navigationController: UINavigationController(),
+      navigationController: navigationController,
       modalPresentationStyle: .automatic
     )
-    rootCoordinator = FakeCoordinator(navigator: navigator)
+    rootCoordinator = TestCoordinator(navigator: navigator)
     navigator.setViewControllers([rootCoordinator.viewController], animated: false, completion: nil)
-    UIApplication.shared.windows.first?.rootViewController = navigator.navigationController
+
+    window = UIWindow(frame: UIScreen.main.bounds)
+    window.rootViewController = navigationController
+    window.makeKeyAndVisible()
   }
 
   override public func tearDown() {
+    navigationController = nil
     rootCoordinator = nil
-    UIApplication.shared.windows.first?.rootViewController = nil
+    window = nil
     super.tearDown()
   }
 
   public func testPresentation() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let childCoordinator = FakeCoordinator()
+    let childCoordinator = TestCoordinatorPresentable()
     let presentationExpectation = expectation(description: "Presentation")
     rootCoordinator.present(childCoordinator, animated: false) {
       presentationExpectation.fulfill()
@@ -58,7 +65,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
       navigationController: UINavigationController(),
       modalPresentationStyle: .automatic
     )
-    let childCoordinator = FakeCoordinator()
+    let childCoordinator = TestCoordinator()
     let presentationExpectation = expectation(description: "Presentation")
     navigator.setViewControllers([childCoordinator.baseViewController], animated: false)
     rootCoordinator.present(childCoordinator, animated: false) {
@@ -99,7 +106,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
   public func testDismissalFromNavigator() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let childCoordinator = FakeCoordinator()
+    let childCoordinator = TestCoordinator()
     let navigator = NavigationCoordinatorNavigator(
       parent: rootCoordinator.navigator,
       navigationController: UINavigationController(),
@@ -125,7 +132,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
 
   public func testPushAndPop() {
     XCTAssertNotNil(rootCoordinator.viewController.view)
-    let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+    let childCoordinator = TestCoordinator(navigator: rootCoordinator.navigator)
     rootCoordinator.push(childCoordinator, animated: false)
     XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
     XCTAssertTrue(
@@ -142,7 +149,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     (1...5)
       .forEach { _ in
-        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        let childCoordinator = TestCoordinator(navigator: rootCoordinator.navigator)
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
@@ -161,7 +168,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     (1...5)
       .forEach { _ in
-        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        let childCoordinator = TestCoordinator(navigator: rootCoordinator.navigator)
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
@@ -172,7 +179,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
         )
       }
     rootCoordinator.popToCoordinator(
-      rootCoordinator.childCoordinators.first! as! FakeCoordinator,
+      rootCoordinator.childCoordinators.first! as! TestCoordinator,
       animated: false
     )
     XCTAssertEqual(navigator.navigationController!.viewControllers.count, 2)
@@ -183,7 +190,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
     XCTAssertNotNil(rootCoordinator.viewController.view)
     (1...5)
       .forEach { _ in
-        let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+        let childCoordinator = TestCoordinator(navigator: rootCoordinator.navigator)
         rootCoordinator.push(childCoordinator, animated: false)
         XCTAssertTrue(rootCoordinator.childCoordinators.contains { $0 === childCoordinator })
         XCTAssertTrue(
@@ -193,7 +200,7 @@ public final class NavigationCoordinatorTests: XCTestCase {
             }
         )
       }
-    let childCoordinator = FakeCoordinator(navigator: rootCoordinator.navigator)
+    let childCoordinator = TestCoordinator(navigator: rootCoordinator.navigator)
     rootCoordinator.setCoordinators([childCoordinator], animated: false)
     XCTAssertEqual(navigator.navigationController!.viewControllers.count, 1)
     XCTAssertEqual(rootCoordinator.childCoordinators.count, 1)
