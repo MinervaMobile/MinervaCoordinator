@@ -13,7 +13,7 @@ MinervaCoordinator is an easy to use framework for structuring iOS, iPadOS and T
 
 ### CocoaPods
 
-MinervaCoordinator supports installation via CocoaPods. You can depend on MinervaCoordinator by adding the following to your Podfile:
+MinervaCoordinator supports installation via CocoaPods, just add the following to your Podfile:
 
 ```
 pod "MinervaCoordinator"
