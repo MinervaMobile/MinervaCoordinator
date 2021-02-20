@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.license = { :type => 'MIT', :file => 'LICENSE' }
 
   s.summary = "A Swift Coordinator Framework"
-  s.homepage = "hhttps://github.com/MinervaMobile/MinervaCoordinator"
+  s.homepage = "https://github.com/MinervaMobile/MinervaCoordinator"
   s.author = { "Joe Laws" => "joe.laws@gmail.com" }
 
   s.source = { :git => "https://github.com/MinervaMobile/MinervaCoordinator.git", :tag => s.version }
