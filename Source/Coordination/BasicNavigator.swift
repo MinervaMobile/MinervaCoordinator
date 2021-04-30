@@ -18,8 +18,4 @@ open class BasicNavigator: NavigatorCommonImpl {
     self.navigationController = navigationController
     super.init(parent: parent, navigationController: navigationController)
   }
-
-  deinit {
-    navigationController.setViewControllers([], animated: false)
-  }
 }
