@@ -20,7 +20,7 @@ open class NavigationCoordinatorNavigator: NavigatorCommonImpl {
   }
 }
 
-open class NavigatorCommonImpl: NSObject {
+open class NavigatorCommonImpl: NSObject, Navigator {
   private final class RemovalCompletionBox {
     let completion: Navigator.RemovalCompletion
 
@@ -56,7 +56,7 @@ open class NavigatorCommonImpl: NSObject {
 
 // MARK: - NavigatorType
 
-extension NavigatorCommonImpl: Navigator {
+extension NavigatorCommonImpl {
   public func present(
     _ viewController: UIViewController,
     animated: Bool,
